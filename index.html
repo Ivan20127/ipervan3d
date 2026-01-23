@@ -1,337 +1,137 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
   <title>Pervan 3-D | Custom 3-D Printing</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <style>
-
     body {
-
       margin: 0;
-
       font-family: Arial, sans-serif;
-
       background: #f5f5f5;
-
       color: #333;
-
     }
-
     header {
-
       background: #111;
-
       color: white;
-
       padding: 40px 20px;
-
       text-align: center;
-
     }
-
     header h1 {
-
       margin: 0;
-
       font-size: 2.2em;
-
     }
-
     header p {
-
       margin-top: 10px;
-
       font-size: 1.1em;
-
     }
-
     .button {
-
       display: inline-block;
-
       margin: 15px 10px;
-
       padding: 12px 24px;
-
       background: #ff6600;
-
       color: white;
-
       text-decoration: none;
-
       border-radius: 4px;
-
       font-weight: bold;
-
       font-size: 1.1em;
-
     }
-
     .venmo-button {
-
-      background: #009cde;  /* Venmo blue */
-
+      background: #009cde;  /* Venmo blue for optional use */
     }
-
     section {
-
       padding: 40px 20px;
-
       max-width: 1000px;
-
       margin: auto;
-
     }
-
     h2 {
-
       text-align: center;
-
       margin-bottom: 30px;
-
     }
-
     .products {
-
       display: grid;
-
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
       gap: 20px;
-
     }
-
     .card {
-
       background: white;
-
       padding: 20px;
-
       border-radius: 6px;
-
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-
       text-align: center;
-
     }
-
     .card img {
-
       width: 100%;
-
       height: 180px;
-
       object-fit: cover;
-
       background: #ddd;
-
       border-radius: 4px;
-
     }
-
     .card h3 {
-
       margin: 15px 0 10px;
-
     }
-
     .card p {
-
       font-size: 0.95em;
-
     }
-
-    .venmo-section {
-
-      text-align: center;
-
-      background: white;
-
-      padding: 30px;
-
-      border-radius: 8px;
-
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-
-      max-width: 600px;
-
-      margin: 0 auto 40px;
-
-    }
-
-    .qr-code {
-
-      max-width: 200px;
-
-      margin: 20px auto;
-
-      display: block;
-
-    }
-
     footer {
-
       background: #111;
-
       color: white;
-
       text-align: center;
-
       padding: 20px;
-
       font-size: 0.9em;
-
     }
-
   </style>
-
 </head>
-
-
 
 <body>
 
-
-
 <header>
-
   <h1>Pervan 3-D</h1>
-
   <p>Custom 3-D Printed Parts, Models, and Prototypes</p>
-
   <a class="button" href="#contact">Request a Quote</a>
-
+  <a class="button" href="shop.html">Go to Shop & Purchase</a>  <!-- This is the key button - now explicitly here -->
 </header>
 
-
-
 <section>
-
   <h2>What We Make</h2>
-
   <div class="products">
-
     <div class="card">
-
       <img alt="Custom part">
-
       <h3>Custom Parts</h3>
-
       <p>Functional and replacement parts printed to your specifications.</p>
-
     </div>
-
     <div class="card">
-
       <img alt="3D model">
-
       <h3>3-D Models</h3>
-
       <p>High-detail models for display, gaming, or personal projects.</p>
-
     </div>
-
     <div class="card">
-
       <img alt="Prototype">
-
       <h3>Prototypes</h3>
-
       <p>Rapid prototyping to test ideas before mass production.</p>
-
     </div>
-
   </div>
-
 </section>
-
-
 
 <section>
-
   <h2>How Ordering Works</h2>
-
   <p style="text-align:center; max-width:700px; margin:auto;">
-
     Send us your idea or file, we review it, provide a quote, and print your
-
     product using high-quality materials. Custom designs welcome.
-
   </p>
-
 </section>
-
-
-
-<section class="venmo-section">
-
-  <h2>Pay with Venmo</h2>
-
-  <p>Once we agree on a quote, pay easily via Venmo.<br>
-
-     Include your order details in the note (e.g., "Custom Keychain - Ivan").</p>
-
-  
-
-  <a class="button venmo-button" href="https://venmo.com/code?user_id=4394888250525052591" target="_blank">
-
-    Pay Now with Venmo
-
-  </a>
-
-  
-
-  <p style="margin-top:30px;">Or scan this QR code with your Venmo app:</p>
-
-  <img src="venmo-qr.png" alt="Venmo QR Code for @Pervan3D" class="qr-code">
-
-  
-
-  <p style="font-size:0.9em; color:#666;">
-
-    Username: @Pervan3D<br>
-
-    Make sure to add a note so I know it's for your order!
-
-  </p>
-
-</section>
-
-
 
 <section id="contact">
-
   <h2>Contact & Quotes</h2>
-
   <p style="text-align:center;">
-
     Email us at:<br>
-
-    <strong>ivanpervan09@gmail.com</strong><br><br>
-
-    Or message me on Venmo after scanning/paying!
-
+    <strong>your@email.com</strong>
   </p>
-
 </section>
 
-
-
 <footer>
-
   © 2026 Pervan 3-D. All rights reserved.
-
 </footer>
 
-
-
 </body>
-
 </html>
