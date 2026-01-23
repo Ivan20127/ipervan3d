@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pervan 3-D | Shop & Purchase</title>
+  <title>Pervan 3-D | Custom 3-D Printing</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     body {
       margin: 0;
@@ -11,69 +12,82 @@
       background: #f5f5f5;
       color: #333;
     }
+
     header {
       background: #111;
       color: white;
       padding: 40px 20px;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.2em;
-    }
-    header p {
-      margin-top: 10px;
-      font-size: 1.1em;
-    }
+
     .button {
       display: inline-block;
-      margin-top: 20px;
+      margin: 10px;
       padding: 12px 24px;
       background: #ff6600;
       color: white;
       text-decoration: none;
       border-radius: 4px;
       font-weight: bold;
+      cursor: pointer;
+      border: none;
     }
-    .venmo-button {
-      background: #009cde;  /* Venmo blue */
-    }
+
     section {
       padding: 40px 20px;
       max-width: 1000px;
       margin: auto;
     }
+
     h2 {
       text-align: center;
       margin-bottom: 30px;
     }
-    .venmo-section {
-      text-align: center;
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
       background: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      max-width: 700px;
-      margin: 0 auto;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    .qr-code {
-      max-width: 250px;
-      margin: 30px auto;
-      display: block;
-      border: 2px solid #009cde;
-      border-radius: 8px;
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #ddd;
+      border-radius: 4px;
     }
+
+    /* CART */
+    .cart {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: white;
+      width: 260px;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      font-size: 0.9em;
+    }
+
+    .cart h3 {
+      margin-top: 0;
+    }
+
     footer {
       background: #111;
       color: white;
       text-align: center;
       padding: 20px;
-      font-size: 0.9em;
-      margin-top: 40px;
-    }
-    .back-link {
-      text-align: center;
-      margin: 20px 0;
     }
   </style>
 </head>
@@ -81,46 +95,60 @@
 <body>
 
 <header>
-  <h1>Pervan 3-D Shop</h1>
-  <p>Choose your item, get a quote if needed, then pay via Venmo</p>
-  <a class="button" href="index.html">Back to Home</a>
+  <h1>Pervan 3-D</h1>
+  <p>Custom 3-D Printed Parts, Models, and Prototypes</p>
 </header>
 
+<!-- PRODUCT STORE -->
 <section>
-  <h2>Purchase Your Custom 3-D Print</h2>
-  <p style="text-align:center; max-width:700px; margin:auto  auto;">
-    Browse examples below or send your idea for a custom quote. Once ready, pay securely with Venmo.<br>
-    Include order details in the payment note (e.g., "Custom Keychain - blue PLA").
-  </p>
+  <h2>Products for Sale</h2>
+  <div class="products">
 
-  <!-- Add your product examples here later, e.g.:
-  <div style="text-align:center; margin:30px 0;">
-    <h3>Custom Keychain - $10</h3>
-    <p>Personalized design. Add photo if you have one!</p>
-  </div>
-  -->
+    <div class="card">
+      <img alt="Dragon Fidget">
+      <h3>Dragon Fidget</h3>
+      <p>Flexible articulated dragon fidget printed in high-quality PLA.</p>
+      <p><strong>$8.00</strong></p>
+      <button class="button" onclick="addToCart('Dragon Fidget', 8)">Add to Cart</button>
+    </div>
 
-  <div class="venmo-section">
-    <h2>Pay with Venmo Now</h2>
-    <p>Tap the button or scan the QR code to open Venmo and send payment.<br>
-       Username: @Pervan3D</p>
-   
-    <a class="button venmo-button" href="https://venmo.com/code?user_id=4394888250525052591" target="_blank">
-      Pay with Venmo
-    </a>
-   
-    <p style="margin-top:40px;">Or scan this QR code:</p>
-    <img src="venmo-qr.png" alt="Venmo QR Code for @Pervan3D" class="qr-code">
-   
-    <p style="font-size:0.9em; color:#666;">
-      After paying, email me your details or message on Venmo so I can start printing!
-    </p>
+    <div class="card">
+      <img alt="Star Fidget">
+      <h3>Star Fidget</h3>
+      <p>Compact star-shaped fidget toy, smooth and satisfying to use.</p>
+      <p><strong>$5.00</strong></p>
+      <button class="button" onclick="addToCart('Star Fidget', 5)">Add to Cart</button>
+    </div>
+
   </div>
 </section>
+
+<!-- CART BOX -->
+<div class="cart" id="cart">
+  <h3>🛒 Cart</h3>
+  <ul id="cart-items"></ul>
+  <p><strong>Total: $<span id="total">0</span></strong></p>
+  <p style="font-size:0.8em;">Pay via Venmo after adding items.</p>
+</div>
 
 <footer>
   © 2026 Pervan 3-D. All rights reserved.
 </footer>
+
+<script>
+  let total = 0;
+  const cartItems = document.getElementById("cart-items");
+  const totalDisplay = document.getElementById("total");
+
+  function addToCart(name, price) {
+    const li = document.createElement("li");
+    li.textContent = name + " - $" + price;
+    cartItems.appendChild(li);
+
+    total += price;
+    totalDisplay.textContent = total.toFixed(2);
+  }
+</script>
 
 </body>
 </html>
