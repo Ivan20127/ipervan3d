@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pervan 3-D | Shop & Purchase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.2em;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.1em;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #ff6600;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .venmo-button {
+      background: #009cde;  /* Venmo blue */
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .venmo-section {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .qr-code {
+      max-width: 250px;
+      margin: 30px auto;
+      display: block;
+      border: 2px solid #009cde;
+      border-radius: 8px;
+    }
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+    .back-link {
+      text-align: center;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Pervan 3-D Shop</h1>
+  <p>Choose your item, get a quote if needed, then pay via Venmo</p>
+  <a class="button" href="index.html">Back to Home</a>
+</header>
+
+<section>
+  <h2>Purchase Your Custom 3-D Print</h2>
+  <p style="text-align:center; max-width:700px; margin:auto  auto;">
+    Browse examples below or send your idea for a custom quote. Once ready, pay securely with Venmo.<br>
+    Include order details in the payment note (e.g., "Custom Keychain - blue PLA").
+  </p>
+
+  <!-- Add your product examples here later, e.g.:
+  <div style="text-align:center; margin:30px 0;">
+    <h3>Custom Keychain - $10</h3>
+    <p>Personalized design. Add photo if you have one!</p>
+  </div>
+  -->
+
+  <div class="venmo-section">
+    <h2>Pay with Venmo Now</h2>
+    <p>Tap the button or scan the QR code to open Venmo and send payment.<br>
+       Username: @Pervan3D</p>
+   
+    <a class="button venmo-button" href="https://venmo.com/code?user_id=4394888250525052591" target="_blank">
+      Pay with Venmo
+    </a>
+   
+    <p style="margin-top:40px;">Or scan this QR code:</p>
+    <img src="venmo-qr.png" alt="Venmo QR Code for @Pervan3D" class="qr-code">
+   
+    <p style="font-size:0.9em; color:#666;">
+      After paying, email me your details or message on Venmo so I can start printing!
+    </p>
+  </div>
+</section>
+
+<footer>
+  © 2026 Pervan 3-D. All rights reserved.
+</footer>
+
+</body>
+</html>
