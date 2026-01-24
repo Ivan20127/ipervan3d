@@ -1,12 +1,7 @@
 <script>
   let total = 0;
-  let cartItems;
-  let totalDisplay;
-
-  window.onload = function () {
-    cartItems = document.getElementById("cart-items");
-    totalDisplay = document.getElementById("total");
-  };
+  const cartItems = document.getElementById("cart-items");
+  const totalDisplay = document.getElementById("total");
 
   function addToCart(name, size, color) {
     let price = 0;
@@ -37,7 +32,8 @@
       return;
     }
 
-    let orderNote = "Pervan 3-D Order | ";
+    // Build order description (same cart logic you already use)
+    let orderNote = "Pervan 3-D Order: ";
     const items = document.querySelectorAll("#cart-items li");
 
     items.forEach((item, index) => {
@@ -47,4 +43,12 @@
       }
     });
 
-    con
+    const amount = total.toFixed(2);
+
+    // Venmo link with auto-filled amount + note
+    window.open(
+      `https://venmo.com/?txn=pay&recipients=YOUR_VENMO_USERNAME&amount=${amount}&note=${encodeURIComponent(orderNote)}`,
+      "_blank"
+    );
+  }
+</script>
