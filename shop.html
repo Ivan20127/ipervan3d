@@ -1,161 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Pervan 3-D | Custom 3-D Printing</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body { margin:0; font-family:Arial; background:#f5f5f5; color:#333; }
-header { background:#111; color:white; padding:40px 20px; text-align:center; }
-.button { padding:12px 24px; background:#ff6600; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
-section { padding:40px 20px; max-width:1100px; margin:auto; }
-.products { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
-.card { background:white; padding:20px; border-radius:6px; box-shadow:0 2px 5px rgba(0,0,0,.1); text-align:center; }
-.card img { width:100%; height:200px; object-fit:cover; border-radius:4px; }
-select, input { width:100%; padding:6px; margin:6px 0; }
-.cart { position:fixed; right:20px; bottom:20px; background:white; width:280px; padding:15px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,.2); }
-footer { background:#111; color:white; text-align:center; padding:20px; margin-top:40px; }
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>Pervan 3-D</h1>
-<p>Custom 3-D Printed Parts, Models, and Prototypes</p>
-</header>
-
-<section>
-<h2>Products for Sale</h2>
-
-<div class="products">
-
-<div class="card">
-<img src="IMG_578356DA-B656-45BD-832D-1299C5B9305C.jpeg">
-<h3>Dragon Fidget</h3>
-<select id="dragon-size">
-<option value="Big">Big ($8)</option>
-<option value="Small">Small ($5)</option>
-</select>
-<select id="dragon-color">
-<option>Blue</option>
-<option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
-<option>Purple Copper (+$2)</option>
-<option>Light Green</option>
-<option>Black</option>
-</select>
-<button class="button" onclick="addToCart('Dragon Fidget','dragon-size','dragon-color')">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="IMG_CAF72275-0A00-4C68-9332-8DCBF5ED22AE.jpeg">
-<h3>Star Fidget</h3>
-<select id="star-size">
-<option value="Big">Big ($8)</option>
-<option value="Small">Small ($5)</option>
-</select>
-<select id="star-color">
-<option>Blue</option>
-<option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
-<option>Purple Copper (+$2)</option>
-<option>Light Green</option>
-<option>Black</option>
-</select>
-<button class="button" onclick="addToCart('Star Fidget','star-size','star-color')">Add to Cart</button>
-</div>
-
-<div class="card">
-<h3>Name</h3>
-<select id="name-color">
-<option>Blue</option>
-<option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
-<option>Purple Copper (+$2)</option>
-<option>Light Green</option>
-<option>Black</option>
-</select>
-<button class="button" onclick="addToCart('Name','Standard','name-color')">Add to Cart ($3)</button>
-</div>
-
-<div class="card">
-<h3>Tree Fidget</h3>
-<select id="tree-color">
-<option>Blue</option>
-<option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
-<option>Purple Copper (+$2)</option>
-<option>Light Green</option>
-<option>Black</option>
-</select>
-<button class="button" onclick="addToCart('Tree Fidget','Standard','tree-color')">Add to Cart ($5)</button>
-</div>
-
-</div>
-</section>
-
-<div class="cart">
-<h3>🛒 Cart</h3>
-<input id="customer-name" placeholder="Customer Name">
-<ul id="cart-items"></ul>
-<p><strong>Total: $<span id="total">0.00</span></strong></p>
-<button class="button" onclick="checkout()">Checkout</button>
-</div>
-
-<footer>© 2026 Pervan 3-D</footer>
-
 <script>
-let total = 0;
-let cart = [];
+  let total = 0;
+  let cart = [];
 
-function addToCart(name, sizeId, colorId) {
-  const size = sizeId === "Standard" ? "Standard" : document.getElementById(sizeId).value;
-  const color = document.getElementById(colorId).value;
+  const cartItems = document.getElementById("cart-items");
+  const totalDisplay = document.getElementById("total");
 
-  let price = 0;
-  if (name === "Dragon Fidget" || name === "Star Fidget") price = size === "Small" ? 5 : 8;
-  if (name === "Name") price = 3;
-  if (name === "Tree Fidget") price = 5;
-  if (color.includes("Purple Copper")) price += 2;
+  function addToCart(name, size, color) {
+    let price = 0;
 
-  const item = `${name} (${size}, ${color}) - $${price.toFixed(2)}`;
-  cart.push(item);
-  total += price;
+    // Base prices
+    if (name === "Dragon Fidget" || name === "Star Fidget") {
+      price = (size === "Small") ? 5 : 8;
+    } else if (name === "Name") {
+      price = 3;
+    } else if (name === "Tree Fidget") {
+      price = 5;
+    }
 
-  const li = document.createElement("li");
-  li.textContent = item;
-  document.getElementById("cart-items").appendChild(li);
-  document.getElementById("total").textContent = total.toFixed(2);
-}
+    // Purple Copper upcharge
+    if (color.includes("Purple Copper")) {
+      price += 2;
+    }
 
-function checkout() {
-  const name = document.getElementById("customer-name").value.trim();
-  if (!name) return alert("Please enter your name.");
-  if (total === 0) return alert("Cart is empty.");
+    const item = {
+      name,
+      size: size || "Standard",
+      color,
+      price
+    };
 
-  fetch("https://YOUR-RENDER-URL/send-text", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      message:
-`🧾 New Order
-Customer: ${name}
+    cart.push(item);
+    renderCart();
+  }
 
-${cart.join("\n")}
+  function removeItem(index) {
+    total -= cart[index].price;
+    cart.splice(index, 1);
+    renderCart();
+  }
 
-Total: $${total.toFixed(2)}`
-    })
-  });
+  function renderCart() {
+    cartItems.innerHTML = "";
+    total = 0;
 
-  window.open("https://venmo.com/code?user_id=4394888250525052591", "_blank");
-}
+    cart.forEach((item, index) => {
+      total += item.price;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${item.name} (${item.size}, ${item.color}) - $${item.price.toFixed(2)}
+        <button onclick="removeItem(${index})"
+          style="margin-left:6px; background:#c00; color:white; border:none; border-radius:4px; cursor:pointer;">
+          ✖
+        </button>
+      `;
+
+      cartItems.appendChild(li);
+    });
+
+    totalDisplay.textContent = total.toFixed(2);
+  }
+
+  function checkout() {
+    const customerName = document.getElementById("customer-name").value.trim();
+
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    if (customerName === "") {
+      alert("Please enter your name before checking out.");
+      return;
+    }
+
+    // Build Venmo note
+    let note = `Pervan3D Order - ${customerName}: `;
+    cart.forEach(item => {
+      note += `${item.name} (${item.size}, ${item.color}) | `;
+    });
+    note += `Total: $${total.toFixed(2)}`;
+
+    const venmoURL =
+      "https://venmo.com/code?user_id=4394888250525052591&note=" +
+      encodeURIComponent(note);
+
+    alert(`Thanks ${customerName}! You’ll now be redirected to Venmo.`);
+
+    window.open(venmoURL, "_blank");
+  }
 </script>
-
-</body>
-</html>
