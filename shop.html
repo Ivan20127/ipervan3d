@@ -66,21 +66,22 @@
       margin-bottom: 10px;
     }
 
-    /* CART */
+    select {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+
     .cart {
       position: fixed;
       right: 20px;
       bottom: 20px;
       background: white;
-      width: 260px;
+      width: 280px;
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       font-size: 0.9em;
-    }
-
-    .cart h3 {
-      margin-top: 0;
     }
 
     footer {
@@ -97,41 +98,67 @@
 <header>
   <h1>Pervan 3-D</h1>
   <p>Custom 3-D Printed Parts, Models, and Prototypes</p>
-
-  <!-- BACK BUTTON -->
   <a href="index.html" class="button">⬅ Back to Main Page</a>
 </header>
 
-<!-- PRODUCT STORE -->
 <section>
   <h2>Products for Sale</h2>
   <div class="products">
 
+    <!-- Dragon Fidget -->
     <div class="card">
       <img src="images/dragon-fidget.jpg" alt="Dragon Fidget">
       <h3>Dragon Fidget</h3>
-      <p>Flexible articulated dragon fidget printed in high-quality PLA.</p>
       <p><strong>$8.00</strong></p>
-      <button class="button" onclick="addToCart('Dragon Fidget', 8)">Add to Cart</button>
+
+      <select id="dragon-color">
+        <option value="Blue">Blue</option>
+        <option value="Gold">Gold</option>
+        <option value="Red">Red</option>
+        <option value="Purple">Purple (+$2)</option>
+        <option value="Copper">Copper (+$2)</option>
+        <option value="Light Green">Light Green</option>
+        <option value="Black">Black</option>
+      </select>
+
+      <button class="button"
+        onclick="addToCart('Dragon Fidget', 8, document.getElementById('dragon-color').value)">
+        Add to Cart
+      </button>
     </div>
 
+    <!-- Star Fidget -->
     <div class="card">
       <img src="images/star-fidget.jpg" alt="Star Fidget">
       <h3>Star Fidget</h3>
-      <p>Compact star-shaped fidget toy, smooth and satisfying to use.</p>
       <p><strong>$5.00</strong></p>
-      <button class="button" onclick="addToCart('Star Fidget', 5)">Add to Cart</button>
+
+      <select id="star-color">
+        <option value="Blue">Blue</option>
+        <option value="Gold">Gold</option>
+        <option value="Red">Red</option>
+        <option value="Purple">Purple (+$2)</option>
+        <option value="Copper">Copper (+$2)</option>
+        <option value="Light Green">Light Green</option>
+        <option value="Black">Black</option>
+      </select>
+
+      <button class="button"
+        onclick="addToCart('Star Fidget', 5, document.getElementById('star-color').value)">
+        Add to Cart
+      </button>
     </div>
 
   </div>
 </section>
 
-<!-- CART BOX -->
-<div class="cart" id="cart">
+<!-- CART -->
+<div class="cart">
   <h3>🛒 Cart</h3>
   <ul id="cart-items"></ul>
-  <p><strong>Total: $<span id="total">0</span></strong></p>
-  <p style="font-size:0.8em;">Pay via Venmo after adding items.</p>
+  <p><strong>Total: $<span id="total">0.00</span></strong></p>
+  <button class="button" style="width:100%;" onclick="checkout()">Checkout</button>
+  <p style="font-size:0.8em;">Pay via Venmo after checkout.</p>
 </div>
 
 <footer>
@@ -143,13 +170,39 @@
   const cartItems = document.getElementById("cart-items");
   const totalDisplay = document.getElementById("total");
 
-  function addToCart(name, price) {
+  function addToCart(name, basePrice, color) {
+    let price = basePrice;
+    let upcharge = "";
+
+    if (color === "Purple" || color === "Copper") {
+      price += 2;
+      upcharge = " (+$2 premium color)";
+    }
+
     const li = document.createElement("li");
-    li.textContent = name + " - $" + price;
+    li.textContent = `${name} - ${color}${upcharge}: $${price.toFixed(2)}`;
     cartItems.appendChild(li);
 
     total += price;
     totalDisplay.textContent = total.toFixed(2);
+  }
+
+  function checkout() {
+    if (total === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    let summary = "Order Summary:\n\n";
+    document.querySelectorAll("#cart-items li").forEach(item => {
+      summary += "- " + item.textContent + "\n";
+    });
+
+    summary += "\nTotal: $" + total.toFixed(2);
+    summary += "\n\nPlease send payment via Venmo.";
+    summary += "\nInclude item names and colors in the note.";
+
+    alert(summary);
   }
 </script>
 
