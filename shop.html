@@ -33,9 +33,9 @@ header {
 
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
   padding: 40px 20px;
 }
@@ -48,12 +48,16 @@ header {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+select, input[type="number"] {
+  margin: 5px 0;
+}
+
 .cart {
   position: fixed;
   right: 20px;
   bottom: 20px;
   background: white;
-  width: 280px;
+  width: 300px;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -76,29 +80,77 @@ header {
 
 <header>
   <h1>Pervan 3-D</h1>
-  <p>Custom 3-D Printed Parts & Fidgets</p>
+  <p>Custom 3-D Printed Parts, Models, and Fidgets</p>
 </header>
 
 <section class="products">
 
+  <!-- DRAGON -->
   <div class="card">
     <h3>Dragon Fidget</h3>
-    <p>$8.00</p>
-    Qty:
-    <input type="number" id="dragonQty" value="1" min="1" style="width:50px;">
-    <br>
-    <button class="button" onclick="addToCart('Dragon Fidget', 8, document.getElementById('dragonQty').value)">
+
+    Size:<br>
+    <select id="dragonSize">
+      <option value="Big">Big ($8)</option>
+      <option value="Small">Small ($5)</option>
+    </select><br>
+
+    Color:<br>
+    <select id="dragonColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Copper Purple (+$2)</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+    </select><br>
+
+    Qty:<br>
+    <input type="number" id="dragonQty" value="1" min="1" style="width:60px;"><br>
+
+    <button class="button"
+      onclick="addToCart(
+        'Dragon Fidget',
+        document.getElementById('dragonSize').value === 'Big' ? 8 : 5,
+        document.getElementById('dragonQty').value,
+        document.getElementById('dragonSize').value,
+        document.getElementById('dragonColor').value
+      )">
       Add to Cart
     </button>
   </div>
 
+  <!-- STAR -->
   <div class="card">
     <h3>Star Fidget</h3>
-    <p>$5.00</p>
-    Qty:
-    <input type="number" id="starQty" value="1" min="1" style="width:50px;">
-    <br>
-    <button class="button" onclick="addToCart('Star Fidget', 5, document.getElementById('starQty').value)">
+
+    Size:<br>
+    <select id="starSize">
+      <option value="Big">Big ($8)</option>
+      <option value="Small">Small ($5)</option>
+    </select><br>
+
+    Color:<br>
+    <select id="starColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Copper Purple (+$2)</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+    </select><br>
+
+    Qty:<br>
+    <input type="number" id="starQty" value="1" min="1" style="width:60px;"><br>
+
+    <button class="button"
+      onclick="addToCart(
+        'Star Fidget',
+        document.getElementById('starSize').value === 'Big' ? 8 : 5,
+        document.getElementById('starQty').value,
+        document.getElementById('starSize').value,
+        document.getElementById('starColor').value
+      )">
       Add to Cart
     </button>
   </div>
@@ -108,11 +160,7 @@ header {
 <div class="cart">
   <h3>🛒 Cart</h3>
 
-  <input
-    id="customerName"
-    placeholder="Customer name"
-    style="width:100%; margin-bottom:8px;"
-  >
+  <input id="customerName" placeholder="Customer name" style="width:100%; margin-bottom:8px;">
 
   <ul id="cart-items"></ul>
 
@@ -126,27 +174,32 @@ let total = 0;
 const cartItems = document.getElementById("cart-items");
 const totalDisplay = document.getElementById("total");
 
-function addToCart(name, price, qty) {
+function addToCart(name, basePrice, qty, size, color) {
   qty = parseInt(qty);
 
-  const itemTotal = price * qty;
-  const li = document.createElement("li");
+  let colorUpcharge = 0;
+  if (color.includes("Copper Purple")) {
+    colorUpcharge = 2;
+  }
 
-  li.textContent = `${name} x${qty} - $${itemTotal.toFixed(2)}`;
+  const finalPrice = (basePrice + colorUpcharge) * qty;
+
+  const li = document.createElement("li");
+  li.textContent = `${name} (${size}, ${color}) x${qty} - $${finalPrice.toFixed(2)}`;
 
   const remove = document.createElement("span");
   remove.textContent = " ✖";
   remove.className = "remove";
   remove.onclick = function () {
     cartItems.removeChild(li);
-    total -= itemTotal;
+    total -= finalPrice;
     totalDisplay.textContent = total.toFixed(2);
   };
 
   li.appendChild(remove);
   cartItems.appendChild(li);
 
-  total += itemTotal;
+  total += finalPrice;
   totalDisplay.textContent = total.toFixed(2);
 }
 
@@ -156,16 +209,16 @@ function checkout() {
     return;
   }
 
-  const name = document.getElementById("customerName").value || "Customer";
+  const customer = document.getElementById("customerName").value || "Customer";
+  let note = `Pervan 3-D Order (${customer}): `;
 
-  let note = `Pervan 3-D Order (${name}): `;
   document.querySelectorAll("#cart-items li").forEach((item, i, arr) => {
     note += item.textContent.replace(" ✖", "");
     if (i !== arr.length - 1) note += " | ";
   });
 
   window.open(
-    `https://venmo.com/?txn=pay&recipients=Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`,
+    `https://venmo.com/?txn=pay&recipients=YOUR_VENMO_USERNAME&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`,
     "_blank"
   );
 }
@@ -173,3 +226,4 @@ function checkout() {
 
 </body>
 </html>
+
