@@ -8,14 +8,12 @@
 <style>
 body { margin:0; font-family:Arial; background:#f5f5f5; color:#333; }
 header { background:#111; color:white; padding:40px 20px; text-align:center; }
-.button { padding:12px 24px; background:#ff6600; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
+.button { padding:12px 24px; background:#ff6600; color:white; border:none; border-radius:4px; cursor:pointer; }
 section { padding:40px 20px; max-width:1100px; margin:auto; }
 .products { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
 .card { background:white; padding:20px; border-radius:6px; box-shadow:0 2px 5px rgba(0,0,0,.1); text-align:center; }
-.card img { width:100%; height:200px; object-fit:cover; border-radius:4px; }
-select, input { width:100%; padding:6px; margin:6px 0; }
+select { width:100%; padding:6px; margin:6px 0; }
 .cart { position:fixed; right:20px; bottom:20px; background:white; width:280px; padding:15px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,.2); }
-footer { background:#111; color:white; text-align:center; padding:20px; margin-top:40px; }
 </style>
 </head>
 
@@ -23,16 +21,13 @@ footer { background:#111; color:white; text-align:center; padding:20px; margin-t
 
 <header>
 <h1>Pervan 3-D</h1>
-<p>Custom 3-D Printed Parts, Models, and Prototypes</p>
+<p>Custom 3-D Printed Products</p>
 </header>
 
 <section>
-<h2>Products for Sale</h2>
-
 <div class="products">
 
 <div class="card">
-<img src="IMG_578356DA-B656-45BD-832D-1299C5B9305C.jpeg">
 <h3>Dragon Fidget</h3>
 <select id="dragon-size">
 <option value="Big">Big ($8)</option>
@@ -41,17 +36,13 @@ footer { background:#111; color:white; text-align:center; padding:20px; margin-t
 <select id="dragon-color">
 <option>Blue</option>
 <option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
 <option>Purple Copper (+$2)</option>
-<option>Light Green</option>
 <option>Black</option>
 </select>
 <button class="button" onclick="addToCart('Dragon Fidget','dragon-size','dragon-color')">Add to Cart</button>
 </div>
 
 <div class="card">
-<img src="IMG_CAF72275-0A00-4C68-9332-8DCBF5ED22AE.jpeg">
 <h3>Star Fidget</h3>
 <select id="star-size">
 <option value="Big">Big ($8)</option>
@@ -60,41 +51,10 @@ footer { background:#111; color:white; text-align:center; padding:20px; margin-t
 <select id="star-color">
 <option>Blue</option>
 <option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
 <option>Purple Copper (+$2)</option>
-<option>Light Green</option>
 <option>Black</option>
 </select>
 <button class="button" onclick="addToCart('Star Fidget','star-size','star-color')">Add to Cart</button>
-</div>
-
-<div class="card">
-<h3>Name</h3>
-<select id="name-color">
-<option>Blue</option>
-<option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
-<option>Purple Copper (+$2)</option>
-<option>Light Green</option>
-<option>Black</option>
-</select>
-<button class="button" onclick="addToCart('Name','Standard','name-color')">Add to Cart ($3)</button>
-</div>
-
-<div class="card">
-<h3>Tree Fidget</h3>
-<select id="tree-color">
-<option>Blue</option>
-<option>Gold</option>
-<option>Red</option>
-<option>Purple</option>
-<option>Purple Copper (+$2)</option>
-<option>Light Green</option>
-<option>Black</option>
-</select>
-<button class="button" onclick="addToCart('Tree Fidget','Standard','tree-color')">Add to Cart ($5)</button>
 </div>
 
 </div>
@@ -102,54 +62,39 @@ footer { background:#111; color:white; text-align:center; padding:20px; margin-t
 
 <div class="cart">
 <h3>🛒 Cart</h3>
-<input id="customer-name" placeholder="Customer Name">
 <ul id="cart-items"></ul>
 <p><strong>Total: $<span id="total">0.00</span></strong></p>
 <button class="button" onclick="checkout()">Checkout</button>
 </div>
-
-<footer>© 2026 Pervan 3-D</footer>
 
 <script>
 let total = 0;
 let cart = [];
 
 function addToCart(name, sizeId, colorId) {
-  const size = sizeId === "Standard" ? "Standard" : document.getElementById(sizeId).value;
+  const size = document.getElementById(sizeId).value;
   const color = document.getElementById(colorId).value;
 
-  let price = 0;
-  if (name === "Dragon Fidget" || name === "Star Fidget") price = size === "Small" ? 5 : 8;
-  if (name === "Name") price = 3;
-  if (name === "Tree Fidget") price = 5;
+  let price = size === "Small" ? 5 : 8;
   if (color.includes("Purple Copper")) price += 2;
 
-  const item = `${name} (${size}, ${color}) - $${price.toFixed(2)}`;
-  cart.push(item);
+  cart.push(`${name} (${size}, ${color}) - $${price}`);
   total += price;
 
   const li = document.createElement("li");
-  li.textContent = item;
+  li.textContent = cart[cart.length - 1];
   document.getElementById("cart-items").appendChild(li);
   document.getElementById("total").textContent = total.toFixed(2);
 }
 
 function checkout() {
-  const name = document.getElementById("customer-name").value.trim();
-  if (!name) return alert("Please enter your name.");
-  if (total === 0) return alert("Cart is empty.");
+  if (total === 0) return alert("Cart empty");
 
-  fetch("https://YOUR-RENDER-URL/send-text", {
+  fetch("https://YOUR-SERVER-URL/send-text", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      message:
-`🧾 New Order
-Customer: ${name}
-
-${cart.join("\n")}
-
-Total: $${total.toFixed(2)}`
+      message: `🧾 New Order\n${cart.join("\n")}\nTotal: $${total.toFixed(2)}`
     })
   });
 
