@@ -1,226 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Pervan 3-D | Custom 3-D Printing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-
-    header {
-      background: #111;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .button {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 24px;
-      background: #ff6600;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-
-    section {
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-
-    select {
-      width: 100%;
-      padding: 6px;
-      margin: 6px 0;
-    }
-
-    .cart {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background: white;
-      width: 280px;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      font-size: 0.9em;
-    }
-
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <h1>Pervan 3-D</h1>
-  <p>Custom 3-D Printed Parts, Models, and Prototypes</p>
-  <a href="index.html" class="button">⬅ Back to Main Page</a>
-</header>
-
-<section>
-  <h2>Products for Sale</h2>
-
-  <div class="products">
-
-    <!-- DRAGON -->
-    <div class="card">
-      <img src="IMG_578356DA-B656-45BD-832D-1299C5B9305C.jpeg" alt="Dragon Fidget">
-      <h3>Dragon Fidget</h3>
-      <p><em>Flexible articulated dragon that moves smoothly in your hands.</em></p>
-
-      <select id="dragon-size">
-        <option value="Big">Big ($8)</option>
-        <option value="Small">Small ($5)</option>
-      </select>
-
-      <select id="dragon-color">
-        <option>Blue</option>
-        <option>Gold</option>
-        <option>Red</option>
-        <option>Purple</option>
-        <option>Purple Copper</option>
-        <option>Light Green</option>
-        <option>Black</option>
-      </select>
-
-      <button class="button"
-        onclick="addToCart('Dragon Fidget', document.getElementById('dragon-size').value, document.getElementById('dragon-color').value)">
-        Add to Cart
-      </button>
-    </div>
-
-    <!-- STAR -->
-    <div class="card">
-      <img src="IMG_CAF72275-0A00-4C68-9332-8DCBF5ED22AE.jpeg" alt="Star Fidget">
-      <h3>Star Fidget</h3>
-      <p><em>Satisfying star-shaped fidget designed for smooth rotation.</em></p>
-
-      <select id="star-size">
-        <option value="Big">Big ($8)</option>
-        <option value="Small">Small ($5)</option>
-      </select>
-
-      <select id="star-color">
-        <option>Blue</option>
-        <option>Gold</option>
-        <option>Red</option>
-        <option>Purple</option>
-        <option>Purple Copper</option>
-        <option>Light Green</option>
-        <option>Black</option>
-      </select>
-
-      <button class="button"
-        onclick="addToCart('Star Fidget', document.getElementById('star-size').value, document.getElementById('star-color').value)">
-        Add to Cart
-      </button>
-    </div>
-
-    <!-- NAME -->
-    <div class="card">
-      <h3>Name</h3>
-      <p><em>Custom 3-D printed name — perfect for desks or gifts.</em></p>
-
-      <select id="name-color">
-        <option>Blue</option>
-        <option>Gold</option>
-        <option>Red</option>
-        <option>Purple</option>
-        <option>Purple Copper</option>
-        <option>Light Green</option>
-        <option>Black</option>
-      </select>
-
-      <button class="button"
-        onclick="addToCart('Name', 'Standard', document.getElementById('name-color').value)">
-        Add to Cart ($3)
-      </button>
-    </div>
-
-    <!-- TREE -->
-    <div class="card">
-      <h3>Tree Fidget</h3>
-      <p><em>Organic tree-shaped fidget with a smooth tactile feel.</em></p>
-
-      <select id="tree-color">
-        <option>Blue</option>
-        <option>Gold</option>
-        <option>Red</option>
-        <option>Purple</option>
-        <option>Purple Copper</option>
-        <option>Light Green</option>
-        <option>Black</option>
-      </select>
-
-      <button class="button"
-        onclick="addToCart('Tree Fidget', 'Standard', document.getElementById('tree-color').value)">
-        Add to Cart ($5)
-      </button>
-    </div>
-
-  </div>
-</section>
-
-<div class="cart">
-  <h3>🛒 Cart</h3>
-  <ul id="cart-items"></ul>
-  <p><strong>Total: $<span id="total">0.00</span></strong></p>
-  <button class="button" onclick="checkout()">Checkout</button>
-</div>
-
-<footer>
-  © 2026 Pervan 3-D. All rights reserved.
-</footer>
-
 <script>
   let total = 0;
-  const cartItems = document.getElementById("cart-items");
-  const totalDisplay = document.getElementById("total");
+  let cartItems;
+  let totalDisplay;
+
+  window.onload = function () {
+    cartItems = document.getElementById("cart-items");
+    totalDisplay = document.getElementById("total");
+  };
 
   function addToCart(name, size, color) {
     let price = 0;
@@ -234,3 +20,31 @@
     }
 
     if (color === "Purple Copper") {
+      price += 2;
+    }
+
+    const li = document.createElement("li");
+    li.textContent = `${name} (${size || "Standard"}, ${color}) - $${price.toFixed(2)}`;
+    cartItems.appendChild(li);
+
+    total += price;
+    totalDisplay.textContent = total.toFixed(2);
+  }
+
+  function checkout() {
+    if (total === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    let orderNote = "Pervan 3-D Order | ";
+    const items = document.querySelectorAll("#cart-items li");
+
+    items.forEach((item, index) => {
+      orderNote += item.textContent;
+      if (index !== items.length - 1) {
+        orderNote += " | ";
+      }
+    });
+
+    con
