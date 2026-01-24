@@ -22,7 +22,7 @@
 
     .button {
       display: inline-block;
-      margin: 10px;
+      margin: 10px 0;
       padding: 12px 24px;
       background: #ff6600;
       color: white;
@@ -31,17 +31,13 @@
       font-weight: bold;
       cursor: pointer;
       border: none;
+      width: 100%;
     }
 
     section {
       padding: 40px 20px;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
     }
 
     .products {
@@ -72,12 +68,18 @@
       margin: 10px 0;
     }
 
+    .definition {
+      font-size: 0.9em;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
     .cart {
       position: fixed;
       right: 20px;
       bottom: 20px;
       background: white;
-      width: 280px;
+      width: 300px;
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -103,20 +105,23 @@
 
 <section>
   <h2>Products for Sale</h2>
+
   <div class="products">
 
     <!-- Dragon Fidget -->
     <div class="card">
       <img src="images/dragon-fidget.jpg" alt="Dragon Fidget">
       <h3>Dragon Fidget</h3>
+      <div class="definition">
+        A flexible, articulated dragon designed to move smoothly and provide a satisfying fidget experience.
+      </div>
       <p><strong>$8.00</strong></p>
 
       <select id="dragon-color">
         <option value="Blue">Blue</option>
         <option value="Gold">Gold</option>
         <option value="Red">Red</option>
-        <option value="Purple">Purple (+$2)</option>
-        <option value="Copper">Copper (+$2)</option>
+        <option value="Purple Copper">Purple Copper (+$2)</option>
         <option value="Light Green">Light Green</option>
         <option value="Black">Black</option>
       </select>
@@ -131,20 +136,70 @@
     <div class="card">
       <img src="images/star-fidget.jpg" alt="Star Fidget">
       <h3>Star Fidget</h3>
+      <div class="definition">
+        A compact, star-shaped fidget that spins and clicks smoothly for stress relief.
+      </div>
       <p><strong>$5.00</strong></p>
 
       <select id="star-color">
         <option value="Blue">Blue</option>
         <option value="Gold">Gold</option>
         <option value="Red">Red</option>
-        <option value="Purple">Purple (+$2)</option>
-        <option value="Copper">Copper (+$2)</option>
+        <option value="Purple Copper">Purple Copper (+$2)</option>
         <option value="Light Green">Light Green</option>
         <option value="Black">Black</option>
       </select>
 
       <button class="button"
         onclick="addToCart('Star Fidget', 5, document.getElementById('star-color').value)">
+        Add to Cart
+      </button>
+    </div>
+
+    <!-- Tree Fidget -->
+    <div class="card">
+      <img src="images/tree-fidget.jpg" alt="Tree Fidget">
+      <h3>Tree Fidget</h3>
+      <div class="definition">
+        A nature-inspired articulated tree fidget with flexible branches for calming movement.
+      </div>
+      <p><strong>$7.00</strong></p>
+
+      <select id="tree-color">
+        <option value="Blue">Blue</option>
+        <option value="Gold">Gold</option>
+        <option value="Red">Red</option>
+        <option value="Purple Copper">Purple Copper (+$2)</option>
+        <option value="Light Green">Light Green</option>
+        <option value="Black">Black</option>
+      </select>
+
+      <button class="button"
+        onclick="addToCart('Tree Fidget', 7, document.getElementById('tree-color').value)">
+        Add to Cart
+      </button>
+    </div>
+
+    <!-- Name Product -->
+    <div class="card">
+      <img src="images/name-product.jpg" alt="Custom Name">
+      <h3>Name</h3>
+      <div class="definition">
+        A fully customizable 3-D printed name sign, perfect for desks, shelves, or gifts.
+      </div>
+      <p><strong>$6.00</strong></p>
+
+      <select id="name-color">
+        <option value="Blue">Blue</option>
+        <option value="Gold">Gold</option>
+        <option value="Red">Red</option>
+        <option value="Purple Copper">Purple Copper (+$2)</option>
+        <option value="Light Green">Light Green</option>
+        <option value="Black">Black</option>
+      </select>
+
+      <button class="button"
+        onclick="addToCart('Name', 6, document.getElementById('name-color').value)">
         Add to Cart
       </button>
     </div>
@@ -157,8 +212,7 @@
   <h3>🛒 Cart</h3>
   <ul id="cart-items"></ul>
   <p><strong>Total: $<span id="total">0.00</span></strong></p>
-  <button class="button" style="width:100%;" onclick="checkout()">Checkout</button>
-  <p style="font-size:0.8em;">Pay via Venmo after checkout.</p>
+  <button class="button" onclick="checkout()">Checkout & Pay</button>
 </div>
 
 <footer>
@@ -172,15 +226,15 @@
 
   function addToCart(name, basePrice, color) {
     let price = basePrice;
-    let upcharge = "";
+    let upchargeText = "";
 
-    if (color === "Purple" || color === "Copper") {
+    if (color === "Purple Copper") {
       price += 2;
-      upcharge = " (+$2 premium color)";
+      upchargeText = " (+$2)";
     }
 
     const li = document.createElement("li");
-    li.textContent = `${name} - ${color}${upcharge}: $${price.toFixed(2)}`;
+    li.textContent = `${name} - ${color}${upchargeText}: $${price.toFixed(2)}`;
     cartItems.appendChild(li);
 
     total += price;
@@ -199,10 +253,14 @@
     });
 
     summary += "\nTotal: $" + total.toFixed(2);
-    summary += "\n\nPlease send payment via Venmo.";
-    summary += "\nInclude item names and colors in the note.";
+    summary += "\n\nPlease include this order info in the Venmo note.";
 
     alert(summary);
+
+    window.open(
+      "https://venmo.com/code?user_id=4394888250525052591",
+      "_blank"
+    );
   }
 </script>
 
