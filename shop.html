@@ -234,31 +234,3 @@
     }
 
     if (color === "Purple Copper") {
-      price += 2;
-    }
-
-    const li = document.createElement("li");
-    li.textContent = `${name} (${size || "Standard"}, ${color}) - $${price.toFixed(2)}`;
-    cartItems.appendChild(li);
-
-    total += price;
-    totalDisplay.textContent = total.toFixed(2);
-  }
-
-  function checkout() {
-    if (total === 0) {
-      alert("Your cart is empty.");
-      return;
-    }
-
-    alert("You will now be redirected to Venmo to pay.");
-
-    window.open(
-      "https://venmo.com/code?user_id=4394888250525052591",
-      "_blank"
-    );
-  }
-</script>
-
-</body>
-</html>
