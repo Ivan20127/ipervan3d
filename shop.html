@@ -1,54 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pervan 3-D | Custom 3-D Printing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+header {
+  background: #111;
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.button {
+  margin: 6px;
+  padding: 10px 18px;
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cart {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: white;
+  width: 280px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  font-size: 0.9em;
+}
+
+.cart li {
+  margin-bottom: 6px;
+}
+
+.remove {
+  color: red;
+  cursor: pointer;
+  margin-left: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Pervan 3-D</h1>
+  <p>Custom 3-D Printed Parts & Fidgets</p>
+</header>
+
+<section class="products">
+
+  <div class="card">
+    <h3>Dragon Fidget</h3>
+    <p>$8.00</p>
+    Qty:
+    <input type="number" id="dragonQty" value="1" min="1" style="width:50px;">
+    <br>
+    <button class="button" onclick="addToCart('Dragon Fidget', 8, document.getElementById('dragonQty').value)">
+      Add to Cart
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>Star Fidget</h3>
+    <p>$5.00</p>
+    Qty:
+    <input type="number" id="starQty" value="1" min="1" style="width:50px;">
+    <br>
+    <button class="button" onclick="addToCart('Star Fidget', 5, document.getElementById('starQty').value)">
+      Add to Cart
+    </button>
+  </div>
+
+</section>
+
+<div class="cart">
+  <h3>🛒 Cart</h3>
+
+  <input
+    id="customerName"
+    placeholder="Customer name"
+    style="width:100%; margin-bottom:8px;"
+  >
+
+  <ul id="cart-items"></ul>
+
+  <p><strong>Total: $<span id="total">0.00</span></strong></p>
+
+  <button class="button" onclick="checkout()">Pay with Venmo</button>
+</div>
+
 <script>
-  let total = 0;
-  const cartItems = document.getElementById("cart-items");
-  const totalDisplay = document.getElementById("total");
+let total = 0;
+const cartItems = document.getElementById("cart-items");
+const totalDisplay = document.getElementById("total");
 
-  function addToCart(name, size, color) {
-    let price = 0;
+function addToCart(name, price, qty) {
+  qty = parseInt(qty);
 
-    if (name === "Dragon Fidget" || name === "Star Fidget") {
-      price = (size === "Small") ? 5 : 8;
-    } else if (name === "Name") {
-      price = 3;
-    } else if (name === "Tree Fidget") {
-      price = 5;
-    }
+  const itemTotal = price * qty;
+  const li = document.createElement("li");
 
-    if (color === "Purple Copper") {
-      price += 2;
-    }
+  li.textContent = `${name} x${qty} - $${itemTotal.toFixed(2)}`;
 
-    const li = document.createElement("li");
-    li.textContent = `${name} (${size || "Standard"}, ${color}) - $${price.toFixed(2)}`;
-    cartItems.appendChild(li);
-
-    total += price;
+  const remove = document.createElement("span");
+  remove.textContent = " ✖";
+  remove.className = "remove";
+  remove.onclick = function () {
+    cartItems.removeChild(li);
+    total -= itemTotal;
     totalDisplay.textContent = total.toFixed(2);
+  };
+
+  li.appendChild(remove);
+  cartItems.appendChild(li);
+
+  total += itemTotal;
+  totalDisplay.textContent = total.toFixed(2);
+}
+
+function checkout() {
+  if (total === 0) {
+    alert("Your cart is empty.");
+    return;
   }
 
-  function checkout() {
-    if (total === 0) {
-      alert("Your cart is empty.");
-      return;
-    }
+  const name = document.getElementById("customerName").value || "Customer";
 
-    // Build order description (same cart logic you already use)
-    let orderNote = "Pervan 3-D Order: ";
-    const items = document.querySelectorAll("#cart-items li");
+  let note = `Pervan 3-D Order (${name}): `;
+  document.querySelectorAll("#cart-items li").forEach((item, i, arr) => {
+    note += item.textContent.replace(" ✖", "");
+    if (i !== arr.length - 1) note += " | ";
+  });
 
-    items.forEach((item, index) => {
-      orderNote += item.textContent;
-      if (index !== items.length - 1) {
-        orderNote += " | ";
-      }
-    });
-
-    const amount = total.toFixed(2);
-
-    // Venmo link with auto-filled amount + note
-    window.open(
-      `https://venmo.com/?txn=pay&recipients=YOUR_VENMO_USERNAME&amount=${amount}&note=${encodeURIComponent(orderNote)}`,
-      "_blank"
-    );
-  }
+  window.open(
+    `https://venmo.com/?txn=pay&recipients=Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`,
+    "_blank"
+  );
+}
 </script>
+
+</body>
+</html>
