@@ -48,6 +48,10 @@
       border-color: #ff6600;
       box-shadow: 0 0 0 3px rgba(255,102,0,0.3);
     }
+    input:disabled {
+      background: #222;
+      cursor: not-allowed;
+    }
     .eye-icon {
       position: absolute;
       right: 15px;
@@ -74,8 +78,12 @@
       transition: background 0.3s;
       margin-top: 10px;
     }
-    button:hover {
+    button:hover:not(:disabled) {
       background: #e65c00;
+    }
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
     }
     .error {
       color: #ff4d4d;
@@ -83,10 +91,19 @@
       font-size: 0.95em;
       min-height: 22px;
     }
-    .note {
-      font-size: 0.85em;
-      color: #888;
+    .note, .lockout-msg {
+      font-size: 0.9em;
       margin-top: 20px;
+    }
+    .lockout-msg {
+      color: #ffcc00;
+      font-weight: bold;
+      display: none;
+    }
+    #countdown {
+      font-size: 1.3em;
+      color: #ff6600;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -95,90 +112,154 @@
 <div class="box">
   <h2>Admin Access</h2>
 
-  <!-- Username Field -->
   <div class="input-group">
-    <input
-      type="text"
-      id="username"
-      placeholder="Username"
-      autocomplete="off"
-    >
+    <input type="text" id="username" placeholder="Username" autocomplete="off">
   </div>
 
-  <!-- Password Field -->
   <div class="input-group">
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-      autocomplete="off"
-    >
+    <input type="password" id="password" placeholder="Password" autocomplete="off">
     <span class="eye-icon" id="toggleEye">👁️</span>
   </div>
 
   <button id="loginBtn">Login</button>
   <div class="error" id="errorMsg"></div>
   <div class="note">Only authorized personnel allowed</div>
+  <div class="lockout-msg" id="lockoutMsg">
+    Too many failed attempts.<br>Locked out for <span id="countdown">5:00</span> minutes.
+  </div>
 </div>
 
 <script>
-  // CHANGE THESE TO YOUR OWN CREDENTIALS!
-  const CORRECT_USERNAME = "Croatia";         // ← Username is now "Croatia"
-  const CORRECT_PASSWORD = "Ivanboy2012";     // ← Change this password if you want!
+// CHANGE THESE TO YOUR OWN CREDENTIALS!
+const CORRECT_USERNAME = "Croatia";
+const CORRECT_PASSWORD = "Ivanboy2012";
 
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
-  const toggleEye     = document.getElementById('toggleEye');
-  const loginBtn      = document.getElementById('loginBtn');
-  const errorMsg      = document.getElementById('errorMsg');
+// LocalStorage keys
+const ATTEMPT_KEY = 'adminLoginAttempts';
+const LOCKOUT_KEY = 'adminLockoutTime';
 
-  // Toggle password visibility
-  toggleEye.addEventListener('click', () => {
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      toggleEye.textContent = '🙈';
-    } else {
-      passwordInput.type = 'password';
-      toggleEye.textContent = '👁️';
-    }
-    passwordInput.focus();
-  });
+// Elements
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const toggleEye     = document.getElementById('toggleEye');
+const loginBtn      = document.getElementById('loginBtn');
+const errorMsg      = document.getElementById('errorMsg');
+const lockoutMsg    = document.getElementById('lockoutMsg');
+const countdownEl   = document.getElementById('countdown');
 
-  // Login function
-  function attemptLogin() {
-    const enteredUsername = usernameInput.value.trim();
-    const enteredPassword = passwordInput.value.trim();
+// Toggle password visibility
+toggleEye.addEventListener('click', () => {
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleEye.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    toggleEye.textContent = '👁️';
+  }
+  passwordInput.focus();
+});
 
-    if (enteredUsername === CORRECT_USERNAME && enteredPassword === CORRECT_PASSWORD) {
-      errorMsg.style.color = '#28a745';
-      errorMsg.textContent = 'Logging in...';
+// Check if currently locked out
+function checkLockout() {
+  const lockoutTime = localStorage.getItem(LOCKOUT_KEY);
+  if (lockoutTime) {
+    const remaining = parseInt(lockoutTime) - Date.now();
+    if (remaining > 0) {
+      lockoutMsg.style.display = 'block';
       loginBtn.disabled = true;
-
-      // Small delay for better feel, then redirect
-      setTimeout(() => {
-        window.location.href = 'adminedit.html'; // ← Make sure this file exists!
-      }, 600);
+      usernameInput.disabled = true;
+      passwordInput.disabled = true;
+      startCountdown(remaining / 1000);
+      return true;
     } else {
-      errorMsg.style.color = '#ff4d4d';
-      errorMsg.textContent = 'Invalid username or password. Try again.';
-      passwordInput.value = '';
-      usernameInput.value = '';
-      usernameInput.focus();
+      localStorage.removeItem(LOCKOUT_KEY);
+      localStorage.removeItem(ATTEMPT_KEY);
     }
   }
+  return false;
+}
 
-  // Button click
-  loginBtn.addEventListener('click', attemptLogin);
+// Countdown timer
+function startCountdown(seconds) {
+  let timeLeft = Math.floor(seconds);
+  countdownEl.textContent = formatTime(timeLeft);
 
-  // Press Enter to login
-  passwordInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      attemptLogin();
+  const interval = setInterval(() => {
+    timeLeft--;
+    countdownEl.textContent = formatTime(timeLeft);
+
+    if (timeLeft <= 0) {
+      clearInterval(interval);
+      lockoutMsg.style.display = 'none';
+      loginBtn.disabled = false;
+      usernameInput.disabled = false;
+      passwordInput.disabled = false;
+      errorMsg.textContent = 'You can try again now.';
+      errorMsg.style.color = '#28a745';
+      localStorage.removeItem(ATTEMPT_KEY);
+      localStorage.removeItem(LOCKOUT_KEY);
     }
-  });
+  }, 1000);
+}
 
-  // Focus on username when page loads
-  usernameInput.focus();
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Attempt login
+function attemptLogin() {
+  if (checkLockout()) return;
+
+  const enteredUsername = usernameInput.value.trim();
+  const enteredPassword = passwordInput.value.trim();
+
+  let attempts = parseInt(localStorage.getItem(ATTEMPT_KEY) || '0');
+
+  if (enteredUsername === CORRECT_USERNAME && enteredPassword === CORRECT_PASSWORD) {
+    // Success → reset attempts and redirect
+    localStorage.removeItem(ATTEMPT_KEY);
+    localStorage.removeItem(LOCKOUT_KEY);
+    errorMsg.style.color = '#28a745';
+    errorMsg.textContent = 'Logging in...';
+    loginBtn.disabled = true;
+    setTimeout(() => {
+      window.location.href = 'adminedit.html';
+    }, 800);
+  } else {
+    // Failed attempt
+    attempts++;
+    localStorage.setItem(ATTEMPT_KEY, attempts.toString());
+    errorMsg.textContent = `Invalid credentials. Attempts left: ${3 - attempts}`;
+    errorMsg.style.color = '#ff4d4d';
+
+    if (attempts >= 3) {
+      const lockoutUntil = Date.now() + 5 * 60 * 1000; // 5 minutes
+      localStorage.setItem(LOCKOUT_KEY, lockoutUntil);
+      lockoutMsg.style.display = 'block';
+      loginBtn.disabled = true;
+      usernameInput.disabled = true;
+      passwordInput.disabled = true;
+      startCountdown(300);
+      errorMsg.textContent = 'Too many failed attempts. Locked for 5 minutes.';
+    }
+
+    passwordInput.value = '';
+    usernameInput.value = '';
+    usernameInput.focus();
+  }
+}
+
+// Event listeners
+loginBtn.addEventListener('click', attemptLogin);
+passwordInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') attemptLogin();
+});
+
+// Focus on load + check lockout
+usernameInput.focus();
+checkLockout();
 </script>
 
 </body>
