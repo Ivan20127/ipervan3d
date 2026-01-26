@@ -1,305 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Pervan 3D Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-    header {
-      background: #111;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-      position: relative;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    .back-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .back-btn:hover {
-      background: #666;
-    }
-    .button {
-      margin: 6px;
-      padding: 10px 18px;
-      background: #dc3545;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .button:hover:not(:disabled) {
-      background: #c82333;
-    }
-    .button:disabled {
-      background: #999;
-      cursor: not-allowed;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      position: relative;
-    }
-    .card img {
-      width: 100%;
-      height: 220px;
-      object-fit: contain;
-      border-radius: 6px;
-      margin-bottom: 12px;
-    }
-    .card h3 {
-      margin: 10px 0;
-    }
-    select, input[type="number"], input[type="text"] {
-      margin: 5px 0;
-      padding: 6px;
-      width: 100%;
-      max-width: 180px;
-    }
-    .status-badge {
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: bold;
-      display: inline-block;
-      margin: 10px 0;
-    }
-    .in-stock { background: #28a745; color: white; }
-    .out-of-stock { background: #dc3545; color: white; }
-    .price {
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #ff6600;
-      margin: 10px 0;
-    }
-    .sold-out-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      color: white;
-      font-size: 1.5em;
-      font-weight: bold;
-      pointer-events: none;
-    }
-    .cart {
-      background: white;
-      width: 100%;
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      font-size: 0.9em;
-    }
-    .cart li {
-      margin-bottom: 6px;
-    }
-    .remove {
-      color: red;
-      cursor: pointer;
-      margin-left: 6px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Pervan 3-D Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+header {
+  background: #111;
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.secret-admin {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.button {
+  margin: 6px;
+  padding: 10px 18px;
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+select, input {
+  margin: 5px 0;
+  padding: 6px;
+}
+
+.cart {
+  background: white;
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.remove {
+  color: red;
+  cursor: pointer;
+}
+
+.admin-panel {
+  display: none;
+  background: #222;
+  color: white;
+  padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  border-radius: 8px;
+}
+</style>
 </head>
+
 <body>
 
-<header style="position: relative;">
-  <h1>Pervan 3D Shop</h1>
-  <p>Custom 3-D Printed Fidgets & More</p>
-  <!-- BACK BUTTON -->
-  <a href="index.html" class="back-btn">← Back to Home</a>
+<header>
+  <h1>Pervan 3-D Shop</h1>
+  <p>Custom 3-D Printed Fidgets</p>
+  <div class="secret-admin" onclick="openAdmin()"></div>
 </header>
 
 <section class="products">
-  <!-- DRAGON FIDGET -->
-  <div class="card" id="dragon-card">
-    <img id="dragon-img" src="" alt="Dragon Fidget">
-    <h3>Dragon Fidget</h3>
-    <p class="price" id="dragon-price"></p>
-    <div id="dragon-availability"></div>
-    Size:<br>
-    <select id="dragonSize">
-      <option value="Big">Big (+$3)</option>
-      <option value="Small">Small</option>
-    </select><br>
-    Color:<br>
-    <select id="dragonColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Copper Purple (+$2)</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="dragonQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="dragon-add-btn" onclick="addToCart(
-      'Dragon Fidget',
-      document.getElementById('dragonSize').value === 'Big' ? 8 : 5,
-      document.getElementById('dragonQty').value,
-      document.getElementById('dragonSize').value,
-      document.getElementById('dragonColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
 
-  <!-- STAR FIDGET -->
-  <div class="card" id="star-card">
-    <img id="star-img" src="" alt="Star Fidget">
-    <h3>Star Fidget</h3>
-    <p class="price" id="star-price"></p>
-    <div id="star-availability"></div>
-    Size:<br>
-    <select id="starSize">
-      <option value="Big">Big (+$3)</option>
-      <option value="Small">Small</option>
-    </select><br>
-    Color:<br>
-    <select id="starColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Copper Purple (+$2)</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="starQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="star-add-btn" onclick="addToCart(
-      'Star Fidget',
-      document.getElementById('starSize').value === 'Big' ? 8 : 5,
-      document.getElementById('starQty').value,
-      document.getElementById('starSize').value,
-      document.getElementById('starColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
+<div class="card">
+  <h3>Dragon Fidget</h3>
+  Size:<br>
+  <select id="dragonSize">
+    <option value="8">Big ($8)</option>
+    <option value="5">Small ($5)</option>
+  </select><br>
+  Color:<br>
+  <select id="dragonColor">
+    <option>Red</option>
+    <option>Blue</option>
+    <option>Black</option>
+    <option>Light Green</option>
+    <option>Yellow</option>
+    <option>Grey</option>
+  </select><br>
+  Qty:<br>
+  <input type="number" id="dragonQty" value="1" min="1"><br>
+  <button class="button" onclick="addToCart('Dragon Fidget', dragonSize.value, dragonQty.value, dragonColor.value)">Add to Cart</button>
+</div>
 
-  <!-- GEAR FIDGET -->
-  <div class="card" id="gear-card">
-    <img id="gear-img" src="" alt="Gear Fidget">
-    <h3>Gear Fidget</h3>
-    <p class="price" id="gear-price"></p>
-    <div id="gear-availability"></div>
-    Color:<br>
-    <select id="gearColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Copper Purple (+$2)</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="gearQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="gear-add-btn" onclick="addToCart(
-      'Gear Fidget',
-      3,
-      document.getElementById('gearQty').value,
-      'Standard',
-      document.getElementById('gearColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
+<div class="card">
+  <h3>Star Fidget</h3>
+  Size:<br>
+  <select id="starSize">
+    <option value="8">Big ($8)</option>
+    <option value="5">Small ($5)</option>
+  </select><br>
+  Color:<br>
+  <select id="starColor">
+    <option>Red</option>
+    <option>Blue</option>
+    <option>Black</option>
+    <option>Light Green</option>
+    <option>Yellow</option>
+    <option>Grey</option>
+  </select><br>
+  Qty:<br>
+  <input type="number" id="starQty" value="1" min="1"><br>
+  <button class="button" onclick="addToCart('Star Fidget', starSize.value, starQty.value, starColor.value)">Add to Cart</button>
+</div>
+
 </section>
 
 <div class="cart">
   <h3>🛒 Cart</h3>
-  <input id="customerName" placeholder="Customer name (required)" required style="width:100%; margin-bottom:8px;">
-  <ul id="cart-items"></ul>
-  <p><strong>Total: $<span id="total">0.00</span></strong></p>
+  <input id="customerName" placeholder="Customer name (required)" style="width:100%">
+  <ul id="cartItems"></ul>
+  <strong>Total: $<span id="total">0.00</span></strong><br><br>
   <button class="button" onclick="checkout()">Pay with Venmo</button>
 </div>
 
+<div class="admin-panel" id="adminPanel">
+  <h2>ADMIN PANEL</h2>
+  <p>Password protected</p>
+  <label>Dragon Available <input type="checkbox" id="dragonAvail" checked></label><br>
+  <label>Star Available <input type="checkbox" id="starAvail" checked></label><br><br>
+  <button class="button" onclick="saveAdmin()">Save Settings</button>
+</div>
+
 <script>
-// ==================== ADMIN SETTINGS APPLY ====================
-function applyAdminSettings() {
-  const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-  const products = settings.products || [];
-  const dragon = products[0] || {};
-  const star = products[1] || {};
-  const gear = products[2] || {};
+let total = 0;
+const cartItems = document.getElementById("cartItems");
+const totalEl = document.getElementById("total");
 
-  // Dragon Fidget
-  document.getElementById('dragon-price').innerHTML = dragon.price ? `$${dragon.price}` : '';
-  if (dragon.image) {
-    document.getElementById('dragon-img').src = dragon.image;
-  }
-  const dragonBadge = document.getElementById('dragon-availability');
-  if (dragon.available === false) {
-    dragonBadge.innerHTML = '<span class="status-badge out-of-stock">Sold Out</span>';
-    document.getElementById('dragon-add-btn').disabled = true;
-    document.getElementById('dragon-add-btn').style.background = '#999';
-    const overlay = document.createElement('div');
-    overlay.className = 'sold-out-overlay';
-    overlay.textContent = 'Sold Out';
-    document.getElementById('dragon-card').appendChild(overlay);
+function addToCart(name, price, qty, color) {
+  qty = parseInt(qty);
+  price = parseFloat(price);
+  const cost = price * qty;
+  const li = document.createElement("li");
+  li.textContent = `${name} (${color}) x${qty} - $${cost.toFixed(2)}`;
+  const rm = document.createElement("span");
+  rm.textContent = " ✖";
+  rm.className = "remove";
+  rm.onclick = () => {
+    total -= cost;
+    totalEl.textContent = total.toFixed(2);
+    li.remove();
+  };
+  li.appendChild(rm);
+  cartItems.appendChild(li);
+  total += cost;
+  totalEl.textContent = total.toFixed(2);
+}
+
+function checkout() {
+  const name = customerName.value.trim();
+  if (!name) return alert("Name required");
+  if (total === 0) return alert("Cart empty");
+
+  let note = `Order (${name}): `;
+  document.querySelectorAll("#cartItems li").forEach(li => {
+    note += li.textContent.replace(" ✖","") + " | ";
+  });
+
+  window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+}
+
+/* ===== ADMIN ===== */
+function openAdmin() {
+  const pass = prompt("Admin Password:");
+  if (pass === "Ivanboy2012") {
+    adminPanel.style.display = "block";
+    loadAdmin();
   } else {
-    dragonBadge.innerHTML = '<span class="status-badge in-stock">Available</span>';
-    document.getElementById('dragon-add-btn').disabled = false;
-    document.getElementById('dragon-add-btn').style.background = '#dc3545';
+    alert("Wrong password");
   }
+}
 
-  // Star Fidget
-  document.getElementById('star-price').innerHTML = star.price ? `$${star.price}` : '';
-  if (star.image) {
-    document.getElementById('star-img').src = star.image;
-  }
-  const starBadge = document.getElementById('star-availability');
-  if (star.available === false) {
-    starBadge.innerHTML = '<span class="status-badge out-of-stock">Sold Out</span>';
-    document.getElementById('star-add-btn').disabled = true;
-    document.getElementById('star-add-btn').style.background = '#999';
-    const overlay = document.createElement('div');
-    overlay.className = 'sold-out-overlay';
-    overlay.textContent = 'Sold Out';
-    document.getElementById('star-card').appendChild(overlay);
-  } else {
-    starBadge.innerHTML = '<span class="status-badge in-stock">Available</span>';
-    document.getElementById('star-add-btn').disabled = false;
-    document.getElementById('star-add-btn').style.background = '#dc3545';
-  }
+function saveAdmin() {
+  localStorage.setItem("pervanAdmin", JSON.stringify({
+    dragon: dragonAvail.checked,
+    star: starAvail.checked
+  }));
+  alert("Saved. Refresh page.");
+}
 
+function loadAdmin() {
+  const s = JSON.parse(localStorage.getItem("pervanAdmin"));
+  if (!s) return;
+  dragonAvail.checked = s.dragon;
+  starAvail.checked = s.star;
+}
 
+loadAdmin();
+</script>
+
+</body>
+</html>
