@@ -17,7 +17,7 @@
     .container { max-width: 1000px; margin: 0 auto; }
     .section { background: white; border-radius: 10px; padding: 30px; margin: 30px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     label { display: block; margin: 18px 0 8px; font-weight: bold; font-size: 1.1em; }
-    input[type="text"], input[type="number"], input[type="email"], input[type="color"] {
+    input[type="text"], input[type="number"], input[type="email"], input[type="color"], input[type="file"] {
       width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; box-sizing: border-box;
     }
     .switch-container { display: flex; align-items: center; margin: 15px 0; font-size: 1.1em; }
@@ -33,14 +33,15 @@
     button { background: #ff6600; color: white; border: none; padding: 14px 30px; border-radius: 6px; font-size: 1.15em; cursor: pointer; margin-top: 25px; display: block; margin-left: auto; }
     button:hover { background: #e65c00; }
     .saved { color: #28a745; font-weight: bold; margin-left: 20px; display: none; font-size: 1.1em; }
-    .color-item { display: flex; align-items: center; justify-content: space-between; margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 6px; }
+    .color-item, .product-item { display: flex; align-items: center; justify-content: space-between; margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 6px; flex-wrap: wrap; gap: 15px; }
+    .product-preview { max-width: 120px; height: auto; border-radius: 6px; border: 1px solid #ddd; }
   </style>
 </head>
 <body>
 
 <div class="container">
   <h1>Pervan 3-D Admin Edit</h1>
-  <p class="subtitle">Control prices, stock status, colors & site appearance — changes apply instantly!</p>
+  <p class="subtitle">Control prices, photos, stock status, colors & site appearance — changes apply instantly!</p>
 
   <!-- COLORS / FILAMENTS -->
   <div class="section">
@@ -48,31 +49,21 @@
     <div id="colors-container"></div>
   </div>
 
-  <!-- PRODUCTS AVAILABILITY -->
+  <!-- PRODUCTS -->
   <div class="section">
-    <h2>Product Availability</h2>
+    <h2>Products (Dragon Fidget & Star Fidget)</h2>
     <div id="products-container"></div>
   </div>
 
-  <!-- PRICES -->
+  <!-- PRICES & GENERAL SETTINGS -->
   <div class="section">
-    <h2>Product Prices (Starting At)</h2>
-    <label for="price-custom">Custom Parts:</label>
-    <input type="number" id="price-custom" min="0" step="0.01" placeholder="29.99">
+    <h2>General Settings</h2>
+    <label for="email">Contact Email:</label>
+    <input type="email" id="email" placeholder="your@email.com">
 
-    <label for="price-model">3-D Models:</label>
-    <input type="number" id="price-model" min="0" step="0.01" placeholder="39.99">
+    <label for="footer-text">Footer Copyright Text:</label>
+    <input type="text" id="footer-text" placeholder="© 2026 Pervan 3-D. All rights reserved.">
 
-    <label for="price-proto">Prototypes:</label>
-    <input type="number" id="price-proto" min="0" step="0.01" placeholder="49.99">
-
-    <label for="shipping">Shipping (flat rate):</label>
-    <input type="number" id="shipping" min="0" step="0.01" placeholder="8.00">
-  </div>
-
-  <!-- APPEARANCE -->
-  <div class="section">
-    <h2>Site Appearance</h2>
     <div class="switch-container">
       <label class="switch">
         <input type="checkbox" id="dark-mode">
@@ -86,16 +77,6 @@
 
     <label for="header-bg">Header & Footer Background Color:</label>
     <input type="color" id="header-bg" value="#111111">
-  </div>
-
-  <!-- GENERAL SETTINGS -->
-  <div class="section">
-    <h2>General Settings</h2>
-    <label for="email">Contact Email:</label>
-    <input type="email" id="email" placeholder="your@email.com">
-
-    <label for="footer-text">Footer Copyright Text:</label>
-    <input type="text" id="footer-text" placeholder="© 2026 Pervan 3-D. All rights reserved.">
 
     <button id="saveAll">Save All Changes</button>
     <span class="saved" id="savedMsg">✓ Changes Saved!</span>
@@ -103,7 +84,7 @@
 </div>
 
 <script>
-// Your exact colors: Red, Blue, Light Green, Yellow, Black, Grey, Copper Purple
+// Your exact colors
 const DEFAULT_COLORS = [
   { name: "Red", inStock: true },
   { name: "Blue", inStock: true },
@@ -114,10 +95,20 @@ const DEFAULT_COLORS = [
   { name: "Copper Purple", inStock: true }
 ];
 
+// Products with price and photo
 const DEFAULT_PRODUCTS = [
-  { name: "Custom Parts", available: true },
-  { name: "3-D Models", available: true },
-  { name: "Prototypes", available: true }
+  { 
+    name: "Dragon Fidget", 
+    available: true, 
+    price: "24.99", 
+    image: ""  // can be URL or base64
+  },
+  { 
+    name: "Star Fidget", 
+    available: true, 
+    price: "19.99", 
+    image: "" 
+  }
 ];
 
 // Load saved settings or use defaults
@@ -152,9 +143,17 @@ function loadSettings() {
   productsContainer.innerHTML = '';
   products.forEach((product, index) => {
     const item = document.createElement('div');
-    item.className = 'color-item';
+    item.className = 'product-item';
     item.innerHTML = `
-      <span>${product.name}</span>
+      <div style="flex: 1;">
+        <strong>${product.name}</strong>
+        <label for="price-${index}">Price (starting at):</label>
+        <input type="number" id="price-${index}" min="0" step="0.01" value="${product.price || ''}" placeholder="19.99">
+        
+        <label for="image-${index}">Product Image URL or Upload:</label>
+        <input type="text" id="image-url-${index}" value="${product.image || ''}" placeholder="https://example.com/dragon.jpg">
+        <input type="file" id="image-file-${index}" accept="image/*" style="margin-top: 8px;">
+      </div>
       <div class="switch-container">
         <label class="switch">
           <input type="checkbox" class="product-toggle" data-index="${index}" ${product.available ? 'checked' : ''}>
@@ -164,15 +163,12 @@ function loadSettings() {
           ${product.available ? 'Available' : 'Sold Out'}
         </span>
       </div>
+      ${product.image ? `<img src="${product.image}" class="product-preview" alt="${product.name}">` : ''}
     `;
     productsContainer.appendChild(item);
   });
 
   // Other fields
-  document.getElementById('price-custom').value = saved.priceCustom || '';
-  document.getElementById('price-model').value = saved.priceModel || '';
-  document.getElementById('price-proto').value = saved.priceProto || '';
-  document.getElementById('shipping').value = saved.shipping || '';
   document.getElementById('dark-mode').checked = saved.darkMode || false;
   document.getElementById('accent-color').value = saved.accentColor || '#ff6600';
   document.getElementById('header-bg').value = saved.headerBg || '#111111';
@@ -182,19 +178,19 @@ function loadSettings() {
 
 // Save all settings
 function saveSettings() {
+  const products = Array.from(document.querySelectorAll('.product-item')).map((item, index) => ({
+    name: item.querySelector('strong').textContent,
+    price: document.getElementById(`price-${index}`).value,
+    image: document.getElementById(`image-url-${index}`).value,
+    available: document.querySelector(`.product-toggle[data-index="${index}"]`).checked
+  }));
+
   const settings = {
     colors: Array.from(document.querySelectorAll('.color-toggle')).map(toggle => ({
       name: toggle.parentElement.parentElement.parentElement.querySelector('span').textContent,
       inStock: toggle.checked
     })),
-    products: Array.from(document.querySelectorAll('.product-toggle')).map(toggle => ({
-      name: toggle.parentElement.parentElement.parentElement.querySelector('span').textContent,
-      available: toggle.checked
-    })),
-    priceCustom: document.getElementById('price-custom').value,
-    priceModel: document.getElementById('price-model').value,
-    priceProto: document.getElementById('price-proto').value,
-    shipping: document.getElementById('shipping').value,
+    products,
     darkMode: document.getElementById('dark-mode').checked,
     accentColor: document.getElementById('accent-color').value,
     headerBg: document.getElementById('header-bg').value,
@@ -210,14 +206,28 @@ function saveSettings() {
   setTimeout(() => { msg.style.display = 'none'; }, 2500);
 }
 
-// Update badges when toggles change (auto-save)
-document.addEventListener('change', (e) => {
+// Handle image upload (convert to base64)
+document.addEventListener('change', async (e) => {
+  if (e.target.type === 'file') {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const index = e.target.id.split('-')[2];
+        document.getElementById(`image-url-${index}`).value = event.target.result;
+        saveSettings();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Auto-save on toggle or other changes
   if (e.target.classList.contains('color-toggle') || e.target.classList.contains('product-toggle')) {
     const badge = e.target.parentElement.nextElementSibling;
     const isChecked = e.target.checked;
     badge.textContent = isChecked ? 'In Stock' : 'Out of Stock';
     badge.className = `status-badge ${isChecked ? 'in-stock' : 'out-of-stock'}`;
-    saveSettings(); // Auto-save
+    saveSettings();
   }
 });
 
