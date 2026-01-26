@@ -23,7 +23,7 @@
       margin-bottom: 40px;
     }
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
     }
     .section {
@@ -35,7 +35,7 @@
     }
     label {
       display: block;
-      margin: 20px 0 8px;
+      margin: 18px 0 8px;
       font-weight: bold;
       font-size: 1.1em;
     }
@@ -71,10 +71,7 @@
     .slider {
       position: absolute;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background-color: #ccc;
       transition: .4s;
       border-radius: 34px;
@@ -91,11 +88,20 @@
       border-radius: 50%;
     }
     input:checked + .slider {
-      background-color: #2196F3;
+      background-color: #28a745;
     }
     input:checked + .slider:before {
       transform: translateX(26px);
     }
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: bold;
+      margin-left: 15px;
+    }
+    .in-stock { background: #28a745; color: white; }
+    .out-of-stock { background: #dc3545; color: white; }
     button {
       background: #ff6600;
       color: white;
@@ -118,136 +124,33 @@
       display: none;
       font-size: 1.1em;
     }
+    .color-item, .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 15px 0;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
   <h1>Pervan 3-D Admin Edit</h1>
-  <p class="subtitle">Change prices, colors & settings — updates apply instantly to your site!</p>
+  <p class="subtitle">Control prices, stock status, colors & site appearance — changes apply instantly!</p>
 
-  <!-- PRICES -->
+  <!-- COLORS / FILAMENTS -->
   <div class="section">
-    <h2>Product Prices</h2>
-    
-    <label for="price-custom">Custom Parts (starting at):</label>
-    <input type="number" id="price-custom" min="0" step="0.01" placeholder="29.99">
-
-    <label for="price-model">3-D Models (starting at):</label>
-    <input type="number" id="price-model" min="0" step="0.01" placeholder="39.99">
-
-    <label for="price-proto">Prototypes (starting at):</label>
-    <input type="number" id="price-proto" min="0" step="0.01" placeholder="49.99">
-
-    <label for="shipping">Shipping (flat rate):</label>
-    <input type="number" id="shipping" min="0" step="0.01" placeholder="8.00">
+    <h2>Color / Filament Inventory</h2>
+    <div id="colors-container"></div>
   </div>
 
-  <!-- APPEARANCE -->
+  <!-- PRODUCTS AVAILABILITY -->
   <div class="section">
-    <h2>Site Appearance</h2>
-
-    <div class="switch-container">
-      <label class="switch">
-        <input type="checkbox" id="dark-mode">
-        <span class="slider"></span>
-      </label>
-      <span>Dark Mode</span>
-    </div>
-
-    <label for="accent-color">Accent Color (buttons & highlights):</label>
-    <input type="color" id="accent-color" value="#ff6600">
-
-    <label for="header-bg">Header & Footer Background Color:</label>
-    <input type="color" id="header-bg" value="#111111">
+    <h2>Product Availability</h2>
+    <div id="products-container"></div>
   </div>
 
-  <!-- GENERAL SETTINGS -->
-  <div class="section">
-    <h2>General Settings</h2>
-
-    <label for="email">Contact Email:</label>
-    <input type="email" id="email" placeholder="your@email.com">
-
-    <label for="footer-text">Footer Copyright Text:</label>
-    <input type="text" id="footer-text" placeholder="© 2026 Pervan 3-D. All rights reserved.">
-
-    <button id="saveAll">Save All Changes</button>
-    <span class="saved" id="savedMsg">✓ Changes Saved!</span>
-  </div>
-</div>
-
-<script>
-// Load saved settings when page opens
-function loadSettings() {
-  const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-
-  document.getElementById('price-custom').value  = settings.priceCustom  || '';
-  document.getElementById('price-model').value   = settings.priceModel   || '';
-  document.getElementById('price-proto').value   = settings.priceProto   || '';
-  document.getElementById('shipping').value      = settings.shipping     || '';
-
-  document.getElementById('dark-mode').checked   = settings.darkMode     || false;
-  document.getElementById('accent-color').value  = settings.accentColor  || '#ff6600';
-  document.getElementById('header-bg').value     = settings.headerBg     || '#111111';
-
-  document.getElementById('email').value         = settings.email        || 'your@email.com';
-  document.getElementById('footer-text').value   = settings.footerText   || '© 2026 Pervan 3-D. All rights reserved.';
-}
-
-// Save settings and show confirmation
-function saveSettings() {
-  const settings = {
-    priceCustom:  document.getElementById('price-custom').value,
-    priceModel:   document.getElementById('price-model').value,
-    priceProto:   document.getElementById('price-proto').value,
-    shipping:     document.getElementById('shipping').value,
-
-    darkMode:     document.getElementById('dark-mode').checked,
-    accentColor:  document.getElementById('accent-color').value,
-    headerBg:     document.getElementById('header-bg').value,
-
-    email:        document.getElementById('email').value,
-    footerText:   document.getElementById('footer-text').value
-  };
-
-  localStorage.setItem('pervanSettings', JSON.stringify(settings));
-
-  // Show saved message
-  const msg = document.getElementById('savedMsg');
-  msg.style.display = 'inline';
-  setTimeout(() => { msg.style.display = 'none'; }, 2500);
-}
-
-// Apply changes immediately (optional live preview in admin)
-function applyLivePreview() {
-  const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-
-  if (settings.darkMode) {
-    document.body.style.background = '#1a1a1a';
-    document.body.style.color = '#eee';
-  } else {
-    document.body.style.background = '#f8f9fa';
-    document.body.style.color = '#333';
-  }
-
-  if (settings.accentColor) {
-    document.querySelector('button').style.background = settings.accentColor;
-  }
-}
-
-// Event listeners
-document.getElementById('saveAll').addEventListener('click', () => {
-  saveSettings();
-  applyLivePreview(); // Optional: preview dark mode/accent in admin page
-});
-
-// Load settings on page load
-window.addEventListener('load', () => {
-  loadSettings();
-  applyLivePreview();
-});
-</script>
-
-</body>
-</html>
+  <!--
