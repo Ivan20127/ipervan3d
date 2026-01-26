@@ -16,6 +16,7 @@
       color: white;
       padding: 40px 20px;
       text-align: center;
+      position: relative; /* Allows absolute positioning inside header */
     }
     header h1 {
       margin: 0;
@@ -37,8 +38,46 @@
       font-size: 1.1em;
     }
     .venmo-button {
-      background: #009cde;  /* Venmo blue for optional use */
+      background: #009cde; /* Venmo blue for optional use */
     }
+
+    /* ──────────────────────────────────────── */
+    /*     SECRET ADMIN BUTTON - TOP RIGHT      */
+    /* ──────────────────────────────────────── */
+    .secret-admin-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.12); /* Very subtle light gray */
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.25s ease;
+      opacity: 0.35;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .secret-admin-btn:hover {
+      opacity: 0.85;
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.15);
+    }
+
+    /* Optional: small gear icon (remove ::after block if you want it completely blank) */
+    .secret-admin-btn::after {
+      content: "⚙";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    /* ──────────────────────────────────────── */
+
     section {
       padding: 40px 20px;
       max-width: 1000px;
@@ -82,14 +121,20 @@
     }
   </style>
 </head>
-
 <body>
 
 <header>
   <h1>Pervan 3-D</h1>
   <p>Custom 3-D Printed Parts, Models, and Prototypes</p>
   <a class="button" href="#contact">Request a Quote</a>
-  <a class="button" href="shop.html">Go to Shop & Purchase</a>  <!-- This is the key button - now explicitly here -->
+  <a class="button" href="shop.html">Go to Shop & Purchase</a>
+
+  <!-- SECRET ADMIN BUTTON -->
+  <button 
+    class="secret-admin-btn" 
+    onclick="window.location.href='admin.html'"
+    title="Admin Area (secret)"
+  ></button>
 </header>
 
 <section>
