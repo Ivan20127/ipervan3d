@@ -166,6 +166,7 @@
       <option>Copper Purple (+$2)</option>
       <option>Light Green</option>
       <option>Yellow</option>
+      <option>Grey</option>
     </select><br>
     Qty:<br>
     <input type="number" id="dragonQty" value="1" min="1" style="width:60px;"><br>
@@ -199,6 +200,7 @@
       <option>Copper Purple (+$2)</option>
       <option>Light Green</option>
       <option>Yellow</option>
+      <option>Grey</option>
     </select><br>
     Qty:<br>
     <input type="number" id="starQty" value="1" min="1" style="width:60px;"><br>
@@ -208,6 +210,35 @@
       document.getElementById('starQty').value,
       document.getElementById('starSize').value,
       document.getElementById('starColor').value
+    )">
+      Add to Cart
+    </button>
+  </div>
+
+  <!-- GEAR FIDGET -->
+  <div class="card" id="gear-card">
+    <img id="gear-img" src="" alt="Gear Fidget">
+    <h3>Gear Fidget</h3>
+    <p class="price" id="gear-price"></p>
+    <div id="gear-availability"></div>
+    Color:<br>
+    <select id="gearColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Copper Purple (+$2)</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+      <option>Grey</option>
+    </select><br>
+    Qty:<br>
+    <input type="number" id="gearQty" value="1" min="1" style="width:60px;"><br>
+    <button class="button" id="gear-add-btn" onclick="addToCart(
+      'Gear Fidget',
+      3,
+      document.getElementById('gearQty').value,
+      'Standard',
+      document.getElementById('gearColor').value
     )">
       Add to Cart
     </button>
@@ -229,6 +260,7 @@ function applyAdminSettings() {
   const products = settings.products || [];
   const dragon = products[0] || {};
   const star = products[1] || {};
+  const gear = products[2] || {};
 
   // Dragon Fidget
   document.getElementById('dragon-price').innerHTML = dragon.price ? `$${dragon.price}` : '';
@@ -253,3 +285,21 @@ function applyAdminSettings() {
   // Star Fidget
   document.getElementById('star-price').innerHTML = star.price ? `$${star.price}` : '';
   if (star.image) {
+    document.getElementById('star-img').src = star.image;
+  }
+  const starBadge = document.getElementById('star-availability');
+  if (star.available === false) {
+    starBadge.innerHTML = '<span class="status-badge out-of-stock">Sold Out</span>';
+    document.getElementById('star-add-btn').disabled = true;
+    document.getElementById('star-add-btn').style.background = '#999';
+    const overlay = document.createElement('div');
+    overlay.className = 'sold-out-overlay';
+    overlay.textContent = 'Sold Out';
+    document.getElementById('star-card').appendChild(overlay);
+  } else {
+    starBadge.innerHTML = '<span class="status-badge in-stock">Available</span>';
+    document.getElementById('star-add-btn').disabled = false;
+    document.getElementById('star-add-btn').style.background = '#dc3545';
+  }
+
+
