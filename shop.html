@@ -24,12 +24,20 @@
     .button {
       margin: 6px;
       padding: 10px 18px;
-      background: #ff6600;
+      background: #dc3545;          /* RED color for buttons */
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-weight: bold;
+      transition: background 0.3s;
+    }
+    .button:hover:not(:disabled) {
+      background: #c82333;          /* Darker red on hover */
+    }
+    .button:disabled {
+      background: #999;
+      cursor: not-allowed;
     }
     .products {
       display: grid;
@@ -200,8 +208,6 @@
 // ==================== ADMIN SETTINGS APPLY ====================
 function applyAdminSettings() {
   const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-
-  // Products
   const products = settings.products || [];
   const dragon = products[0] || {};
   const star = products[1] || {};
@@ -223,7 +229,7 @@ function applyAdminSettings() {
   } else {
     dragonBadge.innerHTML = '<span class="status-badge in-stock">Available</span>';
     document.getElementById('dragon-add-btn').disabled = false;
-    document.getElementById('dragon-add-btn').style.background = '#ff6600';
+    document.getElementById('dragon-add-btn').style.background = '#dc3545'; // red
   }
 
   // Star Fidget
@@ -243,17 +249,14 @@ function applyAdminSettings() {
   } else {
     starBadge.innerHTML = '<span class="status-badge in-stock">Available</span>';
     document.getElementById('star-add-btn').disabled = false;
-    document.getElementById('star-add-btn').style.background = '#ff6600';
+    document.getElementById('star-add-btn').style.background = '#dc3545'; // red
   }
-
-  // Colors in dropdowns (optional - hide out-of-stock colors if you want)
-  // For now we keep all colors visible, but you can add logic here later
 }
 
 // Run on page load
 applyAdminSettings();
 
-// Listen for admin changes in real-time (if admin open in another tab)
+// Listen for admin changes in real-time
 window.addEventListener('storage', applyAdminSettings);
 
 // ==================== YOUR ORIGINAL CART SYSTEM ====================
