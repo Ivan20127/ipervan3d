@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pervan 3-D Admin Edit</title>
 
-  <!-- LOCKOUT ALERT SCRIPT -->
+  <!-- LOCKOUT ALERT (already included) -->
   <script>
     window.addEventListener('load', () => {
       const lockoutTime = localStorage.getItem('adminLockoutTime');
@@ -23,7 +23,6 @@
     });
   </script>
 
-  <!-- Your existing styles -->
   <style>
     body {
       margin: 0;
@@ -55,6 +54,8 @@
     .saved { color: #28a745; font-weight: bold; margin-left: 20px; display: none; font-size: 1.1em; }
     .color-item, .product-item { display: flex; align-items: center; justify-content: space-between; margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 6px; flex-wrap: wrap; gap: 15px; }
     .product-preview { max-width: 120px; height: auto; border-radius: 6px; border: 1px solid #ddd; }
+    .size-price-row { display: flex; gap: 20px; margin: 10px 0; }
+    .size-price-row > div { flex: 1; }
   </style>
 </head>
 <body>
@@ -74,7 +75,7 @@
     <div id="products-container"></div>
   </div>
 
-  <!-- PRICES & GENERAL SETTINGS -->
+  <!-- GENERAL SETTINGS -->
   <div class="section">
     <h2>General Settings</h2>
     <label for="email">Contact Email:</label>
@@ -114,10 +115,22 @@ const DEFAULT_COLORS = [
   { name: "Copper Purple", inStock: true }
 ];
 
-// Products with price and photo
+// Products with size prices and photo
 const DEFAULT_PRODUCTS = [
-  { name: "Dragon Fidget", available: true, price: "24.99", image: "" },
-  { name: "Star Fidget", available: true, price: "19.99", image: "" }
+  {
+    name: "Dragon Fidget",
+    available: true,
+    smallPrice: "5.00",
+    bigPrice: "8.00",
+    image: ""
+  },
+  {
+    name: "Star Fidget",
+    available: true,
+    smallPrice: "5.00",
+    bigPrice: "8.00",
+    image: ""
+  }
 ];
 
 // Load saved settings or use defaults
@@ -156,8 +169,18 @@ function loadSettings() {
     item.innerHTML = `
       <div style="flex: 1;">
         <strong>${product.name}</strong>
-        <label for="price-${index}">Price (starting at):</label>
-        <input type="number" id="price-${index}" min="0" step="0.01" value="${product.price || ''}" placeholder="19.99">
+        
+        <div class="size-price-row">
+          <div>
+            <label for="small-price-${index}">Small Size Price:</label>
+            <input type="number" id="small-price-${index}" min="0" step="0.01" value="${product.smallPrice || '5.00'}" placeholder="5.00">
+          </div>
+          <div>
+            <label for="big-price-${index}">Big Size Price:</label>
+            <input type="number" id="big-price-${index}" min="0" step="0.01" value="${product.bigPrice || '8.00'}" placeholder="8.00">
+          </div>
+        </div>
+
         <label for="image-${index}">Product Image URL or Upload:</label>
         <input type="text" id="image-url-${index}" value="${product.image || ''}" placeholder="https://example.com/dragon.jpg">
         <input type="file" id="image-file-${index}" accept="image/*" style="margin-top: 8px;">
@@ -188,7 +211,8 @@ function loadSettings() {
 function saveSettings() {
   const products = Array.from(document.querySelectorAll('.product-item')).map((item, index) => ({
     name: item.querySelector('strong').textContent,
-    price: document.getElementById(`price-${index}`).value,
+    smallPrice: document.getElementById(`small-price-${index}`).value,
+    bigPrice: document.getElementById(`big-price-${index}`).value,
     image: document.getElementById(`image-url-${index}`).value,
     available: document.querySelector(`.product-toggle[data-index="${index}"]`).checked
   }));
