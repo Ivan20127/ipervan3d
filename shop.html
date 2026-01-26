@@ -52,13 +52,13 @@ select, input[type="number"] {
   margin: 5px 0;
 }
 
+/* UPDATED CART */
 .cart {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
   background: white;
-  width: 300px;
-  padding: 15px;
+  width: 100%;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   font-size: 0.9em;
@@ -177,11 +177,7 @@ const totalDisplay = document.getElementById("total");
 function addToCart(name, basePrice, qty, size, color) {
   qty = parseInt(qty);
 
-  let colorUpcharge = 0;
-  if (color.includes("Copper Purple")) {
-    colorUpcharge = 2;
-  }
-
+  let colorUpcharge = color.includes("Copper Purple") ? 2 : 0;
   const finalPrice = (basePrice + colorUpcharge) * qty;
 
   const li = document.createElement("li");
@@ -226,4 +222,3 @@ function checkout() {
 
 </body>
 </html>
-
