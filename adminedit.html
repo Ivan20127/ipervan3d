@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pervan 3-D Admin Edit</title>
 
-  <!-- LOCKOUT ALERT (already included) -->
+  <!-- LOCKOUT ALERT -->
   <script>
     window.addEventListener('load', () => {
       const lockoutTime = localStorage.getItem('adminLockoutTime');
@@ -71,7 +71,7 @@
 
   <!-- PRODUCTS -->
   <div class="section">
-    <h2>Products (Dragon Fidget & Star Fidget)</h2>
+    <h2>Products</h2>
     <div id="products-container"></div>
   </div>
 
@@ -115,7 +115,7 @@ const DEFAULT_COLORS = [
   { name: "Copper Purple", inStock: true }
 ];
 
-// Products with size prices and photo
+// Products (now with Gear & Cactus)
 const DEFAULT_PRODUCTS = [
   {
     name: "Dragon Fidget",
@@ -129,6 +129,18 @@ const DEFAULT_PRODUCTS = [
     available: true,
     smallPrice: "5.00",
     bigPrice: "8.00",
+    image: ""
+  },
+  {
+    name: "Gear Fidget",
+    available: true,
+    price: "2.00",  // fixed price
+    image: ""
+  },
+  {
+    name: "Cactus Toothpick Holder",
+    available: true,
+    price: "20.00",  // fixed price
     image: ""
   }
 ];
@@ -166,10 +178,11 @@ function loadSettings() {
   products.forEach((product, index) => {
     const item = document.createElement('div');
     item.className = 'product-item';
-    item.innerHTML = `
-      <div style="flex: 1;">
-        <strong>${product.name}</strong>
-        
+    let priceFields = '';
+
+    // Dragon & Star have two size prices
+    if (product.name.includes("Dragon") || product.name.includes("Star")) {
+      priceFields = `
         <div class="size-price-row">
           <div>
             <label for="small-price-${index}">Small Size Price:</label>
@@ -180,9 +193,21 @@ function loadSettings() {
             <input type="number" id="big-price-${index}" min="0" step="0.01" value="${product.bigPrice || '8.00'}" placeholder="8.00">
           </div>
         </div>
+      `;
+    } else {
+      // Gear & Cactus have single fixed price
+      priceFields = `
+        <label for="price-${index}">Price:</label>
+        <input type="number" id="price-${index}" min="0" step="0.01" value="${product.price || ''}" placeholder="20.00">
+      `;
+    }
 
+    item.innerHTML = `
+      <div style="flex: 1;">
+        <strong>${product.name}</strong>
+        ${priceFields}
         <label for="image-${index}">Product Image URL or Upload:</label>
-        <input type="text" id="image-url-${index}" value="${product.image || ''}" placeholder="https://example.com/dragon.jpg">
+        <input type="text" id="image-url-${index}" value="${product.image || ''}" placeholder="https://example.com/product.jpg">
         <input type="file" id="image-file-${index}" accept="image/*" style="margin-top: 8px;">
       </div>
       <div class="switch-container">
@@ -191,7 +216,7 @@ function loadSettings() {
           <span class="slider"></span>
         </label>
         <span class="status-badge ${product.available ? 'in-stock' : 'out-of-stock'}">
-          ${product.available ? 'Available' : 'Sold Out'}
+          ${product.available ? 'In Stock' : 'Out of Stock'}
         </span>
       </div>
       ${product.image ? `<img src="${product.image}" class="product-preview" alt="${product.name}">` : ''}
@@ -209,13 +234,25 @@ function loadSettings() {
 
 // Save all settings
 function saveSettings() {
-  const products = Array.from(document.querySelectorAll('.product-item')).map((item, index) => ({
-    name: item.querySelector('strong').textContent,
-    smallPrice: document.getElementById(`small-price-${index}`).value,
-    bigPrice: document.getElementById(`big-price-${index}`).value,
-    image: document.getElementById(`image-url-${index}`).value,
-    available: document.querySelector(`.product-toggle[data-index="${index}"]`).checked
-  }));
+  const products = Array.from(document.querySelectorAll('.product-item')).map((item, index) => {
+    const name = item.querySelector('strong').textContent;
+    let productData = {
+      name,
+      image: document.getElementById(`image-url-${index}`).value,
+      available: document.querySelector(`.product-toggle[data-index="${index}"]`).checked
+    };
+
+    // Dragon & Star have two prices
+    if (name.includes("Dragon") || name.includes("Star")) {
+      productData.smallPrice = document.getElementById(`small-price-${index}`).value;
+      productData.bigPrice = document.getElementById(`big-price-${index}`).value;
+    } else {
+      // Gear & Cactus have single price
+      productData.price = document.getElementById(`price-${index}`).value;
+    }
+
+    return productData;
+  });
 
   const settings = {
     colors: Array.from(document.querySelectorAll('.color-toggle')).map(toggle => ({
