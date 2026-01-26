@@ -1,365 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Pervan 3D Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-    header {
-      background: #111;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-      position: relative;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    .back-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .back-btn:hover {
-      background: #666;
-    }
-    .button {
-      margin: 6px;
-      padding: 10px 18px;
-      background: #dc3545;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .button:hover:not(:disabled) {
-      background: #c82333;
-    }
-    .button:disabled {
-      background: #999;
-      cursor: not-allowed;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      position: relative;
-    }
-    .card img {
-      width: 100%;
-      height: 220px;
-      object-fit: contain;
-      border-radius: 6px;
-      margin-bottom: 12px;
-    }
-    .card h3 {
-      margin: 10px 0;
-    }
-    select, input[type="number"], input[type="text"] {
-      margin: 5px 0;
-      padding: 6px;
-      width: 100%;
-      max-width: 180px;
-    }
-    .status-badge {
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: bold;
-      display: inline-block;
-      margin: 10px 0;
-    }
-    .in-stock { background: #28a745; color: white; }
-    .out-of-stock { background: #dc3545; color: white; }
-    .price {
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #ff6600;
-      margin: 10px 0;
-    }
-    .sold-out-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      color: white;
-      font-size: 1.8em;
-      font-weight: bold;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .cart {
-      background: white;
-      width: 100%;
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      font-size: 0.9em;
-    }
-    .cart li {
-      margin-bottom: 6px;
-    }
-    .remove {
-      color: red;
-      cursor: pointer;
-      margin-left: 6px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Pervan 3D Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f5f5f5;color:#333;}
+header{background:#111;color:#fff;padding:40px 20px;text-align:center;position:relative;}
+header h1{margin:0;font-size:2.5em;}
+.back-btn{position:absolute;top:20px;left:20px;padding:10px 20px;background:#444;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:bold;text-decoration:none;transition:.3s;}
+.back-btn:hover{background:#666;}
+.button{margin:6px;padding:10px 18px;background:#dc3545;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;}
+.button:hover:not(:disabled){background:#c82333;}
+.button:disabled{background:#999;cursor:not-allowed;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1100px;margin:auto;padding:40px 20px;}
+.card{background:#fff;padding:20px;border-radius:6px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,.1);position:relative;}
+.card img{width:100%;height:220px;object-fit:contain;border-radius:6px;margin-bottom:12px;}
+.card h3{margin:10px 0;}
+select,input[type=number],input[type=text]{margin:5px 0;padding:6px;width:100%;max-width:180px;}
+.status-badge{padding:6px 12px;border-radius:20px;font-size:.9em;font-weight:bold;display:inline-block;margin:10px 0;}
+.in-stock{background:#28a745;color:#fff;}
+.out-of-stock{background:#dc3545;color:#fff;}
+.price{font-size:1.4em;font-weight:bold;color:#ff6600;margin:10px 0;}
+.sold-out-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;border-radius:6px;color:#fff;font-size:1.8em;font-weight:bold;pointer-events:none;z-index:2;}
+.cart{background:#fff;width:100%;max-width:500px;margin:40px auto;padding:20px;border-radius:8px;box-shadow:0 5px 15px rgba(0,0,0,.2);font-size:.9em;}
+.cart li{margin-bottom:6px;}
+.remove{color:red;cursor:pointer;margin-left:6px;}
+</style>
 </head>
 <body>
 
-<header style="position: relative;">
-  <h1>Pervan 3D Shop</h1>
-  <p>Custom 3-D Printed Fidgets & More</p>
-  <a href="index.html" class="back-btn">← Back to Home</a>
+<header>
+<h1>Pervan 3D Shop</h1>
+<p>Custom 3-D Printed Fidgets & More</p>
+<a href="index.html" class="back-btn">← Back to Home</a>
 </header>
 
-<section class="products">
-  <!-- DRAGON FIDGET -->
-  <div class="card" id="dragon-card">
-    <img id="dragon-img" src="" alt="Dragon Fidget">
-    <h3>Dragon Fidget</h3>
-    <p class="price" id="dragon-price"></p>
-    <div id="dragon-availability"></div>
-    Size:<br>
-    <select id="dragonSize">
-      <option value="Big">Big (+$3)</option>
-      <option value="Small">Small</option>
-    </select><br>
-    Color:<br>
-    <select id="dragonColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-      <option>Copper Purple (+$2)</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="dragonQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="dragon-add-btn" onclick="addToCart(
-      'Dragon Fidget',
-      document.getElementById('dragonSize').value === 'Big' ? 8 : 5,
-      document.getElementById('dragonQty').value,
-      document.getElementById('dragonSize').value,
-      document.getElementById('dragonColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
-
-  <!-- STAR FIDGET -->
-  <div class="card" id="star-card">
-    <img id="star-img" src="" alt="Star Fidget">
-    <h3>Star Fidget</h3>
-    <p class="price" id="star-price"></p>
-    <div id="star-availability"></div>
-    Size:<br>
-    <select id="starSize">
-      <option value="Big">Big (+$3)</option>
-      <option value="Small">Small</option>
-    </select><br>
-    Color:<br>
-    <select id="starColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-      <option>Copper Purple (+$2)</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="starQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="star-add-btn" onclick="addToCart(
-      'Star Fidget',
-      document.getElementById('starSize').value === 'Big' ? 8 : 5,
-      document.getElementById('starQty').value,
-      document.getElementById('starSize').value,
-      document.getElementById('starColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
-
-  <!-- GEAR FIDGET -->
-  <div class="card" id="gear-card">
-    <img id="gear-img" src="" alt="Gear Fidget">
-    <h3>Gear Fidget</h3>
-    <p class="price" id="gear-price">$2.00</p>
-    <div id="gear-availability"></div>
-    Color:<br>
-    <select id="gearColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-      <option>Copper Purple (+$2)</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="gearQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="gear-add-btn" onclick="addToCart(
-      'Gear Fidget',
-      2,
-      document.getElementById('gearQty').value,
-      'Standard',
-      document.getElementById('gearColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
-
-  <!-- CACTUS TOOTHPICK HOLDER -->
-  <div class="card" id="cactus-card">
-    <img id="cactus-img" src="" alt="Cactus Toothpick Holder">
-    <h3>Cactus Toothpick Holder</h3>
-    <p class="price" id="cactus-price">$20.00</p>
-    <div id="cactus-availability"></div>
-    Color:<br>
-    <select id="cactusColor">
-      <option>Red</option>
-      <option>Blue</option>
-      <option>Black</option>
-      <option>Light Green</option>
-      <option>Yellow</option>
-      <option>Grey</option>
-      <option>Copper Purple (+$2)</option>
-    </select><br>
-    Qty:<br>
-    <input type="number" id="cactusQty" value="1" min="1" style="width:60px;"><br>
-    <button class="button" id="cactus-add-btn" onclick="addToCart(
-      'Cactus Toothpick Holder',
-      20,
-      document.getElementById('cactusQty').value,
-      'Standard',
-      document.getElementById('cactusColor').value
-    )">
-      Add to Cart
-    </button>
-  </div>
-</section>
+<section class="products" id="products"></section>
 
 <div class="cart">
-  <h3>🛒 Cart</h3>
-  <input id="customerName" placeholder="Customer name (required)" required style="width:100%; margin-bottom:8px;">
-  <ul id="cart-items"></ul>
-  <p><strong>Total: $<span id="total">0.00</span></strong></p>
-  <button class="button" onclick="checkout()">Pay with Venmo</button>
+<h3>🛒 Cart</h3>
+<input id="customerName" placeholder="Customer name (required)" required style="width:100%;margin-bottom:8px;">
+<ul id="cart-items"></ul>
+<p><strong>Total: $<span id="total">0.00</span></strong></p>
+<button class="button" onclick="checkout()">Pay with Venmo</button>
 </div>
 
 <script>
-// ==================== ADMIN SETTINGS APPLY ====================
-function applyAdminSettings() {
-  const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-  const products = settings.products || [];
+// ======== ADMIN SETTINGS / LOCAL STORAGE ========
+let defaultProducts=[
+  {name:"Dragon Fidget",smallPrice:5,bigPrice:8,image:"",available:true,sizes:true},
+  {name:"Star Fidget",smallPrice:5,bigPrice:8,image:"",available:true,sizes:true},
+  {name:"Gear Fidget",price:2,image:"",available:true},
+  {name:"Cactus Toothpick Holder",price:20,image:"",available:true}
+];
 
-  // Dragon Fidget (index 0)
-  const dragon = products[0] || {};
-  document.getElementById('dragon-price').innerHTML = dragon.smallPrice && dragon.bigPrice 
-    ? `$${dragon.smallPrice} – $${dragon.bigPrice}` 
-    : '';
-  if (dragon.image) document.getElementById('dragon-img').src = dragon.image;
-  updateProductStatus('dragon', dragon.available);
+let adminSettings=JSON.parse(localStorage.getItem('pervanSettings')) || {products: defaultProducts};
+localStorage.setItem('pervanSettings', JSON.stringify(adminSettings));
 
-  // Star Fidget (index 1)
-  const star = products[1] || {};
-  document.getElementById('star-price').innerHTML = star.smallPrice && star.bigPrice 
-    ? `$${star.smallPrice} – $${star.bigPrice}` 
-    : '';
-  if (star.image) document.getElementById('star-img').src = star.image;
-  updateProductStatus('star', star.available);
+// ======== COLORS ========
+const colors=["Red","Blue","Black","Light Green","Yellow","Grey","Copper Purple (+$2)"];
 
-  // Gear Fidget (index 2)
-  const gear = products[2] || {};
-  document.getElementById('gear-price').innerHTML = gear.price ? `$${gear.price}` : '$2.00';
-  if (gear.image) document.getElementById('gear-img').src = gear.image;
-  updateProductStatus('gear', gear.available);
+// ======== DOM ELEMENTS ========
+const productsContainer=document.getElementById("products");
+const cartItems=document.getElementById("cart-items");
+const totalDisplay=document.getElementById("total");
+let total=0;
 
-  // Cactus Toothpick Holder (index 3)
-  const cactus = products[3] || {};
-  document.getElementById('cactus-price').innerHTML = cactus.price ? `$${cactus.price}` : '$20.00';
-  if (cactus.image) document.getElementById('cactus-img').src = cactus.image;
-  updateProductStatus('cactus', cactus.available);
+// ======== RENDER PRODUCTS ========
+function renderProducts(){
+  productsContainer.innerHTML="";
+  adminSettings.products.forEach((p,i)=>{
+    const card=document.createElement("div");
+    card.className="card"; card.id=`product-${i}`;
+    let html=`<img src="${p.image}" alt="${p.name}"><h3>${p.name}</h3>
+      <p class="price">${p.smallPrice&&p.bigPrice?`$${p.smallPrice} – $${p.bigPrice}`:`$${p.price||""}`}</p>
+      <div id="availability-${i}"></div>`;
+    if(p.sizes) html+=`Size:<br><select id="size-${i}"><option value="Big">Big (+$3)</option><option value="Small">Small</option></select><br>`;
+    html+=`Color:<br><select id="color-${i}">${colors.map(c=>`<option>${c}</option>`)}</select><br>
+      Qty:<br><input type="number" id="qty-${i}" value="1" min="1" style="width:60px;"><br>
+      <button class="button" id="btn-${i}">Add to Cart</button>`;
+    card.innerHTML=html;
+    productsContainer.appendChild(card);
+    
+    document.getElementById(`btn-${i}`).onclick=()=>addToCart(i);
+    updateStatus(i);
+  });
 }
 
-function updateProductStatus(productId, isAvailable) {
-  const badge = document.getElementById(`${productId}-availability`);
-  const btn = document.getElementById(`${productId}-add-btn`);
-  const card = document.getElementById(`${productId}-card`);
-
-  if (isAvailable === false) {
-    badge.innerHTML = '<span class="status-badge out-of-stock">Sold Out</span>';
-    btn.disabled = true;
-    btn.style.background = '#999';
-
-    // Add overlay if not already present
-    if (!card.querySelector('.sold-out-overlay')) {
-      const overlay = document.createElement('div');
-      overlay.className = 'sold-out-overlay';
-      overlay.textContent = 'Sold Out';
-      card.appendChild(overlay);
-    }
-  } else {
-    badge.innerHTML = '<span class="status-badge in-stock">Available</span>';
-    btn.disabled = false;
-    btn.style.background = '#dc3545';
-
-    // Remove overlay if present
-    const overlay = card.querySelector('.sold-out-overlay');
-    if (overlay) overlay.remove();
-  }
-}
-
-// Run on load
-applyAdminSettings();
-
-// Listen for admin changes (real-time)
-window.addEventListener('storage', applyAdminSettings);
-
-// ==================== CART SYSTEM ====================
-let total = 0;
-const cartItems = document.getElementById("cart-items");
-const totalDisplay = document.getElementById("total");
-
-function addToCart(name, basePrice, qty, size, color) {
-  qty = parseInt(qty) || 1;
-  let colorUpcharge = color.includes("Copper Purple") ? 2 : 0;
-  const finalPrice = (parseFloat(basePrice) + colorUpcharge) * qty;
-
-  const li = document.createElement("li");
-  li.textContent = `${name} (${size}, ${color
+// ======== UPDATE PRODUCT STATUS ========
+function updateStatus(i){
+  const p=adminSettings.products[i];
+  const badge=document.getElementById(`availability-${i}`);
+  const btn=document.getElementById(`btn-${i}`);
+  const card=document.getElementById(`product-${i}`);
+  if(p.available===false){
+    badge.innerHTML='<span class="status-badge out-of-stock">Sold Out</span>';
+    btn.disabled=true; btn.style.background="#999";
+    if(!card.querySelector(".sold-out-overlay")){
+      con
