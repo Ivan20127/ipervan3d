@@ -12,127 +12,28 @@
       color: #333;
       padding: 30px 20px;
     }
-    h1 {
-      text-align: center;
-      color: #222;
-      margin-bottom: 10px;
+    h1 { text-align: center; color: #222; margin-bottom: 10px; }
+    .subtitle { text-align: center; color: #666; margin-bottom: 40px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section { background: white; border-radius: 10px; padding: 30px; margin: 30px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    label { display: block; margin: 18px 0 8px; font-weight: bold; font-size: 1.1em; }
+    input[type="text"], input[type="number"], input[type="email"], input[type="color"] {
+      width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; box-sizing: border-box;
     }
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 40px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .section {
-      background: white;
-      border-radius: 10px;
-      padding: 30px;
-      margin: 30px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin: 18px 0 8px;
-      font-weight: bold;
-      font-size: 1.1em;
-    }
-    input[type="text"],
-    input[type="number"],
-    input[type="email"],
-    input[type="color"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-      box-sizing: border-box;
-    }
-    .switch-container {
-      display: flex;
-      align-items: center;
-      margin: 20px 0;
-      font-size: 1.1em;
-    }
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-      margin-right: 15px;
-    }
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 34px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-    input:checked + .slider {
-      background-color: #28a745;
-    }
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-    .status-badge {
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: bold;
-      margin-left: 15px;
-    }
+    .switch-container { display: flex; align-items: center; margin: 15px 0; font-size: 1.1em; }
+    .switch { position: relative; display: inline-block; width: 60px; height: 34px; margin-right: 15px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #28a745; }
+    input:checked + .slider:before { transform: translateX(26px); }
+    .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.9em; font-weight: bold; margin-left: 15px; }
     .in-stock { background: #28a745; color: white; }
     .out-of-stock { background: #dc3545; color: white; }
-    button {
-      background: #ff6600;
-      color: white;
-      border: none;
-      padding: 14px 30px;
-      border-radius: 6px;
-      font-size: 1.15em;
-      cursor: pointer;
-      margin-top: 25px;
-      display: block;
-      margin-left: auto;
-    }
-    button:hover {
-      background: #e65c00;
-    }
-    .saved {
-      color: #28a745;
-      font-weight: bold;
-      margin-left: 20px;
-      display: none;
-      font-size: 1.1em;
-    }
-    .color-item, .product-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 15px 0;
-      padding: 10px;
-      background: #f9f9f9;
-      border-radius: 6px;
-    }
+    button { background: #ff6600; color: white; border: none; padding: 14px 30px; border-radius: 6px; font-size: 1.15em; cursor: pointer; margin-top: 25px; display: block; margin-left: auto; }
+    button:hover { background: #e65c00; }
+    .saved { color: #28a745; font-weight: bold; margin-left: 20px; display: none; font-size: 1.1em; }
+    .color-item { display: flex; align-items: center; justify-content: space-between; margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 6px; }
   </style>
 </head>
 <body>
@@ -153,4 +54,178 @@
     <div id="products-container"></div>
   </div>
 
-  <!--
+  <!-- PRICES -->
+  <div class="section">
+    <h2>Product Prices (Starting At)</h2>
+    <label for="price-custom">Custom Parts:</label>
+    <input type="number" id="price-custom" min="0" step="0.01" placeholder="29.99">
+
+    <label for="price-model">3-D Models:</label>
+    <input type="number" id="price-model" min="0" step="0.01" placeholder="39.99">
+
+    <label for="price-proto">Prototypes:</label>
+    <input type="number" id="price-proto" min="0" step="0.01" placeholder="49.99">
+
+    <label for="shipping">Shipping (flat rate):</label>
+    <input type="number" id="shipping" min="0" step="0.01" placeholder="8.00">
+  </div>
+
+  <!-- APPEARANCE -->
+  <div class="section">
+    <h2>Site Appearance</h2>
+    <div class="switch-container">
+      <label class="switch">
+        <input type="checkbox" id="dark-mode">
+        <span class="slider"></span>
+      </label>
+      <span>Dark Mode</span>
+    </div>
+
+    <label for="accent-color">Accent Color (buttons & highlights):</label>
+    <input type="color" id="accent-color" value="#ff6600">
+
+    <label for="header-bg">Header & Footer Background Color:</label>
+    <input type="color" id="header-bg" value="#111111">
+  </div>
+
+  <!-- GENERAL SETTINGS -->
+  <div class="section">
+    <h2>General Settings</h2>
+    <label for="email">Contact Email:</label>
+    <input type="email" id="email" placeholder="your@email.com">
+
+    <label for="footer-text">Footer Copyright Text:</label>
+    <input type="text" id="footer-text" placeholder="© 2026 Pervan 3-D. All rights reserved.">
+
+    <button id="saveAll">Save All Changes</button>
+    <span class="saved" id="savedMsg">✓ Changes Saved!</span>
+  </div>
+</div>
+
+<script>
+// Your exact colors: Red, Blue, Light Green, Yellow, Black, Grey, Copper Purple
+const DEFAULT_COLORS = [
+  { name: "Red", inStock: true },
+  { name: "Blue", inStock: true },
+  { name: "Light Green", inStock: true },
+  { name: "Yellow", inStock: true },
+  { name: "Black", inStock: true },
+  { name: "Grey", inStock: true },
+  { name: "Copper Purple", inStock: true }
+];
+
+const DEFAULT_PRODUCTS = [
+  { name: "Custom Parts", available: true },
+  { name: "3-D Models", available: true },
+  { name: "Prototypes", available: true }
+];
+
+// Load saved settings or use defaults
+function loadSettings() {
+  const saved = JSON.parse(localStorage.getItem('pervanSettings')) || {};
+
+  // Colors
+  const colors = saved.colors || DEFAULT_COLORS;
+  const colorsContainer = document.getElementById('colors-container');
+  colorsContainer.innerHTML = '';
+  colors.forEach((color, index) => {
+    const item = document.createElement('div');
+    item.className = 'color-item';
+    item.innerHTML = `
+      <span>${color.name}</span>
+      <div class="switch-container">
+        <label class="switch">
+          <input type="checkbox" class="color-toggle" data-index="${index}" ${color.inStock ? 'checked' : ''}>
+          <span class="slider"></span>
+        </label>
+        <span class="status-badge ${color.inStock ? 'in-stock' : 'out-of-stock'}">
+          ${color.inStock ? 'In Stock' : 'Out of Stock'}
+        </span>
+      </div>
+    `;
+    colorsContainer.appendChild(item);
+  });
+
+  // Products
+  const products = saved.products || DEFAULT_PRODUCTS;
+  const productsContainer = document.getElementById('products-container');
+  productsContainer.innerHTML = '';
+  products.forEach((product, index) => {
+    const item = document.createElement('div');
+    item.className = 'color-item';
+    item.innerHTML = `
+      <span>${product.name}</span>
+      <div class="switch-container">
+        <label class="switch">
+          <input type="checkbox" class="product-toggle" data-index="${index}" ${product.available ? 'checked' : ''}>
+          <span class="slider"></span>
+        </label>
+        <span class="status-badge ${product.available ? 'in-stock' : 'out-of-stock'}">
+          ${product.available ? 'Available' : 'Sold Out'}
+        </span>
+      </div>
+    `;
+    productsContainer.appendChild(item);
+  });
+
+  // Other fields
+  document.getElementById('price-custom').value = saved.priceCustom || '';
+  document.getElementById('price-model').value = saved.priceModel || '';
+  document.getElementById('price-proto').value = saved.priceProto || '';
+  document.getElementById('shipping').value = saved.shipping || '';
+  document.getElementById('dark-mode').checked = saved.darkMode || false;
+  document.getElementById('accent-color').value = saved.accentColor || '#ff6600';
+  document.getElementById('header-bg').value = saved.headerBg || '#111111';
+  document.getElementById('email').value = saved.email || 'your@email.com';
+  document.getElementById('footer-text').value = saved.footerText || '© 2026 Pervan 3-D. All rights reserved.';
+}
+
+// Save all settings
+function saveSettings() {
+  const settings = {
+    colors: Array.from(document.querySelectorAll('.color-toggle')).map(toggle => ({
+      name: toggle.parentElement.parentElement.parentElement.querySelector('span').textContent,
+      inStock: toggle.checked
+    })),
+    products: Array.from(document.querySelectorAll('.product-toggle')).map(toggle => ({
+      name: toggle.parentElement.parentElement.parentElement.querySelector('span').textContent,
+      available: toggle.checked
+    })),
+    priceCustom: document.getElementById('price-custom').value,
+    priceModel: document.getElementById('price-model').value,
+    priceProto: document.getElementById('price-proto').value,
+    shipping: document.getElementById('shipping').value,
+    darkMode: document.getElementById('dark-mode').checked,
+    accentColor: document.getElementById('accent-color').value,
+    headerBg: document.getElementById('header-bg').value,
+    email: document.getElementById('email').value,
+    footerText: document.getElementById('footer-text').value
+  };
+
+  localStorage.setItem('pervanSettings', JSON.stringify(settings));
+
+  // Show saved message
+  const msg = document.getElementById('savedMsg');
+  msg.style.display = 'inline';
+  setTimeout(() => { msg.style.display = 'none'; }, 2500);
+}
+
+// Update badges when toggles change (auto-save)
+document.addEventListener('change', (e) => {
+  if (e.target.classList.contains('color-toggle') || e.target.classList.contains('product-toggle')) {
+    const badge = e.target.parentElement.nextElementSibling;
+    const isChecked = e.target.checked;
+    badge.textContent = isChecked ? 'In Stock' : 'Out of Stock';
+    badge.className = `status-badge ${isChecked ? 'in-stock' : 'out-of-stock'}`;
+    saveSettings(); // Auto-save
+  }
+});
+
+document.getElementById('saveAll').addEventListener('click', saveSettings);
+
+// Load everything on page open
+window.addEventListener('load', loadSettings);
+</script>
+
+</body>
+</html>
