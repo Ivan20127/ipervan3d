@@ -36,66 +36,96 @@ select,input[type=number],input[type=text]{margin:5px 0;padding:6px;width:100%;m
 <a href="index.html" class="back-btn">← Back to Home</a>
 </header>
 
-<section class="products" id="products"></section>
+<section class="products">
+  <!-- DRAGON FIDGET -->
+  <div class="card" id="dragon-card">
+    <img id="dragon-img" src="" alt="Dragon Fidget">
+    <h3>Dragon Fidget</h3>
+    <p class="price" id="dragon-price"></p>
+    <div id="dragon-availability"></div>
+    Size:<br>
+    <select id="dragonSize">
+      <option value="Big">Big (+$3)</option>
+      <option value="Small">Small</option>
+    </select><br>
+    Color:<br>
+    <select id="dragonColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+      <option>Grey</option>
+      <option>Copper Purple (+$2)</option>
+    </select><br>
+    Qty:<br>
+    <input type="number" id="dragonQty" value="1" min="1" style="width:60px;"><br>
+    <button class="button" id="dragon-add-btn">
+      Add to Cart
+    </button>
+  </div>
 
-<div class="cart">
-<h3>🛒 Cart</h3>
-<input id="customerName" placeholder="Customer name (required)" required style="width:100%;margin-bottom:8px;">
-<ul id="cart-items"></ul>
-<p><strong>Total: $<span id="total">0.00</span></strong></p>
-<button class="button" onclick="checkout()">Pay with Venmo</button>
-</div>
+  <!-- STAR FIDGET -->
+  <div class="card" id="star-card">
+    <img id="star-img" src="" alt="Star Fidget">
+    <h3>Star Fidget</h3>
+    <p class="price" id="star-price"></p>
+    <div id="star-availability"></div>
+    Size:<br>
+    <select id="starSize">
+      <option value="Big">Big (+$3)</option>
+      <option value="Small">Small</option>
+    </select><br>
+    Color:<br>
+    <select id="starColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+      <option>Grey</option>
+      <option>Copper Purple (+$2)</option>
+    </select><br>
+    Qty:<br>
+    <input type="number" id="starQty" value="1" min="1" style="width:60px;"><br>
+    <button class="button" id="star-add-btn">
+      Add to Cart
+    </button>
+  </div>
 
-<script>
-// ======== ADMIN SETTINGS / LOCAL STORAGE ========
-let defaultProducts=[
-  {name:"Dragon Fidget",smallPrice:5,bigPrice:8,image:"",available:true,sizes:true},
-  {name:"Star Fidget",smallPrice:5,bigPrice:8,image:"",available:true,sizes:true},
-  {name:"Gear Fidget",price:2,image:"",available:true},
-  {name:"Cactus Toothpick Holder",price:20,image:"",available:true}
-];
+  <!-- GEAR FIDGET -->
+  <div class="card" id="gear-card">
+    <img id="gear-img" src="" alt="Gear Fidget">
+    <h3>Gear Fidget</h3>
+    <p class="price" id="gear-price">$2.00</p>
+    <div id="gear-availability"></div>
+    Color:<br>
+    <select id="gearColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+      <option>Grey</option>
+      <option>Copper Purple (+$2)</option>
+    </select><br>
+    Qty:<br>
+    <input type="number" id="gearQty" value="1" min="1" style="width:60px;"><br>
+    <button class="button" id="gear-add-btn">
+      Add to Cart
+    </button>
+  </div>
 
-let adminSettings=JSON.parse(localStorage.getItem('pervanSettings')) || {products: defaultProducts};
-localStorage.setItem('pervanSettings', JSON.stringify(adminSettings));
-
-// ======== COLORS ========
-const colors=["Red","Blue","Black","Light Green","Yellow","Grey","Copper Purple (+$2)"];
-
-// ======== DOM ELEMENTS ========
-const productsContainer=document.getElementById("products");
-const cartItems=document.getElementById("cart-items");
-const totalDisplay=document.getElementById("total");
-let total=0;
-
-// ======== RENDER PRODUCTS ========
-function renderProducts(){
-  productsContainer.innerHTML="";
-  adminSettings.products.forEach((p,i)=>{
-    const card=document.createElement("div");
-    card.className="card"; card.id=`product-${i}`;
-    let html=`<img src="${p.image}" alt="${p.name}"><h3>${p.name}</h3>
-      <p class="price">${p.smallPrice&&p.bigPrice?`$${p.smallPrice} – $${p.bigPrice}`:`$${p.price||""}`}</p>
-      <div id="availability-${i}"></div>`;
-    if(p.sizes) html+=`Size:<br><select id="size-${i}"><option value="Big">Big (+$3)</option><option value="Small">Small</option></select><br>`;
-    html+=`Color:<br><select id="color-${i}">${colors.map(c=>`<option>${c}</option>`)}</select><br>
-      Qty:<br><input type="number" id="qty-${i}" value="1" min="1" style="width:60px;"><br>
-      <button class="button" id="btn-${i}">Add to Cart</button>`;
-    card.innerHTML=html;
-    productsContainer.appendChild(card);
-    
-    document.getElementById(`btn-${i}`).onclick=()=>addToCart(i);
-    updateStatus(i);
-  });
-}
-
-// ======== UPDATE PRODUCT STATUS ========
-function updateStatus(i){
-  const p=adminSettings.products[i];
-  const badge=document.getElementById(`availability-${i}`);
-  const btn=document.getElementById(`btn-${i}`);
-  const card=document.getElementById(`product-${i}`);
-  if(p.available===false){
-    badge.innerHTML='<span class="status-badge out-of-stock">Sold Out</span>';
-    btn.disabled=true; btn.style.background="#999";
-    if(!card.querySelector(".sold-out-overlay")){
-      con
+  <!-- CACTUS TOOTHPICK HOLDER -->
+  <div class="card" id="cactus-card">
+    <img id="cactus-img" src="" alt="Cactus Toothpick Holder">
+    <h3>Cactus Toothpick Holder</h3>
+    <p class="price" id="cactus-price">$20.00</p>
+    <div id="cactus-availability"></div>
+    Color:<br>
+    <select id="cactusColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Light Green</option>
+      <o
