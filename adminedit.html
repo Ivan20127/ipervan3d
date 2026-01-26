@@ -4,6 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pervan 3-D Admin Edit</title>
+
+  <!-- LOCKOUT ALERT SCRIPT -->
+  <script>
+    window.addEventListener('load', () => {
+      const lockoutTime = localStorage.getItem('adminLockoutTime');
+      if (lockoutTime) {
+        const remainingMs = parseInt(lockoutTime) - Date.now();
+        if (remainingMs > 0) {
+          const minutes = Math.ceil(remainingMs / 60000);
+          alert(
+            `You are currently locked out due to too many failed login attempts.\n\n` +
+            `Please wait ${minutes} minute${minutes > 1 ? 's' : ''} before trying again.\n\n` +
+            `The page will be locked until the countdown on the login page finishes.`
+          );
+        }
+      }
+    });
+  </script>
+
+  <!-- Your existing styles -->
   <style>
     body {
       margin: 0;
@@ -38,7 +58,6 @@
   </style>
 </head>
 <body>
-
 <div class="container">
   <h1>Pervan 3-D Admin Edit</h1>
   <p class="subtitle">Control prices, photos, stock status, colors & site appearance — changes apply instantly!</p>
@@ -97,18 +116,8 @@ const DEFAULT_COLORS = [
 
 // Products with price and photo
 const DEFAULT_PRODUCTS = [
-  { 
-    name: "Dragon Fidget", 
-    available: true, 
-    price: "24.99", 
-    image: ""  // can be URL or base64
-  },
-  { 
-    name: "Star Fidget", 
-    available: true, 
-    price: "19.99", 
-    image: "" 
-  }
+  { name: "Dragon Fidget", available: true, price: "24.99", image: "" },
+  { name: "Star Fidget", available: true, price: "19.99", image: "" }
 ];
 
 // Load saved settings or use defaults
@@ -149,7 +158,6 @@ function loadSettings() {
         <strong>${product.name}</strong>
         <label for="price-${index}">Price (starting at):</label>
         <input type="number" id="price-${index}" min="0" step="0.01" value="${product.price || ''}" placeholder="19.99">
-        
         <label for="image-${index}">Product Image URL or Upload:</label>
         <input type="text" id="image-url-${index}" value="${product.image || ''}" placeholder="https://example.com/dragon.jpg">
         <input type="file" id="image-file-${index}" accept="image/*" style="margin-top: 8px;">
@@ -200,7 +208,6 @@ function saveSettings() {
 
   localStorage.setItem('pervanSettings', JSON.stringify(settings));
 
-  // Show saved message
   const msg = document.getElementById('savedMsg');
   msg.style.display = 'inline';
   setTimeout(() => { msg.style.display = 'none'; }, 2500);
@@ -221,7 +228,7 @@ document.addEventListener('change', async (e) => {
     }
   }
 
-  // Auto-save on toggle or other changes
+  // Auto-save on toggle
   if (e.target.classList.contains('color-toggle') || e.target.classList.contains('product-toggle')) {
     const badge = e.target.parentElement.nextElementSibling;
     const isChecked = e.target.checked;
@@ -236,6 +243,5 @@ document.getElementById('saveAll').addEventListener('click', saveSettings);
 // Load everything on page open
 window.addEventListener('load', loadSettings);
 </script>
-
 </body>
 </html>
