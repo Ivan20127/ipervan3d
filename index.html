@@ -16,7 +16,7 @@
       color: white;
       padding: 40px 20px;
       text-align: center;
-      position: relative; /* Allows absolute positioning inside header */
+      position: relative;
     }
     header h1 {
       margin: 0;
@@ -37,47 +37,6 @@
       font-weight: bold;
       font-size: 1.1em;
     }
-    .venmo-button {
-      background: #009cde; /* Venmo blue for optional use */
-    }
-
-    /* ──────────────────────────────────────── */
-    /*     SECRET ADMIN BUTTON - TOP RIGHT      */
-    /* ──────────────────────────────────────── */
-    .secret-admin-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      width: 38px;
-      height: 38px;
-      background: rgba(255, 255, 255, 0.12); /* Very subtle light gray */
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 1000;
-      transition: all 0.25s ease;
-      opacity: 0.35;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    }
-
-    .secret-admin-btn:hover {
-      opacity: 0.85;
-      background: rgba(255, 255, 255, 0.35);
-      transform: scale(1.15);
-    }
-
-    /* Optional: small gear icon (remove ::after block if you want it completely blank) */
-    .secret-admin-btn::after {
-      content: "⚙";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.9);
-    }
-    /* ──────────────────────────────────────── */
-
     section {
       padding: 40px 20px;
       max-width: 1000px;
@@ -119,6 +78,37 @@
       padding: 20px;
       font-size: 0.9em;
     }
+
+    /* SECRET ADMIN BUTTON */
+    .secret-admin-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.25s ease;
+      opacity: 0.35;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .secret-admin-btn:hover {
+      opacity: 0.85;
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.15);
+    }
+    .secret-admin-btn::after {
+      content: "⚙";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+    }
   </style>
 </head>
 <body>
@@ -132,7 +122,7 @@
   <!-- SECRET ADMIN BUTTON -->
   <button 
     class="secret-admin-btn" 
-    onclick="window.location.href='admin.html'"
+    onclick="window.location.href='admin-lock.html'"
     title="Admin Area (secret)"
   ></button>
 </header>
@@ -141,17 +131,17 @@
   <h2>What We Make</h2>
   <div class="products">
     <div class="card">
-      <img alt="Custom part">
+      <img src="" alt="Custom part">
       <h3>Custom Parts</h3>
       <p>Functional and replacement parts printed to your specifications.</p>
     </div>
     <div class="card">
-      <img alt="3D model">
+      <img src="" alt="3D model">
       <h3>3-D Models</h3>
       <p>High-detail models for display, gaming, or personal projects.</p>
     </div>
     <div class="card">
-      <img alt="Prototype">
+      <img src="" alt="Prototype">
       <h3>Prototypes</h3>
       <p>Rapid prototyping to test ideas before mass production.</p>
     </div>
