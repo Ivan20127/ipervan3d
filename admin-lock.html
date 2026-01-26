@@ -31,11 +31,11 @@
     }
     .input-group {
       position: relative;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
     input {
       width: 100%;
-      padding: 14px 50px 14px 18px;
+      padding: 14px 18px;
       font-size: 1.1em;
       border: 2px solid #444;
       border-radius: 6px;
@@ -72,6 +72,7 @@
       font-weight: bold;
       cursor: pointer;
       transition: background 0.3s;
+      margin-top: 10px;
     }
     button:hover {
       background: #e65c00;
@@ -94,11 +95,22 @@
 <div class="box">
   <h2>Admin Access</h2>
 
+  <!-- Username Field -->
+  <div class="input-group">
+    <input
+      type="text"
+      id="username"
+      placeholder="Username"
+      autocomplete="off"
+    >
+  </div>
+
+  <!-- Password Field -->
   <div class="input-group">
     <input
       type="password"
       id="password"
-      placeholder="Enter admin password"
+      placeholder="Password"
       autocomplete="off"
     >
     <span class="eye-icon" id="toggleEye">👁️</span>
@@ -110,9 +122,11 @@
 </div>
 
 <script>
-  // CHANGE THIS TO YOUR OWN STRONG PASSWORD!
-  const ADMIN_PASSWORD = "Ivanboy2012";
+  // CHANGE THESE TO YOUR OWN CREDENTIALS!
+  const CORRECT_USERNAME = "Croatia";         // ← Username is now "Croatia"
+  const CORRECT_PASSWORD = "Ivanboy2012";     // ← Change this password if you want!
 
+  const usernameInput = document.getElementById('username');
   const passwordInput = document.getElementById('password');
   const toggleEye     = document.getElementById('toggleEye');
   const loginBtn      = document.getElementById('loginBtn');
@@ -132,9 +146,10 @@
 
   // Login function
   function attemptLogin() {
-    const entered = passwordInput.value.trim();
+    const enteredUsername = usernameInput.value.trim();
+    const enteredPassword = passwordInput.value.trim();
 
-    if (entered === ADMIN_PASSWORD) {
+    if (enteredUsername === CORRECT_USERNAME && enteredPassword === CORRECT_PASSWORD) {
       errorMsg.style.color = '#28a745';
       errorMsg.textContent = 'Logging in...';
       loginBtn.disabled = true;
@@ -145,9 +160,10 @@
       }, 600);
     } else {
       errorMsg.style.color = '#ff4d4d';
-      errorMsg.textContent = 'Incorrect password. Try again.';
+      errorMsg.textContent = 'Invalid username or password. Try again.';
       passwordInput.value = '';
-      passwordInput.focus();
+      usernameInput.value = '';
+      usernameInput.focus();
     }
   }
 
@@ -160,6 +176,9 @@
       attemptLogin();
     }
   });
+
+  // Focus on username when page loads
+  usernameInput.focus();
 </script>
 
 </body>
