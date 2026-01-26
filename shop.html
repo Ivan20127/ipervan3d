@@ -243,6 +243,35 @@
       Add to Cart
     </button>
   </div>
+
+  <!-- CACTUS TOOTHPICK HOLDER -->
+  <div class="card" id="cactus-card">
+    <img id="cactus-img" src="" alt="Cactus Toothpick Holder">
+    <h3>Cactus Toothpick Holder</h3>
+    <p class="price" id="cactus-price">$20.00</p>
+    <div id="cactus-availability"></div>
+    Color:<br>
+    <select id="cactusColor">
+      <option>Red</option>
+      <option>Blue</option>
+      <option>Black</option>
+      <option>Light Green</option>
+      <option>Yellow</option>
+      <option>Grey</option>
+      <option>Copper Purple (+$2)</option>
+    </select><br>
+    Qty:<br>
+    <input type="number" id="cactusQty" value="1" min="1" style="width:60px;"><br>
+    <button class="button" id="cactus-add-btn" onclick="addToCart(
+      'Cactus Toothpick Holder',
+      20,
+      document.getElementById('cactusQty').value,
+      'Standard',
+      document.getElementById('cactusColor').value
+    )">
+      Add to Cart
+    </button>
+  </div>
 </section>
 
 <div class="cart">
@@ -280,6 +309,12 @@ function applyAdminSettings() {
   document.getElementById('gear-price').innerHTML = gear.price ? `$${gear.price}` : '$2.00';
   if (gear.image) document.getElementById('gear-img').src = gear.image;
   updateProductStatus('gear', gear.available);
+
+  // Cactus Toothpick Holder (index 3)
+  const cactus = products[3] || {};
+  document.getElementById('cactus-price').innerHTML = cactus.price ? `$${cactus.price}` : '$20.00';
+  if (cactus.image) document.getElementById('cactus-img').src = cactus.image;
+  updateProductStatus('cactus', cactus.available);
 }
 
 function updateProductStatus(productId, isAvailable) {
@@ -327,50 +362,4 @@ function addToCart(name, basePrice, qty, size, color) {
   const finalPrice = (parseFloat(basePrice) + colorUpcharge) * qty;
 
   const li = document.createElement("li");
-  li.textContent = `${name} (${size}, ${color}) x${qty} - $${finalPrice.toFixed(2)}`;
-
-  const remove = document.createElement("span");
-  remove.textContent = " ✖";
-  remove.className = "remove";
-  remove.onclick = function () {
-    cartItems.removeChild(li);
-    total -= finalPrice;
-    totalDisplay.textContent = total.toFixed(2);
-  };
-
-  li.appendChild(remove);
-  cartItems.appendChild(li);
-  total += finalPrice;
-  totalDisplay.textContent = total.toFixed(2);
-}
-
-function checkout() {
-  if (total === 0) {
-    alert("Your cart is empty.");
-    return;
-  }
-
-  const customerInput = document.getElementById("customerName");
-  const customer = customerInput.value.trim();
-
-  if (!customer) {
-    alert("Please enter your customer name before checking out.");
-    customerInput.focus();
-    return;
-  }
-
-  let note = `Pervan 3D Order from ${customer}: `;
-  document.querySelectorAll("#cart-items li").forEach((item, i, arr) => {
-    note += item.textContent.replace(" ✖", "");
-    if (i !== arr.length - 1) note += " | ";
-  });
-
-  window.open(
-    `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`,
-    "_blank"
-  );
-}
-</script>
-
-</body>
-</html>
+  li.textContent = `${name} (${size}, ${color
