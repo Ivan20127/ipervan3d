@@ -1,63 +1,250 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pervan 3-D Admin</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:#f8f9fa;color:#333;padding:20px;}
-h1{text-align:center;margin-bottom:10px;}
-.subtitle{text-align:center;color:#666;margin-bottom:40px;}
-.container{max-width:1000px;margin:auto;}
-.section{background:#fff;border-radius:10px;padding:30px;margin:30px 0;box-shadow:0 4px 12px rgba(0,0,0,.1);}
-label{display:block;margin:10px 0 5px;font-weight:bold;}
-input[type="text"],input[type="number"],input[type="file"],input[type="email"],input[type="color"]{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:6px;}
-.switch-container{display:flex;align-items:center;margin:10px 0;}
-.switch{position:relative;display:inline-block;width:60px;height:34px;margin-right:10px;}
-.switch input{opacity:0;width:0;height:0;}
-.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;transition:.4s;border-radius:34px;}
-.slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background:white;transition:.4s;border-radius:50%;}
-input:checked + .slider{background:#28a745;}
-input:checked + .slider:before{transform:translateX(26px);}
-.status-badge{padding:4px 10px;border-radius:15px;font-size:.9em;font-weight:bold;margin-left:10px;}
-.in-stock{background:#28a745;color:#fff;}
-.out-of-stock{background:#dc3545;color:#fff;}
-button{background:#ff6600;color:#fff;border:none;padding:12px 30px;border-radius:6px;font-size:1em;cursor:pointer;margin-top:10px;}
-button:hover{background:#e65c00;}
-.product-item,.color-item{display:flex;align-items:center;justify-content:space-between;background:#f9f9f9;padding:10px;border-radius:6px;margin:10px 0;flex-wrap:wrap;gap:10px;}
-.product-preview{max-width:120px;border:1px solid #ddd;border-radius:6px;}
-.size-price-row{display:flex;gap:20px;}
-.size-price-row>div{flex:1;}
-.saved{color:#28a745;font-weight:bold;margin-left:15px;display:none;}
-</style>
-</head>
-<body>
-<div class="container">
-<h1>Pervan 3-D Admin</h1>
-<p class="subtitle">Control products, prices, colors, and site appearance</p>
-
-<div class="section">
-<h2>Colors / Filaments</h2>
-<div id="colors-container"></div>
-</div>
-
-<div class="section">
-<h2>Products</h2>
-<div id="products-container"></div>
-</div>
-
-<div class="section">
-<h2>General Settings</h2>
-<label>Email:</label><input type="email" id="email" placeholder="your@email.com">
-<label>Footer Text:</label><input type="text" id="footer-text" placeholder="© 2026 Pervan 3-D. All rights reserved.">
-<div class="switch-container">
-<label class="switch"><input type="checkbox" id="dark-mode"><span class="slider"></span></label> Dark Mode
-</div>
-<label>Accent Color:</label><input type="color" id="accent-color" value="#ff6600">
-<label>Header/Footer BG:</label><input type="color" id="header-bg" value="#111111">
-<button id="saveAll">Save All Changes</button>
-<span class="saved" id="savedMsg">✓ Changes Saved!</span>
-</div>
-</div>
-
 <script>
+// Default products with good example images (mostly from 3D print communities like Printables, MakerWorld, etc.)
+const defaultProducts = [
+  {
+    id: "dragon-fidget",
+    name: "Dragon Fidget",
+    description: "Articulated 3D printed dragon fidget toy – posable wings, flexible body, great for stress relief or display.",
+    price: 19.99,
+    inStock: true,
+    image: "https://media.printables.com/media/prints/413203/images/413203-articulated-night-spirit-dragon.webp"
+  },
+  {
+    id: "star-fidget",
+    name: "Star Fidget",
+    description: "Expanding sensory star fidget – collapses and expands with satisfying motion, now with optional handle for extra spin.",
+    price: 14.99,
+    inStock: true,
+    image: "https://makerworld.com/storage/models/1453243/expanded-sensory-fidget-star-with-handles.webp"
+  },
+  {
+    id: "gear-fidget",
+    name: "Gear Fidget",
+    description: "Print-in-place gear spinner – multiple interlocking gears for smooth, quiet mechanical fidgeting.",
+    price: 11.99,
+    inStock: true,
+    image: "https://media.printables.com/media/prints/550127/images/gear-fidget-spinner.webp"
+  },
+  {
+    id: "heart-dish",
+    name: "Heart Dish",
+    description: "Cute heart-shaped dish – perfect for jewelry, keys, soap, candies, or small trinkets (3D printable design).",
+    price: 15.99,
+    inStock: true,
+    image: "https://www.printables.com/model/330128-heart-shaped-dish/files"  // Placeholder; use a direct image if you host one
+  },
+  {
+    id: "cactus-toothpick",
+    name: "Cactus Toothpick Holder",
+    description: "Fun 3D printed cactus – push mechanism pops toothpicks out like spines, great for parties or desk.",
+    price: 8.99,
+    inStock: true,
+    image: "https://thangs.com/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fproduction-thangs-public%2Fuploads%2Fattachments%2F...%2Fcactus-thumbnail.jpg&w=1080&q=75"  // Adjust to actual if needed
+  },
+  {
+    id: "teacher-gifts",
+    name: "Names and Teacher Gifts",
+    description: "Personalized teacher appreciation set – custom tumblers, keychains, pouches, and more with names or messages.",
+    price: 24.99,
+    inStock: true,
+    image: "https://www.getnamenecklace.com/images/personalized-3d-colorful-teacher-name-sign.jpg"  // Example personalized sign; swap for your tumbler/keychain photo
+  }
+];
+
+// Load saved data or defaults
+let products = JSON.parse(localStorage.getItem('pervanProducts')) || defaultProducts;
+let colors = JSON.parse(localStorage.getItem('pervanColors')) || [
+  { name: "Red", hex: "#ff0000" },
+  { name: "Blue", hex: "#0000ff" },
+  { name: "Black", hex: "#000000" },
+  { name: "Glow Green", hex: "#39ff14" },
+  { name: "Purple", hex: "#9b59b6" }
+];
+
+const productsContainer = document.getElementById('products-container');
+const colorsContainer = document.getElementById('colors-container');
+const saveBtn = document.getElementById('saveAll');
+const savedMsg = document.getElementById('savedMsg');
+
+// Add "Add New Product" form above products list
+function addAddProductForm() {
+  const addSection = document.createElement('div');
+  addSection.style = 'background:#f0f8ff; padding:15px; border-radius:8px; margin-bottom:20px;';
+  addSection.innerHTML = `
+    <h3>Add New Product</h3>
+    <label>Name:</label><input type="text" id="new-name" placeholder="e.g. New Fidget Toy">
+    <label>Description:</label><textarea id="new-desc" style="height:60px;"></textarea>
+    <label>Price ($):</label><input type="number" step="0.01" id="new-price" value="9.99">
+    <label>Image URL:</label><input type="text" id="new-image" placeholder="https://...">
+    <div class="switch-container">
+      <label class="switch"><input type="checkbox" id="new-stock" checked><span class="slider"></span></label> In Stock
+    </div>
+    <button onclick="addNewProduct()">Add Product</button>
+  `;
+  productsContainer.parentNode.insertBefore(addSection, productsContainer);
+}
+
+// Call once on load
+window.addEventListener('load', () => {
+  addAddProductForm();
+  // ... rest of load code below
+});
+
+// Add new product function
+function addNewProduct() {
+  const name = document.getElementById('new-name').value.trim();
+  if (!name) return alert('Please enter a product name!');
+
+  const newProd = {
+    id: 'custom-' + Date.now(),  // Unique ID
+    name: name,
+    description: document.getElementById('new-desc').value.trim(),
+    price: parseFloat(document.getElementById('new-price').value) || 9.99,
+    inStock: document.getElementById('new-stock').checked,
+    image: document.getElementById('new-image').value.trim() || 'https://via.placeholder.com/300?text=New+Product'
+  };
+
+  products.push(newProd);
+
+  // Clear form
+  document.getElementById('new-name').value = '';
+  document.getElementById('new-desc').value = '';
+  document.getElementById('new-price').value = '9.99';
+  document.getElementById('new-image').value = '';
+  document.getElementById('new-stock').checked = true;
+
+  renderProducts();
+  alert('New product added! Click Save All Changes to keep it.');
+}
+
+// Render products with remove button
+function renderProducts() {
+  productsContainer.innerHTML = '';
+  products.forEach((prod, index) => {
+    const div = document.createElement('div');
+    div.className = 'product-item';
+    div.innerHTML = `
+      <div style="flex: 1; min-width: 300px;">
+        <label>Product Name:</label>
+        <input type="text" value="${prod.name}" data-index="${index}" data-field="name">
+
+        <label>Description:</label>
+        <textarea style="height: 90px; resize: vertical;" data-index="${index}" data-field="description">${prod.description || ''}</textarea>
+
+        <label>Price ($):</label>
+        <input type="number" step="0.01" min="0" value="${prod.price.toFixed(2)}" data-index="${index}" data-field="price">
+
+        <label>Image URL:</label>
+        <input type="text" value="${prod.image}" data-index="${index}" data-field="image" placeholder="https://... (direct image link)">
+
+        <div class="switch-container" style="margin-top: 15px;">
+          <label class="switch">
+            <input type="checkbox" ${prod.inStock ? 'checked' : ''} data-index="${index}" data-field="inStock">
+            <span class="slider"></span>
+          </label>
+          <span class="status-badge ${prod.inStock ? 'in-stock' : 'out-of-stock'}">
+            ${prod.inStock ? 'In Stock' : 'Out of Stock'}
+          </span>
+        </div>
+        <button onclick="removeProduct(${index})" style="background:#dc3545; margin-top:10px;">Remove Product</button>
+      </div>
+      <div style="text-align: center;">
+        <img src="${prod.image}" alt="${prod.name}" class="product-preview" onerror="this.src='https://via.placeholder.com/120?text=Image+Not+Found'; this.style.border='2px dashed #ccc';">
+      </div>
+    `;
+    productsContainer.appendChild(div);
+  });
+
+  // Live updates
+  productsContainer.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('input', handleInputChange);
+    input.addEventListener('change', handleInputChange);
+  });
+}
+
+function removeProduct(index) {
+  if (confirm('Remove this product permanently?')) {
+    products.splice(index, 1);
+    renderProducts();
+  }
+}
+
+// ... (rest of the script remains the same: handleInputChange, renderColors, removeColor, saveBtn listener, load general settings)
+
+function handleInputChange(e) {
+  const index = parseInt(e.target.dataset.index);
+  const field = e.target.dataset.field;
+  const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+  if (field === 'price') {
+    products[index][field] = parseFloat(value) || 0;
+  } else if (field === 'inStock') {
+    products[index][field] = value;
+  } else {
+    products[index][field] = value;
+  }
+
+  if (field === 'inStock') {
+    const badge = e.target.closest('.product-item').querySelector('.status-badge');
+    badge.textContent = value ? 'In Stock' : 'Out of Stock';
+    badge.className = `status-badge ${value ? 'in-stock' : 'out-of-stock'}`;
+  }
+}
+
+// Render colors (unchanged)
+function renderColors() {
+  colorsContainer.innerHTML = '';
+  colors.forEach((color, index) => {
+    const div = document.createElement('div');
+    div.className = 'color-item';
+    div.innerHTML = `
+      <input type="text" value="${color.name}" data-index="${index}" data-field="name" data-type="color">
+      <input type="color" value="${color.hex}" data-index="${index}" data-field="hex" data-type="color">
+      <button onclick="removeColor(${index})">Remove</button>
+    `;
+    colorsContainer.appendChild(div);
+  });
+
+  colorsContainer.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const idx = e.target.dataset.index;
+      const field = e.target.dataset.field;
+      colors[idx][field] = e.target.value;
+    });
+  });
+}
+
+function removeColor(index) {
+  if (confirm('Remove this filament color?')) {
+    colors.splice(index, 1);
+    renderColors();
+  }
+}
+
+// Save everything
+saveBtn.addEventListener('click', () => {
+  localStorage.setItem('pervanProducts', JSON.stringify(products));
+  localStorage.setItem('pervanColors', JSON.stringify(colors));
+
+  localStorage.setItem('pervanEmail', document.getElementById('email').value.trim());
+  localStorage.setItem('pervanFooter', document.getElementById('footer-text').value.trim());
+  localStorage.setItem('pervanDarkMode', document.getElementById('dark-mode').checked);
+  localStorage.setItem('pervanAccent', document.getElementById('accent-color').value);
+  localStorage.setItem('pervanHeaderBg', document.getElementById('header-bg').value);
+
+  savedMsg.style.display = 'inline';
+  setTimeout(() => { savedMsg.style.display = 'none'; }, 4000);
+});
+
+// Load on page load
+window.addEventListener('load', () => {
+  document.getElementById('email').value = localStorage.getItem('pervanEmail') || '';
+  document.getElementById('footer-text').value = localStorage.getItem('pervanFooter') || '© 2026 Pervan 3-D. All rights reserved.';
+  document.getElementById('dark-mode').checked = localStorage.getItem('pervanDarkMode') === 'true';
+  document.getElementById('accent-color').value = localStorage.getItem('pervanAccent') || '#ff6600';
+  document.getElementById('header-bg').value = localStorage.getItem('pervanHeaderBg') || '#111111';
+
+  renderProducts();
+  renderColors();
+});
+</script>
