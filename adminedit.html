@@ -1,306 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pervan 3-D Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #f9f9f9;
+    color: #222;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  h1, h2 {
+    text-align: center;
+  }
+  .section {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 600;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  textarea {
+    min-height: 80px;
+  }
+  .product, .color {
+    background: #f8f9fa;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    border: 1px solid #eee;
+  }
+  .row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .row > div {
+    flex: 1;
+    min-width: 250px;
+  }
+  img.preview {
+    max-width: 140px;
+    border-radius: 6px;
+  }
+  .status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-left: 12px;
+  }
+  .in-stock { background:#28a745; color:white; }
+  .out-stock { background:#dc3545; color:white; }
+  button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover { background: #e65c00; }
+  button.danger {
+    background: #c0392b;
+  }
+  button.danger:hover {
+    background: #a93226;
+  }
+  #saveAll {
+    font-size: 1.1rem;
+    padding: 14px 28px;
+  }
+  #saved {
+    color: #28a745;
+    font-weight: bold;
+    margin-left: 15px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Pervan 3-D Admin</h1>
+
+  <!-- Add new product -->
+  <div class="section">
+    <h2>Add New Product</h2>
+    <div class="row">
+      <div>
+        <label>Name</label>
+        <input id="add-name" type="text" placeholder="Product name">
+      </div>
+      <div>
+        <label>Description</label>
+        <textarea id="add-desc"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Price ($)</label>
+        <input id="add-price" type="number" step="0.01" value="12.99">
+      </div>
+      <div>
+        <label>Image URL</label>
+        <input id="add-img" type="text" placeholder="https://...">
+      </div>
+    </div>
+    <div style="margin:15px 0;">
+      <label style="display:inline-flex; align-items:center; gap:8px;">
+        <input type="checkbox" id="add-stock" checked>
+        In stock
+      </label>
+    </div>
+    <button onclick="addItem()">Add product</button>
+  </div>
+
+  <!-- Products list -->
+  <div class="section">
+    <h2>Products</h2>
+    <div id="products"></div>
+  </div>
+
+  <!-- Save button -->
+  <div class="section" style="text-align:center;">
+    <button id="saveAll">Save All Changes</button>
+    <span id="saved">✓ Saved</span>
+  </div>
+</div>
+
 <script>
 // ────────────────────────────────────────────────
-// DEFAULT DATA
+let items = JSON.parse(localStorage.getItem('p3d_items')) || [
+  {name:"Dragon Fidget",   desc:"Posable articulated dragon fidget",               price:19.99, stock:true,  img:"https://via.placeholder.com/300x220/2c3e50/fff?text=Dragon"},
+  {name:"Star Fidget",     desc:"Expanding / collapsing star fidget",             price:14.99, stock:true,  img:"https://via.placeholder.com/300x220/34495e/fff?text=Star"},
+  {name:"Gear Fidget",     desc:"Print-in-place gear spinner",                    price:11.99, stock:true,  img:"https://via.placeholder.com/300x220/7f8c8d/fff?text=Gear"},
+  {name:"Heart Dish",      desc:"Heart shaped trinket / soap dish",               price:15.99, stock:true,  img:"https://via.placeholder.com/300x220/e74c3c/fff?text=Heart"},
+  {name:"Cactus Toothpick",desc:"Push-to-dispense cactus toothpick holder",       price:8.99,  stock:true,  img:"https://via.placeholder.com/300x220/27ae60/fff?text=Cactus"},
+  {name:"Teacher Gifts",   desc:"Personalized teacher appreciation items",        price:24.99, stock:true,  img:"https://via.placeholder.com/300x220/3498db/fff?text=Teacher"}
+];
+
 // ────────────────────────────────────────────────
-const defaultProducts = [
-  {
-    id: "dragon-fidget",
-    name: "Dragon Fidget",
-    description: "Articulated 3D printed dragon fidget toy – posable wings, flexible body, great for stress relief or display.",
-    price: 19.99,
-    inStock: true,
-    image: "https://via.placeholder.com/300x220/2c3e50/ffffff?text=Dragon+Fidget"
-  },
-  {
-    id: "star-fidget",
-    name: "Star Fidget",
-    description: "Expanding sensory star fidget – collapses and expands with satisfying motion, optional handle for extra spin.",
-    price: 14.99,
-    inStock: true,
-    image: "https://via.placeholder.com/300x220/34495e/ffffff?text=Star+Fidget"
-  },
-  {
-    id: "gear-fidget",
-    name: "Gear Fidget",
-    description: "Print-in-place gear spinner – multiple interlocking gears for smooth, quiet mechanical fidgeting.",
-    price: 11.99,
-    inStock: true,
-    image: "https://via.placeholder.com/300x220/7f8c8d/ffffff?text=Gear+Fidget"
-  },
-  {
-    id: "heart-dish",
-    name: "Heart Dish",
-    description: "Cute heart-shaped dish – perfect for jewelry, keys, soap, candies, or small trinkets.",
-    price: 15.99,
-    inStock: true,
-    image: "https://via.placeholder.com/300x220/e74c3c/ffffff?text=Heart+Dish"
-  },
-  {
-    id: "cactus-toothpick",
-    name: "Cactus Toothpick Holder",
-    description: "Fun 3D printed cactus – push mechanism pops toothpicks out like spines, great for desk or parties.",
-    price: 8.99,
-    inStock: true,
-    image: "https://via.placeholder.com/300x220/27ae60/ffffff?text=Cactus+Holder"
-  },
-  {
-    id: "teacher-gifts",
-    name: "Names and Teacher Gifts",
-    description: "Personalized teacher appreciation set – custom tumblers, keychains, pouches, signs with names/messages.",
-    price: 24.99,
-    inStock: true,
-    image: "https://via.placeholder.com/300x220/3498db/ffffff?text=Teacher+Gifts"
+const productsDiv = document.getElementById('products');
+const saveBtn = document.getElementById('saveAll');
+const savedSpan = document.getElementById('saved');
+
+// ────────────────────────────────────────────────
+function render() {
+  productsDiv.innerHTML = '';
+
+  items.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'product';
+    card.innerHTML = `
+      <div class="row">
+        <div>
+          <label>Name</label>
+          <input value="${item.name}" data-index="${index}" data-field="name">
+
+          <label>Description</label>
+          <textarea data-index="${index}" data-field="desc">${item.desc || ''}</textarea>
+
+          <label>Price $</label>
+          <input type="number" step="0.01" value="${item.price}" data-index="${index}" data-field="price">
+        </div>
+
+        <div>
+          <label>Image URL</label>
+          <input value="${item.img}" data-index="${index}" data-field="img">
+
+          <div style="margin:15px 0;">
+            <label style="display:inline-flex; align-items:center; gap:8px;">
+              <input type="checkbox" ${item.stock ? 'checked' : ''} data-index="${index}" data-field="stock">
+              In stock
+            </label>
+            <span class="status ${item.stock ? 'in-stock' : 'out-stock'}">
+              ${item.stock ? 'In Stock' : 'Out of Stock'}
+            </span>
+          </div>
+
+          <button class="danger" onclick="remove(${index})">Remove</button>
+        </div>
+      </div>
+
+      <img src="${item.img}" class="preview" onerror="this.src='https://via.placeholder.com/140?text=?';">
+    `;
+    productsDiv.appendChild(card);
+  });
+
+  // Live updates
+  productsDiv.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', updateField);
+    el.addEventListener('change', updateField);
+  });
+}
+
+function updateField(e) {
+  const index = +e.target.dataset.index;
+  const field = e.target.dataset.field;
+  let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+  if (field === 'price') value = Number(value) || 0;
+
+  items[index][field] = value;
+
+  if (field === 'stock') {
+    const status = e.target.closest('.product').querySelector('.status');
+    status.textContent = value ? 'In Stock' : 'Out of Stock';
+    status.className = 'status ' + (value ? 'in-stock' : 'out-stock');
   }
-];
+}
 
-const defaultColors = [
-  { name: "Red",       hex: "#ff0000" },
-  { name: "Blue",      hex: "#0000ff" },
-  { name: "Black",     hex: "#000000" },
-  { name: "Glow Green",hex: "#39ff14" },
-  { name: "Purple",    hex: "#9b59b6" },
-  { name: "Gold",      hex: "#ffd700" }
-];
+function addItem() {
+  const name = document.getElementById('add-name').value.trim();
+  if (!name) return alert('Name is required');
+
+  items.push({
+    name,
+    desc: document.getElementById('add-desc').value.trim(),
+    price: Number(document.getElementById('add-price').value) || 12.99,
+    img: document.getElementById('add-img').value.trim() || 'https://via.placeholder.com/300x220?text=New',
+    stock: document.getElementById('add-stock').checked
+  });
+
+  render();
+
+  // clear form
+  document.getElementById('add-name').value = '';
+  document.getElementById('add-desc').value = '';
+  document.getElementById('add-price').value = '12.99';
+  document.getElementById('add-img').value = '';
+  document.getElementById('add-stock').checked = true;
+}
+
+function remove(index) {
+  if (!confirm('Delete this product?')) return;
+  items.splice(index, 1);
+  render();
+}
 
 // ────────────────────────────────────────────────
-// STATE & DOM REFERENCES
-// ────────────────────────────────────────────────
-let products = [];
-let colors   = [];
-
-let dom = {
-  productsContainer: null,
-  colorsContainer:   null,
-  saveBtn:           null,
-  savedMsg:          null,
-  email:             null,
-  footerText:        null,
-  darkMode:          null,
-  accentColor:       null,
-  headerBg:          null
+saveBtn.onclick = () => {
+  localStorage.setItem('p3d_items', JSON.stringify(items));
+  savedSpan.style.display = 'inline';
+  setTimeout(() => savedSpan.style.display = 'none', 3000);
+  alert('Saved');
 };
 
 // ────────────────────────────────────────────────
-// UTILITY
-// ────────────────────────────────────────────────
-function escapeHtml(text) {
-  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-  return text.replace(/[&<>"']/g, m => map[m]);
-}
-
-// ────────────────────────────────────────────────
-// RENDERING
-// ────────────────────────────────────────────────
-function renderProducts() {
-  if (!dom.productsContainer) return;
-  dom.productsContainer.innerHTML = '';
-
-  products.forEach((p, i) => {
-    const div = document.createElement('div');
-    div.className = 'product-item';
-    div.innerHTML = `
-      <div style="flex:1; min-width:320px;">
-        <label>Product Name</label>
-        <input type="text" value="${escapeHtml(p.name)}" data-idx="${i}" data-field="name">
-
-        <label>Description</label>
-        <textarea rows="3" data-idx="${i}" data-field="description">${escapeHtml(p.description||'')}</textarea>
-
-        <label>Price ($)</label>
-        <input type="number" step="0.01" min="0" value="${p.price.toFixed(2)}" data-idx="${i}" data-field="price">
-
-        <label>Image URL</label>
-        <input type="text" value="${escapeHtml(p.image)}" data-idx="${i}" data-field="image">
-
-        <div class="switch-container" style="margin:12px 0;">
-          <label class="switch">
-            <input type="checkbox" ${p.inStock?'checked':''} data-idx="${i}" data-field="inStock">
-            <span class="slider"></span>
-          </label>
-          <span class="status-badge ${p.inStock?'in-stock':'out-of-stock'}">
-            ${p.inStock ? 'In Stock' : 'Out of Stock'}
-          </span>
-        </div>
-
-        <button style="background:#e74c3c; color:white;" onclick="removeProduct(${i})">Remove Product</button>
-      </div>
-      <div style="margin-left:20px; text-align:center;">
-        <img src="${p.image}" alt="${escapeHtml(p.name)}" class="product-preview"
-             onerror="this.src='https://via.placeholder.com/120?text=No+Image';this.style.border='2px dashed #ccc';">
-      </div>
-    `;
-    dom.productsContainer.appendChild(div);
-  });
-
-  // attach live listeners
-  dom.productsContainer.querySelectorAll('input, textarea').forEach(el => {
-    el.addEventListener('input',  handleProductInput);
-    el.addEventListener('change', handleProductInput);
-  });
-}
-
-function renderColors() {
-  if (!dom.colorsContainer) return;
-  dom.colorsContainer.innerHTML = '';
-
-  colors.forEach((c, i) => {
-    const div = document.createElement('div');
-    div.className = 'color-item';
-    div.innerHTML = `
-      <input type="text"   value="${escapeHtml(c.name)}" data-idx="${i}" data-field="name"  data-type="color">
-      <input type="color"  value="${c.hex}"             data-idx="${i}" data-field="hex"   data-type="color">
-      <button onclick="removeColor(${i})">Remove</button>
-    `;
-    dom.colorsContainer.appendChild(div);
-  });
-
-  dom.colorsContainer.querySelectorAll('input').forEach(el => {
-    el.addEventListener('input', handleColorInput);
-  });
-}
-
-// ────────────────────────────────────────────────
-// EVENT HANDLERS
-// ────────────────────────────────────────────────
-function handleProductInput(e) {
-  const idx   = parseInt(e.target.dataset.idx);
-  const field = e.target.dataset.field;
-  if (isNaN(idx)) return;
-
-  let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-  if (field === 'price') value = parseFloat(value) || 0;
-
-  products[idx][field] = value;
-
-  if (field === 'inStock') {
-    const badge = e.target.closest('.product-item')?.querySelector('.status-badge');
-    if (badge) {
-      badge.textContent = value ? 'In Stock' : 'Out of Stock';
-      badge.className   = `status-badge ${value ? 'in-stock' : 'out-of-stock'}`;
-    }
-  }
-}
-
-function handleColorInput(e) {
-  const idx   = parseInt(e.target.dataset.idx);
-  const field = e.target.dataset.field;
-  if (isNaN(idx)) return;
-  colors[idx][field] = e.target.value;
-}
-
-function addNewProduct() {
-  const nameEl = document.getElementById('new-name');
-  if (!nameEl?.value.trim()) return alert('Please enter a product name');
-
-  const item = {
-    id:          'custom-' + Date.now(),
-    name:        nameEl.value.trim(),
-    description: document.getElementById('new-desc')?.value.trim() || '',
-    price:       parseFloat(document.getElementById('new-price')?.value) || 9.99,
-    inStock:     document.getElementById('new-stock')?.checked ?? true,
-    image:       document.getElementById('new-image')?.value.trim() || 'https://via.placeholder.com/300x220?text=New+Product'
-  };
-
-  products.push(item);
-  renderProducts();
-
-  // clear form
-  nameEl.value = '';
-  document.getElementById('new-desc').value  = '';
-  document.getElementById('new-price').value = '9.99';
-  document.getElementById('new-image').value = '';
-  document.getElementById('new-stock').checked = true;
-}
-
-function removeProduct(idx) {
-  if (!confirm('Remove this product permanently?')) return;
-  products.splice(idx, 1);
-  renderProducts();
-}
-
-function removeColor(idx) {
-  if (!confirm('Remove this filament color?')) return;
-  colors.splice(idx, 1);
-  renderColors();
-}
-
-// ────────────────────────────────────────────────
-// INIT
-// ────────────────────────────────────────────────
-window.addEventListener('load', () => {
-  try {
-    // 1. Load data
-    products = JSON.parse(localStorage.getItem('pervanProducts')) || defaultProducts;
-    colors   = JSON.parse(localStorage.getItem('pervanColors'))   || defaultColors;
-
-    // 2. Get DOM elements
-    dom.productsContainer = document.getElementById('products-container');
-    dom.colorsContainer   = document.getElementById('colors-container');
-    dom.saveBtn           = document.getElementById('saveAll');
-    dom.savedMsg          = document.getElementById('savedMsg');
-
-    dom.email      = document.getElementById('email');
-    dom.footerText = document.getElementById('footer-text');
-    dom.darkMode   = document.getElementById('dark-mode');
-    dom.accentColor = document.getElementById('accent-color');
-    dom.headerBg   = document.getElementById('header-bg');
-
-    if (!dom.productsContainer || !dom.colorsContainer) {
-      throw new Error("Missing required containers: #products-container and/or #colors-container");
-    }
-
-    // 3. Restore general settings
-    if (dom.email)      dom.email.value      = localStorage.getItem('pervanEmail')      || '';
-    if (dom.footerText) dom.footerText.value = localStorage.getItem('pervanFooter')     || '© 2026 Pervan 3-D. All rights reserved.';
-    if (dom.darkMode)   dom.darkMode.checked = localStorage.getItem('pervanDarkMode')   === 'true';
-    if (dom.accentColor)dom.accentColor.value = localStorage.getItem('pervanAccent')    || '#ff6600';
-    if (dom.headerBg)   dom.headerBg.value   = localStorage.getItem('pervanHeaderBg')   || '#111111';
-
-    // 4. Inject "Add New Product" form
-    const addForm = document.createElement('div');
-    addForm.style.cssText = 'background:#f0f8ff; padding:20px; border-radius:8px; margin-bottom:25px; border:1px solid #ddd;';
-    addForm.innerHTML = `
-      <h3 style="margin-top:0;">Add New Product</h3>
-      <label>Name</label><input type="text" id="new-name" placeholder="e.g. New Fidget Toy"><br>
-      <label>Description</label><textarea id="new-desc" rows="2" placeholder="Short description"></textarea><br>
-      <label>Price ($)</label><input type="number" step="0.01" id="new-price" value="9.99"><br>
-      <label>Image URL</label><input type="text" id="new-image" placeholder="https://... (optional)"><br>
-      <div class="switch-container">
-        <label class="switch"><input type="checkbox" id="new-stock" checked><span class="slider"></span></label> In Stock
-      </div>
-      <button onclick="addNewProduct()">Add Product</button>
-    `;
-    dom.productsContainer.parentNode.insertBefore(addForm, dom.productsContainer);
-
-    // 5. Initial render
-    renderProducts();
-    renderColors();
-
-    // 6. Save button handler
-    if (dom.saveBtn) {
-      dom.saveBtn.addEventListener('click', () => {
-        localStorage.setItem('pervanProducts', JSON.stringify(products));
-        localStorage.setItem('pervanColors',   JSON.stringify(colors));
-
-        if (dom.email)      localStorage.setItem('pervanEmail',     dom.email.value.trim());
-        if (dom.footerText) localStorage.setItem('pervanFooter',    dom.footerText.value.trim());
-        if (dom.darkMode)   localStorage.setItem('pervanDarkMode',  dom.darkMode.checked);
-        if (dom.accentColor) localStorage.setItem('pervanAccent',   dom.accentColor.value);
-        if (dom.headerBg)   localStorage.setItem('pervanHeaderBg',  dom.headerBg.value);
-
-        if (dom.savedMsg) {
-          dom.savedMsg.style.display = 'inline';
-          setTimeout(() => dom.savedMsg.style.display = 'none', 5000);
-        }
-        alert('All changes saved!');
-      });
-    }
-
-    console.log('Pervan 3-D Admin loaded successfully');
-
-  } catch (err) {
-    console.error('Admin load failed:', err);
-    alert('Error loading admin panel:\n' + err.message + '\n\nCheck browser console (F12) for details.');
-  }
-});
+render();
 </script>
+
+</body>
+</html>
