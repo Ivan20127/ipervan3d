@@ -1,270 +1,309 @@
 <script>
-// Default products
+// ────────────────────────────────────────────────
+// DEFAULT DATA
+// ────────────────────────────────────────────────
 const defaultProducts = [
   {
     id: "dragon-fidget",
     name: "Dragon Fidget",
-    description: "Articulated 3D printed dragon fidget toy – posable wings, flexible body, great for stress relief or display.",
+    description: "Articulated 3D printed dragon – posable, flexible, fun stress relief toy.",
     price: 19.99,
     inStock: true,
-    image: "https://via.placeholder.com/300x200?text=Dragon+Fidget"
+    image: "https://via.placeholder.com/300x220/2c3e50/ffffff?text=Dragon+Fidget"
   },
   {
     id: "star-fidget",
     name: "Star Fidget",
-    description: "Expanding sensory star fidget – collapses and expands with satisfying motion.",
+    description: "Expanding / collapsing star sensory fidget – satisfying tactile play.",
     price: 14.99,
     inStock: true,
-    image: "https://via.placeholder.com/300x200?text=Star+Fidget"
+    image: "https://via.placeholder.com/300x220/34495e/ffffff?text=Star+Fidget"
   },
   {
     id: "gear-fidget",
     name: "Gear Fidget",
-    description: "Print-in-place gear spinner – multiple interlocking gears for smooth fidgeting.",
+    description: "Print-in-place mechanical gear spinner – smooth, quiet fidget mechanism.",
     price: 11.99,
     inStock: true,
-    image: "https://via.placeholder.com/300x200?text=Gear+Fidget"
+    image: "https://via.placeholder.com/300x220/7f8c8d/ffffff?text=Gear+Fidget"
   },
   {
     id: "heart-dish",
     name: "Heart Dish",
-    description: "Cute heart-shaped dish – perfect for jewelry, keys, soap, or small trinkets.",
+    description: "Cute heart-shaped trinket dish – jewelry, keys, soap, small treats.",
     price: 15.99,
     inStock: true,
-    image: "https://via.placeholder.com/300x200?text=Heart+Dish"
+    image: "https://via.placeholder.com/300x220/e74c3c/ffffff?text=Heart+Dish"
   },
   {
     id: "cactus-toothpick",
     name: "Cactus Toothpick Holder",
-    description: "Fun 3D printed cactus – push mechanism pops toothpicks out like spines.",
+    description: "Fun cactus dispenser – push to pop toothpicks like spines.",
     price: 8.99,
     inStock: true,
-    image: "https://via.placeholder.com/300x200?text=Cactus+Toothpick"
+    image: "https://via.placeholder.com/300x220/27ae60/ffffff?text=Cactus+Holder"
   },
   {
     id: "teacher-gifts",
-    name: "Names and Teacher Gifts",
-    description: "Personalized teacher appreciation set – custom tumblers, keychains, pouches, etc.",
+    name: "Names & Teacher Gifts",
+    description: "Personalized teacher items – tumblers, keychains, signs with names.",
     price: 24.99,
     inStock: true,
-    image: "https://via.placeholder.com/300x200?text=Teacher+Gifts"
+    image: "https://via.placeholder.com/300x220/3498db/ffffff?text=Teacher+Gifts"
   }
 ];
 
+const defaultColors = [
+  { name: "Red", hex: "#ff0000" },
+  { name: "Blue", hex: "#0000ff" },
+  { name: "Black", hex: "#000000" },
+  { name: "Glow Green", hex: "#39ff14" },
+  { name: "Purple", hex: "#9b59b6" },
+  { name: "Gold", hex: "#ffd700" }
+];
+
+// ────────────────────────────────────────────────
+// STATE
+// ────────────────────────────────────────────────
 let products = [];
 let colors = [];
 
-let productsContainer = null;
-let colorsContainer = null;
-let saveBtn = null;
-let savedMsg = null;
+// DOM references (set safely later)
+let dom = {
+  productsContainer: null,
+  colorsContainer: null,
+  saveBtn: null,
+  savedMsg: null,
+  email: null,
+  footerText: null,
+  darkMode: null,
+  accentColor: null,
+  headerBg: null
+};
 
-function addAddProductForm() {
-  if (!productsContainer) return;
-  const addSection = document.createElement('div');
-  addSection.style.cssText = 'background:#f0f8ff; padding:15px; border-radius:8px; margin-bottom:20px;';
-  addSection.innerHTML = `
-    <h3>Add New Product</h3>
-    <label>Name:</label><input type="text" id="new-name" placeholder="e.g. New Fidget Toy"><br>
-    <label>Description:</label><textarea id="new-desc" style="height:60px; width:100%;"></textarea><br>
-    <label>Price ($):</label><input type="number" step="0.01" id="new-price" value="9.99"><br>
-    <label>Image URL:</label><input type="text" id="new-image" placeholder="https://... or leave blank"><br>
-    <div class="switch-container">
-      <label class="switch"><input type="checkbox" id="new-stock" checked><span class="slider"></span></label> In Stock
-    </div>
-    <button onclick="addNewProduct()">Add Product</button>
-  `;
-  productsContainer.parentNode.insertBefore(addSection, productsContainer);
-}
-
-function addNewProduct() {
-  const nameEl = document.getElementById('new-name');
-  if (!nameEl || !nameEl.value.trim()) return alert('Please enter a product name!');
-
-  const newProd = {
-    id: 'custom-' + Date.now(),
-    name: nameEl.value.trim(),
-    description: document.getElementById('new-desc')?.value.trim() || '',
-    price: parseFloat(document.getElementById('new-price')?.value) || 9.99,
-    inStock: document.getElementById('new-stock')?.checked ?? true,
-    image: document.getElementById('new-image')?.value.trim() || 'https://via.placeholder.com/300?text=New+Product'
-  };
-
-  products.push(newProd);
-  nameEl.value = '';
-  document.getElementById('new-desc').value = '';
-  document.getElementById('new-price').value = '9.99';
-  document.getElementById('new-image').value = '';
-  document.getElementById('new-stock').checked = true;
-
-  renderProducts();
-  alert('Product added — remember to click Save All Changes');
-}
-
+// ────────────────────────────────────────────────
+// RENDER FUNCTIONS
+// ────────────────────────────────────────────────
 function renderProducts() {
-  if (!productsContainer) return;
-  productsContainer.innerHTML = '';
+  if (!dom.productsContainer) return;
+  dom.productsContainer.innerHTML = '';
 
-  products.forEach((prod, index) => {
-    const div = document.createElement('div');
-    div.className = 'product-item';
-    div.innerHTML = `
-      <div style="flex:1; min-width:300px;">
-        <label>Product Name:</label>
-        <input type="text" value="${prod.name}" data-index="${index}" data-field="name"><br>
-        <label>Description:</label>
-        <textarea style="height:90px; width:100%; resize:vertical;" data-index="${index}" data-field="description">${prod.description || ''}</textarea><br>
-        <label>Price ($):</label>
-        <input type="number" step="0.01" min="0" value="${prod.price.toFixed(2)}" data-index="${index}" data-field="price"><br>
-        <label>Image URL:</label>
-        <input type="text" value="${prod.image}" data-index="${index}" data-field="image"><br>
-        <div class="switch-container" style="margin:15px 0;">
+  products.forEach((prod, idx) => {
+    const card = document.createElement('div');
+    card.className = 'product-item';
+    card.innerHTML = `
+      <div style="flex:1; min-width:320px;">
+        <label>Product Name</label>
+        <input type="text" value="${escapeHtml(prod.name)}" data-idx="${idx}" data-field="name">
+
+        <label>Description</label>
+        <textarea rows="3" data-idx="${idx}" data-field="description">${escapeHtml(prod.description || '')}</textarea>
+
+        <label>Price ($)</label>
+        <input type="number" step="0.01" min="0" value="${prod.price.toFixed(2)}" data-idx="${idx}" data-field="price">
+
+        <label>Image URL</label>
+        <input type="text" value="${escapeHtml(prod.image)}" data-idx="${idx}" data-field="image" placeholder="https://...">
+
+        <div class="switch-container" style="margin:12px 0;">
           <label class="switch">
-            <input type="checkbox" ${prod.inStock ? 'checked' : ''} data-index="${index}" data-field="inStock">
+            <input type="checkbox" ${prod.inStock ? 'checked' : ''} data-idx="${idx}" data-field="inStock">
             <span class="slider"></span>
           </label>
           <span class="status-badge ${prod.inStock ? 'in-stock' : 'out-of-stock'}">
             ${prod.inStock ? 'In Stock' : 'Out of Stock'}
           </span>
         </div>
-        <button onclick="removeProduct(${index})" style="background:#dc3545; color:white; padding:8px 16px; border:none; border-radius:4px;">Remove</button>
+
+        <button style="background:#e74c3c;" onclick="removeProduct(${idx})">Remove Product</button>
       </div>
-      <div style="text-align:center; margin-left:20px;">
-        <img src="${prod.image}" alt="${prod.name}" class="product-preview" style="max-width:120px;" 
-             onerror="this.src='https://via.placeholder.com/120?text=No+Image'; this.style.border='2px dashed #ccc';">
+      <div style="margin-left:20px; text-align:center;">
+        <img src="${prod.image}" alt="${escapeHtml(prod.name)}" class="product-preview"
+             onerror="this.src='https://via.placeholder.com/120?text=Broken+Image'; this.style.border='2px dashed red';">
       </div>
     `;
-    productsContainer.appendChild(div);
+    dom.productsContainer.appendChild(card);
   });
 
-  productsContainer.querySelectorAll('input, textarea').forEach(el => {
-    el.addEventListener('input', handleInputChange);
-    el.addEventListener('change', handleInputChange);
+  // Live editing
+  dom.productsContainer.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', handleProductChange);
+    el.addEventListener('change', handleProductChange);
   });
 }
 
-function removeProduct(index) {
-  if (confirm('Delete this product?')) {
-    products.splice(index, 1);
-    renderProducts();
-  }
+function renderColors() {
+  if (!dom.colorsContainer) return;
+  dom.colorsContainer.innerHTML = '';
+
+  colors.forEach((c, idx) => {
+    const item = document.createElement('div');
+    item.className = 'color-item';
+    item.innerHTML = `
+      <input type="text" value="${escapeHtml(c.name)}" data-idx="${idx}" data-field="name" data-type="color">
+      <input type="color" value="${c.hex}" data-idx="${idx}" data-field="hex" data-type="color">
+      <button onclick="removeColor(${idx})">Remove</button>
+    `;
+    dom.colorsContainer.appendChild(item);
+  });
+
+  dom.colorsContainer.querySelectorAll('input').forEach(el => {
+    el.addEventListener('input', handleColorChange);
+  });
 }
 
-function handleInputChange(e) {
-  const index = parseInt(e.target.dataset.index);
-  if (isNaN(index)) return;
+// ────────────────────────────────────────────────
+// EVENT HANDLERS
+// ────────────────────────────────────────────────
+function handleProductChange(e) {
+  const idx = parseInt(e.target.dataset.idx);
+  if (isNaN(idx)) return;
   const field = e.target.dataset.field;
-  const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
 
-  if (field === 'price') {
-    products[index][field] = parseFloat(value) || 0;
-  } else if (field === 'inStock') {
-    products[index][field] = value;
+  if (field === 'price') value = parseFloat(value) || 0;
+
+  products[idx][field] = value;
+
+  // Live badge update
+  if (field === 'inStock') {
     const badge = e.target.closest('.product-item')?.querySelector('.status-badge');
     if (badge) {
       badge.textContent = value ? 'In Stock' : 'Out of Stock';
       badge.className = `status-badge ${value ? 'in-stock' : 'out-of-stock'}`;
     }
-  } else {
-    products[index][field] = value;
   }
 }
 
-function renderColors() {
-  if (!colorsContainer) return;
-  colorsContainer.innerHTML = '';
-  colors.forEach((color, index) => {
-    const div = document.createElement('div');
-    div.className = 'color-item';
-    div.innerHTML = `
-      <input type="text" value="${color.name}" data-index="${index}" data-field="name" data-type="color">
-      <input type="color" value="${color.hex}" data-index="${index}" data-field="hex" data-type="color">
-      <button onclick="removeColor(${index})">Remove</button>
-    `;
-    colorsContainer.appendChild(div);
-  });
-
-  colorsContainer.querySelectorAll('input').forEach(el => {
-    el.addEventListener('input', e => {
-      const idx = e.target.dataset.index;
-      const field = e.target.dataset.field;
-      colors[idx][field] = e.target.value;
-    });
-  });
+function handleColorChange(e) {
+  const idx = parseInt(e.target.dataset.idx);
+  if (isNaN(idx)) return;
+  const field = e.target.dataset.field;
+  colors[idx][field] = e.target.value;
 }
 
-function removeColor(index) {
-  if (confirm('Remove this color?')) {
-    colors.splice(index, 1);
-    renderColors();
-  }
+function addNewProduct() {
+  const nameEl = document.getElementById('new-name');
+  if (!nameEl?.value.trim()) return alert('Product name is required!');
+
+  const newItem = {
+    id: 'prod-' + Date.now(),
+    name: nameEl.value.trim(),
+    description: document.getElementById('new-desc')?.value.trim() || '',
+    price: parseFloat(document.getElementById('new-price')?.value) || 12.99,
+    inStock: document.getElementById('new-stock')?.checked ?? true,
+    image: document.getElementById('new-image')?.value.trim() || 'https://via.placeholder.com/300x220?text=New+Product'
+  };
+
+  products.push(newItem);
+  renderProducts();
+
+  // Clear form
+  nameEl.value = '';
+  document.getElementById('new-desc').value = '';
+  document.getElementById('new-price').value = '12.99';
+  document.getElementById('new-image').value = '';
+  document.getElementById('new-stock').checked = true;
+}
+
+function removeProduct(idx) {
+  if (!confirm('Delete this product?')) return;
+  products.splice(idx, 1);
+  renderProducts();
+}
+
+function removeColor(idx) {
+  if (!confirm('Remove this color?')) return;
+  colors.splice(idx, 1);
+  renderColors();
+}
+
+function escapeHtml(text) {
+  return text.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
 }
 
 // ────────────────────────────────────────────────
-
+// MAIN INIT
+// ────────────────────────────────────────────────
 window.addEventListener('load', () => {
   try {
-    // Load saved data or defaults
+    // Load data
     products = JSON.parse(localStorage.getItem('pervanProducts')) || defaultProducts;
-    colors   = JSON.parse(localStorage.getItem('pervanColors')) || [
-      { name: "Red",    hex: "#ff0000" },
-      { name: "Blue",   hex: "#0000ff" },
-      { name: "Black",  hex: "#000000" },
-      { name: "Glow Green", hex: "#39ff14" },
-      { name: "Purple", hex: "#9b59b6" }
-    ];
+    colors   = JSON.parse(localStorage.getItem('pervanColors'))   || defaultColors;
 
-    // Get DOM elements
-    productsContainer = document.getElementById('products-container');
-    colorsContainer   = document.getElementById('colors-container');
-    saveBtn           = document.getElementById('saveAll');
-    savedMsg          = document.getElementById('savedMsg');
+    // Grab DOM elements safely
+    dom.productsContainer = document.getElementById('products-container');
+    dom.colorsContainer   = document.getElementById('colors-container');
+    dom.saveBtn           = document.getElementById('saveAll');
+    dom.savedMsg          = document.getElementById('savedMsg');
 
-    if (!productsContainer || !colorsContainer) {
-      throw new Error("Missing #products-container or #colors-container in HTML");
+    dom.email      = document.getElementById('email');
+    dom.footerText = document.getElementById('footer-text');
+    dom.darkMode   = document.getElementById('dark-mode');
+    dom.accentColor= document.getElementById('accent-color');
+    dom.headerBg   = document.getElementById('header-bg');
+
+    if (!dom.productsContainer || !dom.colorsContainer) {
+      console.error("Required containers missing → add <div id='products-container'></div> and <div id='colors-container'></div>");
+      alert("Admin layout issue: missing product/color containers. Check HTML.");
+      return;
     }
 
-    // Load general settings
-    const emailEl       = document.getElementById('email');
-    const footerEl      = document.getElementById('footer-text');
-    const darkModeEl    = document.getElementById('dark-mode');
-    const accentEl      = document.getElementById('accent-color');
-    const headerBgEl    = document.getElementById('header-bg');
+    // Load settings
+    if (dom.email)      dom.email.value      = localStorage.getItem('pervanEmail')      || '';
+    if (dom.footerText) dom.footerText.value = localStorage.getItem('pervanFooter')     || '© 2026 Pervan 3-D. All rights reserved.';
+    if (dom.darkMode)   dom.darkMode.checked = localStorage.getItem('pervanDarkMode')   === 'true';
+    if (dom.accentColor)dom.accentColor.value= localStorage.getItem('pervanAccent')     || '#ff6600';
+    if (dom.headerBg)   dom.headerBg.value   = localStorage.getItem('pervanHeaderBg')   || '#111111';
 
-    if (emailEl)       emailEl.value       = localStorage.getItem('pervanEmail') || '';
-    if (footerEl)      footerEl.value      = localStorage.getItem('pervanFooter') || '© 2026 Pervan 3-D. All rights reserved.';
-    if (darkModeEl)    darkModeEl.checked  = localStorage.getItem('pervanDarkMode') === 'true';
-    if (accentEl)      accentEl.value      = localStorage.getItem('pervanAccent') || '#ff6600';
-    if (headerBgEl)    headerBgEl.value    = localStorage.getItem('pervanHeaderBg') || '#111111';
+    // Add "Add New Product" form dynamically
+    if (dom.productsContainer.parentNode) {
+      const addForm = document.createElement('div');
+      addForm.style.cssText = 'background:#f8f9fa; padding:20px; border-radius:8px; margin-bottom:25px; border:1px solid #ddd;';
+      addForm.innerHTML = `
+        <h3 style="margin-top:0;">Add New Product</h3>
+        <label>Name</label><input type="text" id="new-name" placeholder="Product name" required><br>
+        <label>Description</label><textarea id="new-desc" rows="2" placeholder="Short description"></textarea><br>
+        <label>Price ($)</label><input type="number" step="0.01" id="new-price" value="12.99"><br>
+        <label>Image URL</label><input type="text" id="new-image" placeholder="https://... (optional)"><br>
+        <div class="switch-container">
+          <label class="switch"><input type="checkbox" id="new-stock" checked><span class="slider"></span></label>
+          In Stock
+        </div>
+        <button onclick="addNewProduct()">Add Product</button>
+      `;
+      dom.productsContainer.parentNode.insertBefore(addForm, dom.productsContainer);
+    }
 
-    // Render everything
-    addAddProductForm();
+    // Render initial content
     renderProducts();
     renderColors();
 
-    // Save button
-    if (saveBtn) {
-      saveBtn.addEventListener('click', () => {
+    // Save handler
+    if (dom.saveBtn) {
+      dom.saveBtn.addEventListener('click', () => {
         localStorage.setItem('pervanProducts', JSON.stringify(products));
         localStorage.setItem('pervanColors',   JSON.stringify(colors));
 
-        if (emailEl)       localStorage.setItem('pervanEmail',     emailEl.value.trim());
-        if (footerEl)      localStorage.setItem('pervanFooter',    footerEl.value.trim());
-        if (darkModeEl)    localStorage.setItem('pervanDarkMode',  darkModeEl.checked);
-        if (accentEl)      localStorage.setItem('pervanAccent',    accentEl.value);
-        if (headerBgEl)    localStorage.setItem('pervanHeaderBg',  headerBgEl.value);
+        if (dom.email)      localStorage.setItem('pervanEmail',     dom.email.value.trim());
+        if (dom.footerText) localStorage.setItem('pervanFooter',    dom.footerText.value.trim());
+        if (dom.darkMode)   localStorage.setItem('pervanDarkMode',  dom.darkMode.checked);
+        if (dom.accentColor)localStorage.setItem('pervanAccent',    dom.accentColor.value);
+        if (dom.headerBg)   localStorage.setItem('pervanHeaderBg',  dom.headerBg.value);
 
-        if (savedMsg) {
-          savedMsg.style.display = 'inline';
-          setTimeout(() => savedMsg.style.display = 'none', 4000);
+        if (dom.savedMsg) {
+          dom.savedMsg.style.display = 'inline';
+          setTimeout(() => dom.savedMsg.style.display = 'none', 5000);
         }
-        alert('Settings saved!');
+        alert('All changes saved successfully!');
       });
     }
 
+    console.log('Pervan 3-D Admin loaded successfully');
+
   } catch (err) {
-    console.error("Admin panel failed to load:", err);
-    alert("Error loading admin page:\n" + err.message + "\n\nOpen F12 → Console tab for more details.");
+    console.error('Admin init failed:', err);
+    alert('Admin panel could not load properly.\nError: ' + err.message + '\n\nOpen F12 → Console for details.');
   }
 });
 </script>
