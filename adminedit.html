@@ -1,272 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Pervan 3-D Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pervan 3-D Admin</title>
+  <style>
+    :root {
+      --accent: #ff6600;
+      --accent-dark: #e65c00;
+      --text: #333;
+      --bg: #f8f9fa;
+      --card: white;
+      --border: #ddd;
+      --green: #28a745;
+      --red: #dc3545;
+    }
 
-<style>
-  body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: #f9f9f9;
-    color: #222;
-    padding: 20px;
-  }
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  h1, h2 {
-    text-align: center;
-  }
-  .section {
-    background: white;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  }
-  label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: 600;
-  }
-  input, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-  }
-  textarea {
-    min-height: 80px;
-  }
-  .product, .color {
-    background: #f8f9fa;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 8px;
-    border: 1px solid #eee;
-  }
-  .row {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .row > div {
-    flex: 1;
-    min-width: 250px;
-  }
-  img.preview {
-    max-width: 140px;
-    border-radius: 6px;
-  }
-  .status {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-weight: bold;
-    margin-left: 12px;
-  }
-  .in-stock { background:#28a745; color:white; }
-  .out-stock { background:#dc3545; color:white; }
-  button {
-    background: #ff6600;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  button:hover { background: #e65c00; }
-  button.danger {
-    background: #c0392b;
-  }
-  button.danger:hover {
-    background: #a93226;
-  }
-  #saveAll {
-    font-size: 1.1rem;
-    padding: 14px 28px;
-  }
-  #saved {
-    color: #28a745;
-    font-weight: bold;
-    margin-left: 15px;
-    display: none;
-  }
-</style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0 10px;
+      font-size: 2.2rem;
+      color: #111;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .section {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #222;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 12px;
+    }
+
+    /* Add form – no description */
+    .add-form {
+      background: #fffaf0;
+      border: 1px solid #ffe0b2;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-row > div {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    /* Product card – no description */
+    .admin-product {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 1px solid #eee;
+    }
+
+    .admin-product > div {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .preview-img {
+      max-width: 160px;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .stock-switch {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 52px;
+      height: 28px;
+      margin-right: 12px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 28px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider { background-color: var(--green); }
+    input:checked + .slider:before { transform: translateX(24px); }
+
+    .status-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .in-stock  { background: var(--green); color: white; }
+    .out-stock { background: var(--red);   color: white; }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover { background: var(--accent-dark); }
+
+    button.danger {
+      background: var(--red);
+    }
+
+    button.danger:hover { background: #c0392b; }
+
+    #saveAll {
+      font-size: 1.15rem;
+      padding: 16px 36px;
+      display: block;
+      margin: 30px auto;
+    }
+
+    #savedMsg {
+      color: var(--green);
+      font-weight: bold;
+      margin-left: 20px;
+      vertical-align: middle;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
   <h1>Pervan 3-D Admin</h1>
+  <div class="subtitle">Edit products • changes appear on shop & home page</div>
 
-  <!-- Add new product -->
+  <!-- ADD NEW PRODUCT – no description -->
   <div class="section">
     <h2>Add New Product</h2>
-    <div class="row">
-      <div>
-        <label>Name</label>
-        <input id="add-name" type="text" placeholder="Product name">
+    <div class="add-form">
+      <div class="form-row">
+        <div>
+          <label>Product Name</label>
+          <input type="text" id="new-name" placeholder="e.g. Crystal Dragon">
+        </div>
+        <div>
+          <label>Price (USD)</label>
+          <input type="number" step="0.01" id="new-price" value="19.99">
+        </div>
       </div>
-      <div>
-        <label>Description</label>
-        <textarea id="add-desc"></textarea>
+
+      <div class="form-row">
+        <div>
+          <label>Image URL</label>
+          <input type="text" id="new-image" placeholder="https://...">
+        </div>
       </div>
+
+      <div class="stock-switch">
+        <label class="switch">
+          <input type="checkbox" id="new-stock" checked>
+          <span class="slider"></span>
+        </label>
+        <span>In Stock</span>
+      </div>
+
+      <button onclick="addProduct()">Add Product</button>
     </div>
-    <div class="row">
-      <div>
-        <label>Price ($)</label>
-        <input id="add-price" type="number" step="0.01" value="12.99">
-      </div>
-      <div>
-        <label>Image URL</label>
-        <input id="add-img" type="text" placeholder="https://...">
-      </div>
-    </div>
-    <div style="margin:15px 0;">
-      <label style="display:inline-flex; align-items:center; gap:8px;">
-        <input type="checkbox" id="add-stock" checked>
-        In stock
-      </label>
-    </div>
-    <button onclick="addItem()">Add product</button>
   </div>
 
-  <!-- Products list -->
+  <!-- PRODUCTS LIST – no description -->
   <div class="section">
-    <h2>Products</h2>
-    <div id="products"></div>
+    <h2>Your Products</h2>
+    <div id="products-list"></div>
   </div>
 
-  <!-- Save button -->
-  <div class="section" style="text-align:center;">
-    <button id="saveAll">Save All Changes</button>
-    <span id="saved">✓ Saved</span>
-  </div>
+  <!-- SAVE -->
+  <button id="saveAll">Save All Changes</button>
+  <span id="savedMsg">✓ Changes saved</span>
 </div>
 
 <script>
 // ────────────────────────────────────────────────
-let items = JSON.parse(localStorage.getItem('p3d_items')) || [
-  {name:"Dragon Fidget",   desc:"Posable articulated dragon fidget",               price:19.99, stock:true,  img:"https://via.placeholder.com/300x220/2c3e50/fff?text=Dragon"},
-  {name:"Star Fidget",     desc:"Expanding / collapsing star fidget",             price:14.99, stock:true,  img:"https://via.placeholder.com/300x220/34495e/fff?text=Star"},
-  {name:"Gear Fidget",     desc:"Print-in-place gear spinner",                    price:11.99, stock:true,  img:"https://via.placeholder.com/300x220/7f8c8d/fff?text=Gear"},
-  {name:"Heart Dish",      desc:"Heart shaped trinket / soap dish",               price:15.99, stock:true,  img:"https://via.placeholder.com/300x220/e74c3c/fff?text=Heart"},
-  {name:"Cactus Toothpick",desc:"Push-to-dispense cactus toothpick holder",       price:8.99,  stock:true,  img:"https://via.placeholder.com/300x220/27ae60/fff?text=Cactus"},
-  {name:"Teacher Gifts",   desc:"Personalized teacher appreciation items",        price:24.99, stock:true,  img:"https://via.placeholder.com/300x220/3498db/fff?text=Teacher"}
+const productsList = document.getElementById('products-list');
+const saveBtn = document.getElementById('saveAll');
+const savedMsg = document.getElementById('savedMsg');
+
+let products = JSON.parse(localStorage.getItem('pervanProducts')) || [
+  { name: "Dragon Fidget",   price: 19.99, stock: true, image: "https://via.placeholder.com/300x220/2c3e50/ffffff?text=Dragon" },
+  { name: "Star Fidget",     price: 14.99, stock: true, image: "https://via.placeholder.com/300x220/34495e/ffffff?text=Star" },
+  { name: "Gear Fidget",     price: 11.99, stock: true, image: "https://via.placeholder.com/300x220/7f8c8d/ffffff?text=Gear" },
+  { name: "Heart Dish",      price: 15.99, stock: true, image: "https://via.placeholder.com/300x220/e74c3c/ffffff?text=Heart" },
+  { name: "Cactus Toothpick Holder", price: 8.99, stock: true, image: "https://via.placeholder.com/300x220/27ae60/ffffff?text=Cactus" },
+  { name: "Names and Teacher Gifts", price: 24.99, stock: true, image: "https://via.placeholder.com/300x220/3498db/ffffff?text=Teacher" }
 ];
 
 // ────────────────────────────────────────────────
-const productsDiv = document.getElementById('products');
-const saveBtn = document.getElementById('saveAll');
-const savedSpan = document.getElementById('saved');
+function renderProducts() {
+  productsList.innerHTML = '';
 
-// ────────────────────────────────────────────────
-function render() {
-  productsDiv.innerHTML = '';
-
-  items.forEach((item, index) => {
+  products.forEach((p, index) => {
     const card = document.createElement('div');
-    card.className = 'product';
+    card.className = 'admin-product';
     card.innerHTML = `
       <div class="row">
         <div>
-          <label>Name</label>
-          <input value="${item.name}" data-index="${index}" data-field="name">
+          <label>Product Name</label>
+          <input type="text" value="${p.name}" data-index="${index}" data-field="name">
 
-          <label>Description</label>
-          <textarea data-index="${index}" data-field="desc">${item.desc || ''}</textarea>
-
-          <label>Price $</label>
-          <input type="number" step="0.01" value="${item.price}" data-index="${index}" data-field="price">
+          <label>Price ($)</label>
+          <input type="number" step="0.01" value="${p.price}" data-index="${index}" data-field="price">
         </div>
 
         <div>
           <label>Image URL</label>
-          <input value="${item.img}" data-index="${index}" data-field="img">
+          <input type="text" value="${p.image}" data-index="${index}" data-field="image">
 
-          <div style="margin:15px 0;">
-            <label style="display:inline-flex; align-items:center; gap:8px;">
-              <input type="checkbox" ${item.stock ? 'checked' : ''} data-index="${index}" data-field="stock">
-              In stock
+          <div class="stock-switch">
+            <label class="switch">
+              <input type="checkbox" ${p.stock ? 'checked' : ''} data-index="${index}" data-field="stock">
+              <span class="slider"></span>
             </label>
-            <span class="status ${item.stock ? 'in-stock' : 'out-stock'}">
-              ${item.stock ? 'In Stock' : 'Out of Stock'}
+            <span class="status-badge ${p.stock ? 'in-stock' : 'out-stock'}">
+              ${p.stock ? 'In Stock' : 'Out of Stock'}
             </span>
           </div>
 
-          <button class="danger" onclick="remove(${index})">Remove</button>
+          <button class="danger" onclick="removeProduct(${index})">Remove Product</button>
         </div>
       </div>
 
-      <img src="${item.img}" class="preview" onerror="this.src='https://via.placeholder.com/140?text=?';">
+      <img src="${p.image}" class="preview-img" alt="${p.name}" onerror="this.src='https://via.placeholder.com/160?text=No+Image'">
     `;
-    productsDiv.appendChild(card);
+    productsList.appendChild(card);
   });
 
-  // Live updates
-  productsDiv.querySelectorAll('input, textarea').forEach(el => {
-    el.addEventListener('input', updateField);
-    el.addEventListener('change', updateField);
+  // Live editing
+  productsList.querySelectorAll('input').forEach(el => {
+    el.addEventListener('input', handleChange);
+    el.addEventListener('change', handleChange);
   });
 }
 
-function updateField(e) {
+function handleChange(e) {
   const index = +e.target.dataset.index;
   const field = e.target.dataset.field;
   let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
 
   if (field === 'price') value = Number(value) || 0;
 
-  items[index][field] = value;
+  products[index][field] = value;
 
   if (field === 'stock') {
-    const status = e.target.closest('.product').querySelector('.status');
-    status.textContent = value ? 'In Stock' : 'Out of Stock';
-    status.className = 'status ' + (value ? 'in-stock' : 'out-stock');
+    const badge = e.target.closest('.admin-product').querySelector('.status-badge');
+    badge.textContent = value ? 'In Stock' : 'Out of Stock';
+    badge.className = `status-badge ${value ? 'in-stock' : 'out-stock'}`;
   }
 }
 
-function addItem() {
-  const name = document.getElementById('add-name').value.trim();
-  if (!name) return alert('Name is required');
+function addProduct() {
+  const name = document.getElementById('new-name').value.trim();
+  if (!name) return alert('Please enter product name');
 
-  items.push({
+  products.push({
     name,
-    desc: document.getElementById('add-desc').value.trim(),
-    price: Number(document.getElementById('add-price').value) || 12.99,
-    img: document.getElementById('add-img').value.trim() || 'https://via.placeholder.com/300x220?text=New',
-    stock: document.getElementById('add-stock').checked
+    price: Number(document.getElementById('new-price').value) || 19.99,
+    image: document.getElementById('new-image').value.trim() || 'https://via.placeholder.com/300x220?text=New+Product',
+    stock: document.getElementById('new-stock').checked
   });
 
-  render();
+  renderProducts();
 
-  // clear form
-  document.getElementById('add-name').value = '';
-  document.getElementById('add-desc').value = '';
-  document.getElementById('add-price').value = '12.99';
-  document.getElementById('add-img').value = '';
-  document.getElementById('add-stock').checked = true;
+  document.getElementById('new-name').value = '';
+  document.getElementById('new-price').value = '19.99';
+  document.getElementById('new-image').value = '';
+  document.getElementById('new-stock').checked = true;
 }
 
-function remove(index) {
+function removeProduct(index) {
   if (!confirm('Delete this product?')) return;
-  items.splice(index, 1);
-  render();
+  products.splice(index, 1);
+  renderProducts();
 }
 
 // ────────────────────────────────────────────────
-saveBtn.onclick = () => {
-  localStorage.setItem('p3d_items', JSON.stringify(items));
-  savedSpan.style.display = 'inline';
-  setTimeout(() => savedSpan.style.display = 'none', 3000);
-  alert('Saved');
-};
+saveBtn.addEventListener('click', () => {
+  localStorage.setItem('pervanProducts', JSON.stringify(products));
+  savedMsg.style.display = 'inline';
+  setTimeout(() => savedMsg.style.display = 'none', 4000);
+});
 
 // ────────────────────────────────────────────────
-render();
+renderProducts();
 </script>
 
 </body>
