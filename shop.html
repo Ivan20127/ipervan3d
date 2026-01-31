@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Pervan 3D Shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
 body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; color:#333; }
 header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
@@ -15,7 +14,17 @@ header h1 { margin:0; font-size:2.5em; }
   border-radius:6px; text-decoration:none; font-weight:bold;
 }
 .back-btn:hover { background:#666; }
-
+.colors-banner {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.colors-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .products {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -55,14 +64,12 @@ header h1 { margin:0; font-size:2.5em; }
   font-weight:bold;
 }
 .button:hover { background:#c82333; }
-
 select,input[type="number"] {
   margin:5px 0;
   padding:6px;
   width:100%;
   max-width:180px;
 }
-
 .cart {
   background:white;
   max-width:500px;
@@ -75,171 +82,142 @@ select,input[type="number"] {
 .remove { color:red; cursor:pointer; margin-left:6px; }
 </style>
 </head>
-
 <body>
-
 <header>
   <h1>Pervan 3D Shop</h1>
   <p>Custom 3D Printed Fidgets & More</p>
   <a href="index.html" class="back-btn">← Back to Home</a>
 </header>
 
-<section class="products">
+<!-- COLORS PHOTO BANNER – non-changeable without editing code -->
+<div class="colors-banner">
+  <img src="https://via.placeholder.com/1200x250/111/fff?text=Colors+Banner" alt="Colors">
+</div>
 
+<section class="products">
 <!-- DRAGON -->
 <div class="card">
   <img src="dragon.png" alt="Dragon Fidget">
   <h3>Dragon Fidget</h3>
   <p class="price">$5.00 – $8.00</p>
-
   Size:
   <select id="dragonSize">
     <option value="Small">Small</option>
     <option value="Big">Big (+$3)</option>
   </select>
-
   Color:
   <select id="dragonColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="dragonQty" value="1" min="1">
-
   <button class="button" onclick="addFidget('Dragon Fidget','dragonSize','dragonColor','dragonQty')">
     Add to Cart
   </button>
 </div>
-
 <!-- STAR -->
 <div class="card">
   <img src="star.png" alt="Star Fidget">
   <h3>Star Fidget</h3>
   <p class="price">$5.00 – $8.00</p>
-
   Size:
   <select id="starSize">
     <option value="Small">Small</option>
     <option value="Big">Big (+$3)</option>
   </select>
-
   Color:
   <select id="starColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="starQty" value="1" min="1">
-
   <button class="button" onclick="addFidget('Star Fidget','starSize','starColor','starQty')">
     Add to Cart
   </button>
 </div>
-
 <!-- GEAR -->
 <div class="card">
   <img src="gear.png" alt="Gear Fidget">
   <h3>Gear Fidget</h3>
   <p class="price">$2.00</p>
-
   Color:
   <select id="gearColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="gearQty" value="1" min="1">
-
   <button class="button" onclick="addFixed('Gear Fidget',2,'gearColor','gearQty')">
     Add to Cart
   </button>
 </div>
-
 <!-- CACTUS -->
 <div class="card">
   <img src="cactus.png" alt="Cactus Toothpick Holder">
   <h3>Cactus Toothpick Holder</h3>
   <p class="price">$20.00</p>
-
   Color:
   <select id="cactusColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="cactusQty" value="1" min="1">
-
   <button class="button" onclick="addFixed('Cactus Toothpick Holder',20,'cactusColor','cactusQty')">
     Add to Cart
   </button>
 </div>
-
 <!-- HEART DISH -->
 <div class="card">
   <img src="heartdish.png" alt="Heart Dish">
   <h3>Heart Dish</h3>
   <p class="price">$6.00</p>
-
   Color:
   <select id="heartDishColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="heartDishQty" value="1" min="1">
-
   <button class="button" onclick="addFixed('Heart Dish',6,'heartDishColor','heartDishQty')">
     Add to Cart
   </button>
 </div>
-
 <!-- NAMES -->
 <div class="card">
   <img src="names.png" alt="Names">
   <h3>Names</h3>
   <p class="price">$4.00</p>
-
   Color:
   <select id="namesColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="namesQty" value="1" min="1">
-
   <button class="button" onclick="addFixed('Names',3,'namesColor','namesQty')">
     Add to Cart
   </button>
 </div>
-
 <!-- TEACHER GIFT -->
 <div class="card">
   <img src="teachergift.png" alt="Teacher Gift">
   <h3>Teacher Gift</h3>
   <p class="price">$6.00</p>
-
   Color:
   <select id="teacherGiftColor">
     <option>Red</option><option>Blue</option><option>Black</option>
     <option>Light Green</option><option>Yellow</option><option>Grey</option>
   </select>
-
   Qty:
   <input type="number" id="teacherGiftQty" value="1" min="1">
-
   <button class="button" onclick="addFixed('Teacher Gift',6,'teacherGiftColor','teacherGiftQty')">
     Add to Cart
   </button>
 </div>
-
 </section>
-
 <div class="cart">
   <h3>🛒 Cart</h3>
   <input id="customerName" placeholder="Customer name (required)" style="width:100%;margin-bottom:8px;">
@@ -247,7 +225,6 @@ select,input[type="number"] {
   <p><strong>Total: $<span id="total">0.00</span></strong></p>
   <button class="button" onclick="checkout()">Pay with Venmo</button>
 </div>
-
 <script>
 let total = 0;
 const cart = document.getElementById("cart-items");
@@ -270,20 +247,17 @@ function addFixed(name,price,colorId,qtyId){
 function addItem(name,details,price,qty){
   const itemTotal = price * qty;
   total += itemTotal;
-
   const li = document.createElement("li");
   li.textContent = `${name} (${details}) x${qty} - $${itemTotal.toFixed(2)}`;
-
-  const remove = document.createElement("span");
-  remove.textContent = " ✖";
-  remove.className = "remove";
-  remove.onclick = () => {
+  const rm = document.createElement("span");
+  rm.textContent = " ✖";
+  rm.className = "remove";
+  rm.onclick = () => {
     cart.removeChild(li);
     total -= itemTotal;
     totalEl.textContent = total.toFixed(2);
   };
-
-  li.appendChild(remove);
+  li.appendChild(rm);
   cart.appendChild(li);
   totalEl.textContent = total.toFixed(2);
 }
@@ -292,19 +266,16 @@ function checkout(){
   if(total<=0){ alert("Your cart is empty."); return; }
   const name = document.getElementById("customerName").value.trim();
   if(!name){ alert("Please enter your name."); return; }
-
   let note = `Pervan 3D Order (${name}): `;
   document.querySelectorAll("#cart-items li").forEach((li,i,arr)=>{
     note += li.textContent.replace(" ✖","");
     if(i<arr.length-1) note += " | ";
   });
-
   window.open(
     `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`,
     "_blank"
   );
 }
 </script>
-
 </body>
 </html>
