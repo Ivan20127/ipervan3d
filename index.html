@@ -75,15 +75,6 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       text-align: center;
     }
-    .card img#main-product-img {
-      width: 100%;
-      height: auto;
-      max-height: 400px;
-      object-fit: contain;
-      background: #ddd;
-      border-radius: 4px;
-      margin-top: 15px;
-    }
     footer {
       background: #111;
       color: white;
@@ -128,11 +119,6 @@
       background: #1f1f1f;
       color: #eee;
     }
-
-    #photo-upload {
-      margin-top: 20px;
-      text-align: center;
-    }
   </style>
 </head>
 
@@ -167,15 +153,7 @@
         High-quality articulated fidgets and detailed models,
         printed in multiple colors and sizes.
       </p>
-
-      <!-- MAIN PHOTO (admin editable) -->
-      <img id="main-product-img" src="" alt="Sample 3D Printed Model">
-
-      <!-- Upload -->
-      <div id="photo-upload">
-        <label for="upload-photo">Change main photo:</label><br>
-        <input type="file" id="upload-photo" accept="image/*">
-      </div>
+      <!-- IMAGE AND UPLOAD REMOVED -->
     </div>
   </div>
 </section>
@@ -221,32 +199,7 @@
 
   if (settings.darkMode)
     document.body.classList.add('dark');
-
-  if (settings.mainProductImage)
-    document.getElementById('main-product-img').src = settings.mainProductImage;
 })();
-
-document.getElementById('upload-photo').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const img = document.getElementById('main-product-img');
-    img.src = event.target.result;
-
-    const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-    settings.mainProductImage = event.target.result;
-    localStorage.setItem('pervanSettings', JSON.stringify(settings));
-  };
-  reader.readAsDataURL(file);
-});
-
-window.addEventListener('load', () => {
-  const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-  if (settings.mainProductImage)
-    document.getElementById('main-product-img').src = settings.mainProductImage;
-});
 </script>
 
 </body>
