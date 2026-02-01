@@ -47,6 +47,22 @@
       text-align: center;
       margin-bottom: 30px;
     }
+
+    /* WHAT WE MAKE COVER IMAGE */
+    .what-we-make-banner {
+      width: 100%;
+      height: 300px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+    .what-we-make-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -75,6 +91,7 @@
       padding: 20px;
       font-size: 0.9em;
     }
+
     /* SECRET ADMIN BUTTON */
     .secret-admin-btn {
       position: absolute;
@@ -102,6 +119,7 @@
       font-size: 18px;
       color: white;
     }
+
     body.dark {
       background: #121212;
       color: #eee;
@@ -110,18 +128,22 @@
       background: #1f1f1f;
       color: #eee;
     }
+
     #photo-upload {
       margin-top: 20px;
       text-align: center;
     }
   </style>
 </head>
+
 <body>
+
 <header id="site-header">
   <h1>Pervan 3D</h1>
   <p>Custom 3D Printed Models & Fidgets</p>
   <a class="button" href="#contact">Request a Quote</a>
   <a class="button" href="shop.html">Go to Shop & Purchase</a>
+
   <!-- SECRET ADMIN BUTTON -->
   <button
     class="secret-admin-btn"
@@ -132,6 +154,12 @@
 
 <section>
   <h2>What We Make</h2>
+
+  <!-- STATIC COVER IMAGE -->
+  <div class="what-we-make-banner">
+    <img src="title.png" alt="What We Make">
+  </div>
+
   <div class="products">
     <div class="card">
       <h3>3D Printed Models & Fidgets</h3>
@@ -139,9 +167,11 @@
         High-quality articulated fidgets and detailed models,
         printed in multiple colors and sizes.
       </p>
-      <!-- MAIN PHOTO (editable via upload) -->
-      <img id="main-product-img" src="" alt="Sample 3D Printed Model" style="margin-top:15px; border-radius:6px; width:100%; height:auto;">
-      <!-- Photo upload (only visible on this page) -->
+
+      <!-- MAIN PHOTO (admin editable) -->
+      <img id="main-product-img" src="" alt="Sample 3D Printed Model">
+
+      <!-- Upload -->
       <div id="photo-upload">
         <label for="upload-photo">Change main photo:</label><br>
         <input type="file" id="upload-photo" accept="image/*">
@@ -171,69 +201,51 @@
 </footer>
 
 <script>
-/* ================= ADMIN SETTINGS APPLY ================= */
 (function applyAdminSettings() {
   const settings = JSON.parse(localStorage.getItem('pervanSettings'));
   if (!settings) return;
 
-  // Email
-  if (settings.email) {
+  if (settings.email)
     document.getElementById('contact-email').textContent = settings.email;
-  }
 
-  // Footer text
-  if (settings.footerText) {
+  if (settings.footerText)
     document.getElementById('footer-text').textContent = settings.footerText;
-  }
 
-  // Accent color
-  if (settings.accentColor) {
-    document.querySelectorAll('.button').forEach(btn => {
-      btn.style.background = settings.accentColor;
-    });
-  }
+  if (settings.accentColor)
+    document.querySelectorAll('.button').forEach(btn => btn.style.background = settings.accentColor);
 
-  // Header / Footer background
   if (settings.headerBg) {
     document.getElementById('site-header').style.background = settings.headerBg;
     document.getElementById('site-footer').style.background = settings.headerBg;
   }
 
-  // Dark mode
-  if (settings.darkMode) {
+  if (settings.darkMode)
     document.body.classList.add('dark');
-  }
 
-  // Main product photo from admin (if set)
-  if (settings.mainProductImage) {
+  if (settings.mainProductImage)
     document.getElementById('main-product-img').src = settings.mainProductImage;
-  }
 })();
 
-/* ================= PHOTO UPLOAD (local save) ================= */
 document.getElementById('upload-photo').addEventListener('change', function(e) {
   const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const img = document.getElementById('main-product-img');
-      img.src = event.target.result;
+  if (!file) return;
 
-      // Optional: save to localStorage so it persists across pages/sessions
-      const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-      settings.mainProductImage = event.target.result;
-      localStorage.setItem('pervanSettings', JSON.stringify(settings));
-    };
-    reader.readAsDataURL(file);
-  }
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = document.getElementById('main-product-img');
+    img.src = event.target.result;
+
+    const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
+    settings.mainProductImage = event.target.result;
+    localStorage.setItem('pervanSettings', JSON.stringify(settings));
+  };
+  reader.readAsDataURL(file);
 });
 
-// Load saved main photo if it exists
 window.addEventListener('load', () => {
   const settings = JSON.parse(localStorage.getItem('pervanSettings')) || {};
-  if (settings.mainProductImage) {
+  if (settings.mainProductImage)
     document.getElementById('main-product-img').src = settings.mainProductImage;
-  }
 });
 </script>
 
