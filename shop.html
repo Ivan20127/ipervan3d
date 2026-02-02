@@ -135,7 +135,7 @@ select, input[type="number"] {
 
 <!-- DRAGON -->
 <div class="card">
-  <img src="dragon.png" alt="Dragon Fidget">
+  <img src="dragon.png">
   <h3>Dragon Fidget</h3>
   <p class="price">$5 – $8</p>
 
@@ -162,7 +162,7 @@ select, input[type="number"] {
 
 <!-- STAR -->
 <div class="card">
-  <img src="star.png" alt="Star Fidget">
+  <img src="star.png">
   <h3>Star Fidget</h3>
   <p class="price">$5 – $8</p>
 
@@ -189,7 +189,7 @@ select, input[type="number"] {
 
 <!-- GEAR -->
 <div class="card">
-  <img src="gear.png" alt="Gear Fidget">
+  <img src="gear.png">
   <h3>Gear Fidget</h3>
   <p class="price">$2</p>
 
@@ -204,6 +204,102 @@ select, input[type="number"] {
 
   <button class="button"
     onclick="addFixed('Gear Fidget',2,'gearColor','gearQty')">
+    Add to Cart
+  </button>
+</div>
+
+<!-- CACTUS -->
+<div class="card">
+  <img src="cactus.png">
+  <h3>Cactus Toothpick Holder</h3>
+  <p class="price">$15</p>
+
+  Cactus Color:
+  <select id="cactusColor1">
+    <option>Red</option><option>Blue</option><option>Black</option>
+    <option>Light Green</option><option>Yellow</option><option>Grey</option>
+  </select>
+
+  Base Color:
+  <select id="cactusColor2">
+    <option>Red</option><option>Blue</option><option>Black</option>
+    <option>Light Green</option><option>Yellow</option><option>Grey</option>
+  </select>
+
+  Qty:
+  <input type="number" id="cactusQty" value="1" min="1">
+
+  <button class="button"
+    onclick="addItem(
+      'Cactus Toothpick Holder',
+      'Cactus: ' + document.getElementById('cactusColor1').value +
+      ', Base: ' + document.getElementById('cactusColor2').value,
+      15,
+      parseInt(document.getElementById('cactusQty').value)
+    )">
+    Add to Cart
+  </button>
+</div>
+
+<!-- NAMES -->
+<div class="card">
+  <img src="names.png">
+  <h3>Names</h3>
+  <p class="price">$3</p>
+
+  Color:
+  <select id="namesColor">
+    <option>Red</option><option>Blue</option><option>Black</option>
+    <option>Light Green</option><option>Yellow</option><option>Grey</option>
+  </select>
+
+  Qty:
+  <input type="number" id="namesQty" value="1" min="1">
+
+  <button class="button"
+    onclick="addFixed('Names',3,'namesColor','namesQty')">
+    Add to Cart
+  </button>
+</div>
+
+<!-- TEACHER -->
+<div class="card">
+  <img src="teacher.png">
+  <h3>Teacher Gift</h3>
+  <p class="price">$6</p>
+
+  Color:
+  <select id="teacherColor">
+    <option>Red</option><option>Blue</option><option>Black</option>
+    <option>Light Green</option><option>Yellow</option><option>Grey</option>
+  </select>
+
+  Qty:
+  <input type="number" id="teacherQty" value="1" min="1">
+
+  <button class="button"
+    onclick="addFixed('Teacher Gift',6,'teacherColor','teacherQty')">
+    Add to Cart
+  </button>
+</div>
+
+<!-- HEART -->
+<div class="card">
+  <img src="heart.png">
+  <h3>Heart Dish</h3>
+  <p class="price">$6</p>
+
+  Color:
+  <select id="heartColor">
+    <option>Red</option><option>Blue</option><option>Black</option>
+    <option>Light Green</option><option>Yellow</option><option>Grey</option>
+  </select>
+
+  Qty:
+  <input type="number" id="heartQty" value="1" min="1">
+
+  <button class="button"
+    onclick="addFixed('Heart Dish',6,'heartColor','heartQty')">
     Add to Cart
   </button>
 </div>
