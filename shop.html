@@ -10,47 +10,54 @@ body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; }
 header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
 header h1 { margin:0; }
 .back-btn { position:absolute; top:20px; left:20px; padding:10px 20px; background:#444; color:white; text-decoration:none; border-radius:6px; }
+
 .colors-banner img { width:100%; height:100%; object-fit:cover; }
 
 .products {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-  max-width:1100px;
-  margin:auto;
-  padding:40px 20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
 }
 
 .card {
-  background:white;
-  padding:20px;
-  border-radius:6px;
-  text-align:center;
-  box-shadow:0 2px 5px rgba(0,0,0,.15);
+background:white;
+padding:20px;
+border-radius:6px;
+text-align:center;
+box-shadow:0 2px 5px rgba(0,0,0,.15);
 }
 
 .card img { width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
+
 .price { color:#ff6600; font-weight:bold; font-size:1.2em; }
 
-select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
+select,input {
+width:100%;
+max-width:190px;
+padding:6px;
+margin:6px 0;
+}
 
 .button {
-  background:#dc3545;
-  color:white;
-  border:none;
-  padding:10px 18px;
-  border-radius:4px;
-  cursor:pointer;
-  font-weight:bold;
+background:#dc3545;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:4px;
+cursor:pointer;
+font-weight:bold;
 }
 
 .cart {
-  background:white;
-  max-width:500px;
-  margin:40px auto;
-  padding:20px;
-  border-radius:8px;
-  box-shadow:0 5px 15px rgba(0,0,0,.2);
+background:white;
+max-width:500px;
+margin:40px auto;
+padding:20px;
+border-radius:8px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
 }
 
 .remove { color:red; cursor:pointer; margin-left:8px; }
@@ -75,11 +82,8 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <div class="card">
 <img src="dragon.png">
 <h3>Dragon Fidget</h3>
-<p class="price">$5 – $8</p>
-<select id="dragonSize">
-<option>Small</option>
-<option>Big</option>
-</select>
+<p class="price">$5–$8</p>
+<select id="dragonSize"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
@@ -89,11 +93,8 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <div class="card">
 <img src="star.png">
 <h3>Star Fidget</h3>
-<p class="price">$5 – $8</p>
-<select id="starSize">
-<option>Small</option>
-<option>Big</option>
-</select>
+<p class="price">$5–$8</p>
+<select id="starSize"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
@@ -103,7 +104,7 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <div class="card">
 <img src="gearfidget.png">
 <h3>Gear Fidget</h3>
-<p class="price">$3</p>
+<p class="price">$2</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
@@ -117,7 +118,7 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addCactus(this)">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this,'Cactus','Base')">Add to Cart</button>
 </div>
 
 <!-- NAMES -->
@@ -168,7 +169,7 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addPenHolder(this)">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Pen Holder',8,this,'Knight','Base')">Add to Cart</button>
 </div>
 
 <!-- FLEXI STAR -->
@@ -179,7 +180,7 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFlexiStar(this)">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Flexi Star Handle Spin',6,this,'Main','Stick')">Add to Cart</button>
 </div>
 
 </section>
@@ -187,6 +188,8 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
+<input id="customerPhone" placeholder="Phone number required">
+<input id="customerAddress" placeholder="Address required">
 <ul id="cart"></ul>
 <p><strong>Total: $<span id="total">0.00</span></strong></p>
 <button class="button" onclick="checkout()">Pay with Venmo</button>
@@ -196,8 +199,8 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 const colors=[
 "Red","Blue","Black","Light Green","Yellow","Grey",
 "Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
-"Black Gold Green (+$2)","Blue Orange Green (+$2)","Copper Purple Green (+$2)",
-"Multi Color Rose (+$2)","Multi Color Blue (+$2)"
+"Black Gold Green (+$2)","Blue Orange Green (+$2)",
+"Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
 ];
 
 document.querySelectorAll(".color").forEach(sel=>{
@@ -230,28 +233,12 @@ const qty=parseInt(card.querySelector("input").value);
 addItem(name,color,base+upcharge(color),qty);
 }
 
-function addCactus(btn){
+function addTwoColor(name,base,btn,label1,label2){
 const card=btn.parentElement;
-const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
+const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
 const qty=parseInt(card.querySelector("input").value);
-let price=15+colors.reduce((a,c)=>a+upcharge(c),0);
-addItem("Cactus Toothpick Holder",`Cactus:${colors[0]}, Base:${colors[1]}`,price,qty);
-}
-
-function addPenHolder(btn){
-const card=btn.parentElement;
-const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
-let price=8+colors.reduce((a,c)=>a+upcharge(c),0);
-addItem("Pen Holder",`Knight:${colors[0]}, Base:${colors[1]}`,price,qty);
-}
-
-function addFlexiStar(btn){
-const card=btn.parentElement;
-const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
-let price=6+colors.reduce((a,c)=>a+upcharge(c),0);
-addItem("Flexi Star Handle Spin",`Main:${colors[0]}, Stick:${colors[1]}`,price,qty);
+let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
+addItem(name,`${label1}:${cs[0]}, ${label2}:${cs[1]}`,price,qty);
 }
 
 function addItem(name,details,price,qty){
@@ -271,12 +258,23 @@ totalEl.textContent=total.toFixed(2);
 function checkout(){
 if(!cart.children.length) return alert("Cart empty");
 if(!customerName.value.trim()) return alert("Enter name");
-let note=`Pervan 3D Order (${customerName.value}): `;
+if(!customerPhone.value.trim()) return alert("Enter phone number");
+if(!customerAddress.value.trim()) return alert("Enter address");
+
+let note=`Pervan 3D Order
+Name:${customerName.value}
+Phone:${customerPhone.value}
+Address:${customerAddress.value}
+Items: `;
+
 [...cart.children].forEach((li,i,a)=>{
 note+=li.textContent.replace("✖","");
 if(i<a.length-1) note+=" | ";
 });
-window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+
+window.open(
+`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`
+);
 }
 </script>
 
