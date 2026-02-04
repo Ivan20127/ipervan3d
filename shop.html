@@ -10,7 +10,6 @@ body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; }
 header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
 header h1 { margin:0; }
 .back-btn { position:absolute; top:20px; left:20px; padding:10px 20px; background:#444; color:white; text-decoration:none; border-radius:6px; }
-.colors-banner { width:100%; height:100%; overflow:hidden; }
 .colors-banner img { width:100%; height:100%; object-fit:cover; }
 
 .products {
@@ -61,13 +60,13 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <body>
 
 <header>
-  <h1>Pervan 3D Shop</h1>
-  <p>3D Printed Fidgets & Gifts</p>
-  <a href="index.html" class="back-btn">← Back</a>
+<h1>Pervan 3D Shop</h1>
+<p>3D Printed Fidgets & Gifts</p>
+<a href="index.html" class="back-btn">← Back</a>
 </header>
 
 <div class="colors-banner">
-  <img src="colors.png">
+<img src="colors.png">
 </div>
 
 <section class="products">
@@ -77,14 +76,12 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="dragon.png">
 <h3>Dragon Fidget</h3>
 <p class="price">$5 – $8</p>
-
 <select id="dragonSize">
-  <option value="Small">Small</option>
-  <option value="Big">Big (+$3)</option>
+<option>Small</option>
+<option>Big</option>
 </select>
-
 <select class="color"></select>
-<input type="number" id="dragonQty" value="1" min="1">
+<input type="number" value="1" min="1">
 <button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
 </div>
 
@@ -93,14 +90,12 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="star.png">
 <h3>Star Fidget</h3>
 <p class="price">$5 – $8</p>
-
 <select id="starSize">
-  <option value="Small">Small</option>
-  <option value="Big">Big (+$3)</option>
+<option>Small</option>
+<option>Big</option>
 </select>
-
 <select class="color"></select>
-<input type="number" id="starQty" value="1" min="1">
+<input type="number" value="1" min="1">
 <button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
 </div>
 
@@ -109,7 +104,6 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="gearfidget.png">
 <h3>Gear Fidget</h3>
 <p class="price">$3</p>
-
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
@@ -120,7 +114,6 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="cactus.png">
 <h3>Cactus Toothpick Holder</h3>
 <p class="price">$15</p>
-
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
@@ -132,7 +125,6 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="names.png">
 <h3>Names</h3>
 <p class="price">$3</p>
-
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Names',3,this)">Add to Cart</button>
@@ -143,7 +135,6 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="teachergift.png">
 <h3>Teacher Gift</h3>
 <p class="price">$6</p>
-
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Teacher Gift',6,this)">Add to Cart</button>
@@ -154,21 +145,41 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 <img src="heartdish.png">
 <h3>Heart Dish</h3>
 <p class="price">$6</p>
-
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
 </div>
 
-<!-- SPRINGFIDGET -->
+<!-- SPRING -->
 <div class="card">
 <img src="spring.png">
 <h3>Spring Fidget</h3>
 <p class="price">$3</p>
-
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
+</div>
+
+<!-- PEN HOLDER -->
+<div class="card">
+<img src="penholder.png">
+<h3>Pen Holder</h3>
+<p class="price">$8</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addPenHolder(this)">Add to Cart</button>
+</div>
+
+<!-- FLEXI STAR -->
+<div class="card">
+<img src="flexistar.png">
+<h3>Flexi Star Handle Spin</h3>
+<p class="price">$6</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFlexiStar(this)">Add to Cart</button>
 </div>
 
 </section>
@@ -182,22 +193,19 @@ select, input { width:100%; max-width:190px; padding:6px; margin:6px 0; }
 </div>
 
 <script>
-const colors = [
-  "Red","Blue","Black","Light Green","Yellow","Grey",
-  "Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
-  "Black Gold Green (+$2)",
-  "Blue Orange Green (+$2)",
-  "Copper Purple Green (+$2)",
-  "Multi Color Rose (+$2)",
-  "Multi Color Blue (+$2)"
+const colors=[
+"Red","Blue","Black","Light Green","Yellow","Grey",
+"Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
+"Black Gold Green (+$2)","Blue Orange Green (+$2)","Copper Purple Green (+$2)",
+"Multi Color Rose (+$2)","Multi Color Blue (+$2)"
 ];
 
 document.querySelectorAll(".color").forEach(sel=>{
-  colors.forEach(c=>{
-    const o=document.createElement("option");
-    o.textContent=c;
-    sel.appendChild(o);
-  });
+colors.forEach(c=>{
+let o=document.createElement("option");
+o.textContent=c;
+sel.appendChild(o);
+});
 });
 
 let total=0;
@@ -207,46 +215,68 @@ const totalEl=document.getElementById("total");
 const upcharge=c=>c.includes("+$2")?2:0;
 
 function addFidget(name,sizeId,btn){
-  const card=btn.parentElement;
-  const size=card.querySelector("#"+sizeId).value;
-  const color=card.querySelector(".color").value;
-  const qty=card.querySelector("input").value;
-  let price=(size==="Big"?8:5)+upcharge(color);
-  addItem(name,`${size}, ${color}`,price,qty);
+const card=btn.parentElement;
+const size=card.querySelector("#"+sizeId).value;
+const color=card.querySelector(".color").value;
+const qty=parseInt(card.querySelector("input").value);
+let price=(size==="Big"?8:5)+upcharge(color);
+addItem(name,`${size}, ${color}`,price,qty);
 }
 
 function addFixed(name,base,btn){
-  const card=btn.parentElement;
-  const color=card.querySelector(".color").value;
-  const qty=card.querySelector("input").value;
-  addItem(name,color,base+upcharge(color),qty);
+const card=btn.parentElement;
+const color=card.querySelector(".color").value;
+const qty=parseInt(card.querySelector("input").value);
+addItem(name,color,base+upcharge(color),qty);
 }
 
 function addCactus(btn){
-  const card=btn.parentElement;
-  const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
-  const qty=card.querySelector("input").value;
-  let price=15+colors.reduce((a,c)=>a+upcharge(c),0);
-  addItem("Cactus Toothpick Holder",`Cactus: ${colors[0]}, Base: ${colors[1]}`,price,qty);
+const card=btn.parentElement;
+const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=15+colors.reduce((a,c)=>a+upcharge(c),0);
+addItem("Cactus Toothpick Holder",`Cactus:${colors[0]}, Base:${colors[1]}`,price,qty);
+}
+
+function addPenHolder(btn){
+const card=btn.parentElement;
+const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=8+colors.reduce((a,c)=>a+upcharge(c),0);
+addItem("Pen Holder",`Knight:${colors[0]}, Base:${colors[1]}`,price,qty);
+}
+
+function addFlexiStar(btn){
+const card=btn.parentElement;
+const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=6+colors.reduce((a,c)=>a+upcharge(c),0);
+addItem("Flexi Star Handle Spin",`Main:${colors[0]}, Stick:${colors[1]}`,price,qty);
 }
 
 function addItem(name,details,price,qty){
-  qty=parseInt(qty);
-  const t=price*qty;
-  total+=t;
-  const li=document.createElement("li");
-  li.innerHTML=`${name} (${details}) x${qty} - $${t.toFixed(2)} <span class="remove">✖</span>`;
-  li.querySelector(".remove").onclick=()=>{cart.removeChild(li);total-=t;totalEl.textContent=total.toFixed(2);}
-  cart.appendChild(li);
-  totalEl.textContent=total.toFixed(2);
+const t=price*qty;
+total+=t;
+const li=document.createElement("li");
+li.innerHTML=`${name} (${details}) x${qty} - $${t.toFixed(2)} <span class="remove">✖</span>`;
+li.querySelector(".remove").onclick=()=>{
+cart.removeChild(li);
+total-=t;
+totalEl.textContent=total.toFixed(2);
+};
+cart.appendChild(li);
+totalEl.textContent=total.toFixed(2);
 }
 
 function checkout(){
-  if(!cart.children.length) return alert("Cart is empty");
-  if(!customerName.value.trim()) return alert("Enter your name");
-  let note=`Pervan 3D Order (${customerName.value}): `;
-  [...cart.children].forEach((li,i,a)=>{note+=li.textContent.replace("✖","");if(i<a.length-1)note+=" | ";});
-  window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+if(!cart.children.length) return alert("Cart empty");
+if(!customerName.value.trim()) return alert("Enter name");
+let note=`Pervan 3D Order (${customerName.value}): `;
+[...cart.children].forEach((li,i,a)=>{
+note+=li.textContent.replace("✖","");
+if(i<a.length-1) note+=" | ";
+});
+window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
 }
 </script>
 
