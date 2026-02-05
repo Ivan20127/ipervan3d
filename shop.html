@@ -161,30 +161,16 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
 </div>
 
-<!-- PEN HOLDER -->
-<div class="card">
-<img src="penholder.png">
-<h3>Pen Holder</h3>
-<p class="price">$8</p>
-<select class="color"></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Pen Holder',8,this,'Knight','Base')">Add to Cart</button>
+<!-- SHIPPING -->
+<div class="cart">
+<h3>Delivery Method</h3>
+<select id="shipping">
+<option value="0">Local Pickup (Free)</option>
+<option value="6">Ship Order (+$6)</option>
+</select>
 </div>
 
-<!-- FLEXI STAR -->
-<div class="card">
-<img src="flexistar.png">
-<h3>Flexi Star Handle Spin</h3>
-<p class="price">$6</p>
-<select class="color"></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Flexi Star Handle Spin',6,this,'Main','Stick')">Add to Cart</button>
-</div>
-
-</section>
-
+<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
@@ -211,9 +197,8 @@ sel.appendChild(o);
 });
 });
 
+let cartItems=[];
 let total=0;
-const cart=document.getElementById("cart");
-const totalEl=document.getElementById("total");
 
 const upcharge=c=>c.includes("+$2")?2:0;
 
@@ -223,54 +208,71 @@ const size=card.querySelector("#"+sizeId).value;
 const color=card.querySelector(".color").value;
 const qty=parseInt(card.querySelector("input").value);
 let price=(size==="Big"?8:5)+upcharge(color);
-addItem(name,`${size}, ${color}`,price,qty);
+addItem(`${color} ${name} (${size})`,price,qty);
 }
 
 function addFixed(name,base,btn){
 const card=btn.parentElement;
 const color=card.querySelector(".color").value;
 const qty=parseInt(card.querySelector("input").value);
-addItem(name,color,base+upcharge(color),qty);
+addItem(`${color} ${name}`,base+upcharge(color),qty);
 }
 
-function addTwoColor(name,base,btn,label1,label2){
+function addTwoColor(name,base,btn,l1,l2){
 const card=btn.parentElement;
 const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
 const qty=parseInt(card.querySelector("input").value);
 let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
-addItem(name,`${label1}:${cs[0]}, ${label2}:${cs[1]}`,price,qty);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
 
-function addItem(name,details,price,qty){
-const t=price*qty;
-total+=t;
+function addItem(label,price,qty){
+for(let i=0;i<qty;i++){
+cartItems.push({label,price});
+}
+renderCart();
+}
+
+function renderCart(){
+const ul=document.getElementById("cart");
+ul.innerHTML="";
+total=0;
+cartItems.forEach((item,i)=>{
+total+=item.price;
 const li=document.createElement("li");
-li.innerHTML=`${name} (${details}) x${qty} - $${t.toFixed(2)} <span class="remove">✖</span>`;
+li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
 li.querySelector(".remove").onclick=()=>{
-cart.removeChild(li);
-total-=t;
-totalEl.textContent=total.toFixed(2);
+cartItems.splice(i,1);
+renderCart();
 };
-cart.appendChild(li);
-totalEl.textContent=total.toFixed(2);
+ul.appendChild(li);
+});
+
+const ship=parseFloat(document.getElementById("shipping").value);
+total+=ship;
+document.getElementById("total").textContent=total.toFixed(2);
 }
 
 function checkout(){
-if(!cart.children.length) return alert("Cart empty");
+if(!cartItems.length) return alert("Cart empty");
 if(!customerName.value.trim()) return alert("Enter name");
-if(!customerPhone.value.trim()) return alert("Enter phone number");
+if(!customerPhone.value.trim()) return alert("Enter phone");
 if(!customerAddress.value.trim()) return alert("Enter address");
 
 let note=`Pervan 3D Order
-Name:${customerName.value}
-Phone:${customerPhone.value}
-Address:${customerAddress.value}
-Items: `;
+Name: ${customerName.value}
+Phone: ${customerPhone.value}
+Address: ${customerAddress.value}
 
-[...cart.children].forEach((li,i,a)=>{
-note+=li.textContent.replace("✖","");
-if(i<a.length-1) note+=" | ";
+ITEMS:
+`;
+
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}\n`;
 });
+
+note+=`\nShipping: $${document.getElementById("shipping").value}
+Total: $${total.toFixed(2)}`;
 
 window.open(
 `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`
