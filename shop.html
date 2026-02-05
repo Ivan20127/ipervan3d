@@ -151,26 +151,13 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <button class="button" onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
 </div>
 
-<!-- SPRING -->
-<div class="card">
-<img src="spring.png">
-<h3>Spring Fidget</h3>
-<p class="price">$3</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
-</div>
-
-<!-- SHIPPING -->
+<!-- SHIPPING OPTIONS -->
 <div class="cart">
 <h3>Delivery Method</h3>
-<select id="shipping">
-<option value="0">Local Pickup (Free)</option>
-<option value="6">Ship Order (+$6)</option>
-</select>
+<label><input type="radio" name="ship" value="0" checked> Local Drop-Off (Free if nearby)</label><br>
+<label><input type="radio" name="ship" value="6"> Shipping ($6 Flat)</label>
 </div>
 
-<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
@@ -197,8 +184,9 @@ sel.appendChild(o);
 });
 });
 
-let cartItems=[];
 let total=0;
+const cart=document.getElementById("cart");
+const totalEl=document.getElementById("total");
 
 const upcharge=c=>c.includes("+$2")?2:0;
 
@@ -220,62 +208,62 @@ addItem(`${color} ${name}`,base+upcharge(color),qty);
 
 function addTwoColor(name,base,btn,l1,l2){
 const card=btn.parentElement;
-const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
+const c=[...card.querySelectorAll(".color")].map(s=>s.value);
 const qty=parseInt(card.querySelector("input").value);
-let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
-addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+let price=base+c.reduce((a,x)=>a+upcharge(x),0);
+addItem(`${name} (${l1}:${c[0]}, ${l2}:${c[1]})`,price,qty);
 }
 
 function addItem(label,price,qty){
-for(let i=0;i<qty;i++){
-cartItems.push({label,price});
-}
-renderCart();
+const t=price*qty;
+total+=t;
+const li=document.createElement("li");
+li.innerHTML=`${label} x${qty} - $${t.toFixed(2)} <span class="remove">✖</span>`;
+li.querySelector(".remove").onclick=()=>{
+cart.removeChild(li);
+total-=t;
+updateTotal();
+};
+cart.appendChild(li);
+updateTotal();
 }
 
-function renderCart(){
-const ul=document.getElementById("cart");
-ul.innerHTML="";
-total=0;
-cartItems.forEach((item,i)=>{
-total+=item.price;
-const li=document.createElement("li");
-li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
-li.querySelector(".remove").onclick=()=>{
-cartItems.splice(i,1);
-renderCart();
-};
-ul.appendChild(li);
+function updateTotal(){
+let ship=parseFloat(document.querySelector("input[name='ship']:checked").value);
+totalEl.textContent=(total+ship).toFixed(2);
+}
+
+document.querySelectorAll("input[name='ship']").forEach(r=>{
+r.onchange=updateTotal;
 });
 
-const ship=parseFloat(document.getElementById("shipping").value);
-total+=ship;
-document.getElementById("total").textContent=total.toFixed(2);
-}
-
 function checkout(){
-if(!cartItems.length) return alert("Cart empty");
+if(!cart.children.length) return alert("Cart empty");
 if(!customerName.value.trim()) return alert("Enter name");
 if(!customerPhone.value.trim()) return alert("Enter phone");
 if(!customerAddress.value.trim()) return alert("Enter address");
+
+let shipType=document.querySelector("input[name='ship']:checked").value=="6"?"Shipping $6":"Local Drop-Off";
 
 let note=`Pervan 3D Order
 Name: ${customerName.value}
 Phone: ${customerPhone.value}
 Address: ${customerAddress.value}
 
-ITEMS:
+Items:
 `;
 
-cartItems.forEach(i=>{
-note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+[...cart.children].forEach(li=>{
+note+=li.textContent.replace("✖","")+"\n";
 });
 
-note+=`\nShipping: $${document.getElementById("shipping").value}
-Total: $${total.toFixed(2)}`;
+note+=`\nDelivery: ${shipType}`;
+
+let ship=parseFloat(document.querySelector("input[name='ship']:checked").value);
+let finalTotal=total+ship;
 
 window.open(
-`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`
+`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`
 );
 }
 </script>
