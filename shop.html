@@ -6,61 +6,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; }
-header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
-header h1 { margin:0; }
-.back-btn { position:absolute; top:20px; left:20px; padding:10px 20px; background:#444; color:white; text-decoration:none; border-radius:6px; }
+body{margin:0;font-family:Arial;background:#f5f5f5;}
+header{background:#111;color:white;padding:35px;text-align:center;position:relative;}
+.back-btn{position:absolute;left:20px;top:20px;background:#444;color:white;padding:8px 14px;text-decoration:none;border-radius:5px;}
 
-.colors-banner img { width:100%; height:100%; object-fit:cover; }
-
-.products {
+.products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
 max-width:1100px;
 margin:auto;
-padding:40px 20px;
+padding:30px;
 }
 
-.card {
+.card{
 background:white;
 padding:20px;
-border-radius:6px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,.2);
 text-align:center;
-box-shadow:0 2px 5px rgba(0,0,0,.15);
 }
 
-.card img { width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
+.card img{width:100%;height:200px;object-fit:contain;}
 
-.price { color:#ff6600; font-weight:bold; font-size:1.2em; }
+.price{color:#ff6600;font-weight:bold;font-size:1.1em;}
 
-select,input {
+select,input{
 width:100%;
-max-width:190px;
 padding:6px;
 margin:6px 0;
 }
 
-.button {
+button{
 background:#dc3545;
 color:white;
 border:none;
-padding:10px 18px;
-border-radius:4px;
+padding:10px;
+border-radius:5px;
 cursor:pointer;
 font-weight:bold;
 }
 
-.cart {
+.cart{
 background:white;
-max-width:500px;
-margin:40px auto;
+max-width:520px;
+margin:30px auto;
 padding:20px;
 border-radius:8px;
-box-shadow:0 5px 15px rgba(0,0,0,.2);
+box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
 
-.remove { color:red; cursor:pointer; margin-left:8px; }
+.remove{color:red;cursor:pointer;}
 </style>
 </head>
 
@@ -72,9 +68,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <a href="index.html" class="back-btn">← Back</a>
 </header>
 
-<div class="colors-banner">
-<img src="colors.png">
-</div>
+<img src="colors.png" style="width:100%;max-height:250px;object-fit:cover;">
 
 <section class="products">
 
@@ -82,22 +76,22 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <div class="card">
 <img src="dragon.png">
 <h3>Dragon Fidget</h3>
-<p class="price">$5–$8</p>
-<select id="dragonSize"><option>Small</option><option>Big</option></select>
+<p class="price">$5-$8</p>
+<select class="size"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
+<button onclick="addFidget('Dragon Fidget',this)">Add to Cart</button>
 </div>
 
 <!-- STAR -->
 <div class="card">
 <img src="star.png">
 <h3>Star Fidget</h3>
-<p class="price">$5–$8</p>
-<select id="starSize"><option>Small</option><option>Big</option></select>
+<p class="price">$5-$8</p>
+<select class="size"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
+<button onclick="addFidget('Star Fidget',this)">Add to Cart</button>
 </div>
 
 <!-- GEAR -->
@@ -107,7 +101,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <p class="price">$2</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
+<button onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
 </div>
 
 <!-- CACTUS -->
@@ -118,7 +112,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this,'Cactus','Base')">Add to Cart</button>
+<button onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
 </div>
 
 <!-- NAMES -->
@@ -128,7 +122,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <p class="price">$3</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Names',3,this)">Add to Cart</button>
+<button onclick="addFixed('Names',3,this)">Add to Cart</button>
 </div>
 
 <!-- TEACHER -->
@@ -138,7 +132,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <p class="price">$6</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Teacher Gift',6,this)">Add to Cart</button>
+<button onclick="addFixed('Teacher Gift',6,this)">Add to Cart</button>
 </div>
 
 <!-- HEART -->
@@ -148,123 +142,158 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <p class="price">$6</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
+<button onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
 </div>
 
-<!-- SHIPPING OPTIONS -->
-<div class="cart">
-<h3>Delivery Method</h3>
-<label><input type="radio" name="ship" value="0" checked> Local Drop-Off (Free if nearby)</label><br>
-<label><input type="radio" name="ship" value="6"> Shipping ($6 Flat)</label>
+<!-- SPRING -->
+<div class="card">
+<img src="spring.png">
+<h3>Spring Fidget</h3>
+<p class="price">$3</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
 </div>
+
+<!-- PEN HOLDER -->
+<div class="card">
+<img src="penholder.png">
+<h3>Pen Holder</h3>
+<p class="price">$8</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button onclick="addTwoColor('Pen Holder',8,this)">Add to Cart</button>
+</div>
+
+<!-- FLEXI STAR -->
+<div class="card">
+<img src="flexistar.png">
+<h3>Flexi Star Handle Spin</h3>
+<p class="price">$6</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button onclick="addTwoColor('Flexi Star Handle Spin',6,this)">Add to Cart</button>
+</div>
+
+<!-- CUSTOM -->
+<div class="card">
+<h3>Custom</h3>
+<p class="price">$1+</p>
+<p>Email me what you want made:</p>
+<p><a href="mailto:pervan3d@gmail.com">pervan3d@gmail.com</a></p>
+</div>
+
+</section>
 
 <div class="cart">
 <h3>🛒 Cart</h3>
-<input id="customerName" placeholder="Customer name required">
-<input id="customerPhone" placeholder="Phone number required">
-<input id="customerAddress" placeholder="Address required">
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
+<input id="address" placeholder="Address">
+
+<label>
+<input type="checkbox" id="shippingCheck"> Add Shipping ($6)
+</label>
+
 <ul id="cart"></ul>
-<p><strong>Total: $<span id="total">0.00</span></strong></p>
-<button class="button" onclick="checkout()">Pay with Venmo</button>
+
+<p><b>Total: $<span id="total">0.00</span></b></p>
+
+<button onclick="checkout()">Pay with Venmo</button>
 </div>
 
 <script>
 const colors=[
-"Red","Blue","Black","Light Green","Yellow","Grey",
-"Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
+"Red","Blue","Black","White","Grey","Yellow","Light Green","Brown",
+"Candy Red","Champagne","Titan Grey","Candy Green",
 "Black Gold Green (+$2)","Blue Orange Green (+$2)",
 "Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
 ];
 
-document.querySelectorAll(".color").forEach(sel=>{
+document.querySelectorAll(".color").forEach(s=>{
 colors.forEach(c=>{
 let o=document.createElement("option");
 o.textContent=c;
-sel.appendChild(o);
+s.appendChild(o);
 });
 });
 
 let total=0;
-const cart=document.getElementById("cart");
-const totalEl=document.getElementById("total");
+let items=[];
 
-const upcharge=c=>c.includes("+$2")?2:0;
+function upcharge(c){return c.includes("+$2")?2:0;}
 
-function addFidget(name,sizeId,btn){
-const card=btn.parentElement;
-const size=card.querySelector("#"+sizeId).value;
-const color=card.querySelector(".color").value;
-const qty=parseInt(card.querySelector("input").value);
-let price=(size==="Big"?8:5)+upcharge(color);
-addItem(`${color} ${name} (${size})`,price,qty);
+function addItem(text,price){
+items.push({text,price});
+render();
+}
+
+function addFidget(name,btn){
+let card=btn.parentElement;
+let size=card.querySelector(".size").value;
+let color=card.querySelector(".color").value;
+let qty=parseInt(card.querySelector("input").value);
+let base=size==="Big"?8:5;
+let price=(base+upcharge(color))*qty;
+addItem(`${color} ${size} ${name} x${qty}`,price);
 }
 
 function addFixed(name,base,btn){
-const card=btn.parentElement;
-const color=card.querySelector(".color").value;
-const qty=parseInt(card.querySelector("input").value);
-addItem(`${color} ${name}`,base+upcharge(color),qty);
+let card=btn.parentElement;
+let color=card.querySelector(".color").value;
+let qty=parseInt(card.querySelector("input").value);
+addItem(`${color} ${name} x${qty}`, (base+upcharge(color))*qty);
 }
 
-function addTwoColor(name,base,btn,l1,l2){
-const card=btn.parentElement;
-const c=[...card.querySelectorAll(".color")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
-let price=base+c.reduce((a,x)=>a+upcharge(x),0);
-addItem(`${name} (${l1}:${c[0]}, ${l2}:${c[1]})`,price,qty);
+function addTwoColor(name,base,btn){
+let card=btn.parentElement;
+let cs=[...card.querySelectorAll(".color")].map(x=>x.value);
+let qty=parseInt(card.querySelector("input").value);
+let price=(base+upcharge(cs[0])+upcharge(cs[1]))*qty;
+addItem(`${cs[0]} / ${cs[1]} ${name} x${qty}`,price);
 }
 
-function addItem(label,price,qty){
-const t=price*qty;
-total+=t;
-const li=document.createElement("li");
-li.innerHTML=`${label} x${qty} - $${t.toFixed(2)} <span class="remove">✖</span>`;
-li.querySelector(".remove").onclick=()=>{
-cart.removeChild(li);
-total-=t;
-updateTotal();
-};
-cart.appendChild(li);
-updateTotal();
-}
+function render(){
+let ul=document.getElementById("cart");
+ul.innerHTML="";
+total=0;
 
-function updateTotal(){
-let ship=parseFloat(document.querySelector("input[name='ship']:checked").value);
-totalEl.textContent=(total+ship).toFixed(2);
-}
-
-document.querySelectorAll("input[name='ship']").forEach(r=>{
-r.onchange=updateTotal;
+items.forEach((i,idx)=>{
+total+=i.price;
+let li=document.createElement("li");
+li.innerHTML=`${i.text} - $${i.price.toFixed(2)} <span class="remove" onclick="remove(${idx})">✖</span>`;
+ul.appendChild(li);
 });
+
+if(document.getElementById("shippingCheck").checked){
+total+=6;
+}
+
+document.getElementById("total").textContent=total.toFixed(2);
+}
+
+function remove(i){
+items.splice(i,1);
+render();
+}
+
+document.getElementById("shippingCheck").onchange=render;
 
 function checkout(){
-if(!cart.children.length) return alert("Cart empty");
-if(!customerName.value.trim()) return alert("Enter name");
-if(!customerPhone.value.trim()) return alert("Enter phone");
-if(!customerAddress.value.trim()) return alert("Enter address");
+if(!items.length)return alert("Cart empty");
+if(!name.value||!phone.value||!address.value)return alert("Fill all info");
 
-let shipType=document.querySelector("input[name='ship']:checked").value=="6"?"Shipping $6":"Local Drop-Off";
+let note=`Pervan 3D Order\nName:${name.value}\nPhone:${phone.value}\nAddress:${address.value}\n\n`;
 
-let note=`Pervan 3D Order
-Name: ${customerName.value}
-Phone: ${customerPhone.value}
-Address: ${customerAddress.value}
-
-Items:
-`;
-
-[...cart.children].forEach(li=>{
-note+=li.textContent.replace("✖","")+"\n";
+items.forEach(i=>{
+note+=`${i.text} - $${i.price.toFixed(2)}\n`;
 });
 
-note+=`\nDelivery: ${shipType}`;
+if(shippingCheck.checked) note+="Shipping - $6\n";
 
-let ship=parseFloat(document.querySelector("input[name='ship']:checked").value);
-let finalTotal=total+ship;
-
-window.open(
-`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`
-);
+window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
 }
 </script>
 
