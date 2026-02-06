@@ -6,57 +6,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{margin:0;font-family:Arial;background:#f5f5f5;}
-header{background:#111;color:white;padding:35px;text-align:center;position:relative;}
-.back-btn{position:absolute;left:20px;top:20px;background:#444;color:white;padding:8px 14px;text-decoration:none;border-radius:5px;}
+body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; }
+header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
+header h1 { margin:0; }
+.back-btn { position:absolute; top:20px; left:20px; padding:10px 20px; background:#444; color:white; text-decoration:none; border-radius:6px; }
 
-.products{
+.colors-banner img { width:100%; height:100%; object-fit:cover; }
+
+.products {
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
 max-width:1100px;
 margin:auto;
-padding:30px;
+padding:40px 20px;
 }
 
-.card{
+.card {
 background:white;
 padding:20px;
-border-radius:8px;
-box-shadow:0 2px 5px rgba(0,0,0,.2);
+border-radius:6px;
 text-align:center;
+box-shadow:0 2px 5px rgba(0,0,0,.15);
 }
 
-.card img{width:100%;height:200px;object-fit:contain;}
+.card img { width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
 
-.price{color:#ff6600;font-weight:bold;font-size:1.1em;}
+.price { color:#ff6600; font-weight:bold; font-size:1.2em; }
 
-select,input{
+select,input {
 width:100%;
+max-width:190px;
 padding:6px;
 margin:6px 0;
 }
 
-button{
+.button {
 background:#dc3545;
 color:white;
 border:none;
-padding:10px;
-border-radius:5px;
+padding:10px 18px;
+border-radius:4px;
 cursor:pointer;
 font-weight:bold;
 }
 
-.cart{
+.cart {
 background:white;
-max-width:520px;
-margin:30px auto;
+max-width:500px;
+margin:40px auto;
 padding:20px;
 border-radius:8px;
-box-shadow:0 4px 12px rgba(0,0,0,.3);
+box-shadow:0 5px 15px rgba(0,0,0,.2);
 }
 
-.remove{color:red;cursor:pointer;}
+.remove { color:red; cursor:pointer; margin-left:8px; }
 </style>
 </head>
 
@@ -68,7 +72,9 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <a href="index.html" class="back-btn">← Back</a>
 </header>
 
-<img src="colors.png" style="width:100%;max-height:250px;object-fit:cover;">
+<div class="colors-banner">
+<img src="colors.png">
+</div>
 
 <section class="products">
 
@@ -76,22 +82,22 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <div class="card">
 <img src="dragon.png">
 <h3>Dragon Fidget</h3>
-<p class="price">$5-$8</p>
-<select class="size"><option>Small</option><option>Big</option></select>
+<p class="price">$5–$8</p>
+<select id="dragonSize"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFidget('Dragon Fidget',this)">Add to Cart</button>
+<button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
 </div>
 
 <!-- STAR -->
 <div class="card">
 <img src="star.png">
 <h3>Star Fidget</h3>
-<p class="price">$5-$8</p>
-<select class="size"><option>Small</option><option>Big</option></select>
+<p class="price">$5–$8</p>
+<select id="starSize"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFidget('Star Fidget',this)">Add to Cart</button>
+<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
 </div>
 
 <!-- GEAR -->
@@ -101,7 +107,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <p class="price">$2</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
 </div>
 
 <!-- CACTUS -->
@@ -112,7 +118,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this,'Cactus','Base')">Add to Cart</button>
 </div>
 
 <!-- NAMES -->
@@ -122,7 +128,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <p class="price">$3</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFixed('Names',3,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Names',3,this)">Add to Cart</button>
 </div>
 
 <!-- TEACHER -->
@@ -132,7 +138,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <p class="price">$6</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFixed('Teacher Gift',6,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Teacher Gift',6,this)">Add to Cart</button>
 </div>
 
 <!-- HEART -->
@@ -142,7 +148,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <p class="price">$6</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
 </div>
 
 <!-- SPRING -->
@@ -152,7 +158,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <p class="price">$3</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
 </div>
 
 <!-- PEN HOLDER -->
@@ -163,7 +169,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addTwoColor('Pen Holder',8,this)">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Pen Holder',8,this,'Knight','Base')">Add to Cart</button>
 </div>
 
 <!-- FLEXI STAR -->
@@ -174,126 +180,134 @@ box-shadow:0 4px 12px rgba(0,0,0,.3);
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button onclick="addTwoColor('Flexi Star Handle Spin',6,this)">Add to Cart</button>
-</div>
-
-<!-- CUSTOM -->
-<div class="card">
-<h3>Custom</h3>
-<p class="price">$1+</p>
-<p>Email me what you want made:</p>
-<p><a href="mailto:pervan3d@gmail.com">pervan3d@gmail.com</a></p>
+<button class="button" onclick="addTwoColor('Flexi Star Handle Spin',6,this,'Main','Stick')">Add to Cart</button>
 </div>
 
 </section>
 
+<!-- SHIPPING SELECT -->
+<div class="cart">
+<h3>Delivery Method</h3>
+<select id="shipping">
+  <option value="0">Local Pickup (Free)</option>
+  <option value="6">Ship Order (+$6)</option>
+</select>
+</div>
+
+<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<input id="address" placeholder="Address">
-
-<label>
-<input type="checkbox" id="shippingCheck"> Add Shipping ($6)
-</label>
-
+<input id="customerName" placeholder="Customer name required">
+<input id="customerPhone" placeholder="Phone number required">
+<input id="customerAddress" placeholder="Address required">
 <ul id="cart"></ul>
-
-<p><b>Total: $<span id="total">0.00</span></b></p>
-
-<button onclick="checkout()">Pay with Venmo</button>
+<p><strong>Total: $<span id="total">0.00</span></strong></p>
+<button class="button" onclick="checkout()">Pay with Venmo</button>
 </div>
 
 <script>
 const colors=[
-"Red","Blue","Black","White","Grey","Yellow","Light Green","Brown",
-"Candy Red","Champagne","Titan Grey","Candy Green",
+"Red","Blue","Black","Light Green","Yellow","Grey",
+"Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
 "Black Gold Green (+$2)","Blue Orange Green (+$2)",
 "Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
 ];
 
-document.querySelectorAll(".color").forEach(s=>{
-colors.forEach(c=>{
-let o=document.createElement("option");
-o.textContent=c;
-s.appendChild(o);
-});
+document.querySelectorAll(".color").forEach(sel=>{
+  colors.forEach(c=>{
+    let o=document.createElement("option");
+    o.textContent=c;
+    sel.appendChild(o);
+  });
 });
 
+let cartItems=[];
 let total=0;
-let items=[];
 
-function upcharge(c){return c.includes("+$2")?2:0;}
+const upcharge=c=>c.includes("+$2")?2:0;
 
-function addItem(text,price){
-items.push({text,price});
-render();
-}
+/* =========== ADD FUNCTIONS =========== */
 
-function addFidget(name,btn){
-let card=btn.parentElement;
-let size=card.querySelector(".size").value;
-let color=card.querySelector(".color").value;
-let qty=parseInt(card.querySelector("input").value);
-let base=size==="Big"?8:5;
-let price=(base+upcharge(color))*qty;
-addItem(`${color} ${size} ${name} x${qty}`,price);
+function addFidget(name,sizeId,btn){
+  const card=btn.parentElement;
+  const size=card.querySelector("#"+sizeId).value;
+  const color=card.querySelector(".color").value;
+  const qty=parseInt(card.querySelector("input").value);
+  let price=(size==="Big"?8:5)+upcharge(color);
+  addItem(`${color} ${name} (${size})`,price,qty);
 }
 
 function addFixed(name,base,btn){
-let card=btn.parentElement;
-let color=card.querySelector(".color").value;
-let qty=parseInt(card.querySelector("input").value);
-addItem(`${color} ${name} x${qty}`, (base+upcharge(color))*qty);
+  const card=btn.parentElement;
+  const color=card.querySelector(".color").value;
+  const qty=parseInt(card.querySelector("input").value);
+  addItem(`${color} ${name}`,base+upcharge(color),qty);
 }
 
-function addTwoColor(name,base,btn){
-let card=btn.parentElement;
-let cs=[...card.querySelectorAll(".color")].map(x=>x.value);
-let qty=parseInt(card.querySelector("input").value);
-let price=(base+upcharge(cs[0])+upcharge(cs[1]))*qty;
-addItem(`${cs[0]} / ${cs[1]} ${name} x${qty}`,price);
+function addTwoColor(name,base,btn,l1,l2){
+  const card=btn.parentElement;
+  const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
+  const qty=parseInt(card.querySelector("input").value);
+  let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
+  addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
 
-function render(){
-let ul=document.getElementById("cart");
-ul.innerHTML="";
-total=0;
+/* =========== CORE CART =========== */
 
-items.forEach((i,idx)=>{
-total+=i.price;
-let li=document.createElement("li");
-li.innerHTML=`${i.text} - $${i.price.toFixed(2)} <span class="remove" onclick="remove(${idx})">✖</span>`;
-ul.appendChild(li);
-});
-
-if(document.getElementById("shippingCheck").checked){
-total+=6;
+function addItem(label,price,qty){
+  for(let i=0;i<qty;i++){
+    cartItems.push({label,price});
+  }
+  renderCart();
 }
 
-document.getElementById("total").textContent=total.toFixed(2);
+function renderCart(){
+  const ul=document.getElementById("cart");
+  ul.innerHTML="";
+  total=0;
+  cartItems.forEach((item,i)=>{
+    total+=item.price;
+    const li=document.createElement("li");
+    li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
+    li.querySelector(".remove").onclick=()=>{
+      cartItems.splice(i,1);
+      renderCart();
+    };
+    ul.appendChild(li);
+  });
+
+  const ship=parseFloat(document.getElementById("shipping").value);
+  total+=ship;
+  document.getElementById("total").textContent=total.toFixed(2);
 }
 
-function remove(i){
-items.splice(i,1);
-render();
-}
-
-document.getElementById("shippingCheck").onchange=render;
+/* =========== CHECKOUT =========== */
 
 function checkout(){
-if(!items.length)return alert("Cart empty");
-if(!name.value||!phone.value||!address.value)return alert("Fill all info");
+  if(!cartItems.length) return alert("Cart empty");
+  if(!customerName.value.trim()) return alert("Enter name");
+  if(!customerPhone.value.trim()) return alert("Enter phone number");
+  if(!customerAddress.value.trim()) return alert("Enter address");
 
-let note=`Pervan 3D Order\nName:${name.value}\nPhone:${phone.value}\nAddress:${address.value}\n\n`;
+  let note=`Pervan 3D Order
+Name: ${customerName.value}
+Phone: ${customerPhone.value}
+Address: ${customerAddress.value}
 
-items.forEach(i=>{
-note+=`${i.text} - $${i.price.toFixed(2)}\n`;
-});
+ITEMS:
+`;
 
-if(shippingCheck.checked) note+="Shipping - $6\n";
+  cartItems.forEach(i=>{
+    note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+  });
 
-window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+  const shipCost=parseFloat(document.getElementById("shipping").value);
+  note+=`\nShipping: $${shipCost.toFixed(2)}
+Total: $${total.toFixed(2)}`;
+
+  window.open(
+    `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`
+  );
 }
 </script>
 
