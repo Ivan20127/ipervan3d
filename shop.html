@@ -78,6 +78,17 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 
 <section class="products">
 
+<!-- TREE FIDGET -->
+<div class="card">
+<img src="treefidget.png">
+<h3>Tree Fidget</h3>
+<p class="price">$4</p>
+<select class="treecolor"></select>
+<select class="treecolor"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addTree('Tree Fidget',4,this)">Add to Cart</button>
+</div>
+
 <!-- DRAGON -->
 <div class="card">
 <img src="dragon.png">
@@ -185,16 +196,14 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 
 </section>
 
-<!-- SHIPPING SELECT -->
 <div class="cart">
 <h3>Delivery Method</h3>
-<select id="shipping">
-  <option value="0">Local Pickup (Free)</option>
-  <option value="6">Ship Order (+$6)</option>
+<select id="shipping" onchange="renderCart()">
+<option value="0">Local Pickup (Free)</option>
+<option value="6">Ship Order (+$6)</option>
 </select>
 </div>
 
-<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
@@ -214,82 +223,89 @@ const colors=[
 ];
 
 document.querySelectorAll(".color").forEach(sel=>{
-  colors.forEach(c=>{
-    let o=document.createElement("option");
-    o.textContent=c;
-    sel.appendChild(o);
-  });
+colors.forEach(c=>{
+let o=document.createElement("option");
+o.textContent=c;
+sel.appendChild(o);
+});
+});
+
+document.querySelectorAll(".treecolor").forEach(sel=>{
+colors.forEach(c=>{
+let o=document.createElement("option");
+o.textContent=c;
+sel.appendChild(o);
+});
 });
 
 let cartItems=[];
 let total=0;
 
 const upcharge=c=>c.includes("+$2")?2:0;
+const treeUpcharge=c=>c.includes("+$2")?1:0;
 
-/* =========== ADD FUNCTIONS =========== */
+function addTree(name,base,btn){
+const card=btn.parentElement;
+const cs=[...card.querySelectorAll(".treecolor")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=base+cs.reduce((a,c)=>a+treeUpcharge(c),0);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+}
 
 function addFidget(name,sizeId,btn){
-  const card=btn.parentElement;
-  const size=card.querySelector("#"+sizeId).value;
-  const color=card.querySelector(".color").value;
-  const qty=parseInt(card.querySelector("input").value);
-  let price=(size==="Big"?8:5)+upcharge(color);
-  addItem(`${color} ${name} (${size})`,price,qty);
+const card=btn.parentElement;
+const size=card.querySelector("#"+sizeId).value;
+const color=card.querySelector(".color").value;
+const qty=parseInt(card.querySelector("input").value);
+let price=(size==="Big"?8:5)+upcharge(color);
+addItem(`${color} ${name} (${size})`,price,qty);
 }
 
 function addFixed(name,base,btn){
-  const card=btn.parentElement;
-  const color=card.querySelector(".color").value;
-  const qty=parseInt(card.querySelector("input").value);
-  addItem(`${color} ${name}`,base+upcharge(color),qty);
+const card=btn.parentElement;
+const color=card.querySelector(".color").value;
+const qty=parseInt(card.querySelector("input").value);
+addItem(`${color} ${name}`,base+upcharge(color),qty);
 }
 
-function addTwoColor(name,base,btn,l1,l2){
-  const card=btn.parentElement;
-  const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
-  const qty=parseInt(card.querySelector("input").value);
-  let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
-  addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+function addTwoColor(name,base,btn){
+const card=btn.parentElement;
+const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
-
-/* =========== CORE CART =========== */
 
 function addItem(label,price,qty){
-  for(let i=0;i<qty;i++){
-    cartItems.push({label,price});
-  }
-  renderCart();
+for(let i=0;i<qty;i++) cartItems.push({label,price});
+renderCart();
 }
 
 function renderCart(){
-  const ul=document.getElementById("cart");
-  ul.innerHTML="";
-  total=0;
-  cartItems.forEach((item,i)=>{
-    total+=item.price;
-    const li=document.createElement("li");
-    li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
-    li.querySelector(".remove").onclick=()=>{
-      cartItems.splice(i,1);
-      renderCart();
-    };
-    ul.appendChild(li);
-  });
-
-  const ship=parseFloat(document.getElementById("shipping").value);
-  total+=ship;
-  document.getElementById("total").textContent=total.toFixed(2);
+const ul=document.getElementById("cart");
+ul.innerHTML="";
+total=0;
+cartItems.forEach((item,i)=>{
+total+=item.price;
+const li=document.createElement("li");
+li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
+li.querySelector(".remove").onclick=()=>{
+cartItems.splice(i,1);
+renderCart();
+};
+ul.appendChild(li);
+});
+total+=parseFloat(shipping.value);
+document.getElementById("total").textContent=total.toFixed(2);
 }
 
-/* =========== CHECKOUT =========== */
-
 function checkout(){
-  if(!cartItems.length) return alert("Cart empty");
-  if(!customerName.value.trim()) return alert("Enter name");
-  if(!customerPhone.value.trim()) return alert("Enter phone number");
-  if(!customerAddress.value.trim()) return alert("Enter address");
+if(!cartItems.length) return alert("Cart empty");
+if(!customerName.value) return alert("Enter name");
+if(!customerPhone.value) return alert("Enter phone");
+if(!customerAddress.value) return alert("Enter address");
 
-  let note=`Pervan 3D Order
+let note=`Pervan 3D Order
 Name: ${customerName.value}
 Phone: ${customerPhone.value}
 Address: ${customerAddress.value}
@@ -297,17 +313,13 @@ Address: ${customerAddress.value}
 ITEMS:
 `;
 
-  cartItems.forEach(i=>{
-    note+=`${i.label} - $${i.price.toFixed(2)}\n`;
-  });
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+});
 
-  const shipCost=parseFloat(document.getElementById("shipping").value);
-  note+=`\nShipping: $${shipCost.toFixed(2)}
-Total: $${total.toFixed(2)}`;
+note+=`\nTotal: $${total.toFixed(2)}`;
 
-  window.open(
-    `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`
-  );
+window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
 }
 </script>
 
