@@ -61,6 +61,12 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 }
 
 .remove { color:red; cursor:pointer; margin-left:8px; }
+
+.custom a{
+color:#0066cc;
+font-weight:bold;
+text-decoration:none;
+}
 </style>
 </head>
 
@@ -78,13 +84,21 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 
 <section class="products">
 
+<!-- YOUR CUSTOM -->
+<div class="card custom">
+<h3>Your Custom</h3>
+<p class="price">$1+</p>
+<p>Email me your idea:</p>
+<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
+</div>
+
 <!-- TREE FIDGET -->
 <div class="card">
 <img src="treefidget.png">
 <h3>Tree Fidget</h3>
 <p class="price">$4</p>
-<select class="treecolor"></select>
-<select class="treecolor"></select>
+<select class="treeColor"></select>
+<select class="treeColor"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addTree('Tree Fidget',4,this)">Add to Cart</button>
 </div>
@@ -129,7 +143,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this,'Cactus','Base')">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
 </div>
 
 <!-- NAMES -->
@@ -172,30 +186,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 <button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
 </div>
 
-<!-- PEN HOLDER -->
-<div class="card">
-<img src="penholder.png">
-<h3>Pen Holder</h3>
-<p class="price">$8</p>
-<select class="color"></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Pen Holder',8,this,'Knight','Base')">Add to Cart</button>
-</div>
-
-<!-- FLEXI STAR -->
-<div class="card">
-<img src="flexistar.png">
-<h3>Flexi Star Handle Spin</h3>
-<p class="price">$6</p>
-<select class="color"></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Flexi Star Handle Spin',6,this,'Main','Stick')">Add to Cart</button>
-</div>
-
-</section>
-
+<!-- SHIPPING -->
 <div class="cart">
 <h3>Delivery Method</h3>
 <select id="shipping" onchange="renderCart()">
@@ -204,6 +195,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 </select>
 </div>
 
+<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
@@ -222,19 +214,19 @@ const colors=[
 "Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
 ];
 
-document.querySelectorAll(".color").forEach(sel=>{
+document.querySelectorAll(".color").forEach(s=>{
 colors.forEach(c=>{
 let o=document.createElement("option");
 o.textContent=c;
-sel.appendChild(o);
+s.appendChild(o);
 });
 });
 
-document.querySelectorAll(".treecolor").forEach(sel=>{
+document.querySelectorAll(".treeColor").forEach(s=>{
 colors.forEach(c=>{
 let o=document.createElement("option");
 o.textContent=c;
-sel.appendChild(o);
+s.appendChild(o);
 });
 });
 
@@ -246,7 +238,7 @@ const treeUpcharge=c=>c.includes("+$2")?1:0;
 
 function addTree(name,base,btn){
 const card=btn.parentElement;
-const cs=[...card.querySelectorAll(".treecolor")].map(s=>s.value);
+const cs=[...card.querySelectorAll(".treeColor")].map(s=>s.value);
 const qty=parseInt(card.querySelector("input").value);
 let price=base+cs.reduce((a,c)=>a+treeUpcharge(c),0);
 addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
@@ -277,7 +269,9 @@ addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
 
 function addItem(label,price,qty){
-for(let i=0;i<qty;i++) cartItems.push({label,price});
+for(let i=0;i<qty;i++){
+cartItems.push({label,price});
+}
 renderCart();
 }
 
@@ -295,15 +289,15 @@ renderCart();
 };
 ul.appendChild(li);
 });
-total+=parseFloat(shipping.value);
+total+=parseFloat(document.getElementById("shipping").value);
 document.getElementById("total").textContent=total.toFixed(2);
 }
 
 function checkout(){
 if(!cartItems.length) return alert("Cart empty");
-if(!customerName.value) return alert("Enter name");
-if(!customerPhone.value) return alert("Enter phone");
-if(!customerAddress.value) return alert("Enter address");
+if(!customerName.value.trim()) return alert("Enter name");
+if(!customerPhone.value.trim()) return alert("Enter phone");
+if(!customerAddress.value.trim()) return alert("Enter address");
 
 let note=`Pervan 3D Order
 Name: ${customerName.value}
