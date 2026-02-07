@@ -84,14 +84,6 @@ text-decoration:none;
 
 <section class="products">
 
-<!-- YOUR CUSTOM -->
-<div class="card custom">
-<h3>Your Custom</h3>
-<p class="price">$1+</p>
-<p>Email me your idea:</p>
-<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
-</div>
-
 <!-- TREE FIDGET -->
 <div class="card">
 <img src="treefidget.png">
@@ -186,7 +178,17 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
 </div>
 
-<!-- SHIPPING -->
+<!-- YOUR CUSTOM LAST -->
+<div class="card custom">
+<h3>Your Custom</h3>
+<p class="price">$1+</p>
+<p>Email me your idea:</p>
+<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
+</div>
+
+</section>
+
+<!-- DELIVERY ROW -->
 <div class="cart">
 <h3>Delivery Method</h3>
 <select id="shipping" onchange="renderCart()">
@@ -195,7 +197,7 @@ text-decoration:none;
 </select>
 </div>
 
-<!-- CART -->
+<!-- CHECKOUT ROW -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
@@ -214,19 +216,11 @@ const colors=[
 "Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
 ];
 
-document.querySelectorAll(".color").forEach(s=>{
+document.querySelectorAll(".color,.treeColor").forEach(sel=>{
 colors.forEach(c=>{
 let o=document.createElement("option");
 o.textContent=c;
-s.appendChild(o);
-});
-});
-
-document.querySelectorAll(".treeColor").forEach(s=>{
-colors.forEach(c=>{
-let o=document.createElement("option");
-o.textContent=c;
-s.appendChild(o);
+sel.appendChild(o);
 });
 });
 
