@@ -209,6 +209,9 @@ text-decoration:none;
 </div>
 
 <script>
+
+/* ===== YOUR ORIGINAL SCRIPT ===== */
+
 const colors=[
 "Red","Blue","Black","Light Green","Yellow","Grey",
 "Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
@@ -309,6 +312,29 @@ note+=`\nTotal: $${total.toFixed(2)}`;
 
 window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
 }
+
+/* ===== ADMIN → SHOP SYNC (ADDED) ===== */
+
+const adminProducts = JSON.parse(localStorage.getItem("pervanProducts")) || [];
+
+function getAdminProduct(name){
+return adminProducts.find(p=>p.name===name);
+}
+
+window.addEventListener("DOMContentLoaded",()=>{
+document.querySelectorAll(".card").forEach(card=>{
+const title=card.querySelector("h3");
+const priceEl=card.querySelector(".price");
+const img=card.querySelector("img");
+if(!title) return;
+const admin=getAdminProduct(title.textContent);
+if(admin){
+if(priceEl) priceEl.textContent="$"+admin.price;
+if(img && admin.image) img.src=admin.image;
+}
+});
+});
+
 </script>
 
 </body>
