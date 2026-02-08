@@ -1,372 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pervan 3-D Admin</title>
-  <style>
-    :root {
-      --accent: #ff6600;
-      --accent-dark: #e65c00;
-      --text: #333;
-      --bg: #f8f9fa;
-      --card: white;
-      --border: #ddd;
-      --green: #28a745;
-      --red: #dc3545;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pervan 3-D Admin</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
+<style>
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#f4f4f4;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
 
-    h1 {
-      text-align: center;
-      margin: 30px 0 10px;
-      font-size: 2.2rem;
-      color: #111;
-    }
+h1{text-align:center}
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 40px;
-    }
+.section{
+background:white;
+padding:20px;
+border-radius:8px;
+margin-bottom:30px;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
 
-    .section {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 35px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    }
+label{
+display:block;
+margin-top:10px;
+font-weight:bold;
+}
 
-    h2 {
-      margin-top: 0;
-      color: #222;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 12px;
-    }
+input,select{
+width:100%;
+padding:8px;
+margin-top:4px;
+border:1px solid #ccc;
+border-radius:4px;
+}
 
-    /* Add form – no description */
-    .add-form {
-      background: #fffaf0;
-      border: 1px solid #ffe0b2;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 25px;
-    }
+button{
+margin-top:15px;
+background:#dc3545;
+color:white;
+border:none;
+padding:12px 20px;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
 
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-weight: bold;
-      color: #444;
-    }
+button:hover{background:#b92c3a}
 
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .form-row > div {
-      flex: 1;
-      min-width: 260px;
-    }
-
-    /* Product card – no description */
-    .admin-product {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-      background: #fafafa;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px 0;
-      border: 1px solid #eee;
-    }
-
-    .admin-product > div {
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .preview-img {
-      max-width: 160px;
-      height: auto;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .stock-switch {
-      display: flex;
-      align-items: center;
-      margin: 15px 0;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 52px;
-      height: 28px;
-      margin-right: 12px;
-    }
-
-    .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 28px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 22px;
-      width: 22px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider { background-color: var(--green); }
-    input:checked + .slider:before { transform: translateX(24px); }
-
-    .status-badge {
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-
-    .in-stock  { background: var(--green); color: white; }
-    .out-stock { background: var(--red);   color: white; }
-
-    button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover { background: var(--accent-dark); }
-
-    button.danger {
-      background: var(--red);
-    }
-
-    button.danger:hover { background: #c0392b; }
-
-    #saveAll {
-      font-size: 1.15rem;
-      padding: 16px 36px;
-      display: block;
-      margin: 30px auto;
-    }
-
-    #savedMsg {
-      color: var(--green);
-      font-weight: bold;
-      margin-left: 20px;
-      vertical-align: middle;
-      display: none;
-    }
-  </style>
+.success{
+color:green;
+font-weight:bold;
+display:none;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
-  <h1>Pervan 3-D Admin</h1>
-  <div class="subtitle">Edit products • changes appear on shop & home page</div>
 
-  <!-- ADD NEW PRODUCT – no description -->
-  <div class="section">
-    <h2>Add New Product</h2>
-    <div class="add-form">
-      <div class="form-row">
-        <div>
-          <label>Product Name</label>
-          <input type="text" id="new-name" placeholder="e.g. Crystal Dragon">
-        </div>
-        <div>
-          <label>Price (USD)</label>
-          <input type="number" step="0.01" id="new-price" value="19.99">
-        </div>
-      </div>
+<h1>Pervan 3-D Admin Panel</h1>
 
-      <div class="form-row">
-        <div>
-          <label>Image URL</label>
-          <input type="text" id="new-image" placeholder="https://...">
-        </div>
-      </div>
+<div class="section">
 
-      <div class="stock-switch">
-        <label class="switch">
-          <input type="checkbox" id="new-stock" checked>
-          <span class="slider"></span>
-        </label>
-        <span>In Stock</span>
-      </div>
+<label>Select Product</label>
+<select id="productSelect"></select>
 
-      <button onclick="addProduct()">Add Product</button>
-    </div>
-  </div>
+<label>Product Name</label>
+<input id="name">
 
-  <!-- PRODUCTS LIST – no description -->
-  <div class="section">
-    <h2>Your Products</h2>
-    <div id="products-list"></div>
-  </div>
+<label>Price</label>
+<input id="price" type="number">
 
-  <!-- SAVE -->
-  <button id="saveAll">Save All Changes</button>
-  <span id="savedMsg">✓ Changes saved</span>
+<label>Image URL</label>
+<input id="image">
+
+<label>Colors (comma separated)</label>
+<input id="colors">
+
+<label>In Stock</label>
+<select id="stock">
+<option value="true">In Stock</option>
+<option value="false">Out of Stock</option>
+</select>
+
+<button onclick="saveProduct()">Save Product</button>
+<span id="saved" class="success">Saved!</span>
+
+</div>
+
+<div class="section">
+
+<h2>Add New Product</h2>
+
+<label>Name</label>
+<input id="newName">
+
+<label>Price</label>
+<input id="newPrice" type="number">
+
+<label>Image URL</label>
+<input id="newImage">
+
+<label>Colors</label>
+<input id="newColors">
+
+<button onclick="addNew()">Add Product</button>
+
+</div>
+
 </div>
 
 <script>
-// ────────────────────────────────────────────────
-const productsList = document.getElementById('products-list');
-const saveBtn = document.getElementById('saveAll');
-const savedMsg = document.getElementById('savedMsg');
 
-let products = JSON.parse(localStorage.getItem('pervanProducts')) || [
-  { name: "Dragon Fidget",   price: 19.99, stock: true, image: "https://via.placeholder.com/300x220/2c3e50/ffffff?text=Dragon" },
-  { name: "Star Fidget",     price: 14.99, stock: true, image: "https://via.placeholder.com/300x220/34495e/ffffff?text=Star" },
-  { name: "Gear Fidget",     price: 11.99, stock: true, image: "https://via.placeholder.com/300x220/7f8c8d/ffffff?text=Gear" },
-  { name: "Heart Dish",      price: 15.99, stock: true, image: "https://via.placeholder.com/300x220/e74c3c/ffffff?text=Heart" },
-  { name: "Cactus Toothpick Holder", price: 8.99, stock: true, image: "https://via.placeholder.com/300x220/27ae60/ffffff?text=Cactus" },
-  { name: "Names and Teacher Gifts", price: 24.99, stock: true, image: "https://via.placeholder.com/300x220/3498db/ffffff?text=Teacher" }
+/* ============================
+   DATA
+============================ */
+
+let products = JSON.parse(localStorage.getItem("pervanProducts")) || [
+
+{ name:"Tree Fidget", price:4, image:"treefidget.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Dragon Fidget", price:5, image:"dragon.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Star Fidget", price:5, image:"star.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Gear Fidget", price:2, image:"gearfidget.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Cactus Toothpick Holder", price:15, image:"cactus.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Names", price:3, image:"names.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Teacher Gift", price:6, image:"teachergift.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Heart Dish", price:6, image:"heartdish.png", colors:"Red,Blue,Black", stock:true },
+{ name:"Spring Fidget", price:3, image:"spring.png", colors:"Red,Blue,Black", stock:true }
+
 ];
 
-// ────────────────────────────────────────────────
-function renderProducts() {
-  productsList.innerHTML = '';
+/* ============================
+   LOAD DROPDOWN
+============================ */
 
-  products.forEach((p, index) => {
-    const card = document.createElement('div');
-    card.className = 'admin-product';
-    card.innerHTML = `
-      <div class="row">
-        <div>
-          <label>Product Name</label>
-          <input type="text" value="${p.name}" data-index="${index}" data-field="name">
+const select = document.getElementById("productSelect");
 
-          <label>Price ($)</label>
-          <input type="number" step="0.01" value="${p.price}" data-index="${index}" data-field="price">
-        </div>
-
-        <div>
-          <label>Image URL</label>
-          <input type="text" value="${p.image}" data-index="${index}" data-field="image">
-
-          <div class="stock-switch">
-            <label class="switch">
-              <input type="checkbox" ${p.stock ? 'checked' : ''} data-index="${index}" data-field="stock">
-              <span class="slider"></span>
-            </label>
-            <span class="status-badge ${p.stock ? 'in-stock' : 'out-stock'}">
-              ${p.stock ? 'In Stock' : 'Out of Stock'}
-            </span>
-          </div>
-
-          <button class="danger" onclick="removeProduct(${index})">Remove Product</button>
-        </div>
-      </div>
-
-      <img src="${p.image}" class="preview-img" alt="${p.name}" onerror="this.src='https://via.placeholder.com/160?text=No+Image'">
-    `;
-    productsList.appendChild(card);
-  });
-
-  // Live editing
-  productsList.querySelectorAll('input').forEach(el => {
-    el.addEventListener('input', handleChange);
-    el.addEventListener('change', handleChange);
-  });
+function loadDropdown(){
+select.innerHTML="";
+products.forEach((p,i)=>{
+let o=document.createElement("option");
+o.value=i;
+o.textContent=p.name;
+select.appendChild(o);
+});
+loadFields(0);
 }
 
-function handleChange(e) {
-  const index = +e.target.dataset.index;
-  const field = e.target.dataset.field;
-  let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+loadDropdown();
 
-  if (field === 'price') value = Number(value) || 0;
+/* ============================
+   LOAD FIELDS
+============================ */
 
-  products[index][field] = value;
-
-  if (field === 'stock') {
-    const badge = e.target.closest('.admin-product').querySelector('.status-badge');
-    badge.textContent = value ? 'In Stock' : 'Out of Stock';
-    badge.className = `status-badge ${value ? 'in-stock' : 'out-stock'}`;
-  }
+function loadFields(i){
+let p=products[i];
+name.value=p.name;
+price.value=p.price;
+image.value=p.image;
+colors.value=p.colors;
+stock.value=p.stock;
 }
 
-function addProduct() {
-  const name = document.getElementById('new-name').value.trim();
-  if (!name) return alert('Please enter product name');
+/* ============================
+   SAVE EDIT
+============================ */
 
-  products.push({
-    name,
-    price: Number(document.getElementById('new-price').value) || 19.99,
-    image: document.getElementById('new-image').value.trim() || 'https://via.placeholder.com/300x220?text=New+Product',
-    stock: document.getElementById('new-stock').checked
-  });
+function saveProduct(){
+let i=productSelect.value;
 
-  renderProducts();
+products[i]={
+name:name.value,
+price:Number(price.value),
+image:image.value,
+colors:colors.value,
+stock:stock.value==="true"
+};
 
-  document.getElementById('new-name').value = '';
-  document.getElementById('new-price').value = '19.99';
-  document.getElementById('new-image').value = '';
-  document.getElementById('new-stock').checked = true;
+localStorage.setItem("pervanProducts",JSON.stringify(products));
+
+saved.style.display="inline";
+setTimeout(()=>saved.style.display="none",2000);
+
+loadDropdown();
+productSelect.value=i;
 }
 
-function removeProduct(index) {
-  if (!confirm('Delete this product?')) return;
-  products.splice(index, 1);
-  renderProducts();
-}
+/* ============================
+   ADD PRODUCT
+============================ */
 
-// ────────────────────────────────────────────────
-saveBtn.addEventListener('click', () => {
-  localStorage.setItem('pervanProducts', JSON.stringify(products));
-  savedMsg.style.display = 'inline';
-  setTimeout(() => savedMsg.style.display = 'none', 4000);
+function addNew(){
+products.push({
+name:newName.value,
+price:Number(newPrice.value),
+image:newImage.value,
+colors:newColors.value,
+stock:true
 });
 
-// ────────────────────────────────────────────────
-renderProducts();
+localStorage.setItem("pervanProducts",JSON.stringify(products));
+
+newName.value="";
+newPrice.value="";
+newImage.value="";
+newColors.value="";
+
+loadDropdown();
+alert("Product Added");
+}
+
+/* ============================
+   CHANGE SELECT
+============================ */
+
+productSelect.onchange=()=>{
+loadFields(productSelect.value);
+};
+
 </script>
 
 </body>
