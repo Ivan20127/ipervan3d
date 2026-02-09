@@ -106,25 +106,16 @@ text-decoration:none;
 <button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
 </div>
 
-<!-- STAR -->
+<!-- STAR (TWO COLOR) -->
 <div class="card">
 <img src="star.png">
 <h3>Star Fidget</h3>
 <p class="price">$5–$8</p>
 <select id="starSize"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
-</div>
-
-<!-- ✅  SPINNING STAR -->
-<div class="card">
-<img src="flexistar.png">
-<h3>Flexi Spinning Star Fidget</h3>
-<p class="price">$6</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Flexi Spinning Star Fidget',6,this)">Add to Cart</button>
+<button class="button" onclick="addStarTwoColor('Star Fidget','starSize',this)">Add to Cart</button>
 </div>
 
 <!-- GEAR -->
@@ -268,6 +259,17 @@ const color=card.querySelector(".color").value;
 const qty=parseInt(card.querySelector("input").value);
 let price=(size==="Big"?8:4)+upcharge(color);
 addItem(`${color} ${name} (${size})`,price,qty);
+}
+
+/* STAR TWO COLOR */
+function addStarTwoColor(name,sizeId,btn){
+const card=btn.parentElement;
+const size=card.querySelector("#"+sizeId).value;
+const colors=[...card.querySelectorAll(".color")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=(size==="Big"?8:4);
+price+=colors.reduce((a,c)=>a+upcharge(c),0);
+addItem(`${colors[0]} / ${colors[1]} ${name} (${size})`,price,qty);
 }
 
 function addFixed(name,base,btn){
