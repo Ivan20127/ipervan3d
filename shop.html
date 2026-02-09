@@ -13,7 +13,7 @@ header h1 { margin:0; }
 
 .colors-banner img { width:100%; height:100%; object-fit:cover; }
 
-.products {
+.products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
@@ -22,7 +22,7 @@ margin:auto;
 padding:40px 20px;
 }
 
-.card {
+.card{
 background:white;
 padding:20px;
 border-radius:6px;
@@ -30,18 +30,18 @@ text-align:center;
 box-shadow:0 2px 5px rgba(0,0,0,.15);
 }
 
-.card img { width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
+.card img{ width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
 
-.price { color:#ff6600; font-weight:bold; font-size:1.2em; }
+.price{ color:#ff6600; font-weight:bold; font-size:1.2em; }
 
-select,input {
+select,input{
 width:100%;
 max-width:190px;
 padding:6px;
 margin:6px 0;
 }
 
-.button {
+.button{
 background:#dc3545;
 color:white;
 border:none;
@@ -51,7 +51,7 @@ cursor:pointer;
 font-weight:bold;
 }
 
-.cart {
+.cart{
 background:white;
 max-width:500px;
 margin:40px auto;
@@ -60,7 +60,7 @@ border-radius:8px;
 box-shadow:0 5px 15px rgba(0,0,0,.2);
 }
 
-.remove { color:red; cursor:pointer; margin-left:8px; }
+.remove{ color:red; cursor:pointer; margin-left:8px; }
 
 .custom a{
 color:#0066cc;
@@ -84,22 +84,22 @@ text-decoration:none;
 
 <section class="products">
 
-<!-- TREE FIDGET -->
+<!-- TREE -->
 <div class="card">
 <img src="treefidget.png">
 <h3>Tree Fidget</h3>
-<p class="price">$4</p>
+<p class="price">$3</p>
 <select class="treeColor"></select>
 <select class="treeColor"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addTree('Tree Fidget',4,this)">Add to Cart</button>
+<button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
 </div>
 
 <!-- DRAGON -->
 <div class="card">
 <img src="dragon.png">
 <h3>Dragon Fidget</h3>
-<p class="price">$5–$8</p>
+<p class="price">$4–$8</p>
 <select id="dragonSize"><option>Small</option><option>Big</option></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
@@ -131,11 +131,11 @@ text-decoration:none;
 <div class="card">
 <img src="cactus.png">
 <h3>Cactus Toothpick Holder</h3>
-<p class="price">$15</p>
+<p class="price">$13</p>
 <select class="color"></select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
+<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',13,this)">Add to Cart</button>
 </div>
 
 <!-- NAMES -->
@@ -152,33 +152,43 @@ text-decoration:none;
 <div class="card">
 <img src="teachergift.png">
 <h3>Teacher Gift</h3>
-<p class="price">$6</p>
+<p class="price">$4</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Teacher Gift',6,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Teacher Gift',4,this)">Add to Cart</button>
 </div>
 
 <!-- HEART -->
 <div class="card">
 <img src="heartdish.png">
 <h3>Heart Dish</h3>
-<p class="price">$6</p>
+<p class="price">$5</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Heart Dish',6,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
 </div>
 
 <!-- SPRING -->
 <div class="card">
 <img src="spring.png">
 <h3>Spring Fidget</h3>
-<p class="price">$3</p>
+<p class="price">$2</p>
 <select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Spring Fidget',3,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
 </div>
 
-<!-- YOUR CUSTOM LAST -->
+<!-- KNIGHT -->
+<div class="card">
+<img src="knightpenholder.png">
+<h3>Knight Pen Holder</h3>
+<p class="price">$6</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Knight Pen Holder',6,this)">Add to Cart</button>
+</div>
+
+<!-- CUSTOM -->
 <div class="card custom">
 <h3>Your Custom</h3>
 <p class="price">$1+</p>
@@ -188,7 +198,7 @@ text-decoration:none;
 
 </section>
 
-<!-- DELIVERY ROW -->
+<!-- DELIVERY -->
 <div class="cart">
 <h3>Delivery Method</h3>
 <select id="shipping" onchange="renderCart()">
@@ -197,7 +207,7 @@ text-decoration:none;
 </select>
 </div>
 
-<!-- CHECKOUT ROW -->
+<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
@@ -210,8 +220,7 @@ text-decoration:none;
 
 <script>
 
-/* ===== YOUR ORIGINAL SCRIPT ===== */
-
+/* COLORS */
 const colors=[
 "Red","Blue","Black","Light Green","Yellow","Grey",
 "Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
@@ -227,6 +236,7 @@ sel.appendChild(o);
 });
 });
 
+/* CART */
 let cartItems=[];
 let total=0;
 
@@ -246,7 +256,7 @@ const card=btn.parentElement;
 const size=card.querySelector("#"+sizeId).value;
 const color=card.querySelector(".color").value;
 const qty=parseInt(card.querySelector("input").value);
-let price=(size==="Big"?8:5)+upcharge(color);
+let price=(size==="Big"?8:4)+upcharge(color);
 addItem(`${color} ${name} (${size})`,price,qty);
 }
 
@@ -266,9 +276,7 @@ addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
 
 function addItem(label,price,qty){
-for(let i=0;i<qty;i++){
-cartItems.push({label,price});
-}
+for(let i=0;i<qty;i++) cartItems.push({label,price});
 renderCart();
 }
 
@@ -312,28 +320,6 @@ note+=`\nTotal: $${total.toFixed(2)}`;
 
 window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
 }
-
-/* ===== ADMIN → SHOP SYNC (ADDED) ===== */
-
-const adminProducts = JSON.parse(localStorage.getItem("pervanProducts")) || [];
-
-function getAdminProduct(name){
-return adminProducts.find(p=>p.name===name);
-}
-
-window.addEventListener("DOMContentLoaded",()=>{
-document.querySelectorAll(".card").forEach(card=>{
-const title=card.querySelector("h3");
-const priceEl=card.querySelector(".price");
-const img=card.querySelector("img");
-if(!title) return;
-const admin=getAdminProduct(title.textContent);
-if(admin){
-if(priceEl) priceEl.textContent="$"+admin.price;
-if(img && admin.image) img.src=admin.image;
-}
-});
-});
 
 </script>
 
