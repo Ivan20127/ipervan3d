@@ -92,6 +92,24 @@
       font-size: 0.9em;
     }
 
+    /* ABOUT AUTHOR */
+    .about-author {
+      text-align: center;
+      padding: 60px 20px;
+      background: #e9e9e9;
+    }
+
+    .about-author h2 {
+      margin-bottom: 20px;
+    }
+
+    .about-author img {
+      width: 260px;
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
     /* SECRET ADMIN BUTTON */
     .secret-admin-btn {
       position: absolute;
@@ -130,6 +148,10 @@
     body.dark .card {
       background: #1f1f1f;
       color: #eee;
+    }
+
+    body.dark .about-author {
+      background: #1a1a1a;
     }
   </style>
 </head>
@@ -181,14 +203,18 @@
 
   <p style="text-align:center;">
     Email us at:<br>
-
-    <!-- CLICKABLE EMAIL -->
     <a id="contact-email"
        href="mailto:ivanpervan09@gmail.com"
        style="color:white; font-weight:bold; text-decoration:none;">
        ivanpervan09@gmail.com
     </a>
   </p>
+</section>
+
+<!-- ABOUT AUTHOR SECTION -->
+<section class="about-author">
+  <h2>About the Author</h2>
+  <img src="abouttheauthor.png" alt="About the Author">
 </section>
 
 <footer id="site-footer">
