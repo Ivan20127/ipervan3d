@@ -6,382 +6,501 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; }
-header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
-header h1 { margin:0; }
-.back-btn { position:absolute; top:20px; left:20px; padding:10px 20px; background:#444; color:white; text-decoration:none; border-radius:6px; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+  }
+  header {
+    background: #111;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { margin: 0; }
+  .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: #444;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+  }
 
-.colors-banner img { width:100%; height:100%; object-fit:cover; }
+  .colors-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-max-width:1100px;
-margin:auto;
-padding:40px 20px;
-}
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+  }
 
-.card{
-background:white;
-padding:20px;
-border-radius:6px;
-text-align:center;
-box-shadow:0 2px 5px rgba(0,0,0,.15);
-}
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  }
 
-.card img{ width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
 
-.price{ color:#ff6600; font-weight:bold; font-size:1.2em; }
+  .price {
+    color: #ff6600;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
 
-select,input{
-width:100%;
-max-width:190px;
-padding:6px;
-margin:6px 0;
-}
+  select, input {
+    width: 100%;
+    max-width: 220px;
+    padding: 8px;
+    margin: 6px 0;
+    font-size: 1em;
+    box-sizing: border-box;
+  }
 
-.button{
-background:#dc3545;
-color:white;
-border:none;
-padding:10px 18px;
-border-radius:4px;
-cursor:pointer;
-font-weight:bold;
-}
+  .button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+  }
 
-.cart{
-background:white;
-max-width:500px;
-margin:40px auto;
-padding:20px;
-border-radius:8px;
-box-shadow:0 5px 15px rgba(0,0,0,.2);
-}
+  .cart {
+    background: white;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+  }
 
-.remove{ color:red; cursor:pointer; margin-left:8px; }
+  .remove {
+    color: red;
+    cursor: pointer;
+    margin-left: 8px;
+  }
 
-.custom a{
-color:#0066cc;
-font-weight:bold;
-text-decoration:none;
-}
+  .custom a {
+    color: #0066cc;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  /* ────────────────────────────────────────────────
+     Color dropdown enhancements
+  ──────────────────────────────────────────────── */
+  .color, .treeColor {
+    width: 100%;
+    max-width: 220px;
+    padding: 8px;
+    font-size: 1em;
+  }
+
+  .color option, .treeColor option {
+    padding: 6px 8px;
+    background: white;
+  }
+
+  /* Highlight upcharge options */
+  .color option[value*="+$2"], .treeColor option[value*="+$2"] {
+    font-weight: bold;
+    background: #fffacd;
+    color: #d32f2f;
+  }
+
+  /* Color swatch preview */
+  .color option:not([value=""]), .treeColor option:not([value=""]) {
+    position: relative;
+    padding-left: 36px;
+  }
+
+  .color option:not([value=""])::before,
+  .treeColor option:not([value=""])::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background-color: var(--color-preview, #ccc);
+  }
+
+  /* Color → hex mapping (adjust these to match your real filaments!) */
+  option[value="Red"]::before       { --color-preview: #e63946; }
+  option[value="Blue"]::before      { --color-preview: #457b9d; }
+  option[value="Black"]::before     { --color-preview: #1d1d1d; }
+  option[value="Light Green"]::before { --color-preview: #90ee90; }
+  option[value="Yellow"]::before    { --color-preview: #ffd60a; }
+  option[value="Grey"]::before      { --color-preview: #adb5bd; }
+  option[value="Candy Red"]::before { --color-preview: #ff3333; }
+  option[value="Champagne"]::before { --color-preview: #f1c40f; }
+  option[value="White"]::before     { --color-preview: #f8f9fa; border: 1px solid #aaa; }
+  option[value="Titan Grey"]::before{ --color-preview: #4a4e69; }
+  option[value="Candy Green"]::before { --color-preview: #00ff9f; }
+  option[value="Brown"]::before     { --color-preview: #8d5524; }
+  option[value="Gold"]::before      { --color-preview: #d4a017; }
+  option[value="Orange"]::before    { --color-preview: #f48c06; }
+  option[value="Purple"]::before    { --color-preview: #9b5de5; }
+
+  /* Gradient previews for multi/special colors */
+  option[value^="Black Gold Green"]::before  { background: linear-gradient(90deg, #000, #d4a017, #006400); border: none; }
+  option[value^="Blue Orange Green"]::before { background: linear-gradient(90deg, #457b9d, #f48c06, #006400); border: none; }
+  option[value^="Phantom Blue"]::before      { --color-preview: #3a86ff; filter: brightness(1.1); }
+  option[value^="Copper Purple Green"]::before { background: linear-gradient(90deg, #b87333, #9b5de5, #006400); border: none; }
+  option[value^="Multi Color Rose"]::before  { background: linear-gradient(90deg, #ffafcc, #ffc8dd, #f4a7c9); border: none; }
+  option[value^="Multi Color Blue"]::before  { background: linear-gradient(90deg, #48cae4, #5390d9, #4361ee); border: none; }
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Pervan 3D Shop</h1>
-<p>3D Printed Fidgets & Gifts</p>
-<a href="index.html" class="back-btn">← Back</a>
+  <h1>Pervan 3D Shop</h1>
+  <p>3D Printed Fidgets & Gifts</p>
+  <a href="index.html" class="back-btn">← Back</a>
 </header>
 
 <div class="colors-banner">
-<img src="colors.png">
+  <img src="colors.png" alt="Available filament colors">
 </div>
 
 <section class="products">
 
-<!-- TREE -->
-<div class="card">
-<img src="treefidget.png">
-<h3>Tree Fidget</h3>
-<p class="price">$3</p>
-<select class="treeColor"></select>
-<select class="treeColor"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
-</div>
+  <!-- TREE -->
+  <div class="card">
+    <img src="treefidget.png" alt="Tree Fidget">
+    <h3>Tree Fidget</h3>
+    <p class="price">$3</p>
+    <select class="treeColor"></select>
+    <select class="treeColor"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
+  </div>
 
-<!-- DRAGON -->
-<div class="card">
-<img src="dragon.png">
-<h3>Dragon Fidget</h3>
-<p class="price">$4–$8</p>
-<select id="dragonSize"><option>Small</option><option>Big</option></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
-</div>
+  <!-- DRAGON -->
+  <div class="card">
+    <img src="dragon.png" alt="Dragon Fidget">
+    <h3>Dragon Fidget</h3>
+    <p class="price">$4–$8</p>
+    <select id="dragonSize"><option>Small</option><option>Big</option></select>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
+  </div>
 
-<!-- STAR (ONE COLOR) -->
-<div class="card">
-<img src="star.png">
-<h3>Star Fidget</h3>
-<p class="price">$5–$8</p>
-<select id="starSize"><option>Small</option><option>Big</option></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
-</div>
+  <!-- STAR -->
+  <div class="card">
+    <img src="star.png" alt="Star Fidget">
+    <h3>Star Fidget</h3>
+    <p class="price">$5–$8</p>
+    <select id="starSize"><option>Small</option><option>Big</option></select>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
+  </div>
 
-<!-- FLEXI SPINNING STAR -->
-<div class="card">
-<img src="flexistar.png">
-<h3>Flexi Spinning Star Fidget</h3>
-<p class="price">$6</p>
-<select class="color"></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Flexi Spinning Star Fidget',6,this)">Add to Cart</button>
-</div>
+  <!-- FLEXI SPINNING STAR -->
+  <div class="card">
+    <img src="flexistar.png" alt="Flexi Spinning Star">
+    <h3>Flexi Spinning Star Fidget</h3>
+    <p class="price">$6</p>
+    <select class="color"></select>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addTwoColor('Flexi Spinning Star Fidget',6,this)">Add to Cart</button>
+  </div>
 
-<!-- GEAR -->
-<div class="card">
-<img src="gearfidget.png">
-<h3>Gear Fidget</h3>
-<p class="price">$2</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
-</div>
+  <!-- GEAR -->
+  <div class="card">
+    <img src="gearfidget.png" alt="Gear Fidget">
+    <h3>Gear Fidget</h3>
+    <p class="price">$2</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
+  </div>
 
-<!-- CACTUS -->
-<div class="card">
-<img src="cactus.png">
-<h3>Cactus Toothpick Holder</h3>
-<p class="price">$13</p>
-<select class="color"></select>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',13,this)">Add to Cart</button>
-</div>
+  <!-- CACTUS -->
+  <div class="card">
+    <img src="cactus.png" alt="Cactus Toothpick Holder">
+    <h3>Cactus Toothpick Holder</h3>
+    <p class="price">$13</p>
+    <select class="color"></select>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addTwoColor('Cactus Toothpick Holder',13,this)">Add to Cart</button>
+  </div>
 
-<!-- NAMES -->
-<div class="card">
-<img src="names.png">
-<h3>Names</h3>
-<p class="price">$3</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Names',3,this)">Add to Cart</button>
-</div>
+  <!-- NAMES -->
+  <div class="card">
+    <img src="names.png" alt="Names">
+    <h3>Names</h3>
+    <p class="price">$3</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Names',3,this)">Add to Cart</button>
+  </div>
 
-<!-- TEACHER -->
-<div class="card">
-<img src="teachergift.png">
-<h3>Teacher Gift</h3>
-<p class="price">$4</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Teacher Gift',4,this)">Add to Cart</button>
-</div>
+  <!-- TEACHER -->
+  <div class="card">
+    <img src="teachergift.png" alt="Teacher Gift">
+    <h3>Teacher Gift</h3>
+    <p class="price">$4</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Teacher Gift',4,this)">Add to Cart</button>
+  </div>
 
-<!-- HEART -->
-<div class="card">
-<img src="heartdish.png">
-<h3>Heart Dish</h3>
-<p class="price">$5</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
-</div>
+  <!-- HEART -->
+  <div class="card">
+    <img src="heartdish.png" alt="Heart Dish">
+    <h3>Heart Dish</h3>
+    <p class="price">$5</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
+  </div>
 
-<!-- SPRING -->
-<div class="card">
-<img src="spring.png">
-<h3>Spring Fidget</h3>
-<p class="price">$2</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
-</div>
+  <!-- SPRING -->
+  <div class="card">
+    <img src="spring.png" alt="Spring Fidget">
+    <h3>Spring Fidget</h3>
+    <p class="price">$2</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
+  </div>
 
-<!-- KNIGHT -->
-<div class="card">
-<img src="penholder.png">
-<h3>Knight Pen Holder</h3>
-<p class="price">$6</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Knight Pen Holder',6,this)">Add to Cart</button>
-</div>
+  <!-- KNIGHT -->
+  <div class="card">
+    <img src="penholder.png" alt="Knight Pen Holder">
+    <h3>Knight Pen Holder</h3>
+    <p class="price">$6</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Knight Pen Holder',6,this)">Add to Cart</button>
+  </div>
 
-<!-- NEW: WHISTLE KEYCHAIN -->
-<div class="card">
-<img src="whistlekeychain.png"> <!-- replace with your actual image filename -->
-<h3>Whistle Keychain</h3>
-<p class="price">$1</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Whistle Keychain',1,this)">Add to Cart</button>
-</div>
+  <!-- WHISTLE KEYCHAIN -->
+  <div class="card">
+    <img src="whistlekeychain.png" alt="Whistle Keychain">
+    <h3>Whistle Keychain</h3>
+    <p class="price">$1</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Whistle Keychain',1,this)">Add to Cart</button>
+  </div>
 
-<!-- NEW: GRENADE CLICKER -->
-<div class="card">
-<img src="grenadeclicker.png"> <!-- replace with your actual image filename -->
-<h3>Grenade Clicker</h3>
-<p class="price">$4</p>
-<select class="color"></select>
-<input type="number" value="4" min="4">
-<button class="button" onclick="addFixed('Grenade Clicker',4,this)">Add to Cart</button>
-</div>
+  <!-- GRENADE CLICKER -->
+  <div class="card">
+    <img src="grenadeclicker.png" alt="Grenade Clicker">
+    <h3>Grenade Clicker</h3>
+    <p class="price">$4</p>
+    <select class="color"></select>
+    <input type="number" value="4" min="4">
+    <button class="button" onclick="addFixed('Grenade Clicker',4,this)">Add to Cart</button>
+  </div>
 
-<!-- NEW:CLICKER FIDGET -->
-<div class="card">
-<img src="clickerfidget.png"> <!-- replace with your actual image filename -->
-<h3>Clicker Fidget</h3>
-<p class="price">$3</p>
-<select class="color"></select>
-<input type="number" value="3" min="3">
-<button class="button" onclick="addFixed('Clicker Fidget',3,this)">Add to Cart</button>
-</div>
+  <!-- CLICKER FIDGET -->
+  <div class="card">
+    <img src="clickerfidget.png" alt="Clicker Fidget">
+    <h3>Clicker Fidget</h3>
+    <p class="price">$3</p>
+    <select class="color"></select>
+    <input type="number" value="3" min="3">
+    <button class="button" onclick="addFixed('Clicker Fidget',3,this)">Add to Cart</button>
+  </div>
 
-<!-- NEW: ROTATING RINGS FIDGET -->
-<div class="card">
-<img src="rotatingrings.png"> <!-- replace with your actual image filename -->
-<h3>Rotating Rings Fidget</h3>
-<p class="price">$4</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Rotating Rings Fidget',4,this)">Add to Cart</button>
-</div>
+  <!-- ROTATING RINGS FIDGET -->
+  <div class="card">
+    <img src="rotatingrings.png" alt="Rotating Rings Fidget">
+    <h3>Rotating Rings Fidget</h3>
+    <p class="price">$4</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Rotating Rings Fidget',4,this)">Add to Cart</button>
+  </div>
 
-<!-- NEW: AIR PRESSURE TANK -->
-<div class="card">
-<img src="airpressuretank.png"> <!-- replace with your actual image filename -->
-<h3>Air Pressure Tank</h3>
-<p class="price">$10</p>
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Air Pressure Tank',10,this)">Add to Cart</button>
-</div>
+  <!-- AIR PRESSURE TANK -->
+  <div class="card">
+    <img src="airpressuretank.png" alt="Air Pressure Tank">
+    <h3>Air Pressure Tank</h3>
+    <p class="price">$10</p>
+    <select class="color"></select>
+    <input type="number" value="1" min="1">
+    <button class="button" onclick="addFixed('Air Pressure Tank',10,this)">Add to Cart</button>
+  </div>
 
-<!-- CUSTOM -->
-<div class="card custom">
-<h3>Your Custom</h3>
-<p class="price">$1+</p>
-<p>Email me your idea:</p>
-<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
-</div>
+  <!-- CUSTOM -->
+  <div class="card custom">
+    <h3>Your Custom</h3>
+    <p class="price">$1+</p>
+    <p>Email me your idea:</p>
+    <a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
+  </div>
 
 </section>
 
-<!-- DELIVERY -->
 <div class="cart">
-<h3>Delivery Method</h3>
-<select id="shipping" onchange="renderCart()">
-<option value="0">Local Pickup (Free)</option>
-<option value="6">Ship Order (+$6)</option>
-</select>
+  <h3>Delivery Method</h3>
+  <select id="shipping" onchange="renderCart()">
+    <option value="0">Local Pickup (Free)</option>
+    <option value="6">Ship Order (+$6)</option>
+  </select>
 </div>
 
-<!-- CART -->
 <div class="cart">
-<h3>🛒 Cart</h3>
-<input id="customerName" placeholder="Customer name required">
-<input id="customerPhone" placeholder="Phone number required">
-<input id="customerAddress" placeholder="Address required">
-<ul id="cart"></ul>
-<p><strong>Total: $<span id="total">0.00</span></strong></p>
-<button class="button" onclick="checkout()">Pay with Venmo</button>
+  <h3>🛒 Cart</h3>
+  <input id="customerName" placeholder="Customer name required">
+  <input id="customerPhone" placeholder="Phone number required">
+  <input id="customerAddress" placeholder="Address required (if shipping)">
+  <ul id="cart"></ul>
+  <p><strong>Total: $<span id="total">0.00</span></strong></p>
+  <button class="button" onclick="checkout()">Pay with Venmo</button>
 </div>
 
 <script>
-
-/* COLORS */
-const colors=[
-"Red","Blue","Black","Light Green","Yellow","Grey",
-"Candy Red","Champagne","White","Titan Grey","Candy Green","Brown","Gold","Blue","Orange","Purple"
-"Black Gold Green (+$2)","Blue Orange Green (+$2)","Phantom Blue (+2$)",
-"Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
+// ────────────────────────────────────────────────
+// COLORS (with previews via CSS)
+// ────────────────────────────────────────────────
+const colors = [
+  "Red", "Blue", "Black", "Light Green", "Yellow", "Grey",
+  "Candy Red", "Champagne", "White", "Titan Grey", "Candy Green", "Brown", "Gold", "Orange", "Purple",
+  "Black Gold Green (+$2)", "Blue Orange Green (+$2)", "Phantom Blue (+$2)",
+  "Copper Purple Green (+$2)", "Multi Color Rose (+$2)", "Multi Color Blue (+$2)"
 ];
 
-document.querySelectorAll(".color,.treeColor").forEach(sel=>{
-colors.forEach(c=>{
-let o=document.createElement("option");
-o.textContent=c;
-sel.appendChild(o);
-});
-});
+document.querySelectorAll(".color, .treeColor").forEach(sel => {
+  let blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = "— Choose color —";
+  sel.appendChild(blank);
 
-/* CART SYSTEM */
-let cartItems=[];
-let total=0;
-
-const upcharge=c=>c.includes("+$2")?2:0;
-const treeUpcharge=c=>c.includes("+$2")?1:0;
-
-function addTree(name,base,btn){
-const card=btn.parentElement;
-const cs=[...card.querySelectorAll(".treeColor")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
-let price=base+cs.reduce((a,c)=>a+treeUpcharge(c),0);
-addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
-}
-
-function addFidget(name,sizeId,btn){
-const card=btn.parentElement;
-const size=card.querySelector("#"+sizeId).value;
-const color=card.querySelector(".color").value;
-const qty=parseInt(card.querySelector("input").value);
-let price=(size==="Big"?8:4)+upcharge(color);
-addItem(`${color} ${name} (${size})`,price,qty);
-}
-
-function addFixed(name,base,btn){
-const card=btn.parentElement;
-const color=card.querySelector(".color").value;
-const qty=parseInt(card.querySelector("input").value);
-addItem(`${color} ${name}`,base+upcharge(color),qty);
-}
-
-function addTwoColor(name,base,btn){
-const card=btn.parentElement;
-const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
-let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
-addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
-}
-
-function addItem(label,price,qty){
-for(let i=0;i<qty;i++) cartItems.push({label,price});
-renderCart();
-}
-
-function renderCart(){
-const ul=document.getElementById("cart");
-ul.innerHTML="";
-total=0;
-cartItems.forEach((item,i)=>{
-total+=item.price;
-const li=document.createElement("li");
-li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
-li.querySelector(".remove").onclick=()=>{
-cartItems.splice(i,1);
-renderCart();
-};
-ul.appendChild(li);
-});
-total+=parseFloat(document.getElementById("shipping").value);
-document.getElementById("total").textContent=total.toFixed(2);
-}
-
-function checkout(){
-if(!cartItems.length) return alert("Cart empty");
-if(!customerName.value.trim()) return alert("Enter name");
-if(!customerPhone.value.trim()) return alert("Enter phone");
-if(!customerAddress.value.trim()) return alert("Enter address");
-
-let note=`Pervan 3D Order
-Name: ${customerName.value}
-Phone: ${customerPhone.value}
-Address: ${customerAddress.value}
-
-ITEMS:
-`;
-
-cartItems.forEach(i=>{
-note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+  colors.forEach(c => {
+    let o = document.createElement("option");
+    o.value = c;
+    o.textContent = c;
+    sel.appendChild(o);
+  });
 });
 
-note+=`\nTotal: $${total.toFixed(2)}`;
+// ────────────────────────────────────────────────
+// CART LOGIC
+// ────────────────────────────────────────────────
+let cartItems = [];
+let total = 0;
 
-window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+const upcharge    = c => c.includes("+$2") ? 2 : 0;
+const treeUpcharge = c => c.includes("+$2") ? 1 : 0;
+
+function addTree(name, base, btn) {
+  const card = btn.parentElement;
+  const cs = [...card.querySelectorAll(".treeColor")].map(s => s.value).filter(v => v);
+  const qty = parseInt(card.querySelector("input").value) || 1;
+  if (cs.length < 2) return alert("Please select both colors");
+  let price = base + cs.reduce((a,c) => a + treeUpcharge(c), 0);
+  addItem(`${cs[0]} / ${cs[1]} ${name}`, price, qty);
 }
 
+function addFidget(name, sizeId, btn) {
+  const card = btn.parentElement;
+  const size = card.querySelector("#" + sizeId).value;
+  const color = card.querySelector(".color").value;
+  const qty = parseInt(card.querySelector("input").value) || 1;
+  if (!color) return alert("Please select a color");
+  let price = (size === "Big" ? 8 : 4) + upcharge(color);
+  addItem(`${color} ${name} (${size})`, price, qty);
+}
+
+function addFixed(name, base, btn) {
+  const card = btn.parentElement;
+  const color = card.querySelector(".color").value;
+  const qty = parseInt(card.querySelector("input").value) || 1;
+  if (!color) return alert("Please select a color");
+  addItem(`${color} ${name}`, base + upcharge(color), qty);
+}
+
+function addTwoColor(name, base, btn) {
+  const card = btn.parentElement;
+  const cs = [...card.querySelectorAll(".color")].map(s => s.value).filter(v => v);
+  const qty = parseInt(card.querySelector("input").value) || 1;
+  if (cs.length < 2) return alert("Please select both colors");
+  let price = base + cs.reduce((a,c) => a + upcharge(c), 0);
+  addItem(`${cs[0]} / ${cs[1]} ${name}`, price, qty);
+}
+
+function addItem(label, price, qty) {
+  for (let i = 0; i < qty; i++) {
+    cartItems.push({ label, price });
+  }
+  renderCart();
+}
+
+function renderCart() {
+  const ul = document.getElementById("cart");
+  ul.innerHTML = "";
+  total = 0;
+
+  cartItems.forEach((item, i) => {
+    total += item.price;
+    const li = document.createElement("li");
+    li.innerHTML = `${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
+    li.querySelector(".remove").onclick = () => {
+      cartItems.splice(i, 1);
+      renderCart();
+    };
+    ul.appendChild(li);
+  });
+
+  total += parseFloat(document.getElementById("shipping").value || 0);
+  document.getElementById("total").textContent = total.toFixed(2);
+}
+
+function checkout() {
+  if (!cartItems.length) return alert("Cart is empty");
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+
+  if (!name) return alert("Please enter your name");
+  if (!phone) return alert("Please enter your phone number");
+  if (parseFloat(document.getElementById("shipping").value) > 0 && !address) {
+    return alert("Please enter your address for shipping");
+  }
+
+  let note = `Pervan 3D Order\nName: ${name}\nPhone: ${phone}\nAddress: ${address || "Local Pickup"}\n\nITEMS:\n`;
+  cartItems.forEach(i => {
+    note += `${i.label} - $${i.price.toFixed(2)}\n`;
+  });
+  note += `\nTotal: $${total.toFixed(2)}`;
+
+  const venmoUrl = `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`;
+  window.open(venmoUrl, "_blank");
+}
 </script>
 
 </body>
