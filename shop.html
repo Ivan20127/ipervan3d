@@ -1,346 +1,339 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Online shop with fidget toys, keychains and accessories">
-  <meta name="author" content="Your Name">
-  <title>Fidget & Accessories Shop</title>
+<meta charset="UTF-8">
+<title>Pervan 3D Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ============================================= -->
-  <!--             MAIN STYLESHEET                   -->
-  <!-- ============================================= -->
-  <style>
-    /* ========================================== */
-    /* Reset and base styles                      */
-    /* ========================================== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; }
+header { background:#111; color:white; padding:40px 20px; text-align:center; position:relative; }
+header h1 { margin:0; }
+.back-btn { position:absolute; top:20px; left:20px; padding:10px 20px; background:#444; color:white; text-decoration:none; border-radius:6px; }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+.colors-banner img { width:100%; height:100%; object-fit:cover; }
 
-    /* ========================================== */
-    /* Container and layout                       */
-    /* ========================================== */
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
 
-    header {
-      text-align: center;
-      padding: 40px 0 30px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      margin-bottom: 40px;
-    }
+.card{
+background:white;
+padding:20px;
+border-radius:6px;
+text-align:center;
+box-shadow:0 2px 5px rgba(0,0,0,.15);
+}
 
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-    }
+.card img{ width:100%; height:220px; object-fit:contain; margin-bottom:10px; }
 
-    .subtitle {
-      font-size: 1.3rem;
-      opacity: 0.9;
-    }
+.price{ color:#ff6600; font-weight:bold; font-size:1.2em; }
 
-    /* ========================================== */
-    /* Products grid                              */
-    /* ========================================== */
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 30px;
-      padding: 20px 0 60px;
-    }
+select,input{
+width:100%;
+max-width:190px;
+padding:6px;
+margin:6px 0;
+}
 
-    /* ========================================== */
-    /* Single product card                        */
-    /* ========================================== */
-    .product-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-    }
+.button{
+background:#dc3545;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:4px;
+cursor:pointer;
+font-weight:bold;
+}
 
-    .product-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
-    }
+.cart{
+background:white;
+max-width:500px;
+margin:40px auto;
+padding:20px;
+border-radius:8px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
 
-    .product-image-wrapper {
-      height: 240px;
-      background: #f1f3f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 15px;
-    }
+.remove{ color:red; cursor:pointer; margin-left:8px; }
 
-    .product-card img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      transition: transform 0.4s ease;
-    }
-
-    .product-card:hover img {
-      transform: scale(1.06);
-    }
-
-    .product-info {
-      padding: 20px 18px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-title {
-      font-size: 1.28rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #1a1a1a;
-      min-height: 2.8em;
-    }
-
-    .product-price {
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: #d81b60;
-      margin: 8px 0 16px;
-    }
-
-    select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 14px;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      font-size: 1rem;
-      background: white;
-      cursor: pointer;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    button:hover {
-      background: #218838;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    /* ========================================== */
-    /* Footer (optional but adds lines)           */
-    /* ========================================== */
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      background: #343a40;
-      color: white;
-      margin-top: 60px;
-    }
-
-    footer p {
-      margin: 8px 0;
-    }
-  </style>
+.custom a{
+color:#0066cc;
+font-weight:bold;
+text-decoration:none;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="container">
-      <h1>Welcome to the Shop</h1>
-      <p class="subtitle">Fidget toys, keychains, gadgets & more – affordable prices!</p>
-    </div>
-  </header>
+<header>
+<h1>Pervan 3D Shop</h1>
+<p>3D Printed Fidgets & Gifts</p>
+<a href="index.html" class="back-btn">← Back</a>
+</header>
 
-  <div class="container">
-    <section class="products">
+<div class="colors-banner">
+<img src="colors.png">
+</div>
 
-      <!-- ============================================= -->
-      <!--             EXISTING / PLACEHOLDER PRODUCTS   -->
-      <!-- ============================================= -->
+<section class="products">
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://via.placeholder.com/320x240/eeeeee/555555?text=Item+A" alt="Placeholder Product A">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Classic Fidget Spinner</div>
-          <div class="product-price">$7.99</div>
-          <select>
-            <option>Black</option>
-            <option>Red</option>
-            <option>Blue</option>
-            <option>Green</option>
-            <option>Yellow</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- TREE -->
+<div class="card">
+<img src="treefidget.png">
+<h3>Tree Fidget</h3>
+<p class="price">$3</p>
+<select class="treeColor"></select>
+<select class="treeColor"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
+</div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://via.placeholder.com/320x240/dddddd/444444?text=Item+B" alt="Placeholder Product B">
-        </div>
-        <div class="product-info">
-          <div class="product-title">LED Light-up Cube</div>
-          <div class="product-price">$14.50</div>
-          <select>
-            <option>White Light</option>
-            <option>RGB Color</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- DRAGON -->
+<div class="card">
+<img src="dragon.png">
+<h3>Dragon Fidget</h3>
+<p class="price">$4–$8</p>
+<select id="dragonSize"><option>Small</option><option>Big</option></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
+</div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://via.placeholder.com/320x240/cccccc/333333?text=Item+C" alt="Placeholder Product C">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Stress Relief Ball</div>
-          <div class="product-price">$5.25</div>
-          <select>
-            <option>Red</option>
-            <option>Blue</option>
-            <option>Green</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- STAR (ONE COLOR) -->
+<div class="card">
+<img src="star.png">
+<h3>Star Fidget</h3>
+<p class="price">$5–$8</p>
+<select id="starSize"><option>Small</option><option>Big</option></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
+</div>
 
-      <!-- ============================================= -->
-      <!--             NEW PRODUCTS REQUESTED            -->
-      <!-- ============================================= -->
+<!-- FLEXI SPINNING STAR -->
+<div class="card">
+<img src="flexistar.png">
+<h3>Flexi Spinning Star Fidget</h3>
+<p class="price">$6</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addTwoColor('Flexi Spinning Star Fidget',6,this)">Add to Cart</button>
+</div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1594787318286-3d835c1d207f?w=600&auto=format&fit=crop&q=80" alt="Whistle Keychain">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Whistle Keychain</div>
-          <div class="product-price">$1.00</div>
-          <select>
-            <option>Black</option>
-            <option>Silver</option>
-            <option>Gold</option>
-            <option>Red</option>
-            <option>Blue</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- GEAR -->
+<div class="card">
+<img src="gearfidget.png">
+<h3>Gear Fidget</h3>
+<p class="price">$2</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
+</div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1610797252146-9b7b2a3f1d1d?w=600&auto=format&fit=crop&q=80" alt="Rotating Ring Fidget">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Rotating Ring Fidget</div>
-          <div class="product-price">$4.00</div>
-          <select>
-            <option>Black</option>
-            <option>Silver</option>
-            <option>Rainbow</option>
-            <option>Red</option>
-            <option>Blue</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- CACTUS -->
+<div class="card">
+<img src="cactus.png">
+<h3>Cactus Toothpick Holder</h3>
+<p class="price">$13</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',13,this)">Add to Cart</button>
+</div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1581092160607-36e2e7fdd65e?w=600&auto=format&fit=crop&q=80" alt="Air Pressure Tank">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Air Pressure Tank</div>
-          <div class="product-price">$11.00</div>
-          <select>
-            <option>Black</option>
-            <option>Red</option>
-            <option>Blue</option>
-            <option>Green</option>
-            <option>Silver</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- NAMES -->
+<div class="card">
+<img src="names.png">
+<h3>Names</h3>
+<p class="price">$3</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Names',3,this)">Add to Cart</button>
+</div>
 
-      <!-- Extra placeholder cards to ensure length -->
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://via.placeholder.com/320x240/bbbbbb/222222?text=Item+D" alt="Placeholder D">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Magnetic Puzzle Ring</div>
-          <div class="product-price">$6.75</div>
-          <select>
-            <option>Silver</option>
-            <option>Gold</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- TEACHER -->
+<div class="card">
+<img src="teachergift.png">
+<h3>Teacher Gift</h3>
+<p class="price">$4</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Teacher Gift',4,this)">Add to Cart</button>
+</div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://via.placeholder.com/320x240/aaaaaa/111111?text=Item+E" alt="Placeholder E">
-        </div>
-        <div class="product-info">
-          <div class="product-title">Pop It Fidget Board</div>
-          <div class="product-price">$8.99</div>
-          <select>
-            <option>Pastel</option>
-            <option>Neon</option>
-            <option>Dark</option>
-          </select>
-          <button>Add to Cart</button>
-        </div>
-      </div>
+<!-- HEART -->
+<div class="card">
+<img src="heartdish.png">
+<h3>Heart Dish</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
+</div>
 
-      <!-- You can keep adding more real products here later -->
+<!-- SPRING -->
+<div class="card">
+<img src="spring.png">
+<h3>Spring Fidget</h3>
+<p class="price">$2</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
+</div>
 
-    </section>
-  </div>
+<!-- KNIGHT -->
+<div class="card">
+<img src="penholder.png">
+<h3>Knight Pen Holder</h3>
+<p class="price">$6</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Knight Pen Holder',6,this)">Add to Cart</button>
+</div>
 
-  <footer>
-    <div class="container">
-      <p>© 2026 Fidget Shop – All rights reserved</p>
-      <p>Fast shipping • Secure checkout • Great prices</p>
-      <p>Contact: support@fidgetshop.example</p>
-    </div>
-  </footer>
+<!-- CUSTOM -->
+<div class="card custom">
+<h3>Your Custom</h3>
+<p class="price">$1+</p>
+<p>Email me your idea:</p>
+<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
+</div>
+
+</section>
+
+<!-- DELIVERY -->
+<div class="cart">
+<h3>Delivery Method</h3>
+<select id="shipping" onchange="renderCart()">
+<option value="0">Local Pickup (Free)</option>
+<option value="6">Ship Order (+$6)</option>
+</select>
+</div>
+
+<!-- CART -->
+<div class="cart">
+<h3>🛒 Cart</h3>
+<input id="customerName" placeholder="Customer name required">
+<input id="customerPhone" placeholder="Phone number required">
+<input id="customerAddress" placeholder="Address required">
+<ul id="cart"></ul>
+<p><strong>Total: $<span id="total">0.00</span></strong></p>
+<button class="button" onclick="checkout()">Pay with Venmo</button>
+</div>
+
+<script>
+
+/* COLORS */
+const colors=[
+"Red","Blue","Black","Light Green","Yellow","Grey",
+"Candy Red","Champagne","White","Titan Grey","Candy Green","Brown",
+"Black Gold Green (+$2)","Blue Orange Green (+$2)",
+"Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
+];
+
+document.querySelectorAll(".color,.treeColor").forEach(sel=>{
+colors.forEach(c=>{
+let o=document.createElement("option");
+o.textContent=c;
+sel.appendChild(o);
+});
+});
+
+/* CART SYSTEM */
+let cartItems=[];
+let total=0;
+
+const upcharge=c=>c.includes("+$2")?2:0;
+const treeUpcharge=c=>c.includes("+$2")?1:0;
+
+function addTree(name,base,btn){
+const card=btn.parentElement;
+const cs=[...card.querySelectorAll(".treeColor")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=base+cs.reduce((a,c)=>a+treeUpcharge(c),0);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+}
+
+function addFidget(name,sizeId,btn){
+const card=btn.parentElement;
+const size=card.querySelector("#"+sizeId).value;
+const color=card.querySelector(".color").value;
+const qty=parseInt(card.querySelector("input").value);
+let price=(size==="Big"?8:4)+upcharge(color);
+addItem(`${color} ${name} (${size})`,price,qty);
+}
+
+function addFixed(name,base,btn){
+const card=btn.parentElement;
+const color=card.querySelector(".color").value;
+const qty=parseInt(card.querySelector("input").value);
+addItem(`${color} ${name}`,base+upcharge(color),qty);
+}
+
+function addTwoColor(name,base,btn){
+const card=btn.parentElement;
+const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
+const qty=parseInt(card.querySelector("input").value);
+let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+}
+
+function addItem(label,price,qty){
+for(let i=0;i<qty;i++) cartItems.push({label,price});
+renderCart();
+}
+
+function renderCart(){
+const ul=document.getElementById("cart");
+ul.innerHTML="";
+total=0;
+cartItems.forEach((item,i)=>{
+total+=item.price;
+const li=document.createElement("li");
+li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
+li.querySelector(".remove").onclick=()=>{
+cartItems.splice(i,1);
+renderCart();
+};
+ul.appendChild(li);
+});
+total+=parseFloat(document.getElementById("shipping").value);
+document.getElementById("total").textContent=total.toFixed(2);
+}
+
+function checkout(){
+if(!cartItems.length) return alert("Cart empty");
+if(!customerName.value.trim()) return alert("Enter name");
+if(!customerPhone.value.trim()) return alert("Enter phone");
+if(!customerAddress.value.trim()) return alert("Enter address");
+
+let note=`Pervan 3D Order
+Name: ${customerName.value}
+Phone: ${customerPhone.value}
+Address: ${customerAddress.value}
+
+ITEMS:
+`;
+
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+});
+
+note+=`\nTotal: $${total.toFixed(2)}`;
+
+window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+}
+
+</script>
 
 </body>
 </html>
