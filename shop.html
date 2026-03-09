@@ -433,7 +433,7 @@ function addFidget(name, sizeId, btn) {
   const color = card.querySelector(".color").value;
   const qty = parseInt(card.querySelector("input").value) || 1;
   if (!color) return alert("Please select a color");
-  let price = (size === "Big" ? 8 : 4) + upcharge(color);
+  let price = (size === "Big" ? 8 : 5) + upcharge(color);
   addItem(`${color} ${name} (${size})`, price, qty);
 }
 
