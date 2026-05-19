@@ -389,6 +389,9 @@ text-decoration:none;
 <ul id="cart"></ul>
 <p><strong>Total: $<span id="total">0.00</span></strong></p>
 <button class="button" onclick="checkout()">Pay with Venmo</button>
+ <button class="button" onclick="zelleCheckout()" style="background:#6D1ED4;margin-top:10px;">
+Pay with Zelle
+</button>
 </div>
 
 <script>
@@ -501,101 +504,59 @@ renderCart();
 };
 ul.appendChild(li);
 });
- <!-- ZELLE PAYMENT BUTTON -->
-<div class="zelle-box">
+function zelleCheckout(){
 
-  <h2>Complete Your Order</h2>
+const name=document.getElementById("customerName").value.trim();
+const phone=document.getElementById("customerPhone").value.trim();
+const address=document.getElementById("customerAddress").value.trim();
 
-  <div class="order-info">
-    <p><strong>Order:</strong> <span id="orderName">Red Dragon Print</span></p>
-    <p><strong>Price:</strong> $<span id="orderPrice">18</span></p>
-    <p><strong>Order ID:</strong> <span id="orderID"></span></p>
-  </div>
-
-  <button onclick="payWithZelle()">
-    Pay with Zelle
-  </button>
-
-</div>
-
-<style>
-.zelle-box{
-  background:white;
-  padding:25px;
-  border-radius:15px;
-  max-width:400px;
-  margin:auto;
-  text-align:center;
-  box-shadow:0 4px 12px rgba(0,0,0,0.1);
-  font-family:Arial;
+if(!name||!phone){
+alert("Please enter your name and phone number");
+return;
 }
 
-.order-info{
-  margin:20px 0;
-  font-size:18px;
+if(cartItems.length===0){
+alert("Cart is empty");
+return;
 }
 
-.zelle-box button{
-  background:#6D1ED4;
-  color:white;
-  border:none;
-  padding:14px 24px;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:18px;
-  width:100%;
+const shipping=parseFloat(document.getElementById("shipping").value);
+
+let finalTotal=total+shipping;
+
+const orderID="ORD"+Math.floor(Math.random()*100000);
+
+let note=`Pervan 3D Order
+Order ID: ${orderID}
+
+Customer: ${name}
+Phone: ${phone}
+Address: ${address}
+
+ITEMS:
+`;
+
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+});
+
+note+=`\nTotal: $${finalTotal.toFixed(2)}`;
+
+navigator.clipboard.writeText(note);
+
+window.open("https://www.zellepay.com/","_blank");
+
+alert(
+`Order copied!
+
+Send payment with Zelle.
+
+Paste this into the payment note:
+
+${note}`
+);
+
 }
-
-.zelle-box button:hover{
-  opacity:.9;
-}
-</style>
-
-<script>
-
-// YOUR ZELLE INFO
-const zelleEmail = "YOUR_EMAIL@gmail.com";
-
-// ORDER INFO
-const orderName = "Red Dragon Print";
-const orderPrice = 18;
-
-// GENERATE RANDOM ORDER ID
-const orderID = "ORD" + Math.floor(Math.random()*100000);
-
-document.getElementById("orderID").innerText = orderID;
-
-function payWithZelle(){
-
-  const paymentMessage =
-`Order: ${orderName}
-Price: $${orderPrice}
-Order ID: ${orderID}`;
-
-  // COPY PAYMENT INFO
-  navigator.clipboard.writeText(paymentMessage);
-
-  // OPEN ZELLE WEBSITE
-  window.open("https://www.zellepay.com/","_blank");
-
-  alert(
-`Payment info copied!
-
-Send payment to:
-${zelleEmail}
-
-Paste this into the Zelle note:
-
-${paymentMessage}`
-  );
-}
-
-</script>
-
-total+=parseFloat(document.getElementById("shipping").value);
-document.getElementById("total").textContent=total.toFixed(2);
-}
-
 function checkout(){
 
 if(!cartItems.length)return alert("Cart is empty");
