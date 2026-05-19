@@ -504,7 +504,7 @@ renderCart();
 };
 ul.appendChild(li);
 });
-function zelleCheckout(){
+function zelleCheckout(){}
 
 const name=document.getElementById("customerName").value.trim();
 const phone=document.getElementById("customerPhone").value.trim();
@@ -545,7 +545,8 @@ note+=`\nTotal: $${finalTotal.toFixed(2)}`;
 navigator.clipboard.writeText(note);
 note += `
 
-Send Zelle payment to:tammypervan@hotmail.com;
+Send Zelle payment to:
+tammypervan@hotmail.com`;
  
 window.open("https://www.zellepay.com/","_blank");
 
