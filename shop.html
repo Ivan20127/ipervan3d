@@ -1,12 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pervan 3D Shop</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body{
 margin:0;
 font-family:Arial,sans-serif;
@@ -21,7 +21,15 @@ text-align:center;
 position:relative;
 }
 
-header h1{margin:0;}
+header h1{
+margin:0;
+font-size:40px;
+}
+
+header p{
+margin-top:10px;
+font-size:18px;
+}
 
 .back-btn{
 position:absolute;
@@ -44,7 +52,7 @@ object-fit:cover;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
-max-width:1100px;
+max-width:1200px;
 margin:auto;
 padding:40px 20px;
 }
@@ -52,9 +60,9 @@ padding:40px 20px;
 .card{
 background:white;
 padding:20px;
-border-radius:6px;
+border-radius:10px;
 text-align:center;
-box-shadow:0 2px 5px rgba(0,0,0,.15);
+box-shadow:0 2px 10px rgba(0,0,0,.15);
 }
 
 .card img{
@@ -70,7 +78,8 @@ font-weight:bold;
 font-size:1.2em;
 }
 
-select,input{
+select,
+input{
 width:100%;
 max-width:220px;
 padding:8px;
@@ -90,9 +99,13 @@ font-weight:bold;
 margin-top:8px;
 }
 
+.button:hover{
+opacity:.9;
+}
+
 .cart{
 background:white;
-max-width:500px;
+max-width:600px;
 margin:40px auto;
 padding:20px;
 border-radius:8px;
@@ -103,6 +116,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 color:red;
 cursor:pointer;
 margin-left:8px;
+font-weight:bold;
 }
 
 .custom a{
@@ -110,8 +124,8 @@ color:#0066cc;
 font-weight:bold;
 text-decoration:none;
 }
-
 </style>
+
 </head>
 
 <body>
@@ -128,7 +142,6 @@ text-decoration:none;
 
 <section class="products">
 
-<!-- TREE -->
 <div class="card">
 <img src="treefidget.png">
 <h3>Tree Fidget</h3>
@@ -139,49 +152,46 @@ text-decoration:none;
 <button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
 </div>
 
-<!-- DRAGON -->
 <div class="card">
 <img src="dragon.png">
 <h3>Dragon Fidget</h3>
-<p class="price">$5–$8</p>
-<select id="dragonSize"><option>Small</option><option>Big</option></select>
+<p class="price">$5-$8</p>
+<select id="dragonSize">
+<option>Small</option>
+<option>Big</option>
+</select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
 </div>
 
-<!-- STAR -->
 <div class="card">
 <img src="star.png">
 <h3>Star Fidget</h3>
-<p class="price">$5–$8</p>
-<select id="starSize"><option>Small</option><option>Big</option></select>
+<p class="price">$5-$8</p>
+<select id="starSize">
+<option>Small</option>
+<option>Big</option>
+</select>
 <select class="color"></select>
 <input type="number" value="1" min="1">
 <button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
 </div>
 
-<!-- FLEXI SPINNING STAR -->
 <div class="card">
 <img src="flexistar.png">
 <h3>Flexi Spinning Star Fidget</h3>
-<p class="price">$6 – $10</p>
-
+<p class="price">$6-$10</p>
 <select id="spinSize">
 <option>Small</option>
 <option>Big</option>
 </select>
-
 <select class="color"></select>
 <select class="color"></select>
-
 <input type="number" value="1" min="1">
-
 <button class="button" onclick="addSpinningStar(this)">Add to Cart</button>
-
 </div>
 
-<!-- GEAR -->
 <div class="card">
 <img src="gearfidget.png">
 <h3>Gear Fidget</h3>
@@ -191,52 +201,51 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
 </div>
 
- <!-- PIG KEYCHAIN -->
 <div class="card">
 <img src="pigkey.png">
-<h3>pig keychain</h3>
+<h3>Pig Keychain</h3>
 <p class="price">$5</p>
+<select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('pig keychain',5,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Pig Keychain',5,this)">Add to Cart</button>
 </div>
 
- <!-- FLEXI PIG -->
 <div class="card">
 <img src="bigpig.png">
-<h3>flexi pig</h3>
+<h3>Flexi Pig</h3>
 <p class="price">$5</p>
+<select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('flexi pig',5,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Flexi Pig',5,this)">Add to Cart</button>
 </div>
- 
- <!-- OTTER -->
+
 <div class="card">
 <img src="otter.png">
-<h3>otter</h3>
+<h3>Otter</h3>
 <p class="price">$5</p>
+<select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('otter',5,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Otter',5,this)">Add to Cart</button>
 </div>
 
- <!-- ARTICULATED CHAMELEON KEYCHAIN -->
 <div class="card">
 <img src="chameleon.png">
-<h3>articulated chameleon keychain</h3>
+<h3>Articulated Chameleon Keychain</h3>
 <p class="price">$5</p>
+<select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('articulated chameleon keychain',5,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Articulated Chameleon Keychain',5,this)">Add to Cart</button>
 </div>
 
- <!-- ARTICULATED ALLIGATOR FIDGET -->
 <div class="card">
 <img src="aligator.png">
-<h3>articulated alligator fidget</h3>
+<h3>Articulated Alligator Fidget</h3>
 <p class="price">$7</p>
+<select class="color"></select>
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('articulated alligator fidget',7,this)">Add to Cart</button>
+<button class="button" onclick="addFixed('Articulated Alligator Fidget',7,this)">Add to Cart</button>
 </div>
 
-<!-- CACTUS -->
 <div class="card">
 <img src="cactus.png">
 <h3>Cactus Toothpick Holder</h3>
@@ -247,23 +256,16 @@ text-decoration:none;
 <button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
 </div>
 
-<!-- NAMES -->
 <div class="card">
 <img src="names.png">
 <h3>Names</h3>
 <p class="price">$1 per letter</p>
-
 <input id="nameText" placeholder="Type name here">
-
 <select class="color"></select>
-
 <input type="number" value="1" min="1">
-
 <button class="button" onclick="addName(this)">Add to Cart</button>
-
 </div>
 
-<!-- TEACHER -->
 <div class="card">
 <img src="teachergift.png">
 <h3>Teacher Gift</h3>
@@ -273,7 +275,6 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Teacher Gift',5,this)">Add to Cart</button>
 </div>
 
-<!-- HEART -->
 <div class="card">
 <img src="heartdish.png">
 <h3>Heart Dish</h3>
@@ -283,7 +284,6 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
 </div>
 
-<!-- SPRING -->
 <div class="card">
 <img src="spring.png">
 <h3>Spring Fidget</h3>
@@ -293,7 +293,6 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
 </div>
 
-<!-- KNIGHT -->
 <div class="card">
 <img src="penholder.png">
 <h3>Knight Pen Holder</h3>
@@ -303,7 +302,6 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Knight Pen Holder',8,this)">Add to Cart</button>
 </div>
 
-<!-- WHISTLE KEYCHAIN -->
 <div class="card">
 <img src="whistlekeychain.png">
 <h3>Whistle Keychain</h3>
@@ -313,27 +311,24 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Whistle Keychain',2,this)">Add to Cart</button>
 </div>
 
-<!-- GRENADE CLICKER -->
 <div class="card">
 <img src="grenadeclicker.png">
 <h3>Grenade Clicker</h3>
 <p class="price">$4</p>
 <select class="color"></select>
-<input type="number" value="4" min="4">
+<input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Grenade Clicker',4,this)">Add to Cart</button>
 </div>
 
-<!-- CLICKER FIDGET -->
 <div class="card">
 <img src="clickerfidget.png">
 <h3>Clicker Fidget</h3>
 <p class="price">$3</p>
 <select class="color"></select>
-<input type="number" value="3" min="3">
+<input type="number" value="1" min="1">
 <button class="button" onclick="addFixed('Clicker Fidget',3,this)">Add to Cart</button>
 </div>
 
-<!-- ROTATING RINGS -->
 <div class="card">
 <img src="rotatingrings.png">
 <h3>Rotating Rings Fidget</h3>
@@ -343,7 +338,6 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Rotating Rings Fidget',4,this)">Add to Cart</button>
 </div>
 
-<!-- AIR PRESSURE TANK -->
 <div class="card">
 <img src="airpressuretank.png">
 <h3>Air Pressure Tank</h3>
@@ -353,17 +347,15 @@ text-decoration:none;
 <button class="button" onclick="addFixed('Air Pressure Tank',11,this)">Add to Cart</button>
 </div>
 
- <!-- ARTICULATED SHARK -->
 <div class="card">
-  <img src="flexishark.PNG">
-  <h3>Articulated Shark</h3>
-  <p class="price">$4</p>
-  <select class="color"></select>
-  <input type="number" value="1" min="1">
-  <button class="button" onclick="addFixed('Articulated Shark', 4, this)">Add to Cart</button>
+<img src="flexishark.PNG">
+<h3>Articulated Shark</h3>
+<p class="price">$4</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Articulated Shark',4,this)">Add to Cart</button>
 </div>
-  
-  <!-- CUSTOM -->
+
 <div class="card custom">
 <h3>Your Custom</h3>
 <p class="price">$1+</p>
@@ -385,11 +377,15 @@ text-decoration:none;
 <h3>🛒 Cart</h3>
 <input id="customerName" placeholder="Customer name required">
 <input id="customerPhone" placeholder="Phone number required">
-<input id="customerAddress" placeholder="Address required (if shipping)">
+<input id="customerAddress" placeholder="Address required if shipping">
 <ul id="cart"></ul>
 <p><strong>Total: $<span id="total">0.00</span></strong></p>
-<button class="button" onclick="checkout()">Pay with Venmo</button>
- <button class="button" onclick="zelleCheckout()" style="background:#6D1ED4;margin-top:10px;">
+
+<button class="button" onclick="checkout()">
+Pay with Venmo
+</button>
+
+<button class="button" onclick="zelleCheckout()" style="background:#6D1ED4;">
 Pay with Zelle
 </button>
 </div>
@@ -397,15 +393,32 @@ Pay with Zelle
 <script>
 
 const colors=[
-"Red","Blue","Black","Light Green","Yellow","Grey",
-"Candy Red","Champagne","White","Titan Grey","Candy Green","Brown","Gold","Orange","Purple",
-"Black Gold Green (+$2)","Blue Orange Green (+$2)","Phantom Blue (+$2)",
-"Copper Purple Green (+$2)","Multi Color Rose (+$2)","Multi Color Blue (+$2)"
+"Red",
+"Blue",
+"Black",
+"Light Green",
+"Yellow",
+"Grey",
+"Candy Red",
+"Champagne",
+"White",
+"Titan Grey",
+"Candy Green",
+"Brown",
+"Gold",
+"Orange",
+"Purple",
+"Black Gold Green (+$2)",
+"Blue Orange Green (+$2)",
+"Phantom Blue (+$2)",
+"Copper Purple Green (+$2)",
+"Multi Color Rose (+$2)",
+"Multi Color Blue (+$2)"
 ];
 
-document.querySelectorAll(".color,.treeColor").forEach(sel=>{
+document.querySelectorAll('.color,.treeColor').forEach(sel=>{
 colors.forEach(c=>{
-let o=document.createElement("option");
+let o=document.createElement('option');
 o.textContent=c;
 sel.appendChild(o);
 });
@@ -414,186 +427,181 @@ sel.appendChild(o);
 let cartItems=[];
 let total=0;
 
-const upcharge=c=>c.includes("+$2")?2:0;
+const upcharge=c=>c.includes('+$2')?2:0;
 
-function addName(btn){
-
-const card=btn.parentElement;
-
-const text=card.querySelector("#nameText").value.trim();
-
-const color=card.querySelector(".color").value;
-
-const qty=parseInt(card.querySelector("input[type=number]").value);
-
-if(!text) return alert("Type the name");
-
-let price=text.length*1+upcharge(color);
-
-addItem(`${color} Name: ${text}`,price,qty);
-
+function addItem(label,price,qty){
+for(let i=0;i<qty;i++){
+cartItems.push({label,price});
 }
-
-function addSpinningStar(btn){
-
-const card=btn.parentElement;
-
-const size=card.querySelector("#spinSize").value;
-
-const colors=[...card.querySelectorAll(".color")].map(c=>c.value);
-
-const qty=parseInt(card.querySelector("input").value);
-
-let base=size==="Big"?10:6;
-
-let price=base+colors.reduce((a,c)=>a+upcharge(c),0);
-
-addItem(`${colors[0]} / ${colors[1]} Flexi Spinning Star (${size})`,price,qty);
-
+renderCart();
 }
 
 function addTree(name,base,btn){
 const card=btn.parentElement;
-const cs=[...card.querySelectorAll(".treeColor")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
-let price=base;
-addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+const cs=[...card.querySelectorAll('.treeColor')].map(s=>s.value);
+const qty=parseInt(card.querySelector('input').value);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,base,qty);
 }
 
 function addFidget(name,sizeId,btn){
 const card=btn.parentElement;
-const size=card.querySelector("#"+sizeId).value;
-const color=card.querySelector(".color").value;
-const qty=parseInt(card.querySelector("input").value);
-let price=(size==="Big"?8:5)+upcharge(color);
+const size=card.querySelector('#'+sizeId).value;
+const color=card.querySelector('.color').value;
+const qty=parseInt(card.querySelector('input').value);
+let price=(size==='Big'?8:5)+upcharge(color);
 addItem(`${color} ${name} (${size})`,price,qty);
+}
+
+function addSpinningStar(btn){
+const card=btn.parentElement;
+const size=card.querySelector('#spinSize').value;
+const colors=[...card.querySelectorAll('.color')].map(c=>c.value);
+const qty=parseInt(card.querySelector('input').value);
+let base=size==='Big'?10:6;
+let price=base+colors.reduce((a,c)=>a+upcharge(c),0);
+addItem(`${colors[0]} / ${colors[1]} Flexi Spinning Star (${size})`,price,qty);
 }
 
 function addFixed(name,base,btn){
 const card=btn.parentElement;
-const color=card.querySelector(".color").value;
-const qty=parseInt(card.querySelector("input").value);
+const colorSelect=card.querySelector('.color');
+const color=colorSelect?colorSelect.value:'';
+const qty=parseInt(card.querySelector('input').value);
 addItem(`${color} ${name}`,base+upcharge(color),qty);
 }
 
 function addTwoColor(name,base,btn){
 const card=btn.parentElement;
-const cs=[...card.querySelectorAll(".color")].map(s=>s.value);
-const qty=parseInt(card.querySelector("input").value);
+const cs=[...card.querySelectorAll('.color')].map(s=>s.value);
+const qty=parseInt(card.querySelector('input').value);
 let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
 addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
 
-function addItem(label,price,qty){
-for(let i=0;i<qty;i++)cartItems.push({label,price});
-renderCart();
+function addName(btn){
+const card=btn.parentElement;
+const text=card.querySelector('#nameText').value.trim();
+const color=card.querySelector('.color').value;
+const qty=parseInt(card.querySelector('input[type=number]').value);
+
+if(!text){
+alert('Type the name');
+return;
+}
+
+let price=text.length+upcharge(color);
+addItem(`${color} Name: ${text}`,price,qty);
 }
 
 function renderCart(){
-const ul=document.getElementById("cart");
-ul.innerHTML="";
+const ul=document.getElementById('cart');
+ul.innerHTML='';
 total=0;
 
 cartItems.forEach((item,i)=>{
 total+=item.price;
-const li=document.createElement("li");
+
+const li=document.createElement('li');
 li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
-li.querySelector(".remove").onclick=()=>{
+
+li.querySelector('.remove').onclick=()=>{
 cartItems.splice(i,1);
 renderCart();
 };
+
 ul.appendChild(li);
 });
 
+const shipping=parseFloat(document.getElementById('shipping').value);
+const finalTotal=total+shipping;
+
+document.getElementById('total').innerText=finalTotal.toFixed(2);
+}
+
+function checkout(){
+
+if(cartItems.length===0){
+alert('Cart is empty');
+return;
+}
+
+const name=document.getElementById('customerName').value.trim();
+const phone=document.getElementById('customerPhone').value.trim();
+const address=document.getElementById('customerAddress').value.trim();
+
+const shipping=parseFloat(document.getElementById('shipping').value);
+const finalTotal=total+shipping;
+
+let note=`Pervan 3D Order
+
+`;
+note+=`Customer: ${name}
+`;
+note+=`Phone: ${phone}
+`;
+note+=`Address: ${address}
+
+`;
+note+=`ITEMS:
+`;
+
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}
+`;
+});
+
+note+=`
+Total: $${finalTotal.toFixed(2)}`;
+
+window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`,'_blank');
 }
 
 function zelleCheckout(){
 
-const name=document.getElementById("customerName").value.trim();
-const phone=document.getElementById("customerPhone").value.trim();
-const address=document.getElementById("customerAddress").value.trim();
-
-if(!name||!phone){
-alert("Please enter your name and phone number");
-return;
-}
-
 if(cartItems.length===0){
-alert("Cart is empty");
+alert('Cart is empty');
 return;
 }
 
-ul.appendChild(li);
-});
+const name=document.getElementById('customerName').value.trim();
+const phone=document.getElementById('customerPhone').value.trim();
+const address=document.getElementById('customerAddress').value.trim();
 
-const shipping=parseFloat(document.getElementById("shipping").value);
-
-document.getElementById("total").innerText=(total+shipping).toFixed(2);
-
-}
-let finalTotal=total+shipping;
-
-const orderID="ORD"+Math.floor(Math.random()*100000);
+const shipping=parseFloat(document.getElementById('shipping').value);
+const finalTotal=total+shipping;
 
 let note=`Pervan 3D Order
-Order ID: ${orderID}
 
-Customer: ${name}
-Phone: ${phone}
-Address: ${address}
+`;
+note+=`Customer: ${name}
+`;
+note+=`Phone: ${phone}
+`;
+note+=`Address: ${address}
 
-ITEMS:
+`;
+note+=`ITEMS:
 `;
 
 cartItems.forEach(i=>{
-note+=`${i.label} - $${i.price.toFixed(2)}\n`;
-});
-
-note += `
-
-Send Zelle payment to:
-tammypervan@hotmail.com`;
-
-window.open("https://www.zellepay.com/","_blank");
- 
-window.open("https://enroll.zellepay.com/","_blank");
-
-alert(
-`Order copied!
-
-Send payment with Zelle.
-
-Paste this into the payment note:
-
-${note}`
-);
-
-}
-function checkout(){
-
-if(!cartItems.length)return alert("Cart is empty");
-
-const name=customerName.value.trim();
-const phone=customerPhone.value.trim();
-const address=customerAddress.value.trim();
-
-let note=`Pervan 3D Order
-Name: ${name}
-Phone: ${phone}
-Address: ${address}
-
-ITEMS:
+note+=`${i.label} - $${i.price.toFixed(2)}
 `;
-
-cartItems.forEach(i=>{
-note+=`${i.label} - $${i.price.toFixed(2)}\n`;
 });
 
-note+=`\nTotal: $${total.toFixed(2)}`;
+note+=`
+Total: $${finalTotal.toFixed(2)}
+`;
+note+=`
+Send payment to: tammypervan@hotmail.com`;
 
-window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`);
+navigator.clipboard.writeText(note);
 
+window.open('https://www.zellepay.com/','_blank');
+
+alert('Order copied for Zelle payment! Paste the copied order into the Zelle note.');
 }
+
+renderCart();
 
 </script>
 
