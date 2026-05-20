@@ -549,13 +549,12 @@ cartItems.forEach(i=>{
 note+=`${i.label} - $${i.price.toFixed(2)}\n`;
 });
 
-note+=`\nTotal: $${finalTotal.toFixed(2)}`;
-
-navigator.clipboard.writeText(note);
 note += `
 
 Send Zelle payment to:
-6302583131`;
+tammypervan@hotmail.com`;
+
+window.open("https://www.zellepay.com/","_blank");
  
 window.open("https://enroll.zellepay.com/","_blank");
 
