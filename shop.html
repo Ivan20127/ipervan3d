@@ -523,8 +523,14 @@ alert("Cart is empty");
 return;
 }
 
+ul.appendChild(li);
+});
+
 const shipping=parseFloat(document.getElementById("shipping").value);
 
+document.getElementById("total").innerText=(total+shipping).toFixed(2);
+
+}
 let finalTotal=total+shipping;
 
 const orderID="ORD"+Math.floor(Math.random()*100000);
