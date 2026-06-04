@@ -1,224 +1,258 @@
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Print Wars Fixed</title>
 
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:#0b1220;
+font-family:Arial;
+color:white;
+}
+
+canvas{
+display:block;
+background:#111827;
+}
+
+#ui{
+position:fixed;
+top:10px;
+left:10px;
+background:rgba(0,0,0,0.6);
+padding:10px;
+border-radius:10px;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="ui">
+Controls: ← → move | SPACE jump<br>
+Enemies: <span id="count">0</span>
+</div>
+
+<canvas id="game" width="900" height="500"></canvas>
+
+<script>
+
+// ================= SAFE AUDIO (NO FREEZE) =================
+let audioCtx = null;
+
+function beep(freq){
+if(!audioCtx){
+audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+const o = audioCtx.createOscillator();
+const g = audioCtx.createGain();
+
+o.connect(g);
+g.connect(audioCtx.destination);
+
+o.frequency.value = freq;
+g.gain.value = 0.1;
+
+o.start();
+
+g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+o.stop(audioCtx.currentTime + 0.1);
+}
+
+// ================= CANVAS =================
+const c = document.getElementById("game");
+const ctx = c.getContext("2d");
+
+// ================= INPUT =================
 let keys = {};
 
 addEventListener("keydown", e => keys[e.key] = true);
 addEventListener("keyup", e => keys[e.key] = false);
 
-// SAFE SOUND (NO FREEZE)
-let audioCtx;
-function beep(freq){
-  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const o = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
-
-  o.connect(g);
-  g.connect(audioCtx.destination);
-
-  o.frequency.value = freq;
-  g.gain.value = 0.1;
-
-  o.start();
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-  o.stop(audioCtx.currentTime + 0.1);
-}
-
-// PLAYER
+// ================= PLAYER =================
 let player = {
-  x:100, y:300,
-  vx:0, vy:0,
-  w:18, h:40,
-  onGround:false,
-  hp:3,
-  lives:3
+x:100,
+y:300,
+vx:0,
+vy:0,
+w:18,
+h:40,
+onGround:false,
+lives:3
 };
 
-// LEVEL PLATFORM (ALL ENEMIES CAN REACH THESE)
-const platforms = [
-  [0,450,900,50],
-  [150,380,200,10],
-  [400,320,200,10],
-  [650,260,200,10]
-];
-
-// YOUR PRODUCTS AS ENEMIES
+// ================= PRODUCTS (ENEMIES) =================
 const productNames = [
 "Gear Fidget","Dragon","Pig","Otter","Shark",
-"Knight","Cactus","Air Tank"
+"Knight Holder","Cactus","Air Tank"
 ];
 
-// ENEMIES
 let enemies = [];
 
-function spawnEnemies(){
-  enemies = [];
+// ================= PLATFORM =================
+const groundY = 420;
 
-  for(let i=0;i<6;i++){
-    enemies.push({
-      x:200 + i*100,
-      y:420,
-      w:25,h:25,
-      vx:0,
-      speed:1.5,
-      name: productNames[Math.floor(Math.random()*productNames.length)]
-    });
-  }
+// ================= SPAWN =================
+function spawnEnemies(){
+enemies = [];
+
+for(let i=0;i<6;i++){
+enemies.push({
+x:200 + i*120,
+y:groundY,
+vx:1.2,
+name: productNames[Math.floor(Math.random()*productNames.length)]
+});
+}
 }
 
 spawnEnemies();
 
-// COLLISION
+// ================= COLLISION =================
 function hit(a,b){
-  return a.x < b.x+b.w &&
-         a.x+a.w > b.x &&
-         a.y < b.y+b.h &&
-         a.y+a.h > b.y;
+return a.x < b.x + 25 &&
+a.x + 18 > b.x &&
+a.y < b.y + 25 &&
+a.y + 40 > b.y;
 }
 
-// JUMP
-function jump(){
-  if(player.onGround){
-    player.vy = -11;
-    player.onGround = false;
-    beep(300);
-  }
-}
-
-// DAMAGE
+// ================= DAMAGE =================
 function damage(){
-  player.hp--;
-  beep(120);
+player.lives--;
+beep(120);
 
-  if(player.hp <= 0){
-    player.lives--;
-    player.hp = 3;
-
-    if(player.lives <= 0){
-      alert("GAME OVER");
-      location.reload();
-    }
-  }
+if(player.lives <= 0){
+alert("GAME OVER");
+location.reload();
+}
 }
 
-// UPDATE
+// ================= JUMP =================
+function jump(){
+if(player.onGround){
+player.vy = -11;
+player.onGround = false;
+beep(300);
+}
+}
+
+// ================= UPDATE =================
 function update(){
 
-// player movement
+// movement
 if(keys["ArrowLeft"]) player.vx = -4;
 else if(keys["ArrowRight"]) player.vx = 4;
 else player.vx *= 0.8;
 
 // gravity
 player.vy += 0.5;
+
 player.x += player.vx;
 player.y += player.vy;
 
 // ground
-if(player.y > 420){
-  player.y = 420;
-  player.vy = 0;
-  player.onGround = true;
+if(player.y >= groundY){
+player.y = groundY;
+player.vy = 0;
+player.onGround = true;
 }
 
-// platforms (solid)
-for(let p of platforms){
-  let plat = {x:p[0],y:p[1],w:p[2],h:p[3]};
-
-  if(hit(player,plat) && player.vy > 0){
-    player.y = plat.y - player.h;
-    player.vy = 0;
-    player.onGround = true;
-  }
-}
-
-// ENEMY AI (FIXED: always reachable + stable)
+// ENEMIES (STABLE AI)
 for(let e of enemies){
 
-  // CHASE PLAYER (REAL AI)
-  if(player.x < e.x) e.x -= e.speed;
-  else e.x += e.speed;
+// simple chase AI
+if(player.x < e.x) e.x -= e.vx;
+else e.x += e.vx;
 
-  // STAY ON GROUND (IMPORTANT FIX)
-  e.y = 420;
-
-  // ATTACK RANGE
-  if(Math.abs(player.x - e.x) < 25 && Math.abs(player.y - e.y) < 40){
-    damage();
-  }
-
-  // STOMP KILL
-  if(player.vy > 0 && hit(player,e)){
-    e.dead = true;
-    player.vy = -8;
-    beep(200);
-  }
+// damage player
+if(Math.abs(player.x - e.x) < 20){
+damage();
 }
 
-// CLEAN ENEMIES
+// stomp kill
+if(player.vy > 0 && hit(player,e)){
+e.dead = true;
+player.vy = -8;
+beep(200);
+}
+}
+
+// remove dead
 enemies = enemies.filter(e => !e.dead);
 
-// NEXT WAVE
+// respawn if cleared
 if(enemies.length === 0){
-  spawnEnemies();
+spawnEnemies();
 }
 
 // bounds
 player.x = Math.max(0, Math.min(880, player.x));
 }
 
-// DRAW
+// ================= DRAW =================
 function draw(){
 
 ctx.clearRect(0,0,900,500);
 
-// platforms
+// ground
 ctx.fillStyle="#334155";
-for(let p of platforms){
-  ctx.fillRect(p[0],p[1],p[2],p[3]);
-}
+ctx.fillRect(0,groundY+40,900,60);
 
 // player (stick figure)
 ctx.strokeStyle="white";
 ctx.lineWidth=3;
 
 ctx.beginPath();
-ctx.arc(player.x,player.y-20,10,0,Math.PI*2);
+ctx.arc(player.x, player.y-20, 10, 0, Math.PI*2);
 ctx.stroke();
 
 ctx.beginPath();
-ctx.moveTo(player.x,player.y-10);
-ctx.lineTo(player.x,player.y+20);
+ctx.moveTo(player.x, player.y-10);
+ctx.lineTo(player.x, player.y+20);
 ctx.stroke();
 
 ctx.beginPath();
-ctx.moveTo(player.x,player.y+20);
-ctx.lineTo(player.x-10,player.y+40);
-ctx.moveTo(player.x,player.y+20);
-ctx.lineTo(player.x+10,player.y+40);
+ctx.moveTo(player.x, player.y+20);
+ctx.lineTo(player.x-10, player.y+40);
+ctx.moveTo(player.x, player.y+20);
+ctx.lineTo(player.x+10, player.y+40);
 ctx.stroke();
 
-// enemies (PRODUCTS)
+// enemies (YOUR PRODUCTS)
 ctx.fillStyle="#f97316";
+
 for(let e of enemies){
-  ctx.fillRect(e.x,e.y,25,25);
+ctx.fillRect(e.x, e.y, 25, 25);
 
-  ctx.fillStyle="white";
-  ctx.font="10px Arial";
-  ctx.fillText(e.name,e.x-15,e.y-5);
-  ctx.fillStyle="#f97316";
-}
+ctx.fillStyle="white";
+ctx.font="10px Arial";
+ctx.fillText(e.name, e.x-10, e.y-5);
+ctx.fillStyle="#f97316";
 }
 
-// LOOP
+// UI
+document.getElementById("count").innerText = enemies.length;
+}
+
+// ================= LOOP =================
 function loop(){
 update();
 draw();
 requestAnimationFrame(loop);
 }
 
-addEventListener("keydown",e=>{
-  if(e.key===" ") jump();
+addEventListener("keydown", e=>{
+if(e.key === " ") jump();
 });
 
 loop();
+
+</script>
+
+</body>
+</html>
