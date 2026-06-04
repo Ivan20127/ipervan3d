@@ -2,268 +2,203 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Print Clicker</title>
+<title>Pervan 3D Print Empire</title>
 
 <style>
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#111827;
-    color:white;
+  margin:0;
+  font-family:Arial;
+  background:#111;
+  color:white;
 }
 
-.container{
-    display:flex;
-    min-height:100vh;
+header{
+  text-align:center;
+  padding:20px;
+  background:#000;
 }
 
-.left{
-    width:60%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+button{
+  cursor:pointer;
+  padding:10px;
+  margin-top:5px;
 }
 
-.right{
-    width:40%;
-    background:#1f2937;
-    padding:20px;
-    overflow-y:auto;
+#click{
+  font-size:30px;
+  padding:20px;
+  margin:20px auto;
+  display:block;
 }
 
-h1{
-    margin-bottom:10px;
+#shop{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+  padding:20px;
 }
 
-#productBtn{
-    width:250px;
-    height:250px;
-    border-radius:50%;
-    border:none;
-    cursor:pointer;
-    font-size:90px;
-    background:#374151;
-    transition:.1s;
+.card{
+  background:#1f1f1f;
+  padding:10px;
+  border-radius:10px;
 }
 
-#productBtn:active{
-    transform:scale(.95);
+/* RARITIES */
+.common{color:#ccc;}
+.uncommon{color:#22c55e;}
+.rare{color:#3b82f6;}
+.epic{color:#a855f7;}
+.legendary{
+  color:#f59e0b;
+  text-shadow:0 0 10px #f59e0b;
 }
-
-.stat{
-    font-size:24px;
-    margin:10px;
-}
-
-.upgrade{
-    background:#374151;
-    padding:15px;
-    margin-bottom:10px;
-    border-radius:10px;
-}
-
-.upgrade button{
-    width:100%;
-    padding:10px;
-    border:none;
-    cursor:pointer;
-    background:#10b981;
-    color:white;
-    border-radius:6px;
-    font-weight:bold;
-}
-
-.upgrade button:hover{
-    background:#059669;
-}
-
-.small{
-    color:#9ca3af;
-    font-size:14px;
+.mythic{
+  color:#ef4444;
+  text-shadow:0 0 10px red,0 0 20px red;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+<h1>🖨️ Pervan 3D Print Empire</h1>
+<div>Prints: <span id="prints">0</span></div>
+<div>Prints/sec: <span id="pps">0</span></div>
+</header>
 
-<div class="left">
-    <h1>🖨️ Print Clicker</h1>
-
-    <div class="stat">
-        Products Printed:
-        <span id="prints">0</span>
-    </div>
-
-    <div class="stat">
-        Prints / Second:
-        <span id="pps">0</span>
-    </div>
-
-    <button id="productBtn">🐉</button>
-
-    <div class="small">
-        Click to print a dragon!
-    </div>
-</div>
-
-<div class="right">
-
-<h2>Upgrades</h2>
+<button id="click">🖨️ PRINT</button>
 
 <div id="shop"></div>
 
-</div>
-
-</div>
-
 <script>
 
-let prints = 0;
-let clickPower = 1;
+// ===== PRODUCTS =====
+const products = [
+{name:"Gear Fidget",price:2,rarity:"Common",unlock:0,pps:1},
+{name:"Spring Fidget",price:2,rarity:"Common",unlock:50,pps:2},
+{name:"Whistle Keychain",price:2,rarity:"Common",unlock:100,pps:3},
 
-const upgrades = [
+{name:"Tree Fidget",price:3,rarity:"Uncommon",unlock:200,pps:5},
+{name:"Clicker Fidget",price:3,rarity:"Uncommon",unlock:500,pps:8},
+{name:"Articulated Shark",price:4,rarity:"Uncommon",unlock:1000,pps:15},
 
-{
-name:"Better Filament",
-cost:25,
-pps:1,
-owned:0,
-emoji:"🧵"
-},
+{name:"Dragon Fidget",price:5,rarity:"Rare",unlock:2000,pps:30},
+{name:"Pig Keychain",price:5,rarity:"Rare",unlock:5000,pps:50},
+{name:"Otter",price:5,rarity:"Rare",unlock:8000,pps:70},
+{name:"Heart Dish",price:5,rarity:"Rare",unlock:12000,pps:90},
 
-{
-name:"Second Printer",
-cost:100,
-pps:5,
-owned:0,
-emoji:"🖨️"
-},
+{name:"Knight Pen Holder",price:8,rarity:"Epic",unlock:20000,pps:200},
+{name:"Alligator Fidget",price:7,rarity:"Epic",unlock:30000,pps:300},
 
-{
-name:"Print Farm",
-cost:500,
-pps:25,
-owned:0,
-emoji:"🏭"
-},
+{name:"Air Pressure Tank",price:11,rarity:"Legendary",unlock:80000,pps:1000},
 
-{
-name:"Dragon Factory",
-cost:2000,
-pps:100,
-owned:0,
-emoji:"🐉"
-},
-
-{
-name:"Robot Operator",
-cost:10000,
-pps:500,
-owned:0,
-emoji:"🤖"
-},
-
-{
-name:"Mega Production Facility",
-cost:50000,
-pps:2500,
-owned:0,
-emoji:"🚀"
-}
-
+{name:"Cactus Toothpick Holder",price:15,rarity:"Mythic",unlock:300000,pps:8000}
 ];
 
-const printsEl = document.getElementById("prints");
-const ppsEl = document.getElementById("pps");
-const shopEl = document.getElementById("shop");
-
-function updateDisplay(){
-
-printsEl.textContent =
-Math.floor(prints);
-
-ppsEl.textContent =
-getPPS();
-
-renderShop();
-}
-
-function getPPS(){
-
+let prints = 0;
 let total = 0;
 
-upgrades.forEach(u=>{
-total += u.pps * u.owned;
-});
+const owned = {};
+products.forEach(p=>owned[p.name]=0);
 
-return total;
+// ===== CLICK =====
+document.getElementById("click").onclick=()=>{
+prints++;
+total++;
+render();
+};
+
+// ===== PPS =====
+function getPPS(){
+let sum=0;
+products.forEach(p=>{
+sum += owned[p.name]*p.pps;
+});
+return sum;
 }
 
-document.getElementById("productBtn")
-.addEventListener("click",()=>{
+// ===== BUY =====
+function buy(i){
+let p = products[i];
+let cost = Math.floor(p.price*10*Math.pow(1.15,owned[p.name]));
 
-prints += clickPower;
+if(prints>=cost){
+prints-=cost;
+owned[p.name]++;
+render();
+}
+}
 
-updateDisplay();
+// ===== RENDER =====
+function render(){
 
-});
+document.getElementById("prints").innerText=Math.floor(prints);
+document.getElementById("pps").innerText=getPPS();
 
-function renderShop(){
+let shop=document.getElementById("shop");
+shop.innerHTML="";
 
-shopEl.innerHTML = "";
+products.forEach((p,i)=>{
 
-upgrades.forEach((u,index)=>{
+if(total>=p.unlock){
 
-const div =
-document.createElement("div");
+let cost=Math.floor(p.price*10*Math.pow(1.15,owned[p.name]));
 
-div.className = "upgrade";
-
-div.innerHTML = `
-<h3>${u.emoji} ${u.name}</h3>
-<p>Owned: ${u.owned}</p>
-<p>+${u.pps} Prints/sec</p>
-<p>Cost: ${Math.floor(u.cost)}</p>
-<button onclick="buyUpgrade(${index})">
-Buy
-</button>
+shop.innerHTML+=`
+<div class="card ${p.rarity.toLowerCase()}">
+<h3>${p.name}</h3>
+<p>${p.rarity}</p>
+<p>Owned: ${owned[p.name]}</p>
+<p>+${p.pps}/sec</p>
+<p>Cost: ${cost}</p>
+<button onclick="buy(${i})">Print</button>
+</div>
 `;
 
-shopEl.appendChild(div);
+}
 
 });
 
+// mythic event
+if(total>=300000 && !window.mythic){
+window.mythic=true;
+alert("🔥 MYTHIC UNLOCKED: CACTUS TOOTHPICK HOLDER 🔥");
+document.body.style.background="#2a0000";
 }
 
-window.buyUpgrade = function(index){
-
-const u = upgrades[index];
-
-if(prints >= u.cost){
-
-prints -= u.cost;
-
-u.owned++;
-
-u.cost *= 1.35;
-
-updateDisplay();
-}
+save();
 }
 
+// ===== SAVE =====
+function save(){
+localStorage.setItem("pervan3d",JSON.stringify({prints,total,owned}));
+}
+
+// ===== LOAD =====
+function load(){
+let data=JSON.parse(localStorage.getItem("pervan3d"));
+if(!data)return;
+
+prints=data.prints;
+total=data.total;
+
+Object.keys(data.owned).forEach(k=>{
+owned[k]=data.owned[k];
+});
+}
+
+// ===== LOOP =====
 setInterval(()=>{
-
-prints += getPPS()/10;
-
-updateDisplay();
-
+let income=getPPS()/10;
+prints+=income;
+total+=income;
+render();
 },100);
 
-updateDisplay();
+load();
+render();
 
 </script>
 
