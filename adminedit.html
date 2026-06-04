@@ -3,62 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pervan 3-D Admin</title>
+<title>Print Clicker</title>
 
 <style>
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f4f4;
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#111827;
+    color:white;
 }
 
 .container{
-max-width:900px;
-margin:auto;
-padding:20px;
+    display:flex;
+    min-height:100vh;
 }
 
-h1{text-align:center}
-
-.section{
-background:white;
-padding:20px;
-border-radius:8px;
-margin-bottom:30px;
-box-shadow:0 2px 8px rgba(0,0,0,.15);
+.left{
+    width:60%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 }
 
-label{
-display:block;
-margin-top:10px;
-font-weight:bold;
+.right{
+    width:40%;
+    background:#1f2937;
+    padding:20px;
+    overflow-y:auto;
 }
 
-input,select{
-width:100%;
-padding:8px;
-margin-top:4px;
-border:1px solid #ccc;
-border-radius:4px;
+h1{
+    margin-bottom:10px;
 }
 
-button{
-margin-top:15px;
-background:#dc3545;
-color:white;
-border:none;
-padding:12px 20px;
-font-size:16px;
-border-radius:6px;
-cursor:pointer;
+#productBtn{
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    font-size:90px;
+    background:#374151;
+    transition:.1s;
 }
 
-button:hover{background:#b92c3a}
+#productBtn:active{
+    transform:scale(.95);
+}
 
-.success{
-color:green;
-font-weight:bold;
-display:none;
+.stat{
+    font-size:24px;
+    margin:10px;
+}
+
+.upgrade{
+    background:#374151;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+}
+
+.upgrade button{
+    width:100%;
+    padding:10px;
+    border:none;
+    cursor:pointer;
+    background:#10b981;
+    color:white;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.upgrade button:hover{
+    background:#059669;
+}
+
+.small{
+    color:#9ca3af;
+    font-size:14px;
 }
 </style>
 </head>
@@ -67,53 +90,31 @@ display:none;
 
 <div class="container">
 
-<h1>Pervan 3-D Admin Panel</h1>
+<div class="left">
+    <h1>🖨️ Print Clicker</h1>
 
-<div class="section">
+    <div class="stat">
+        Products Printed:
+        <span id="prints">0</span>
+    </div>
 
-<label>Select Product</label>
-<select id="productSelect"></select>
+    <div class="stat">
+        Prints / Second:
+        <span id="pps">0</span>
+    </div>
 
-<label>Product Name</label>
-<input id="name">
+    <button id="productBtn">🐉</button>
 
-<label>Price</label>
-<input id="price" type="number">
-
-<label>Image URL</label>
-<input id="image">
-
-<label>Colors (comma separated)</label>
-<input id="colors">
-
-<label>In Stock</label>
-<select id="stock">
-<option value="true">In Stock</option>
-<option value="false">Out of Stock</option>
-</select>
-
-<button onclick="saveProduct()">Save Product</button>
-<span id="saved" class="success">Saved!</span>
-
+    <div class="small">
+        Click to print a dragon!
+    </div>
 </div>
 
-<div class="section">
+<div class="right">
 
-<h2>Add New Product</h2>
+<h2>Upgrades</h2>
 
-<label>Name</label>
-<input id="newName">
-
-<label>Price</label>
-<input id="newPrice" type="number">
-
-<label>Image URL</label>
-<input id="newImage">
-
-<label>Colors</label>
-<input id="newColors">
-
-<button onclick="addNew()">Add Product</button>
+<div id="shop"></div>
 
 </div>
 
@@ -121,111 +122,148 @@ display:none;
 
 <script>
 
-/* ============================
-   DATA
-============================ */
+let prints = 0;
+let clickPower = 1;
 
-let products = JSON.parse(localStorage.getItem("pervanProducts")) || [
+const upgrades = [
 
-{ name:"Tree Fidget", price:4, image:"treefidget.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Dragon Fidget", price:5, image:"dragon.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Star Fidget", price:5, image:"star.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Gear Fidget", price:2, image:"gearfidget.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Cactus Toothpick Holder", price:15, image:"cactus.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Names", price:3, image:"names.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Teacher Gift", price:6, image:"teachergift.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Heart Dish", price:6, image:"heartdish.png", colors:"Red,Blue,Black", stock:true },
-{ name:"Spring Fidget", price:3, image:"spring.png", colors:"Red,Blue,Black", stock:true }
+{
+name:"Better Filament",
+cost:25,
+pps:1,
+owned:0,
+emoji:"🧵"
+},
+
+{
+name:"Second Printer",
+cost:100,
+pps:5,
+owned:0,
+emoji:"🖨️"
+},
+
+{
+name:"Print Farm",
+cost:500,
+pps:25,
+owned:0,
+emoji:"🏭"
+},
+
+{
+name:"Dragon Factory",
+cost:2000,
+pps:100,
+owned:0,
+emoji:"🐉"
+},
+
+{
+name:"Robot Operator",
+cost:10000,
+pps:500,
+owned:0,
+emoji:"🤖"
+},
+
+{
+name:"Mega Production Facility",
+cost:50000,
+pps:2500,
+owned:0,
+emoji:"🚀"
+}
 
 ];
 
-/* ============================
-   LOAD DROPDOWN
-============================ */
+const printsEl = document.getElementById("prints");
+const ppsEl = document.getElementById("pps");
+const shopEl = document.getElementById("shop");
 
-const select = document.getElementById("productSelect");
+function updateDisplay(){
 
-function loadDropdown(){
-select.innerHTML="";
-products.forEach((p,i)=>{
-let o=document.createElement("option");
-o.value=i;
-o.textContent=p.name;
-select.appendChild(o);
-});
-loadFields(0);
+printsEl.textContent =
+Math.floor(prints);
+
+ppsEl.textContent =
+getPPS();
+
+renderShop();
 }
 
-loadDropdown();
+function getPPS(){
 
-/* ============================
-   LOAD FIELDS
-============================ */
+let total = 0;
 
-function loadFields(i){
-let p=products[i];
-name.value=p.name;
-price.value=p.price;
-image.value=p.image;
-colors.value=p.colors;
-stock.value=p.stock;
-}
-
-/* ============================
-   SAVE EDIT
-============================ */
-
-function saveProduct(){
-let i=productSelect.value;
-
-products[i]={
-name:name.value,
-price:Number(price.value),
-image:image.value,
-colors:colors.value,
-stock:stock.value==="true"
-};
-
-localStorage.setItem("pervanProducts",JSON.stringify(products));
-
-saved.style.display="inline";
-setTimeout(()=>saved.style.display="none",2000);
-
-loadDropdown();
-productSelect.value=i;
-}
-
-/* ============================
-   ADD PRODUCT
-============================ */
-
-function addNew(){
-products.push({
-name:newName.value,
-price:Number(newPrice.value),
-image:newImage.value,
-colors:newColors.value,
-stock:true
+upgrades.forEach(u=>{
+total += u.pps * u.owned;
 });
 
-localStorage.setItem("pervanProducts",JSON.stringify(products));
-
-newName.value="";
-newPrice.value="";
-newImage.value="";
-newColors.value="";
-
-loadDropdown();
-alert("Product Added");
+return total;
 }
 
-/* ============================
-   CHANGE SELECT
-============================ */
+document.getElementById("productBtn")
+.addEventListener("click",()=>{
 
-productSelect.onchange=()=>{
-loadFields(productSelect.value);
-};
+prints += clickPower;
+
+updateDisplay();
+
+});
+
+function renderShop(){
+
+shopEl.innerHTML = "";
+
+upgrades.forEach((u,index)=>{
+
+const div =
+document.createElement("div");
+
+div.className = "upgrade";
+
+div.innerHTML = `
+<h3>${u.emoji} ${u.name}</h3>
+<p>Owned: ${u.owned}</p>
+<p>+${u.pps} Prints/sec</p>
+<p>Cost: ${Math.floor(u.cost)}</p>
+<button onclick="buyUpgrade(${index})">
+Buy
+</button>
+`;
+
+shopEl.appendChild(div);
+
+});
+
+}
+
+window.buyUpgrade = function(index){
+
+const u = upgrades[index];
+
+if(prints >= u.cost){
+
+prints -= u.cost;
+
+u.owned++;
+
+u.cost *= 1.35;
+
+updateDisplay();
+}
+}
+
+setInterval(()=>{
+
+prints += getPPS()/10;
+
+updateDisplay();
+
+},100);
+
+updateDisplay();
 
 </script>
 
