@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pervan 3D Shop</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+}
+
+/* 3D PRINTER BACKGROUND */
+
+.printer-area{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:220px;
+background:#0d0d0d;
+overflow:hidden;
+z-index:-1;
+border-top:2px solid #222;
+}
+
+.printer-rail{
+position:absolute;
+top:35px;
+width:100%;
+height:8px;
+background:#333;
+box-shadow:0 0 10px rgba(255,255,255,.1);
+}
+
+.nozzle{
+position:absolute;
+top:20px;
+left:10%;
+width:80px;
+height:50px;
+background:linear-gradient(#666,#222);
+border-radius:12px;
+animation:nozzleMove 5s ease-in-out infinite alternate;
+box-shadow:
+0 0 15px rgba(255,102,0,.5),
+0 0 30px rgba(255,102,0,.3);
+}
+
+.nozzle::after{
+content:'';
+position:absolute;
+bottom:-18px;
+left:34px;
+width:12px;
+height:20px;
+background:#ff6600;
+border-radius:0 0 6px 6px;
+animation:extrude .3s infinite alternate;
+}
+
+.print-bed{
+position:absolute;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+width:80%;
+height:12px;
+background:linear-gradient(90deg,#ff6600,#ffaa00,#ff6600);
+border-radius:10px;
+box-shadow:
+0 0 15px rgba(255,102,0,.5),
+0 0 30px rgba(255,102,0,.25);
+animation:bedGlow 1s infinite alternate;
+}
+
+@keyframes nozzleMove{
+0%{left:8%;}
+100%{left:82%;}
+}
+
+@keyframes extrude{
+from{
+height:14px;
+opacity:.6;
+}
+
+to{
+height:22px;
+opacity:1;
+}
+}
+
+@keyframes bedGlow{
+from{opacity:.6;}
+to{opacity:1;}
+}
+
+header{
+background:#111;
+color:white;
+padding:40px 20px;
+text-align:center;
+position:relative;
+}
+
+header h1{
+margin:0;
+font-size:40px;
+}
+
+header p{
+margin-top:10px;
+font-size:18px;
+}
+
+.back-btn{
+position:absolute;
+top:20px;
+left:20px;
+padding:10px 20px;
+background:#444;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+.colors-banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+transition:all .35s ease;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 18px 35px rgba(0,0,0,.25);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:contain;
+margin-bottom:10px;
+transition:transform .4s ease;
+}
+
+.card:hover img{
+transform:scale(1.08) rotate(2deg);
+}
+
+.price{
+color:#ff6600;
+font-weight:bold;
+font-size:1.2em;
+}
+
+select,
+input{
+width:100%;
+max-width:220px;
+padding:8px;
+margin:6px 0;
+font-size:1em;
+box-sizing:border-box;
+}
+
+.button{
+background:linear-gradient(45deg,#ff4d4d,#ff6600);
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+transition:all .25s ease;
+}
+
+.button:hover{
+transform:translateY(-3px) scale(1.04);
+}
+
+.cart{
+background:white;
+max-width:600px;
+margin:40px auto;
+padding:20px;
+border-radius:16px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.remove{
+color:red;
+cursor:pointer;
+margin-left:8px;
+font-weight:bold;
+}
+
+.custom a{
+color:#0066cc;
+font-weight:bold;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="printer-area">
+  <div class="printer-rail"></div>
+  <div class="nozzle"></div>
+  <div class="print-bed"></div>
+</div>
+
+<header>
+<h1>Pervan 3D Shop</h1>
+<p>3D Printed Fidgets & Gifts</p>
+<a href="index.html" class="back-btn">← Back</a>
+</header>
+
+<div class="colors-banner">
+<img src="colors.png">
+</div>
+
+<section class="products">
+
+<div class="card">
+<img src="treefidget.png">
+<h3>Tree Fidget</h3>
+<p class="price">$3</p>
+<select class="treeColor"></select>
+<select class="treeColor"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="dragon.png">
+<h3>Dragon Fidget</h3>
+<p class="price">$5-$8</p>
+<select id="dragonSize">
+<option>Small</option>
+<option>Big</option>
+</select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="star.png">
+<h3>Star Fidget</h3>
+<p class="price">$5-$8</p>
+<select id="starSize">
+<option>Small</option>
+<option>Big</option>
+</select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="flexistar.png">
+<h3>Flexi Spinning Star Fidget</h3>
+<p class="price">$6-$10</p>
+<select id="spinSize">
+<option>Small</option>
+<option>Big</option>
+</select>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addSpinningStar(this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="gearfidget.png">
+<h3>Gear Fidget</h3>
+<p class="price">$2</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="pigkey.png">
+<h3>Pig Keychain</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Pig Keychain',5,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="bigpig.png">
+<h3>Flexi Pig</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Flexi Pig',5,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="otter.png">
+<h3>Otter</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Otter',5,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="chameleon.png">
+<h3>Articulated Chameleon Keychain</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Articulated Chameleon Keychain',5,this)">Add to Cart</button>
+</div>
+
+  
+<div class="card">
+<img src="">
+<h3>Custom Keyboard Clicker</h3>
+<p class="price">4 letters or less: $2.50<br>5+ letters: $2.00</p>
+
+<input class="keyboardText" placeholder="Type text here">
+
+<select class="color"></select>
+<select class="keyboardSize"><option value="2.5">4 Letters or Less</option><option value="2">5+ Letters</option></select>
+
+<input type="number" value="1" min="1">
+
+<button class="button" onclick="addKeyboardClicker(this)">
+Add to Cart
+</button>
+</div>
+
+<div class="card">
+<img src="aligator.png">
+<h3>Articulated Alligator Fidget</h3>
+<p class="price">$7</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Articulated Alligator Fidget',7,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="cactus.png">
+<h3>Cactus Toothpick Holder</h3>
+<p class="price">$15</p>
+<select class="color"></select>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="names.png">
+<h3>Names</h3>
+<p class="price">$1 per letter</p>
+<input id="nameText" placeholder="Type name here">
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addName(this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="teachergift.png">
+<h3>Teacher Gift</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Teacher Gift',5,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="heartdish.png">
+<h3>Heart Dish</h3>
+<p class="price">$5</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="spring.png">
+<h3>Spring Fidget</h3>
+<p class="price">$2</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="penholder.png">
+<h3>Knight Pen Holder</h3>
+<p class="price">$8</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Knight Pen Holder',8,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="whistlekeychain.png">
+<h3>Whistle Keychain</h3>
+<p class="price">$2</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Whistle Keychain',2,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="grenadeclicker.png">
+<h3>Grenade Clicker</h3>
+<p class="price">$4</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Grenade Clicker',4,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="clickerfidget.png">
+<h3>Clicker Fidget</h3>
+<p class="price">$3</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Clicker Fidget',3,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="rotatingrings.png">
+<h3>Rotating Rings Fidget</h3>
+<p class="price">$4</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Rotating Rings Fidget',4,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="airpressuretank.png">
+<h3>Air Pressure Tank</h3>
+<p class="price">$11</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Air Pressure Tank',11,this)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="flexishark.PNG">
+<h3>Articulated Shark</h3>
+<p class="price">$4</p>
+<select class="color"></select>
+<input type="number" value="1" min="1">
+<button class="button" onclick="addFixed('Articulated Shark',4,this)">Add to Cart</button>
+</div>
+
+<div class="card custom">
+<h3>Your Custom</h3>
+<p class="price">$1+</p>
+<p>Email me your idea:</p>
+<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
+</div>
+
+</section>
+
+<div class="cart">
+<h3>Delivery Method</h3>
+<select id="shipping" onchange="renderCart()">
+<option value="0">Local Pickup (Free)</option>
+<option value="6">Ship Order (+$6)</option>
+</select>
+</div>
+
+<div class="cart">
+<h3>🛒 Cart</h3>
+<input id="customerName" placeholder="Customer name required">
+<input id="customerPhone" placeholder="Phone number required">
+<input id="customerAddress" placeholder="Address required if shipping">
+<ul id="cart"></ul>
+<p><strong>Total: $<span id="total">0.00</span></strong></p>
+
+<button class="button" onclick="checkout()">
+Pay with Venmo
+</button>
+
+<button class="button" onclick="zelleCheckout()" style="background:#6D1ED4;">
+Pay with Zelle
+</button>
+</div>
+
+<script>
+
+const colors=[
+"Red",
+"Blue",
+"Black",
+"Light Green",
+"Yellow",
+"Grey",
+"Candy Red",
+"Champagne",
+"White",
+"Titan Grey",
+"Candy Green",
+"Brown",
+"Gold",
+"Orange",
+"Purple",
+"Black Gold Green (+$2)",
+"Blue Orange Green (+$2)",
+"Phantom Blue (+$2)",
+"Copper Purple Green (+$2)",
+"Multi Color Rose (+$2)",
+"Multi Color Blue (+$2)"
+];
+
+document.querySelectorAll('.color,.treeColor').forEach(sel=>{
+colors.forEach(c=>{
+let o=document.createElement('option');
+o.textContent=c;
+sel.appendChild(o);
+});
+});
+
+let cartItems=[];
+let total=0;
+
+const upcharge=c=>c.includes('+$2')?2:0;
+
+function addItem(label,price,qty){
+for(let i=0;i<qty;i++){
+cartItems.push({label,price});
+}
+renderCart();
+}
+
+function addTree(name,base,btn){
+const card=btn.parentElement;
+const cs=[...card.querySelectorAll('.treeColor')].map(s=>s.value);
+const qty=parseInt(card.querySelector('input').value);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,base,qty);
+}
+
+function addFidget(name,sizeId,btn){
+const card=btn.parentElement;
+const size=card.querySelector('#'+sizeId).value;
+const color=card.querySelector('.color').value;
+const qty=parseInt(card.querySelector('input').value);
+let price=(size==='Big'?8:5)+upcharge(color);
+addItem(`${color} ${name} (${size})`,price,qty);
+}
+
+function addSpinningStar(btn){
+const card=btn.parentElement;
+const size=card.querySelector('#spinSize').value;
+const colors=[...card.querySelectorAll('.color')].map(c=>c.value);
+const qty=parseInt(card.querySelector('input').value);
+let base=size==='Big'?10:6;
+let price=base+colors.reduce((a,c)=>a+upcharge(c),0);
+addItem(`${colors[0]} / ${colors[1]} Flexi Spinning Star (${size})`,price,qty);
+}
+
+function addFixed(name,base,btn){
+const card=btn.parentElement;
+const colorSelect=card.querySelector('.color');
+const color=colorSelect?colorSelect.value:'';
+const qty=parseInt(card.querySelector('input').value);
+addItem(`${color} ${name}`,base+upcharge(color),qty);
+}
+
+function addTwoColor(name,base,btn){
+const card=btn.parentElement;
+const cs=[...card.querySelectorAll('.color')].map(s=>s.value);
+const qty=parseInt(card.querySelector('input').value);
+let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
+addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+}
+
+
+function addKeyboardClicker(btn){
+const card=btn.parentElement;
+const textValue=card.querySelector('.keyboardText').value.trim();
+const color=card.querySelector('.color').value;
+const qty=parseInt(card.querySelector('input[type=number]').value);
+if(!textValue){alert('Type the text');return;}
+let base=textValue.length<=4?2.5:2.0;
+let price=base+upcharge(color);
+addItem(`${color} Keyboard Clicker: ${textValue}`,price,qty);
+}
+
+function addName(btn){
+const card=btn.parentElement;
+const text=card.querySelector('#nameText').value.trim();
+const color=card.querySelector('.color').value;
+const qty=parseInt(card.querySelector('input[type=number]').value);
+
+if(!text){
+alert('Type the name');
+return;
+}
+
+let price=text.length+upcharge(color);
+addItem(`${color} Name: ${text}`,price,qty);
+}
+
+function renderCart(){
+const ul=document.getElementById('cart');
+ul.innerHTML='';
+total=0;
+
+cartItems.forEach((item,i)=>{
+total+=item.price;
+
+const li=document.createElement('li');
+li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
+
+li.querySelector('.remove').onclick=()=>{
+cartItems.splice(i,1);
+renderCart();
+};
+
+ul.appendChild(li);
+});
+
+const shipping=parseFloat(document.getElementById('shipping').value);
+const finalTotal=total+shipping;
+
+document.getElementById('total').innerText=finalTotal.toFixed(2);
+}
+
+function checkout(){
+
+if(cartItems.length===0){
+alert('Cart is empty');
+return;
+}
+
+const name=document.getElementById('customerName').value.trim();
+const phone=document.getElementById('customerPhone').value.trim();
+const address=document.getElementById('customerAddress').value.trim();
+
+const shipping=parseFloat(document.getElementById('shipping').value);
+const finalTotal=total+shipping;
+
+let note=`Pervan 3D Order\n\n`;
+note+=`Customer: ${name}\n`;
+note+=`Phone: ${phone}\n`;
+note+=`Address: ${address}\n\n`;
+note+=`ITEMS:\n`;
+
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+});
+
+note+=`\nTotal: $${finalTotal.toFixed(2)}`;
+
+window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`,'_blank');
+}
+
+function zelleCheckout(){
+
+if(cartItems.length===0){
+alert('Cart is empty');
+return;
+}
+
+const name=document.getElementById('customerName').value.trim();
+const phone=document.getElementById('customerPhone').value.trim();
+const address=document.getElementById('customerAddress').value.trim();
+
+const shipping=parseFloat(document.getElementById('shipping').value);
+const finalTotal=total+shipping;
+
+let note=`Pervan 3D Order\n\n`;
+note+=`Customer: ${name}\n`;
+note+=`Phone: ${phone}\n`;
+note+=`Address: ${address}\n\n`;
+note+=`ITEMS:\n`;
+
+cartItems.forEach(i=>{
+note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+});
+
+note+=`\nTotal: $${finalTotal.toFixed(2)}\n`;
+note+=`\nSend payment to: tammypervan@hotmail.com`;
+
+navigator.clipboard.writeText(note);
+
+window.open('https://www.zellepay.com/','_blank');
+
+alert('Order copied for Zelle payment! Paste the copied order into the Zelle note.');
+}
+
+renderCart();
+
+</script>
+
+</body>
+</html>
