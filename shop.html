@@ -603,30 +603,22 @@ function addKeyboardClicker(btn){
     const color = card.querySelector('.color').value;
     const qty = parseInt(card.querySelector('input[type=number]').value);
 
-    if(!textValue){
+    if (!textValue) {
         alert("Type the text");
         return;
     }
 
     const letters = textValue.length;
+
+    // Price PER LETTER
     const pricePerLetter = letters <= 4 ? 2.50 : 2.00;
 
+    // Total price = number of letters × price per letter
     const price = (letters * pricePerLetter) + upcharge(color);
 
     addItem(`${color} Keyboard Clicker: ${textValue}`, price, qty);
 }
-
-function addKeyboardClicker(btn){
-const card=btn.parentElement;
-const textValue=card.querySelector('.keyboardText').value.trim();
-const color=card.querySelector('.color').value;
-const qty=parseInt(card.querySelector('input[type=number]').value);
-if(!textValue){alert('Type the text');return;}
-let base=textValue.length<=4?2.5:2.0;
-let price=base+upcharge(color);
-addItem(`${color} Keyboard Clicker: ${textValue}`,price,qty);
-}
-
+  
 function addName(btn){
 const card=btn.parentElement;
 const text=card.querySelector('#nameText').value.trim();
