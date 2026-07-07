@@ -373,6 +373,25 @@ $1.00 per letter
 <input type="number" value="1" min="1">
 <button class="button" onclick="addName(this)">Add to Cart</button>
 </div>
+
+<div class="card">
+<img src="">
+<h3>Custom Keyboard Clicker</h3>
+<p class="price">
+4 letters or less: $2.50 per letter<br>
+5+ letters: $2.00 per letter
+</p>
+
+<input class="keyboardText" placeholder="Type text here">
+
+<select class="color"></select>
+
+<input type="number" value="1" min="1">
+
+<button class="button" onclick="addKeyboardClicker(this)">
+Add to Cart
+</button>
+</div>
   
 <div class="card">
 <img src="heartdish.png">
@@ -577,6 +596,25 @@ let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
 addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
 }
 
+function addKeyboardClicker(btn){
+    const card = btn.parentElement;
+
+    const textValue = card.querySelector('.keyboardText').value.trim();
+    const color = card.querySelector('.color').value;
+    const qty = parseInt(card.querySelector('input[type=number]').value);
+
+    if(!textValue){
+        alert("Type the text");
+        return;
+    }
+
+    const letters = textValue.length;
+    const pricePerLetter = letters <= 4 ? 2.50 : 2.00;
+
+    const price = (letters * pricePerLetter) + upcharge(color);
+
+    addItem(`${color} Keyboard Clicker: ${textValue}`, price, qty);
+}
 
 function addKeyboardClicker(btn){
 const card=btn.parentElement;
