@@ -11,7 +11,7 @@
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:#f5f5f5;f
+background:#f5f5f5;
 }
 
 /* 3D PRINTER BACKGROUND */
@@ -135,6 +135,47 @@ height:100%;
 object-fit:cover;
 }
 
+/* SEARCH BAR */
+
+.search-container{
+max-width:700px;
+margin:30px auto 0;
+padding:0 20px;
+text-align:center;
+}
+
+#productSearch{
+width:100%;
+max-width:650px;
+padding:16px 20px;
+font-size:18px;
+border:2px solid #ddd;
+border-radius:30px;
+outline:none;
+box-sizing:border-box;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,.12);
+transition:all .25s ease;
+}
+
+#productSearch:focus{
+border-color:#ff6600;
+box-shadow:0 5px 20px rgba(255,102,0,.25);
+}
+
+#productSearch::placeholder{
+color:#999;
+}
+
+#noResults{
+display:none;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+color:#666;
+padding:50px 20px;
+}
+
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -246,6 +287,17 @@ text-decoration:none;
 <img src="colors.png">
 </div>
 
+<!-- SEARCH BAR -->
+
+<div class="search-container">
+  <input
+    type="text"
+    id="productSearch"
+    placeholder="🔍 Search for a product..."
+    oninput="searchProducts()"
+  >
+</div>
+
 <section class="products">
 
 <div class="card">
@@ -352,7 +404,7 @@ text-decoration:none;
 <input type="number" value="1" min="1">
 <button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
 </div>
-  
+
 <div class="card">
 <img src="teachergift.png">
 <h3>Teacher Gift</h3>
@@ -392,7 +444,7 @@ $1.00 per letter
 Add to Cart
 </button>
 </div>
-  
+
 <div class="card">
 <img src="heartdish.png">
 <h3>Heart Dish</h3>
@@ -483,6 +535,10 @@ Add to Cart
 
 </section>
 
+<div id="noResults">
+  😕 No products found. Try searching for something else.
+</div>
+
 <div class="cart">
 <h3>Delivery Method</h3>
 <select id="shipping" onchange="renderCart()">
@@ -547,180 +603,410 @@ let total=0;
 
 const upcharge=c=>c.includes('+$2')?2:0;
 
+
+/* SEARCH PRODUCTS */
+
+function searchProducts(){
+
+const search=document
+.getElementById('productSearch')
+.value
+.toLowerCase()
+.trim();
+
+const products=document.querySelectorAll('.products .card');
+
+let visibleProducts=0;
+
+products.forEach(card=>{
+
+const productName=card
+.querySelector('h3')
+?.textContent
+.toLowerCase() || '';
+
+if(productName.includes(search)){
+
+card.style.display='';
+visibleProducts++;
+
+}else{
+
+card.style.display='none';
+
+}
+
+});
+
+const noResults=document.getElementById('noResults');
+
+if(visibleProducts===0){
+
+noResults.style.display='block';
+
+}else{
+
+noResults.style.display='none';
+
+}
+
+}
+
+
 function addItem(label,price,qty){
+
 for(let i=0;i<qty;i++){
+
 cartItems.push({label,price});
+
 }
+
 renderCart();
+
 }
+
 
 function addTree(name,base,btn){
+
 const card=btn.parentElement;
-const cs=[...card.querySelectorAll('.treeColor')].map(s=>s.value);
+
+const cs=[...card.querySelectorAll('.treeColor')]
+.map(s=>s.value);
+
 const qty=parseInt(card.querySelector('input').value);
+
 addItem(`${cs[0]} / ${cs[1]} ${name}`,base,qty);
+
 }
+
 
 function addFidget(name,sizeId,btn){
+
 const card=btn.parentElement;
+
 const size=card.querySelector('#'+sizeId).value;
+
 const color=card.querySelector('.color').value;
+
 const qty=parseInt(card.querySelector('input').value);
+
 let price=(size==='Big'?8:5)+upcharge(color);
+
 addItem(`${color} ${name} (${size})`,price,qty);
+
 }
+
 
 function addSpinningStar(btn){
+
 const card=btn.parentElement;
+
 const size=card.querySelector('#spinSize').value;
-const colors=[...card.querySelectorAll('.color')].map(c=>c.value);
+
+const colors=[...card.querySelectorAll('.color')]
+.map(c=>c.value);
+
 const qty=parseInt(card.querySelector('input').value);
+
 let base=size==='Big'?10:6;
-let price=base+colors.reduce((a,c)=>a+upcharge(c),0);
-addItem(`${colors[0]} / ${colors[1]} Flexi Spinning Star (${size})`,price,qty);
+
+let price=base+
+colors.reduce((a,c)=>a+upcharge(c),0);
+
+addItem(
+`${colors[0]} / ${colors[1]} Flexi Spinning Star (${size})`,
+price,
+qty
+);
+
 }
+
 
 function addFixed(name,base,btn){
+
 const card=btn.parentElement;
+
 const colorSelect=card.querySelector('.color');
+
 const color=colorSelect?colorSelect.value:'';
+
 const qty=parseInt(card.querySelector('input').value);
-addItem(`${color} ${name}`,base+upcharge(color),qty);
+
+addItem(
+`${color} ${name}`,
+base+upcharge(color),
+qty
+);
+
 }
+
 
 function addTwoColor(name,base,btn){
+
 const card=btn.parentElement;
-const cs=[...card.querySelectorAll('.color')].map(s=>s.value);
+
+const cs=[...card.querySelectorAll('.color')]
+.map(s=>s.value);
+
 const qty=parseInt(card.querySelector('input').value);
-let price=base+cs.reduce((a,c)=>a+upcharge(c),0);
-addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty);
+
+let price=base+
+cs.reduce((a,c)=>a+upcharge(c),0);
+
+addItem(
+`${cs[0]} / ${cs[1]} ${name}`,
+price,
+qty
+);
+
 }
+
 
 function addKeyboardClicker(btn){
-    const card = btn.parentElement;
 
-    const textValue = card.querySelector('.keyboardText').value.trim();
-    const color = card.querySelector('.color').value;
-    const qty = parseInt(card.querySelector('input[type=number]').value);
-
-    if (!textValue) {
-        alert("Type the text");
-        return;
-    }
-
-    const letters = textValue.length;
-
-    // Price PER LETTER
-    const pricePerLetter = letters <= 4 ? 2.50 : 2.00;
-
-    // Total price = number of letters × price per letter
-    const price = (letters * pricePerLetter) + upcharge(color);
-
-    addItem(`${color} Keyboard Clicker: ${textValue}`, price, qty);
-}
-  
-function addName(btn){
 const card=btn.parentElement;
-const text=card.querySelector('#nameText').value.trim();
+
+const textValue=card
+.querySelector('.keyboardText')
+.value
+.trim();
+
 const color=card.querySelector('.color').value;
-const qty=parseInt(card.querySelector('input[type=number]').value);
+
+const qty=parseInt(
+card.querySelector('input[type=number]').value
+);
+
+if(!textValue){
+
+alert("Type the text");
+
+return;
+
+}
+
+const letters=textValue.length;
+
+const pricePerLetter=
+letters<=4?2.50:2.00;
+
+const price=
+(letters*pricePerLetter)+upcharge(color);
+
+addItem(
+`${color} Keyboard Clicker: ${textValue}`,
+price,
+qty
+);
+
+}
+
+
+function addName(btn){
+
+const card=btn.parentElement;
+
+const text=card
+.querySelector('#nameText')
+.value
+.trim();
+
+const color=card.querySelector('.color').value;
+
+const qty=parseInt(
+card.querySelector('input[type=number]').value
+);
 
 if(!text){
+
 alert('Type the name');
+
 return;
+
 }
 
 let price=text.length+upcharge(color);
-addItem(`${color} Name: ${text}`,price,qty);
+
+addItem(
+`${color} Name: ${text}`,
+price,
+qty
+);
+
 }
 
+
 function renderCart(){
+
 const ul=document.getElementById('cart');
+
 ul.innerHTML='';
+
 total=0;
 
 cartItems.forEach((item,i)=>{
+
 total+=item.price;
 
 const li=document.createElement('li');
-li.innerHTML=`${item.label} - $${item.price.toFixed(2)} <span class="remove">✖</span>`;
+
+li.innerHTML=
+`${item.label} - $${item.price.toFixed(2)}
+<span class="remove">✖</span>`;
 
 li.querySelector('.remove').onclick=()=>{
+
 cartItems.splice(i,1);
+
 renderCart();
+
 };
 
 ul.appendChild(li);
+
 });
 
-const shipping=parseFloat(document.getElementById('shipping').value);
+const shipping=
+parseFloat(
+document.getElementById('shipping').value
+);
+
 const finalTotal=total+shipping;
 
-document.getElementById('total').innerText=finalTotal.toFixed(2);
+document.getElementById('total').innerText=
+finalTotal.toFixed(2);
+
 }
+
 
 function checkout(){
 
 if(cartItems.length===0){
+
 alert('Cart is empty');
+
 return;
+
 }
 
-const name=document.getElementById('customerName').value.trim();
-const phone=document.getElementById('customerPhone').value.trim();
-const address=document.getElementById('customerAddress').value.trim();
+const name=
+document.getElementById('customerName')
+.value
+.trim();
 
-const shipping=parseFloat(document.getElementById('shipping').value);
+const phone=
+document.getElementById('customerPhone')
+.value
+.trim();
+
+const address=
+document.getElementById('customerAddress')
+.value
+.trim();
+
+const shipping=
+parseFloat(
+document.getElementById('shipping').value
+);
+
 const finalTotal=total+shipping;
 
 let note=`Pervan 3D Order\n\n`;
+
 note+=`Customer: ${name}\n`;
+
 note+=`Phone: ${phone}\n`;
+
 note+=`Address: ${address}\n\n`;
+
 note+=`ITEMS:\n`;
 
 cartItems.forEach(i=>{
-note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+
+note+=
+`${i.label} - $${i.price.toFixed(2)}\n`;
+
 });
 
-note+=`\nTotal: $${finalTotal.toFixed(2)}`;
+note+=
+`\nTotal: $${finalTotal.toFixed(2)}`;
 
-window.open(`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`,'_blank');
+window.open(
+`https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`,
+'_blank'
+);
+
 }
+
 
 function zelleCheckout(){
 
 if(cartItems.length===0){
+
 alert('Cart is empty');
+
 return;
+
 }
 
-const name=document.getElementById('customerName').value.trim();
-const phone=document.getElementById('customerPhone').value.trim();
-const address=document.getElementById('customerAddress').value.trim();
+const name=
+document.getElementById('customerName')
+.value
+.trim();
 
-const shipping=parseFloat(document.getElementById('shipping').value);
+const phone=
+document.getElementById('customerPhone')
+.value
+.trim();
+
+const address=
+document.getElementById('customerAddress')
+.value
+.trim();
+
+const shipping=
+parseFloat(
+document.getElementById('shipping').value
+);
+
 const finalTotal=total+shipping;
 
 let note=`Pervan 3D Order\n\n`;
+
 note+=`Customer: ${name}\n`;
+
 note+=`Phone: ${phone}\n`;
+
 note+=`Address: ${address}\n\n`;
+
 note+=`ITEMS:\n`;
 
 cartItems.forEach(i=>{
-note+=`${i.label} - $${i.price.toFixed(2)}\n`;
+
+note+=
+`${i.label} - $${i.price.toFixed(2)}\n`;
+
 });
 
-note+=`\nTotal: $${finalTotal.toFixed(2)}\n`;
-note+=`\nSend payment to: tammypervan@hotmail.com`;
+note+=
+`\nTotal: $${finalTotal.toFixed(2)}\n`;
+
+note+=
+`\nSend payment to: tammypervan@hotmail.com`;
 
 navigator.clipboard.writeText(note);
 
-window.open('https://www.zellepay.com/','_blank');
+window.open(
+'https://www.zellepay.com/',
+'_blank'
+);
 
-alert('Order copied for Zelle payment! Paste the copied order into the Zelle note.');
+alert(
+'Order copied for Zelle payment! Paste the copied order into the Zelle note.'
+);
+
 }
+
 
 renderCart();
 
