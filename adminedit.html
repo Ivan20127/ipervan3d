@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Print Wars</title>
 
 <style>
@@ -19,8 +18,8 @@ html,body{
 
 body{
     background:#050b16;
-    color:white;
     font-family:Arial,Helvetica,sans-serif;
+    color:white;
     user-select:none;
 }
 
@@ -41,8 +40,8 @@ canvas{
     padding:11px 15px;
     font-size:14px;
     line-height:1.55;
-    min-width:190px;
     box-shadow:0 8px 30px rgba(0,0,0,.4);
+    min-width:180px;
 }
 
 #ui strong{color:#60a5fa}
@@ -66,13 +65,13 @@ canvas{
 }
 
 .touchButton{
-    width:62px;
-    height:62px;
+    width:64px;
+    height:64px;
     border-radius:50%;
     border:2px solid rgba(255,255,255,.25);
-    background:rgba(15,23,42,.86);
+    background:rgba(15,23,42,.82);
     color:white;
-    font-size:24px;
+    font-size:25px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -86,13 +85,17 @@ canvas{
     transform:scale(.94);
 }
 
+/* =====================================================
+   MAIN MESSAGE
+===================================================== */
+
 #message{
     position:fixed;
     z-index:50;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
-    width:min(92%,560px);
+    width:min(92%,600px);
     max-height:90vh;
     overflow:auto;
     padding:30px;
@@ -114,36 +117,28 @@ canvas{
     color:#dbeafe;
 }
 
-button.menuButton{
+.mainButton{
     margin:8px 5px 0;
-    padding:13px 24px;
+    padding:13px 28px;
     border:0;
     border-radius:11px;
     background:#2563eb;
     color:white;
-    font-size:16px;
+    font-size:17px;
     font-weight:bold;
     cursor:pointer;
     box-shadow:0 5px 18px rgba(37,99,235,.4);
 }
 
-button.menuButton:hover{
+.mainButton:hover{
     background:#3b82f6;
 }
 
-button.shopButton{
-    background:#7c3aed;
-}
-
-button.shopButton:hover{
-    background:#8b5cf6;
-}
-
-button.backButton{
+.backButton{
     background:#475569;
 }
 
-button.backButton:hover{
+.backButton:hover{
     background:#64748b;
 }
 
@@ -151,144 +146,355 @@ button.backButton:hover{
     display:none!important;
 }
 
-.powerPreview{
+/* =====================================================
+   SHOP
+===================================================== */
+
+#shop{
+    position:fixed;
+    z-index:60;
+    inset:0;
+    background:rgba(2,6,23,.96);
+    display:none;
+    overflow:auto;
+    padding:25px;
+}
+
+#shop.show{
+    display:block;
+}
+
+.shopHeader{
+    max-width:1000px;
+    margin:auto;
     display:flex;
-    justify-content:center;
-    gap:14px;
-    margin:18px 0;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
     flex-wrap:wrap;
 }
 
+.shopHeader h1{
+    color:#60a5fa;
+    margin:5px 0;
+}
+
+.shopCoins{
+    color:#facc15;
+    font-size:20px;
+    font-weight:bold;
+}
+
+#skins{
+    max-width:1000px;
+    margin:25px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+}
+
+.skinCard{
+    background:#111827;
+    border:2px solid #334155;
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+.skinCard.selected{
+    border-color:#4ade80;
+}
+
+.skinPreview{
+    width:70px;
+    height:90px;
+    margin:5px auto 15px;
+    position:relative;
+}
+
+.skinHead{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:#f8fafc;
+    margin:auto;
+}
+
+.skinBody{
+    width:55px;
+    height:50px;
+    margin:3px auto;
+    border-radius:9px;
+}
+
+.skinName{
+    font-size:18px;
+    font-weight:bold;
+    margin:8px;
+}
+
+.skinPrice{
+    color:#facc15;
+    margin-bottom:10px;
+}
+
+.skinButton{
+    border:0;
+    padding:10px 18px;
+    border-radius:9px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.skinButton:disabled{
+    background:#475569;
+    cursor:default;
+}
+
+/* =====================================================
+   POWER PREVIEW
+===================================================== */
+
+#powerPreview{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+    margin:18px 0;
+}
+
 .powerCard{
-    width:190px;
-    padding:15px;
-    border-radius:16px;
-    border:2px solid;
-    background:rgba(15,23,42,.9);
-    box-shadow:0 0 25px rgba(96,165,250,.15);
+    width:180px;
+    padding:18px;
+    border-radius:18px;
+    background:rgba(30,41,59,.9);
+    border:2px solid #7c3aed;
+    box-shadow:
+        0 0 15px rgba(168,85,247,.45),
+        inset 0 0 20px rgba(168,85,247,.08);
+}
+
+.powerIcon{
+    font-size:50px;
+    filter:drop-shadow(0 0 12px currentColor);
 }
 
 .powerCard.fire{
-    border-color:#f97316;
-    box-shadow:0 0 25px rgba(249,115,22,.3);
+    border-color:#ef4444;
+    box-shadow:0 0 22px rgba(239,68,68,.5);
 }
 
 .powerCard.jump{
     border-color:#38bdf8;
-    box-shadow:0 0 25px rgba(56,189,248,.3);
+    box-shadow:0 0 22px rgba(56,189,248,.5);
 }
 
-.powerIcon{
-    font-size:42px;
-    display:block;
-    margin-bottom:5px;
-}
+/* =====================================================
+   POWER STATUS
+===================================================== */
 
-.shopGrid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-top:18px;
-}
-
-.skinCard{
-    padding:14px;
-    border:2px solid #334155;
-    border-radius:15px;
-    background:#0f172a;
-}
-
-.skinPreview{
-    height:65px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:42px;
-}
-
-.skinCard.owned{
-    border-color:#22c55e;
-}
-
-.skinCard.equipped{
-    border-color:#facc15;
-}
-
-.small{
+#powerStatus{
+    margin-top:5px;
     font-size:12px;
-    color:#94a3b8;
+    color:#facc15;
 }
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media(max-width:700px){
+
     #ui{
         font-size:12px;
         padding:8px 11px;
-        min-width:150px;
+        min-width:145px;
     }
 
     .touchButton{
-        width:56px;
-        height:56px;
+        width:58px;
+        height:58px;
     }
 
     #message{
-        padding:22px;
+        padding:20px;
     }
 
     #message h1{
         font-size:28px;
     }
 
-    .shopGrid{
-        grid-template-columns:1fr 1fr;
-    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =====================================================
+     HUD
+===================================================== -->
+
 <div id="ui">
+
     <div>🖨️ <strong>PRINT WARS</strong></div>
-    <div>Level: <span id="level">1-1</span></div>
-    <div>Score: <span id="score">0</span></div>
-    <div>🧵 Filament: <span id="coins">0</span></div>
-    <div>❤️ Lives: <span id="lives">♥ ♥ ♥</span></div>
-    <div>⚡ Power: <span id="power" class="power">Normal</span></div>
-    <div style="margin-top:5px;color:#94a3b8">
-        ← → Move &nbsp; SPACE Jump &nbsp; X Dash &nbsp; C Fireball
+
+    <div>
+        Level:
+        <span id="level">1-1</span>
     </div>
+
+    <div>
+        Score:
+        <span id="score">0</span>
+    </div>
+
+    <div>
+        🧵 Filament:
+        <span id="coins">0</span>
+    </div>
+
+    <div>
+        ❤️ Lives:
+        <span id="lives">♥ ♥ ♥</span>
+    </div>
+
+    <div>
+        ⚡ Power:
+        <span id="power" class="power">Normal</span>
+    </div>
+
+    <div id="powerStatus"></div>
+
+    <div style="margin-top:5px;color:#94a3b8">
+        ← → Move &nbsp; SPACE Jump &nbsp; X Dash
+    </div>
+
 </div>
 
 <canvas id="game" width="960" height="540"></canvas>
 
+<!-- =====================================================
+     MOBILE
+===================================================== -->
+
 <div id="mobileControls">
 
     <div class="controlGroup">
-        <button class="touchButton" data-key="ArrowLeft">◀</button>
-        <button class="touchButton" data-key="ArrowRight">▶</button>
+
+        <button class="touchButton" data-key="ArrowLeft">
+            ◀
+        </button>
+
+        <button class="touchButton" data-key="ArrowRight">
+            ▶
+        </button>
+
     </div>
 
     <div class="controlGroup">
-        <button class="touchButton" data-key=" ">▲</button>
-        <button class="touchButton" data-key="x">⚡</button>
-        <button class="touchButton" data-key="c">🔥</button>
+
+        <button class="touchButton" data-key=" ">
+            ▲
+        </button>
+
+        <button class="touchButton" data-key="x">
+            ⚡
+        </button>
+
     </div>
 
 </div>
+
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
 
 <div id="message">
 
     <h1>🖨️ PRINT WARS</h1>
 
     <div id="messageText">
+
         Welcome to the secret 3D-printing factory!
+
         <br><br>
+
         Run, jump, stomp rogue products,
         collect filament and reach the printer.
+
+        <br><br>
+
+        <strong>
+        Watch out for spikes, jumping products,
+        fire spitters and dangerous power orbs!
+        </strong>
+
     </div>
 
-    <div id="menuButtons"></div>
+    <button id="startButton" class="mainButton">
+        START GAME
+    </button>
+
+    <button
+        id="messageShopButton"
+        class="mainButton"
+        style="background:#7c3aed"
+    >
+        🛍️ SHOP
+    </button>
+
+</div>
+
+<!-- =====================================================
+     SHOP
+===================================================== -->
+
+<div id="shop">
+
+    <div class="shopHeader">
+
+        <div>
+            <h1>🛍️ PRINT WARS SHOP</h1>
+            <div style="color:#94a3b8">
+                Buy skins for your printer hero.
+            </div>
+        </div>
+
+        <div class="shopCoins">
+            🪙 <span id="shopCoins">0</span>
+        </div>
+
+    </div>
+
+    <div
+        style="
+        text-align:center;
+        margin:20px auto;
+        color:#cbd5e1;
+        max-width:700px;
+        "
+    >
+        Every skin costs <strong style="color:#facc15">
+        2,000 coins
+        </strong>.
+        Your selected skin is used in every level.
+    </div>
+
+    <div id="skins"></div>
+
+    <div style="text-align:center">
+
+        <button
+            id="closeShop"
+            class="mainButton"
+        >
+            🔙 BACK TO LEVEL
+        </button>
+
+    </div>
 
 </div>
 
@@ -298,49 +504,68 @@ button.backButton:hover{
    CANVAS
 ========================================================= */
 
-const canvas=document.getElementById("game");
-const ctx=canvas.getContext("2d");
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
-const WIDTH=960;
-const HEIGHT=540;
+const WIDTH = 960;
+const HEIGHT = 540;
 
 
 /* =========================================================
    AUDIO
 ========================================================= */
 
-let audioCtx=null;
+let audioCtx = null;
 
 function startAudio(){
+
     if(!audioCtx){
-        audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+
+        audioCtx = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
     }
 
-    if(audioCtx.state==="suspended"){
+    if(audioCtx.state === "suspended"){
         audioCtx.resume();
     }
 }
 
-function beep(frequency,duration=.08,type="square",volume=.05){
+function beep(
+    frequency,
+    duration=.08,
+    type="square",
+    volume=.05
+){
+
     if(!audioCtx)return;
 
-    const o=audioCtx.createOscillator();
-    const g=audioCtx.createGain();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
 
-    o.type=type;
-    o.frequency.value=frequency;
+    o.type = type;
+    o.frequency.value = frequency;
 
-    g.gain.setValueAtTime(volume,audioCtx.currentTime);
+    g.gain.setValueAtTime(
+        volume,
+        audioCtx.currentTime
+    );
+
     g.gain.exponentialRampToValueAtTime(
         .001,
-        audioCtx.currentTime+duration
+        audioCtx.currentTime + duration
     );
 
     o.connect(g);
     g.connect(audioCtx.destination);
 
     o.start();
-    o.stop(audioCtx.currentTime+duration);
+
+    o.stop(
+        audioCtx.currentTime + duration
+    );
 }
 
 
@@ -348,116 +573,106 @@ function beep(frequency,duration=.08,type="square",volume=.05){
    INPUT
 ========================================================= */
 
-const keys={};
+const keys = {};
 
-window.addEventListener("keydown",e=>{
+window.addEventListener("keydown", e => {
 
-    if(["ArrowLeft","ArrowRight","ArrowUp"," ","x","X","c","C"].includes(e.key)){
+    if([
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        " ",
+        "x",
+        "X"
+    ].includes(e.key)){
+
         e.preventDefault();
+
     }
 
-    keys[e.key]=true;
+    keys[e.key] = true;
 
     if(
-        (e.key===" "||e.key==="ArrowUp") &&
+        (e.key === " " || e.key === "ArrowUp") &&
         game.started &&
         !game.over &&
-        !world.finished
+        !world.finished &&
+        !shopOpen
     ){
+
         jump();
+
     }
 
     if(
-        (e.key==="x"||e.key==="X") &&
+        (e.key === "x" || e.key === "X") &&
         game.started &&
         !game.over &&
-        !world.finished
+        !world.finished &&
+        !shopOpen
     ){
+
         dash();
+
     }
 
-    if(
-        (e.key==="c"||e.key==="C") &&
-        game.started &&
-        !game.over &&
-        !world.finished
-    ){
-        fireballAttack();
-    }
-});
-
-window.addEventListener("keyup",e=>{
-    keys[e.key]=false;
 });
 
 
-document.querySelectorAll(".touchButton").forEach(button=>{
+window.addEventListener("keyup", e => {
+    keys[e.key] = false;
+});
 
-    const key=button.dataset.key;
 
-    button.addEventListener("pointerdown",e=>{
+document
+.querySelectorAll(".touchButton")
+.forEach(button => {
+
+    const key = button.dataset.key;
+
+    button.addEventListener("pointerdown", e => {
+
         e.preventDefault();
 
-        keys[key]=true;
+        keys[key] = true;
 
-        if(key===" ")jump();
-        if(key==="x")dash();
-        if(key==="c")fireballAttack();
+        if(key === " "){
+            jump();
+        }
+
+        if(key === "x"){
+            dash();
+        }
+
     });
 
-    button.addEventListener("pointerup",e=>{
+    button.addEventListener("pointerup", e => {
+
         e.preventDefault();
-        keys[key]=false;
+
+        keys[key] = false;
+
     });
 
-    button.addEventListener("pointercancel",()=>{
-        keys[key]=false;
+    button.addEventListener("pointercancel", () => {
+        keys[key] = false;
     });
+
 });
 
 
 /* =========================================================
-   SAVED DATA
+   GAME STATE
 ========================================================= */
 
-let savedCoins=Number(localStorage.getItem("printWarsCoins")||0);
-
-let ownedSkins=
-JSON.parse(localStorage.getItem("printWarsSkins")||'["default"]');
-
-let equippedSkin=
-localStorage.getItem("printWarsEquipped")||"default";
-
-
-function saveData(){
-    localStorage.setItem(
-        "printWarsCoins",
-        String(game.filament)
-    );
-
-    localStorage.setItem(
-        "printWarsSkins",
-        JSON.stringify(ownedSkins)
-    );
-
-    localStorage.setItem(
-        "printWarsEquipped",
-        equippedSkin
-    );
-}
-
-
-/* =========================================================
-   GAME
-========================================================= */
-
-const game={
+const game = {
 
     started:false,
     over:false,
+
     score:0,
 
-    filament:savedCoins,
+    filament:0,
 
     enemiesDefeated:0,
 
@@ -469,10 +684,101 @@ const game={
 
 
 /* =========================================================
+   SHOP STATE
+========================================================= */
+
+let shopOpen = false;
+
+const SKIN_PRICE = 2000;
+
+const skins = [
+
+    {
+        id:"blue",
+        name:"Factory Blue",
+        color:"#60a5fa",
+        secondary:"#7c3aed",
+        owned:true
+    },
+
+    {
+        id:"red",
+        name:"Hot Printer",
+        color:"#ef4444",
+        secondary:"#991b1b",
+        owned:false
+    },
+
+    {
+        id:"green",
+        name:"Eco Bot",
+        color:"#4ade80",
+        secondary:"#15803d",
+        owned:false
+    },
+
+    {
+        id:"gold",
+        name:"Golden Printer",
+        color:"#facc15",
+        secondary:"#ca8a04",
+        owned:false
+    },
+
+    {
+        id:"purple",
+        name:"Galaxy Print",
+        color:"#c084fc",
+        secondary:"#7e22ce",
+        owned:false
+    },
+
+    {
+        id:"cyan",
+        name:"Cyber Print",
+        color:"#22d3ee",
+        secondary:"#0891b2",
+        owned:false
+    }
+
+];
+
+
+let selectedSkin =
+    localStorage.getItem("printWarsSkin")
+    || "blue";
+
+
+let savedCoins =
+    Number(
+        localStorage.getItem("printWarsCoins")
+        || 0
+    );
+
+game.filament = savedCoins;
+
+
+const savedSkins =
+    JSON.parse(
+        localStorage.getItem("printWarsSkins")
+        || '["blue"]'
+    );
+
+
+for(const skin of skins){
+
+    if(savedSkins.includes(skin.id)){
+        skin.owned = true;
+    }
+
+}
+
+
+/* =========================================================
    WORLD
 ========================================================= */
 
-const world={
+const world = {
 
     width:5000,
 
@@ -491,19 +797,24 @@ const world={
    PLAYER
 ========================================================= */
 
-const player={
+const player = {
 
     x:100,
+
     y:350,
 
     w:30,
+
     h:52,
 
     vx:0,
+
     vy:0,
 
     maxSpeed:6,
+
     acceleration:.65,
+
     friction:.78,
 
     jumpPower:13,
@@ -522,8 +833,6 @@ const player={
 
     dashTimer:0,
 
-    fireballCooldown:0,
-
     big:false,
 
     starTimer:0,
@@ -531,7 +840,10 @@ const player={
     checkpoint:100,
 
     fireballPower:false,
-    extraJumpPower:false
+
+    extraJumpPower:false,
+
+    fireballCooldown:0
 
 };
 
@@ -552,35 +864,35 @@ let texts=[];
 
 
 /* =========================================================
-   POWER-UPS
+   PRODUCT NAMES
 ========================================================= */
 
-const POWERUPS={
+const productNames = [
 
-    fireball:{
-        name:"FIREBALL",
-        icon:"🔥",
-        description:"Press C to shoot fireballs."
-    },
+    "Gear Fidget",
+    "Dragon",
+    "Pig",
+    "Otter",
+    "Shark",
+    "Knight Holder",
+    "Cactus",
+    "Air Tank"
 
-    extraJump:{
-        name:"EXTRA JUMP",
-        icon:"🪽",
-        description:"Jump twice in the air."
-    }
-
-};
+];
 
 
 /* =========================================================
    LEVEL DATA
 ========================================================= */
 
-const levels=[
+const levels = [
 
 {
+
     name:"Factory Floor",
+
     theme:"factory",
+
     width:4800,
 
     grounds:[
@@ -636,11 +948,15 @@ const levels=[
         [2970,270],
         [3930,260]
     ]
+
 },
 
 {
+
     name:"Filament Warehouse",
+
     theme:"warehouse",
+
     width:5400,
 
     grounds:[
@@ -712,11 +1028,15 @@ const levels=[
         [4500,280],
         [5150,280]
     ]
+
 },
 
 {
+
     name:"3D Print Canyon",
+
     theme:"canyon",
+
     width:6000,
 
     grounds:[
@@ -804,11 +1124,15 @@ const levels=[
         [5230,280],
         [5580,220]
     ]
+
 },
 
 {
+
     name:"Prototype Lab",
+
     theme:"lab",
+
     width:6500,
 
     grounds:[
@@ -899,11 +1223,15 @@ const levels=[
         [5630,280],
         [6030,240]
     ]
+
 },
 
 {
+
     name:"The Mega Printer",
+
     theme:"mega",
+
     width:7200,
 
     grounds:[
@@ -1002,124 +1330,177 @@ const levels=[
         [6230,180],
         [6530,270]
     ]
+
 }
+
 ];
 
 
 /* =========================================================
-   SKINS
+   TWO POWERS PER LEVEL
 ========================================================= */
 
-const skins={
+const levelPowers = [
 
-    default:{
-        name:"Printer Bot",
-        color:"#60a5fa",
-        accent:"#7c3aed",
-        icon:"🤖"
+    ["fireball","extraJump"],
+
+    ["extraJump","fireball"],
+
+    ["fireball","extraJump"],
+
+    ["extraJump","fireball"],
+
+    ["fireball","extraJump"]
+
+];
+
+
+/* =========================================================
+   POWER INFORMATION
+========================================================= */
+
+const powerInfo = {
+
+    fireball:{
+        name:"Fireball",
+        icon:"🔥",
+        description:
+        "Press F to shoot a fireball at enemies."
     },
 
-    red:{
-        name:"Red Hot",
-        color:"#ef4444",
-        accent:"#991b1b",
-        icon:"🔥"
-    },
-
-    green:{
-        name:"Toxic Print",
-        color:"#22c55e",
-        accent:"#166534",
-        icon:"☢️"
-    },
-
-    gold:{
-        name:"Golden Bot",
-        color:"#facc15",
-        accent:"#a16207",
-        icon:"👑"
-    },
-
-    purple:{
-        name:"Galaxy",
-        color:"#c084fc",
-        accent:"#6b21a8",
-        icon:"🌌"
-    },
-
-    cyan:{
-        name:"Cyber",
-        color:"#22d3ee",
-        accent:"#0e7490",
-        icon:"⚡"
+    extraJump:{
+        name:"Extra Jump",
+        icon:"🪽",
+        description:
+        "Touch the orb to unlock a second jump in the air."
     }
+
 };
 
 
 /* =========================================================
-   LEVEL POWER-UP ASSIGNMENTS
+   POWER PREVIEW
 ========================================================= */
 
-const levelPowers=[
-    ["fireball","extraJump"],
-    ["extraJump","fireball"],
-    ["fireball","extraJump"],
-    ["extraJump","fireball"],
-    ["fireball","extraJump"]
-];
+function showPowerPreview(level){
+
+    const powers =
+        levelPowers[level-1];
+
+    let html = "";
+
+    for(const power of powers){
+
+        const info = powerInfo[power];
+
+        html += `
+
+        <div class="powerCard ${power === "fireball" ? "fire" : "jump"}">
+
+            <div class="powerIcon">
+                ${info.icon}
+            </div>
+
+            <strong style="font-size:20px">
+                ${info.name}
+            </strong>
+
+            <br><br>
+
+            <span style="color:#cbd5e1">
+                ${info.description}
+            </span>
+
+        </div>
+
+        `;
+
+    }
+
+    return html;
+}
 
 
 /* =========================================================
-   BASIC OBJECTS
+   CREATE PLATFORM
 ========================================================= */
 
 function addPlatform(x,y,w,h){
     platforms.push({x,y,w,h});
 }
 
+
+/* =========================================================
+   SPIKES
+========================================================= */
+
 function addSpike(x,y,w){
-    spikes.push({x,y,w,h:25});
-}
 
-function addBlock(x,y){
-    blocks.push({
-        x,y,
-        w:42,
-        h:42,
-        used:false
+    spikes.push({
+        x,
+        y,
+        w,
+        h:25
     });
-}
 
-function addFilament(x,y){
-    collectibles.push({
-        x,y,
-        r:9,
-        collected:false
-    });
 }
 
 
 /* =========================================================
-   POWERUP ORB
+   BLOCK
+========================================================= */
+
+function addBlock(x,y){
+
+    blocks.push({
+        x,
+        y,
+        w:42,
+        h:42,
+        used:false
+    });
+
+}
+
+
+/* =========================================================
+   FILAMENT
+========================================================= */
+
+function addFilament(x,y){
+
+    collectibles.push({
+        x,
+        y,
+        r:9,
+        collected:false
+    });
+
+}
+
+
+/* =========================================================
+   POWER ORB
 ========================================================= */
 
 function addPowerup(x,y,type){
 
     powerups.push({
 
-        x:x,
-        y:y,
+        x,
+        y,
 
         w:36,
         h:36,
 
-        type:type,
+        type,
 
         collected:false,
 
         pulse:Math.random()*Math.PI*2
 
     });
+
 }
 
 
@@ -1127,39 +1508,34 @@ function addPowerup(x,y,type){
    ENEMY
 ========================================================= */
 
-const productNames=[
-    "Gear Fidget",
-    "Dragon",
-    "Pig",
-    "Otter",
-    "Shark",
-    "Knight Holder",
-    "Cactus",
-    "Air Tank"
-];
-
 function addEnemy(x,type){
 
     enemies.push({
 
-        x:x,
+        x,
+
         y:390,
 
         w:34,
+
         h:34,
 
         vx:0,
+
         vy:0,
 
-        direction:Math.random()>.5?1:-1,
+        direction:
+            Math.random()>.5 ? 1 : -1,
 
         speed:
             type==="jumper"
             ?1.1+game.level*.08
             :1.15+game.level*.10,
 
-        type:type,
+        type,
+
         alive:true,
+
         onGround:false,
 
         jumpTimer:
@@ -1174,10 +1550,13 @@ function addEnemy(x,type){
 
         name:
             productNames[
-                Math.floor(Math.random()*productNames.length)
+                Math.floor(
+                    Math.random()*productNames.length
+                )
             ]
 
     });
+
 }
 
 
@@ -1187,7 +1566,7 @@ function addEnemy(x,type){
 
 function createLevel(number){
 
-    const data=levels[number-1];
+    const data = levels[number-1];
 
     platforms=[];
     spikes=[];
@@ -1199,35 +1578,54 @@ function createLevel(number){
     particles=[];
     texts=[];
 
-    world.width=data.width;
-    world.finished=false;
-    world.finishX=data.width-150;
+    world.width = data.width;
 
-    /* Grounds */
+    world.finished = false;
+
+    world.finishX = data.width-150;
 
     for(const g of data.grounds){
-        addPlatform(g[0],450,g[1],100);
-    }
 
-    /* Platforms */
+        addPlatform(
+            g[0],
+            450,
+            g[1],
+            100
+        );
+
+    }
 
     for(const p of data.platforms){
-        addPlatform(p[0],p[1],p[2],25);
-    }
 
-    /* Spikes */
+        addPlatform(
+            p[0],
+            p[1],
+            p[2],
+            25
+        );
+
+    }
 
     for(const s of data.spikes){
-        addSpike(s[0],s[1],s[2]);
-    }
 
-    /* Blocks */
+        addSpike(
+            s[0],
+            s[1],
+            s[2]
+        );
+
+    }
 
     for(const b of data.blocks){
-        addBlock(b[0],b[1]);
+
+        addBlock(
+            b[0],
+            b[1]
+        );
+
     }
 
-    /* Filament */
+    /* FILAMENT */
 
     for(
         let x=120;
@@ -1235,12 +1633,15 @@ function createLevel(number){
         x+=190
     ){
 
-        const y=370-((x/190)%3)*35;
+        const y =
+            370 -
+            ((x/190)%3)*35;
 
         addFilament(x,y);
+
     }
 
-    /* Platform filament */
+    /* PLATFORM FILAMENT */
 
     for(const p of data.platforms){
 
@@ -1250,53 +1651,80 @@ function createLevel(number){
             x+=48
         ){
 
-            addFilament(x,p[1]-28);
+            addFilament(
+                x,
+                p[1]-28
+            );
+
         }
+
     }
 
-    /* Enemies */
+    /* ENEMIES */
 
     for(const e of data.enemies){
-        addEnemy(e[0],e[1]);
+
+        addEnemy(
+            e[0],
+            e[1]
+        );
+
     }
 
-    /*
-       EXACTLY TWO POWER-UPS PER LEVEL.
-       They are deliberately placed in visible
-       locations near the beginning and middle
-       of each level.
-    */
+    /* =====================================================
+       EXACTLY TWO POWER ORBS
+    ===================================================== */
 
-    const p1=data.platforms[2];
-    const p2=data.platforms[
-        Math.floor(data.platforms.length*.55)
+    const chosen =
+        levelPowers[number-1];
+
+    const positions = [
+
+        data.platforms[
+            Math.floor(data.platforms.length*.32)
+        ],
+
+        data.platforms[
+            Math.floor(data.platforms.length*.72)
+        ]
+
     ];
 
     addPowerup(
-        p1[0]+p1[2]/2-18,
-        p1[1]-55,
-        levelPowers[number-1][0]
+        positions[0][0] + positions[0][2]/2 - 18,
+        positions[0][1] - 58,
+        chosen[0]
     );
 
     addPowerup(
-        p2[0]+p2[2]/2-18,
-        p2[1]-55,
-        levelPowers[number-1][1]
+        positions[1][0] + positions[1][2]/2 - 18,
+        positions[1][1] - 58,
+        chosen[1]
     );
 
-    /* Player */
+    /* PLAYER RESET */
 
     player.x=100;
     player.y=350;
+
     player.vx=0;
     player.vy=0;
+
     player.invincible=120;
+
     player.checkpoint=100;
 
+    player.jumpsUsed=0;
+
     player.fireballPower=false;
+
     player.extraJumpPower=false;
 
-    player.jumpsUsed=0;
+    player.fireballCooldown=0;
+
+    player.big=false;
+
+    player.starTimer=0;
 
     addText(
         player.x+300,
@@ -1315,6 +1743,7 @@ function createLevel(number){
     );
 
     beep(350,.12);
+
 }
 
 
@@ -1325,11 +1754,17 @@ function createLevel(number){
 function overlap(a,b){
 
     return(
-        a.x<b.x+b.w &&
-        a.x+a.w>b.x &&
-        a.y<b.y+b.h &&
-        a.y+a.h>b.y
+
+        a.x < b.x+b.w &&
+
+        a.x+a.w > b.x &&
+
+        a.y < b.y+b.h &&
+
+        a.y+a.h > b.y
+
     );
+
 }
 
 
@@ -1342,50 +1777,54 @@ function jump(){
     if(
         !game.started ||
         game.over ||
-        world.finished
-    )return;
+        world.finished ||
+        shopOpen
+    ){
+
+        return;
+
+    }
+
+    /* FIRST JUMP */
 
     if(player.onGround){
 
-        player.vy=-player.jumpPower;
+        player.vy =
+            -player.jumpPower;
+
         player.onGround=false;
+
         player.jumpsUsed=1;
 
         beep(500,.07);
 
         return;
+
     }
 
-    /*
-       EXTRA JUMP ONLY WORKS AFTER
-       THE EXTRA JUMP ORB HAS BEEN TOUCHED.
-    */
+    /* EXTRA JUMP */
 
     if(
         player.extraJumpPower &&
-        player.jumpsUsed<2
+        player.jumpsUsed < 2
     ){
 
-        player.vy=-player.jumpPower;
+        player.vy =
+            -player.jumpPower;
+
         player.jumpsUsed=2;
 
         burst(
             player.x+15,
-            player.y+player.h,
+            player.y+30,
             "#38bdf8",
             12
         );
 
-        addText(
-            player.x+15,
-            player.y-10,
-            "EXTRA JUMP!",
-            "#38bdf8",
-            16
-        );
+        beep(700,.08);
 
-        beep(700,.09);
     }
+
 }
 
 
@@ -1397,15 +1836,19 @@ function dash(){
 
     if(
         player.dashCooldown>0 ||
-        !game.started ||
-        game.over ||
-        world.finished
-    )return;
+        shopOpen
+    ){
+
+        return;
+
+    }
 
     player.dashTimer=12;
+
     player.dashCooldown=70;
 
-    player.vx=player.facing*13;
+    player.vx =
+        player.facing*13;
 
     burst(
         player.x,
@@ -1414,62 +1857,94 @@ function dash(){
         12
     );
 
-    beep(180,.1,"sawtooth");
+    beep(
+        180,
+        .1,
+        "sawtooth"
+    );
+
 }
 
 
 /* =========================================================
-   FIREBALL ATTACK
+   FIREBALL SHOOT
 ========================================================= */
 
-function fireballAttack(){
+function shootFireball(){
 
-    /*
-       C DOES NOTHING UNTIL THE FIREBALL ORB
-       HAS ACTUALLY BEEN TOUCHED.
-    */
+    if(
+        !player.fireballPower ||
+        player.fireballCooldown>0 ||
+        !game.started ||
+        game.over ||
+        world.finished ||
+        shopOpen
+    ){
 
-    if(!player.fireballPower){
         return;
+
     }
 
-    if(player.fireballCooldown>0){
-        return;
-    }
-
-    player.fireballCooldown=22;
+    player.fireballCooldown=25;
 
     fireballs.push({
 
         x:
             player.x+
-            (player.facing===1?player.w:-18),
+            (player.facing===1
+                ?player.w
+                :-16),
 
-        y:player.y+20,
+        y:
+            player.y+18,
 
         w:18,
+
         h:18,
 
-        vx:player.facing*9,
-        vy:-1,
+        vx:
+            player.facing*9,
+
+        vy:0,
 
         life:120,
-
-        fromPlayer:true,
 
         rotation:0
 
     });
 
     burst(
-        player.x+player.w/2,
-        player.y+22,
-        "#f97316",
-        8
+        player.x+15,
+        player.y+25,
+        "#ef4444",
+        7
     );
 
-    beep(240,.07,"sawtooth",.04);
+    beep(
+        250,
+        .08,
+        "sawtooth"
+    );
+
 }
+
+
+/* =========================================================
+   F KEY
+========================================================= */
+
+window.addEventListener("keydown",e=>{
+
+    if(
+        e.key==="f" ||
+        e.key==="F"
+    ){
+
+        shootFireball();
+
+    }
+
+});
 
 
 /* =========================================================
@@ -1480,14 +1955,18 @@ function updatePlayer(){
 
     if(keys["ArrowLeft"]){
 
-        player.vx-=player.acceleration;
+        player.vx -= player.acceleration;
+
         player.facing=-1;
+
     }
 
     if(keys["ArrowRight"]){
 
-        player.vx+=player.acceleration;
+        player.vx += player.acceleration;
+
         player.facing=1;
+
     }
 
     if(
@@ -1495,109 +1974,140 @@ function updatePlayer(){
         !keys["ArrowRight"]
     ){
 
-        player.vx*=player.friction;
+        player.vx *= player.friction;
+
     }
 
-    player.vx=Math.max(
-        -player.maxSpeed,
-        Math.min(player.maxSpeed,player.vx)
-    );
+    player.vx =
+        Math.max(
+            -player.maxSpeed,
+            Math.min(
+                player.maxSpeed,
+                player.vx
+            )
+        );
 
     if(player.dashTimer>0){
 
         player.dashTimer--;
+
         player.vx*=.97;
+
     }
 
     if(player.dashCooldown>0){
+
         player.dashCooldown--;
+
     }
 
     if(player.fireballCooldown>0){
+
         player.fireballCooldown--;
+
     }
 
-    player.vy+=.6;
+    player.vy += .6;
 
-    const oldBottom=player.y+player.h;
+    const oldBottom =
+        player.y+player.h;
 
-    player.x+=player.vx;
-    player.y+=player.vy;
+    player.x += player.vx;
+
+    player.y += player.vy;
 
     player.onGround=false;
 
     for(const p of platforms){
 
         if(
+
             player.x+player.w>p.x &&
+
             player.x<p.x+p.w &&
+
             oldBottom<=p.y &&
+
             player.y+player.h>=p.y &&
+
             player.vy>=0
+
         ){
 
-            player.y=p.y-player.h;
+            player.y =
+                p.y-player.h;
+
             player.vy=0;
 
-            if(!player.onGround){
-                player.jumpsUsed=0;
-            }
-
             player.onGround=true;
+
+            player.jumpsUsed=0;
+
         }
+
     }
 
-    player.x=Math.max(
-        0,
-        Math.min(world.width-player.w,player.x)
-    );
+    player.x =
+        Math.max(
+            0,
+            Math.min(
+                world.width-player.w,
+                player.x
+            )
+        );
 
     for(const spike of spikes){
 
         if(
             overlap(
                 player,
-                {
-                    x:spike.x,
-                    y:spike.y,
-                    w:spike.w,
-                    h:spike.h
-                }
+                spike
             )
         ){
 
             loseLife();
-            return;
+
+            break;
+
         }
+
     }
 
     if(player.y>600){
+
         loseLife();
-        return;
+
     }
 
-    world.cameraX=player.x-300;
+    world.cameraX =
+        player.x-300;
 
-    world.cameraX=Math.max(
-        0,
-        Math.min(
-            world.width-WIDTH,
-            world.cameraX
-        )
-    );
+    world.cameraX =
+        Math.max(
+            0,
+            Math.min(
+                world.width-WIDTH,
+                world.cameraX
+            )
+        );
 
     if(player.invincible>0){
+
         player.invincible--;
+
     }
 
     if(player.starTimer>0){
+
         player.starTimer--;
+
     }
+
 }
 
 
 /* =========================================================
-   ENEMIES
+   ENEMY UPDATE
 ========================================================= */
 
 function updateEnemies(){
@@ -1606,62 +2116,91 @@ function updateEnemies(){
 
         if(!enemy.alive)continue;
 
-        enemy.vy+=.55;
+        enemy.vy += .55;
 
-        const oldBottom=enemy.y+enemy.h;
+        const oldBottom =
+            enemy.y+enemy.h;
 
-        enemy.y+=enemy.vy;
+        enemy.y += enemy.vy;
+
         enemy.onGround=false;
 
         for(const p of platforms){
 
             if(
+
                 enemy.x+enemy.w>p.x &&
+
                 enemy.x<p.x+p.w &&
+
                 oldBottom<=p.y &&
+
                 enemy.y+enemy.h>=p.y &&
+
                 enemy.vy>=0
+
             ){
 
-                enemy.y=p.y-enemy.h;
+                enemy.y =
+                    p.y-enemy.h;
+
                 enemy.vy=0;
+
                 enemy.onGround=true;
+
             }
+
         }
 
-        enemy.x+=enemy.direction*enemy.speed;
+        enemy.x +=
+            enemy.direction*enemy.speed;
 
         let support=null;
 
         for(const p of platforms){
 
             if(
+
                 enemy.x+enemy.w>p.x &&
+
                 enemy.x<p.x+p.w &&
+
                 Math.abs(
                     enemy.y+enemy.h-p.y
                 )<8
+
             ){
 
                 support=p;
                 break;
+
             }
+
         }
 
         if(support){
 
             const left=support.x;
-            const right=support.x+support.w-enemy.w;
+
+            const right =
+                support.x+
+                support.w-
+                enemy.w;
 
             if(enemy.x<=left){
+
                 enemy.x=left;
                 enemy.direction=1;
+
             }
 
             if(enemy.x>=right){
+
                 enemy.x=right;
                 enemy.direction=-1;
+
             }
+
         }
 
         if(enemy.type==="jumper"){
@@ -1673,14 +2212,17 @@ function updateEnemies(){
                 enemy.onGround
             ){
 
-                enemy.direction=
-                    player.x>enemy.x?1:-1;
+                enemy.direction =
+                    player.x>enemy.x
+                    ?1
+                    :-1;
 
-                enemy.vy=
+                enemy.vy =
                     -10-game.level*.35;
 
-                enemy.jumpTimer=
-                    90+Math.random()*80;
+                enemy.jumpTimer =
+                    90+
+                    Math.random()*80;
 
                 burst(
                     enemy.x+17,
@@ -1688,7 +2230,9 @@ function updateEnemies(){
                     "#c084fc",
                     7
                 );
+
             }
+
         }
 
         if(enemy.type==="fire"){
@@ -1699,16 +2243,18 @@ function updateEnemies(){
 
                 spitFire(enemy);
 
-                enemy.fireTimer=
+                enemy.fireTimer =
                     110-
                     game.level*5+
                     Math.random()*70;
+
             }
+
         }
 
         if(overlap(player,enemy)){
 
-            const playerBottom=
+            const playerBottom =
                 player.y+player.h;
 
             if(
@@ -1717,20 +2263,30 @@ function updateEnemies(){
             ){
 
                 killEnemy(enemy);
+
                 player.vy=-10;
+
             }
+
             else if(player.starTimer>0){
 
                 killEnemy(enemy);
+
             }
+
             else{
 
                 loseLife();
+
             }
+
         }
+
     }
 
-    enemies=enemies.filter(e=>e.alive);
+    enemies =
+        enemies.filter(e=>e.alive);
+
 }
 
 
@@ -1760,46 +2316,62 @@ function killEnemy(enemy){
         enemy.y-10,
         "+200",
         "#facc15",
-        15
+        14
     );
 
-    beep(700,.08);
+    beep(
+        750,
+        .08
+    );
+
 }
 
 
 /* =========================================================
-   FIRE FROM ENEMIES
+   FIRE SPITTER
 ========================================================= */
 
 function spitFire(enemy){
 
     if(
-        Math.abs(player.x-enemy.x)>700
-    )return;
+        Math.abs(
+            player.x-enemy.x
+        )>700
+    ){
 
-    const direction=
-        player.x>enemy.x?1:-1;
+        return;
+
+    }
+
+    const direction =
+        player.x>enemy.x
+        ?1
+        :-1;
 
     fireballs.push({
 
         x:enemy.x+17,
+
         y:enemy.y+8,
 
         w:16,
+
         h:16,
 
-        vx:direction*(4.5+game.level*.25),
+        vx:
+            direction*
+            (4.5+game.level*.25),
+
         vy:-2,
 
         life:180,
 
-        fromPlayer:false,
+        rotation:0,
 
-        rotation:0
+        enemyFire:true
 
     });
 
-    beep(130,.07,"sawtooth",.03);
 }
 
 
@@ -1812,6 +2384,7 @@ function updateFireballs(){
     for(const fire of fireballs){
 
         fire.x+=fire.vx;
+
         fire.y+=fire.vy;
 
         fire.vy+=.1;
@@ -1820,9 +2393,9 @@ function updateFireballs(){
 
         fire.life--;
 
-        /* PLAYER FIREBALL HITS ENEMY */
+        /* PLAYER FIREBALL */
 
-        if(fire.fromPlayer){
+        if(!fire.enemyFire){
 
             for(const enemy of enemies){
 
@@ -1836,13 +2409,17 @@ function updateFireballs(){
                     killEnemy(enemy);
 
                     break;
+
                 }
+
             }
+
         }
 
-        /* ENEMY FIREBALL HITS PLAYER */
+        /* ENEMY FIREBALL */
 
-        else if(
+        if(
+            fire.enemyFire &&
             overlap(player,fire)
         ){
 
@@ -1856,7 +2433,9 @@ function updateFireballs(){
             else{
 
                 loseLife();
+
             }
+
         }
 
         for(const p of platforms){
@@ -1871,14 +2450,18 @@ function updateFireballs(){
                     "#fb923c",
                     7
                 );
+
             }
+
         }
+
     }
 
-    fireballs=
+    fireballs =
         fireballs.filter(
             f=>f.life>0
         );
+
 }
 
 
@@ -1893,25 +2476,39 @@ function updateBlocks(){
         if(block.used)continue;
 
         if(
+
             player.vy<0 &&
+
             player.x+player.w>block.x &&
+
             player.x<block.x+block.w &&
+
             player.y<block.y+block.h &&
+
             player.y+player.h>block.y
+
         ){
 
             block.used=true;
 
-            game.filament+=50;
-            game.score+=100;
+            if(Math.random()<.25){
 
-            addText(
-                block.x+21,
-                block.y-10,
-                "+50 FILAMENT",
-                "#60a5fa",
-                13
-            );
+                addPowerup(
+                    block.x+3,
+                    block.y-40,
+                    "fireball"
+                );
+
+            }
+            else{
+
+                game.filament++;
+
+                saveCoins();
+
+                game.score+=100;
+
+            }
 
             burst(
                 block.x+21,
@@ -1920,9 +2517,15 @@ function updateBlocks(){
                 8
             );
 
-            beep(650,.08);
+            beep(
+                650,
+                .08
+            );
+
         }
+
     }
+
 }
 
 
@@ -1937,10 +2540,12 @@ function updateCollectibles(){
         if(item.collected)continue;
 
         const box={
+
             x:item.x-9,
             y:item.y-9,
             w:18,
             h:18
+
         };
 
         if(overlap(player,box)){
@@ -1948,60 +2553,114 @@ function updateCollectibles(){
             item.collected=true;
 
             game.filament++;
+
+            saveCoins();
+
             game.score+=50;
 
             addText(
                 item.x,
                 item.y-15,
-                "+1 FILAMENT",
+                "+50",
                 "#60a5fa"
             );
 
-            beep(850,.06,"sine");
+            beep(
+                850,
+                .06,
+                "sine"
+            );
+
         }
+
     }
+
 }
 
 
 /* =========================================================
-   POWER-UP COLLECTION
+   POWERUPS
 ========================================================= */
 
-function collectPowerup(item){
+function updatePowerups(){
 
-    if(item.collected)return;
+    for(const item of powerups){
 
-    item.collected=true;
+        if(item.collected)continue;
 
-    if(item.type==="fireball"){
+        item.pulse += .08;
+
+        const box={
+
+            x:item.x,
+            y:item.y,
+            w:item.w,
+            h:item.h
+
+        };
+
+        /*
+         * IMPORTANT:
+         * THE PLAYER MUST TOUCH THE ORB.
+         * IT IS NOT GIVEN AUTOMATICALLY.
+         */
+
+        if(overlap(player,box)){
+
+            item.collected=true;
+
+            activatePower(item.type);
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTIVATE POWER
+========================================================= */
+
+function activatePower(type){
+
+    if(type==="fireball"){
 
         player.fireballPower=true;
 
         addText(
-            player.x+15,
+            player.x,
             player.y-25,
             "🔥 FIREBALL!",
-            "#f97316",
+            "#ef4444",
             22
         );
 
         burst(
             player.x+15,
             player.y+20,
-            "#f97316",
-            25
+            "#ef4444",
+            20
         );
 
-        beep(250,.12,"sawtooth");
-        setTimeout(()=>beep(500,.12),100);
+        beep(
+            500,
+            .12
+        );
+
+        setTimeout(
+            ()=>beep(800,.12),
+            120
+        );
+
     }
 
-    if(item.type==="extraJump"){
+    if(type==="extraJump"){
 
         player.extraJumpPower=true;
 
         addText(
-            player.x+15,
+            player.x,
             player.y-25,
             "🪽 EXTRA JUMP!",
             "#38bdf8",
@@ -2012,25 +2671,284 @@ function collectPowerup(item){
             player.x+15,
             player.y+20,
             "#38bdf8",
-            25
+            20
         );
 
-        beep(500,.1);
-        setTimeout(()=>beep(800,.12),100);
+        beep(
+            700,
+            .12
+        );
+
     }
+
 }
 
 
-function updatePowerups(){
+/* =========================================================
+   FINISH
+========================================================= */
 
-    for(const item of powerups){
+function checkFinish(){
 
-        item.pulse+=.08;
+    if(
+        player.x>=world.finishX
+    ){
 
-        if(overlap(player,item)){
-            collectPowerup(item);
-        }
+        finishLevel();
+
     }
+
+}
+
+
+/* =========================================================
+   FINISH LEVEL
+========================================================= */
+
+function finishLevel(){
+
+    if(world.finished)return;
+
+    world.finished=true;
+
+    game.score +=
+        2500*game.level;
+
+    beep(700,.12);
+
+    setTimeout(
+        ()=>beep(900,.12),
+        130
+    );
+
+    if(game.level<game.totalLevels){
+
+        showLevelComplete();
+
+    }
+    else{
+
+        gameWon();
+
+    }
+
+}
+
+
+/* =========================================================
+   LEVEL COMPLETE
+========================================================= */
+
+function showLevelComplete(){
+
+    message.classList.remove("hidden");
+
+    messageText.innerHTML = `
+
+        <strong
+        style="
+        color:#4ade80;
+        font-size:27px;
+        "
+        >
+        🎉 LEVEL ${game.level} COMPLETE!
+        </strong>
+
+        <br><br>
+
+        ${levels[game.level-1].name}
+
+        <br><br>
+
+        Score:
+
+        <strong style="color:#facc15">
+        ${game.score.toLocaleString()}
+        </strong>
+
+        <br><br>
+
+        You earned:
+
+        <strong style="color:#60a5fa">
+        +${2500*game.level} score
+        </strong>
+
+        <br><br>
+
+        <button
+            class="mainButton"
+            onclick="openShopForNextLevel()"
+        >
+            🛍️ SHOP
+        </button>
+
+    `;
+
+    startButton.style.display="none";
+
+    document.getElementById(
+        "messageShopButton"
+    ).style.display="none";
+
+}
+
+
+/* =========================================================
+   NEXT LEVEL SHOP
+========================================================= */
+
+function openShopForNextLevel(){
+
+    message.classList.add("hidden");
+
+    game.level++;
+
+    if(game.level>game.totalLevels){
+
+        game.level=game.totalLevels;
+
+    }
+
+    openShop(true);
+
+}
+
+
+/* =========================================================
+   GAME WON
+========================================================= */
+
+function gameWon(){
+
+    game.over=true;
+
+    message.classList.remove("hidden");
+
+    messageText.innerHTML = `
+
+        <strong
+        style="
+        color:#facc15;
+        font-size:28px;
+        "
+        >
+        🏆 PRINT WARS COMPLETE!
+        </strong>
+
+        <br><br>
+
+        You survived all five
+        3D-printing stages!
+
+        <br><br>
+
+        🖨️ The Mega Printer is safe!
+
+        <br><br>
+
+        Final Score:
+
+        <strong
+        style="
+        color:#60a5fa;
+        font-size:22px;
+        "
+        >
+        ${game.score.toLocaleString()}
+        </strong>
+
+        <br><br>
+
+        Products defeated:
+
+        <strong>
+        ${game.enemiesDefeated}
+        </strong>
+
+        <br><br>
+
+        <button
+            class="mainButton"
+            onclick="openShop(false)"
+        >
+            🛍️ SHOP
+        </button>
+
+    `;
+
+    startButton.textContent="PLAY AGAIN";
+
+    startButton.style.display="inline-block";
+
+    beep(700,.2);
+
+    setTimeout(
+        ()=>beep(900,.2),
+        160
+    );
+
+}
+
+
+/* =========================================================
+   LOSE LIFE
+========================================================= */
+
+function loseLife(){
+
+    /*
+     * THIS PREVENTS THE MULTIPLE-DEATH GLITCH.
+     */
+
+    if(player.invincible>0)return;
+
+    player.lives--;
+
+    player.invincible=120;
+
+    game.score =
+        Math.max(
+            0,
+            game.score-200
+        );
+
+    burst(
+        player.x+15,
+        player.y+20,
+        "#fb7185",
+        18
+    );
+
+    beep(
+        120,
+        .2,
+        "sawtooth"
+    );
+
+    if(player.lives<=0){
+
+        gameOver();
+
+        return;
+
+    }
+
+    /*
+     * RESET PLAYER SAFELY.
+     */
+
+    player.x =
+        player.checkpoint;
+
+    player.y=300;
+
+    player.vx=0;
+
+    player.vy=-8;
+
+    player.jumpsUsed=0;
+
 }
 
 
@@ -2040,8 +2958,10 @@ function updatePowerups(){
 
 function updateCheckpoint(){
 
-    const checkpoint=
-        Math.floor(player.x/1000)*1000+100;
+    const checkpoint =
+        Math.floor(
+            player.x/1000
+        )*1000+100;
 
     if(
         checkpoint>player.checkpoint &&
@@ -2058,248 +2978,14 @@ function updateCheckpoint(){
             16
         );
 
-        beep(600,.08,"sine");
-    }
-}
-
-
-/* =========================================================
-   LOSE LIFE
-========================================================= */
-
-function loseLife(){
-
-    if(player.invincible>0)return;
-
-    player.lives--;
-
-    player.invincible=120;
-
-    game.score=Math.max(
-        0,
-        game.score-200
-    );
-
-    player.x=player.checkpoint;
-    player.y=300;
-
-    player.vx=0;
-    player.vy=-8;
-
-    player.jumpsUsed=0;
-
-    beep(120,.2,"sawtooth");
-
-    if(player.lives<=0){
-        gameOver();
-    }
-}
-
-
-/* =========================================================
-   FINISH LEVEL
-========================================================= */
-
-function checkFinish(){
-
-    if(player.x>=world.finishX){
-        finishLevel();
-    }
-}
-
-
-function finishLevel(){
-
-    if(world.finished)return;
-
-    world.finished=true;
-
-    game.score+=2500*game.level;
-
-    saveData();
-
-    if(game.level<game.totalLevels){
-
-        showLevelComplete();
+        beep(
+            600,
+            .08,
+            "sine"
+        );
 
     }
-    else{
 
-        gameWon();
-    }
-}
-
-
-/* =========================================================
-   LEVEL COMPLETE
-========================================================= */
-
-function showLevelComplete(){
-
-    const next=game.level+1;
-
-    message.classList.remove("hidden");
-
-    messageText.innerHTML=`
-
-        <strong style="
-            color:#4ade80;
-            font-size:28px;
-        ">
-            🎉 LEVEL ${game.level} COMPLETE!
-        </strong>
-
-        <br><br>
-
-        ${levels[game.level-1].name}
-
-        <br><br>
-
-        Score:
-        <strong style="color:#facc15">
-            ${game.score.toLocaleString()}
-        </strong>
-
-        <br><br>
-
-        🧵 Filament:
-        <strong style="color:#60a5fa">
-            ${game.filament.toLocaleString()}
-        </strong>
-
-        <br><br>
-
-        <strong>
-            Level ${next} is ready!
-        </strong>
-    `;
-
-    menuButtons.innerHTML=`
-
-        <button class="menuButton" id="nextLevelButton">
-            NEXT LEVEL
-        </button>
-
-        <button class="menuButton shopButton" id="completeShopButton">
-            🛍️ SHOP
-        </button>
-    `;
-
-    document
-        .getElementById("nextLevelButton")
-        .onclick=()=>{
-            startNextLevel();
-        };
-
-    document
-        .getElementById("completeShopButton")
-        .onclick=()=>{
-            showShop("complete");
-        };
-
-    beep(700,.15);
-
-    setTimeout(
-        ()=>beep(900,.15),
-        150
-    );
-}
-
-
-/* =========================================================
-   START NEXT LEVEL
-========================================================= */
-
-function startNextLevel(){
-
-    if(game.level>=game.totalLevels)return;
-
-    game.level++;
-
-    showLevelPreview();
-}
-
-
-/* =========================================================
-   GAME WON
-========================================================= */
-
-function gameWon(){
-
-    game.over=true;
-
-    saveData();
-
-    message.classList.remove("hidden");
-
-    messageText.innerHTML=`
-
-        <strong style="
-            color:#facc15;
-            font-size:29px;
-        ">
-            🏆 PRINT WARS COMPLETE!
-        </strong>
-
-        <br><br>
-
-        You survived all five
-        3D-printing stages!
-
-        <br><br>
-
-        🖨️ The Mega Printer is safe!
-
-        <br><br>
-
-        Final Score:
-
-        <strong style="
-            color:#60a5fa;
-            font-size:23px;
-        ">
-            ${game.score.toLocaleString()}
-        </strong>
-
-        <br><br>
-
-        Products defeated:
-
-        <strong>
-            ${game.enemiesDefeated}
-        </strong>
-    `;
-
-    menuButtons.innerHTML=`
-
-        <button class="menuButton" id="playAgainButton">
-            PLAY AGAIN
-        </button>
-
-        <button class="menuButton shopButton" id="winnerShopButton">
-            🛍️ SHOP
-        </button>
-    `;
-
-    document
-        .getElementById("playAgainButton")
-        .onclick=()=>{
-            resetGame();
-            showLevelPreview();
-        };
-
-    document
-        .getElementById("winnerShopButton")
-        .onclick=()=>{
-            showShop("winner");
-        };
-
-    beep(700,.2);
-
-    setTimeout(
-        ()=>beep(900,.2),
-        160
-    );
 }
 
 
@@ -2313,13 +2999,15 @@ function gameOver(){
 
     message.classList.remove("hidden");
 
-    messageText.innerHTML=`
+    messageText.innerHTML = `
 
-        <strong style="
-            color:#fb7185;
-            font-size:28px;
-        ">
-            🖨️ PRINTER JAMMED!
+        <strong
+        style="
+        color:#fb7185;
+        font-size:28px;
+        "
+        >
+        🖨️ PRINTER JAMMED!
         </strong>
 
         <br><br>
@@ -2330,437 +3018,81 @@ function gameOver(){
         <br><br>
 
         You reached Level
-        <strong>${game.level}</strong>.
+        <strong>
+        ${game.level}
+        </strong>.
 
         <br><br>
 
         Score:
-        <strong style="color:#facc15">
-            ${game.score.toLocaleString()}
+
+        <strong
+        style="color:#facc15"
+        >
+        ${game.score.toLocaleString()}
         </strong>
 
         <br><br>
 
         Products defeated:
         <strong>
-            ${game.enemiesDefeated}
+        ${game.enemiesDefeated}
         </strong>
+
     `;
 
-    menuButtons.innerHTML=`
+    startButton.textContent="TRY AGAIN";
 
-        <button class="menuButton" id="retryButton">
-            TRY AGAIN
-        </button>
+    startButton.style.display="inline-block";
 
-        <button class="menuButton shopButton" id="gameOverShop">
-            🛍️ SHOP
-        </button>
-    `;
+    document.getElementById(
+        "messageShopButton"
+    ).style.display="inline-block";
 
-    document
-        .getElementById("retryButton")
-        .onclick=()=>{
-            player.lives=3;
-            player.big=false;
-            game.over=false;
-            createLevel(game.level);
-            showLevelPreview();
-        };
-
-    document
-        .getElementById("gameOverShop")
-        .onclick=()=>{
-            showShop("gameover");
-        };
 }
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function resetGame(){
-
-    game.started=true;
-    game.over=false;
-
-    game.level=1;
-
-    game.score=0;
-
-    game.enemiesDefeated=0;
-
-    player.lives=3;
-    player.big=false;
-
-    player.starTimer=0;
-
-    createLevel(1);
-}
-
-
-/* =========================================================
-   LEVEL PREVIEW
-========================================================= */
-
-function showLevelPreview(){
-
-    game.started=true;
-    game.over=false;
-
-    const powers=levelPowers[game.level-1];
-
-    message.classList.remove("hidden");
-
-    messageText.innerHTML=`
-
-        <strong style="
-            color:#60a5fa;
-            font-size:28px;
-        ">
-            LEVEL ${game.level}
-        </strong>
-
-        <br>
-
-        <strong style="
-            color:#e2e8f0;
-            font-size:20px;
-        ">
-            ${levels[game.level-1].name}
-        </strong>
-
-        <br><br>
-
-        <strong style="color:#facc15">
-            ⚡ POWER-UPS IN THIS LEVEL
-        </strong>
-
-        <div class="powerPreview">
-
-            <div class="powerCard ${powers[0]==="fireball"?"fire":"jump"}">
-
-                <span class="powerIcon">
-                    ${POWERUPS[powers[0]].icon}
-                </span>
-
-                <strong>
-                    ${POWERUPS[powers[0]].name}
-                </strong>
-
-                <div class="small">
-                    ${POWERUPS[powers[0]].description}
-                </div>
-
-            </div>
-
-            <div class="powerCard ${powers[1]==="fireball"?"fire":"jump"}">
-
-                <span class="powerIcon">
-                    ${POWERUPS[powers[1]].icon}
-                </span>
-
-                <strong>
-                    ${POWERUPS[powers[1]].name}
-                </strong>
-
-                <div class="small">
-                    ${POWERUPS[powers[1]].description}
-                </div>
-
-            </div>
-
-        </div>
-
-        <strong style="color:#4ade80">
-            Find the glowing orbs to activate them!
-        </strong>
-
-        <br><br>
-
-        🧵 Filament:
-        <strong style="color:#60a5fa">
-            ${game.filament.toLocaleString()}
-        </strong>
-    `;
-
-    menuButtons.innerHTML=`
-
-        <button class="menuButton" id="startLevelButton">
-            ▶ START LEVEL
-        </button>
-
-        <button class="menuButton shopButton" id="previewShopButton">
-            🛍️ SHOP
-        </button>
-    `;
-
-    document
-        .getElementById("startLevelButton")
-        .onclick=()=>{
-            actuallyStartLevel();
-        };
-
-    document
-        .getElementById("previewShopButton")
-        .onclick=()=>{
-            showShop("preview");
-        };
-}
-
-
-/* =========================================================
-   ACTUALLY START LEVEL
-========================================================= */
-
-function actuallyStartLevel(){
-
-    createLevel(game.level);
-
-    message.classList.add("hidden");
-
-    game.started=true;
-    game.over=false;
-
-    beep(440,.1);
-
-    setTimeout(
-        ()=>beep(660,.1),
-        100
-    );
-}
-
-
-/* =========================================================
-   SHOP
-========================================================= */
-
-function showShop(returnTo){
-
-    message.classList.remove("hidden");
-
-    messageText.innerHTML=`
-
-        <strong style="
-            color:#c084fc;
-            font-size:29px;
-        ">
-            🛍️ PRINT SHOP
-        </strong>
-
-        <br><br>
-
-        🧵 Your Filament:
-        <strong style="color:#60a5fa">
-            ${game.filament.toLocaleString()}
-        </strong>
-
-        <br>
-
-        <span class="small">
-            Every skin costs exactly 2,000 filament.
-        </span>
-
-        <div class="shopGrid">
-
-            ${Object.entries(skins).map(
-                ([id,skin])=>{
-
-                    const owned=
-                        ownedSkins.includes(id);
-
-                    const equipped=
-                        equippedSkin===id;
-
-                    return `
-
-                    <div class="
-                        skinCard
-                        ${owned?"owned":""}
-                        ${equipped?"equipped":""}
-                    ">
-
-                        <div
-                            class="skinPreview"
-                            style="
-                                color:${skin.color};
-                                text-shadow:
-                                0 0 20px ${skin.color};
-                            "
-                        >
-                            ${skin.icon}
-                        </div>
-
-                        <strong>
-                            ${skin.name}
-                        </strong>
-
-                        <br>
-
-                        ${
-                            equipped
-                            ?
-                            `<span style="color:#facc15">
-                                EQUIPPED
-                            </span>`
-                            :
-                            owned
-                            ?
-                            `<button
-                                class="menuButton"
-                                onclick="equipSkin('${id}')"
-                            >
-                                EQUIP
-                            </button>`
-                            :
-                            `<button
-                                class="menuButton"
-                                onclick="buySkin('${id}')"
-                            >
-                                2,000 🧵
-                            </button>`
-                        }
-
-                    </div>
-
-                    `;
-                }
-            ).join("")}
-
-        </div>
-    `;
-
-    menuButtons.innerHTML=`
-
-        <button
-            class="menuButton backButton"
-            id="shopBackButton"
-        >
-            ← BACK
-        </button>
-    `;
-
-    document
-        .getElementById("shopBackButton")
-        .onclick=()=>{
-
-            /*
-               THIS IS THE IMPORTANT FIX:
-               The shop no longer traps you.
-               BACK returns to exactly the menu
-               you were using before entering the shop.
-            */
-
-            if(returnTo==="preview"){
-                showLevelPreview();
-            }
-            else if(returnTo==="complete"){
-                showLevelComplete();
-            }
-            else if(returnTo==="winner"){
-                gameWon();
-            }
-            else if(returnTo==="gameover"){
-                gameOver();
-            }
-            else{
-                showLevelPreview();
-            }
-        };
-}
-
-
-/* =========================================================
-   BUY SKIN
-========================================================= */
-
-window.buySkin=function(id){
-
-    if(ownedSkins.includes(id)){
-
-        equipSkin(id);
-        return;
-    }
-
-    if(game.filament<2000){
-
-        addText(
-            player.x,
-            player.y-40,
-            "NOT ENOUGH FILAMENT!",
-            "#fb7185",
-            18
-        );
-
-        beep(120,.15,"sawtooth");
-
-        alert(
-            "You need 2,000 filament to buy this skin."
-        );
-
-        return;
-    }
-
-    game.filament-=2000;
-
-    ownedSkins.push(id);
-
-    equippedSkin=id;
-
-    saveData();
-
-    beep(600,.1);
-    setTimeout(
-        ()=>beep(900,.12),
-        100
-    );
-
-    showShop("preview");
-};
-
-
-/* =========================================================
-   EQUIP SKIN
-========================================================= */
-
-window.equipSkin=function(id){
-
-    if(!ownedSkins.includes(id))return;
-
-    equippedSkin=id;
-
-    saveData();
-
-    beep(700,.08);
-
-    showShop("preview");
-};
 
 
 /* =========================================================
    PARTICLES
 ========================================================= */
 
-function burst(x,y,color,amount=10){
+function burst(
+    x,
+    y,
+    color,
+    amount=10
+){
 
-    for(let i=0;i<amount;i++){
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
 
         particles.push({
 
             x,
+
             y,
 
-            vx:(Math.random()-.5)*8,
-            vy:(Math.random()-.5)*8,
+            vx:
+                (Math.random()-.5)*8,
 
-            size:2+Math.random()*4,
+            vy:
+                (Math.random()-.5)*8,
+
+            size:
+                2+Math.random()*4,
 
             color,
 
-            life:25+Math.random()*30
+            life:
+                25+Math.random()*30
+
         });
+
     }
+
 }
 
 
@@ -2769,17 +3101,20 @@ function updateParticles(){
     for(const p of particles){
 
         p.x+=p.vx;
+
         p.y+=p.vy;
 
         p.vy+=.18;
 
         p.life--;
+
     }
 
-    particles=
+    particles =
         particles.filter(
             p=>p.life>0
         );
+
 }
 
 
@@ -2796,13 +3131,21 @@ function addText(
 ){
 
     texts.push({
+
         x,
+
         y,
+
         text,
+
         color,
+
         size,
+
         life:65
+
     });
+
 }
 
 
@@ -2811,13 +3154,16 @@ function updateTexts(){
     for(const t of texts){
 
         t.y-=.6;
+
         t.life--;
+
     }
 
-    texts=
+    texts =
         texts.filter(
             t=>t.life>0
         );
+
 }
 
 
@@ -2830,53 +3176,84 @@ function drawBackground(){
     let top="#071426";
     let bottom="#172554";
 
-    const theme=
-        levels[game.level-1].theme;
+    if(
+        levels[game.level-1].theme==="warehouse"
+    ){
 
-    if(theme==="warehouse"){
         top="#111827";
         bottom="#312e81";
+
     }
 
-    if(theme==="canyon"){
+    if(
+        levels[game.level-1].theme==="canyon"
+    ){
+
         top="#431407";
         bottom="#7c2d12";
+
     }
 
-    if(theme==="lab"){
+    if(
+        levels[game.level-1].theme==="lab"
+    ){
+
         top="#071e2f";
         bottom="#164e63";
+
     }
 
-    if(theme==="mega"){
+    if(
+        levels[game.level-1].theme==="mega"
+    ){
+
         top="#1e1b4b";
         bottom="#312e81";
+
     }
 
-    const gradient=
+    const gradient =
         ctx.createLinearGradient(
-            0,0,0,HEIGHT
+            0,
+            0,
+            0,
+            HEIGHT
         );
 
-    gradient.addColorStop(0,top);
-    gradient.addColorStop(1,bottom);
+    gradient.addColorStop(
+        0,
+        top
+    );
+
+    gradient.addColorStop(
+        1,
+        bottom
+    );
 
     ctx.fillStyle=gradient;
 
     ctx.fillRect(
-        0,0,WIDTH,HEIGHT
+        0,
+        0,
+        WIDTH,
+        HEIGHT
     );
 
-    for(let i=0;i<35;i++){
+    for(
+        let i=0;
+        i<35;
+        i++
+    ){
 
-        const x=
+        const x =
             i*80-
             (world.cameraX*.18%80);
 
-        const h=
-            70+(i*47)%140;
+        const h =
+            70+
+            (i*47)%140;
 
-        ctx.fillStyle=
+        ctx.fillStyle =
             i%2
             ?"#0f1b2e"
             :"#142238";
@@ -2888,7 +3265,7 @@ function drawBackground(){
             h
         );
 
-        ctx.fillStyle=
+        ctx.fillStyle =
             i%3===0
             ?"#facc15"
             :"#38bdf8";
@@ -2899,11 +3276,31 @@ function drawBackground(){
             y+=23
         ){
 
-            ctx.fillRect(x+10,y,6,8);
-            ctx.fillRect(x+30,y,6,8);
-            ctx.fillRect(x+50,y,6,8);
+            ctx.fillRect(
+                x+10,
+                y,
+                6,
+                8
+            );
+
+            ctx.fillRect(
+                x+30,
+                y,
+                6,
+                8
+            );
+
+            ctx.fillRect(
+                x+50,
+                y,
+                6,
+                8
+            );
+
         }
+
     }
+
 }
 
 
@@ -2944,37 +3341,55 @@ function drawPlatform(p){
 
         ctx.beginPath();
 
-        ctx.moveTo(x,p.y+10);
-        ctx.lineTo(x,p.y+p.h);
+        ctx.moveTo(
+            x,
+            p.y+10
+        );
+
+        ctx.lineTo(
+            x,
+            p.y+p.h
+        );
 
         ctx.stroke();
+
     }
+
 }
 
 
 /* =========================================================
-   SPIKES
+   SPIKE DRAW
 ========================================================= */
 
 function drawSpike(s){
 
-    const count=
+    const count =
         Math.max(
             1,
             Math.floor(s.w/18)
         );
 
-    const spikeW=s.w/count;
+    const spikeW =
+        s.w/count;
 
-    for(let i=0;i<count;i++){
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
 
-        const x=s.x+i*spikeW;
+        const x =
+            s.x+i*spikeW;
 
         ctx.fillStyle="#cbd5e1";
 
         ctx.beginPath();
 
-        ctx.moveTo(x,s.y+s.h);
+        ctx.moveTo(
+            x,
+            s.y+s.h
+        );
 
         ctx.lineTo(
             x+spikeW/2,
@@ -2991,18 +3406,21 @@ function drawSpike(s){
         ctx.fill();
 
         ctx.strokeStyle="#64748b";
+
         ctx.stroke();
+
     }
+
 }
 
 
 /* =========================================================
-   BLOCK
+   BLOCK DRAW
 ========================================================= */
 
 function drawBlock(block){
 
-    ctx.fillStyle=
+    ctx.fillStyle =
         block.used
         ?"#475569"
         :"#f59e0b";
@@ -3015,6 +3433,7 @@ function drawBlock(block){
     );
 
     ctx.strokeStyle="#111827";
+
     ctx.lineWidth=3;
 
     ctx.strokeRect(
@@ -3024,12 +3443,14 @@ function drawBlock(block){
         block.h-4
     );
 
-    ctx.fillStyle=
+    ctx.fillStyle =
         block.used
         ?"#64748b"
         :"#fff7ae";
 
-    ctx.font="bold 24px Arial";
+    ctx.font=
+        "bold 24px Arial";
+
     ctx.textAlign="center";
 
     ctx.fillText(
@@ -3039,141 +3460,7 @@ function drawBlock(block){
     );
 
     ctx.textAlign="left";
-}
 
-
-/* =========================================================
-   POWERUP ORB DRAW
-========================================================= */
-
-function drawPowerup(item){
-
-    const pulse=
-        Math.sin(item.pulse)*5;
-
-    const cx=
-        item.x+item.w/2;
-
-    const cy=
-        item.y+item.h/2;
-
-    const isFire=
-        item.type==="fireball";
-
-    const color=
-        isFire
-        ?"#f97316"
-        :"#38bdf8";
-
-    /*
-       BIG GLOW
-    */
-
-    ctx.save();
-
-    ctx.shadowColor=color;
-    ctx.shadowBlur=35+pulse;
-
-    ctx.fillStyle=
-        isFire
-        ?"rgba(249,115,22,.25)"
-        :"rgba(56,189,248,.25)";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        cx,
-        cy,
-        27+pulse,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.shadowBlur=0;
-
-    /*
-       ORB
-    */
-
-    ctx.fillStyle=color;
-
-    ctx.beginPath();
-
-    ctx.arc(
-        cx,
-        cy,
-        17,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.strokeStyle="white";
-    ctx.lineWidth=3;
-
-    ctx.stroke();
-
-    /*
-       ICON
-    */
-
-    ctx.fillStyle="white";
-
-    ctx.font="bold 20px Arial";
-
-    ctx.textAlign="center";
-
-    ctx.textBaseline="middle";
-
-    ctx.fillText(
-        isFire?"🔥":"🪽",
-        cx,
-        cy
-    );
-
-    /*
-       LABEL
-    */
-
-    ctx.font="bold 12px Arial";
-
-    ctx.fillStyle="white";
-
-    ctx.fillText(
-        isFire
-        ?"FIREBALL"
-        :"EXTRA JUMP",
-        cx,
-        cy-34-pulse
-    );
-
-    /*
-       ARROWS / ATTENTION
-    */
-
-    ctx.font="bold 16px Arial";
-
-    ctx.fillStyle=color;
-
-    ctx.fillText(
-        "★",
-        cx-29,
-        cy-20
-    );
-
-    ctx.fillText(
-        "★",
-        cx+29,
-        cy+20
-    );
-
-    ctx.restore();
-
-    ctx.textAlign="left";
-    ctx.textBaseline="alphabetic";
 }
 
 
@@ -3183,7 +3470,8 @@ function drawPowerup(item){
 
 function drawEnemy(enemy){
 
-    ctx.fillStyle="rgba(0,0,0,.3)";
+    ctx.fillStyle=
+        "rgba(0,0,0,.3)";
 
     ctx.beginPath();
 
@@ -3199,23 +3487,7 @@ function drawEnemy(enemy){
 
     ctx.fill();
 
-    if(enemy.type==="jumper"){
-
-        ctx.strokeStyle="#c084fc";
-        ctx.lineWidth=3;
-
-        ctx.beginPath();
-
-        ctx.moveTo(enemy.x+8,enemy.y+34);
-        ctx.lineTo(enemy.x+12,enemy.y+39);
-        ctx.lineTo(enemy.x+17,enemy.y+34);
-        ctx.lineTo(enemy.x+22,enemy.y+39);
-        ctx.lineTo(enemy.x+27,enemy.y+34);
-
-        ctx.stroke();
-    }
-
-    ctx.fillStyle=
+    ctx.fillStyle =
         enemy.type==="fire"
         ?"#ef4444"
         :
@@ -3248,13 +3520,18 @@ function drawEnemy(enemy){
 
         ctx.beginPath();
 
-        ctx.moveTo(enemy.x+4,y);
+        ctx.moveTo(
+            enemy.x+4,
+            y
+        );
+
         ctx.lineTo(
             enemy.x+enemy.w-4,
             y
         );
 
         ctx.stroke();
+
     }
 
     ctx.fillStyle="white";
@@ -3280,7 +3557,9 @@ function drawEnemy(enemy){
     ctx.fill();
 
     ctx.fillStyle="#e2e8f0";
+
     ctx.font="10px Arial";
+
     ctx.textAlign="center";
 
     ctx.fillText(
@@ -3290,16 +3569,18 @@ function drawEnemy(enemy){
     );
 
     ctx.textAlign="left";
+
 }
 
 
 /* =========================================================
-   FILAMENT
+   FILAMENT DRAW
 ========================================================= */
 
 function drawFilament(item){
 
     ctx.strokeStyle="#60a5fa";
+
     ctx.lineWidth=5;
 
     ctx.beginPath();
@@ -3315,6 +3596,7 @@ function drawFilament(item){
     ctx.stroke();
 
     ctx.strokeStyle="#dbeafe";
+
     ctx.lineWidth=2;
 
     ctx.beginPath();
@@ -3328,6 +3610,122 @@ function drawFilament(item){
     );
 
     ctx.stroke();
+
+}
+
+
+/* =========================================================
+   POWER ORB DRAW
+========================================================= */
+
+function drawPowerup(item){
+
+    const info =
+        powerInfo[item.type];
+
+    const pulse =
+        Math.sin(item.pulse)*5;
+
+    const cx =
+        item.x+18;
+
+    const cy =
+        item.y+18;
+
+    /* HUGE GLOW */
+
+    ctx.save();
+
+    ctx.shadowColor =
+        item.type==="fireball"
+        ?"#ef4444"
+        :"#38bdf8";
+
+    ctx.shadowBlur =
+        25+pulse;
+
+    ctx.fillStyle =
+        item.type==="fireball"
+        ?"rgba(239,68,68,.28)"
+        :"rgba(56,189,248,.28)";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        26+pulse,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+    /* ORB */
+
+    ctx.fillStyle =
+        item.type==="fireball"
+        ?"#ef4444"
+        :"#38bdf8";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        17,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle="white";
+
+    ctx.lineWidth=3;
+
+    ctx.stroke();
+
+    /* ICON */
+
+    ctx.font="23px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        info.icon,
+        cx,
+        cy+8
+    );
+
+    /* LABEL */
+
+    ctx.font="bold 12px Arial";
+
+    ctx.fillStyle="white";
+
+    ctx.fillText(
+        info.name,
+        cx,
+        item.y-9
+    );
+
+    /* TOUCH ME */
+
+    ctx.font="bold 9px Arial";
+
+    ctx.fillStyle="#facc15";
+
+    ctx.fillText(
+        "TOUCH!",
+        cx,
+        item.y+53
+    );
+
+    ctx.textAlign="left";
+
 }
 
 
@@ -3344,12 +3742,18 @@ function drawFireball(fire){
         fire.y+8
     );
 
-    ctx.rotate(fire.rotation);
+    ctx.rotate(
+        fire.rotation
+    );
 
-    ctx.shadowColor="#f97316";
+    ctx.shadowColor="#ff4500";
+
     ctx.shadowBlur=15;
 
-    ctx.fillStyle="#ef4444";
+    ctx.fillStyle=
+        fire.enemyFire
+        ?"#ef4444"
+        :"#ff6b00";
 
     ctx.beginPath();
 
@@ -3370,7 +3774,7 @@ function drawFireball(fire){
     ctx.arc(
         0,
         0,
-        6,
+        5,
         0,
         Math.PI*2
     );
@@ -3378,6 +3782,7 @@ function drawFireball(fire){
     ctx.fill();
 
     ctx.restore();
+
 }
 
 
@@ -3389,30 +3794,35 @@ function drawPlayer(){
 
     if(
         player.invincible>0 &&
-        Math.floor(player.invincible/6)%2===0
+        Math.floor(
+            player.invincible/6
+        )%2===0
     ){
+
         return;
+
     }
 
-    const skin=
-        skins[equippedSkin]||skins.default;
+    const skin =
+        skins.find(
+            s=>s.id===selectedSkin
+        ) || skins[0];
 
     const x=player.x;
     const y=player.y;
 
-    const width=player.big?36:30;
-    const height=player.big?62:52;
+    const width =
+        player.big ? 36 : 30;
+
+    const height =
+        player.big ? 62 : 52;
 
     if(player.starTimer>0){
 
         ctx.shadowColor="#facc15";
+
         ctx.shadowBlur=25;
-    }
 
-    if(player.fireballPower){
-
-        ctx.shadowColor="#f97316";
-        ctx.shadowBlur=player.onGround?8:15;
     }
 
     ctx.fillStyle=skin.color;
@@ -3429,6 +3839,8 @@ function drawPlayer(){
 
     ctx.fill();
 
+    /* HEAD */
+
     ctx.fillStyle="#f8fafc";
 
     ctx.beginPath();
@@ -3443,6 +3855,8 @@ function drawPlayer(){
 
     ctx.fill();
 
+    /* VISOR */
+
     ctx.fillStyle="#0f172a";
 
     ctx.fillRect(
@@ -3452,9 +3866,12 @@ function drawPlayer(){
         7
     );
 
-    ctx.fillStyle=skin.accent;
+    /* BACKPACK */
+
+    ctx.fillStyle=skin.secondary;
 
     ctx.fillRect(
+
         player.facing===1
         ?x-5
         :x+width,
@@ -3462,10 +3879,15 @@ function drawPlayer(){
         y+22,
 
         7,
+
         22
+
     );
 
+    /* LEGS */
+
     ctx.strokeStyle="#e2e8f0";
+
     ctx.lineWidth=5;
 
     ctx.beginPath();
@@ -3493,6 +3915,7 @@ function drawPlayer(){
     ctx.stroke();
 
     ctx.shadowBlur=0;
+
 }
 
 
@@ -3532,12 +3955,20 @@ function drawFinish(){
     );
 
     ctx.strokeStyle="#a78bfa";
+
     ctx.lineWidth=6;
 
     ctx.beginPath();
 
-    ctx.moveTo(x+105,355);
-    ctx.lineTo(x+105,410);
+    ctx.moveTo(
+        x+105,
+        355
+    );
+
+    ctx.lineTo(
+        x+105,
+        410
+    );
 
     ctx.stroke();
 
@@ -3554,15 +3985,27 @@ function drawFinish(){
 
     ctx.beginPath();
 
-    ctx.moveTo(x+8,200);
-    ctx.lineTo(x+105,230);
-    ctx.lineTo(x+8,260);
+    ctx.moveTo(
+        x+8,
+        200
+    );
+
+    ctx.lineTo(
+        x+105,
+        230
+    );
+
+    ctx.lineTo(
+        x+8,
+        260
+    );
 
     ctx.closePath();
 
     ctx.fill();
 
     ctx.fillStyle="white";
+
     ctx.font="bold 14px Arial";
 
     ctx.fillText(
@@ -3570,6 +4013,7 @@ function drawFinish(){
         x+30,
         235
     );
+
 }
 
 
@@ -3603,4 +4047,722 @@ function draw(){
         drawSpike(s);
     }
 
-    for(const b of
+    for(const b of blocks){
+        drawBlock(b);
+    }
+
+    for(const item of collectibles){
+
+        if(!item.collected){
+            drawFilament(item);
+        }
+
+    }
+
+    for(const item of powerups){
+
+        if(!item.collected){
+            drawPowerup(item);
+        }
+
+    }
+
+    for(const enemy of enemies){
+        drawEnemy(enemy);
+    }
+
+    for(const fire of fireballs){
+        drawFireball(fire);
+    }
+
+    drawFinish();
+
+    drawPlayer();
+
+    for(const p of particles){
+
+        ctx.globalAlpha =
+            Math.max(
+                0,
+                p.life/40
+            );
+
+        ctx.fillStyle=p.color;
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            p.size,
+            p.size
+        );
+
+    }
+
+    ctx.globalAlpha=1;
+
+    for(const t of texts){
+
+        ctx.globalAlpha =
+            Math.min(
+                1,
+                t.life/20
+            );
+
+        ctx.fillStyle=t.color;
+
+        ctx.font =
+            `bold ${t.size}px Arial`;
+
+        ctx.textAlign="center";
+
+        ctx.fillText(
+            t.text,
+            t.x,
+            t.y
+        );
+
+    }
+
+    ctx.globalAlpha=1;
+
+    ctx.textAlign="left";
+
+    ctx.restore();
+
+    if(player.starTimer>0){
+
+        ctx.fillStyle=
+            "rgba(250,204,21,.055)";
+
+        ctx.fillRect(
+            0,
+            0,
+            WIDTH,
+            HEIGHT
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+function updateHUD(){
+
+    document.getElementById("score")
+        .textContent =
+        game.score.toLocaleString();
+
+    document.getElementById("coins")
+        .textContent =
+        game.filament;
+
+    document.getElementById("level")
+        .textContent =
+        game.level+"-"+game.level;
+
+    document.getElementById("lives")
+        .textContent =
+        "♥ ".repeat(
+            Math.max(
+                0,
+                player.lives
+            )
+        ).trim();
+
+    let power="Normal";
+
+    let status="";
+
+    if(player.big){
+
+        power="Print Power";
+
+    }
+
+    if(player.starTimer>0){
+
+        power="3D Star";
+
+    }
+
+    if(player.fireballPower){
+
+        power="🔥 Fireball";
+
+        status =
+            player.fireballCooldown>0
+            ?"Fireball recharging..."
+            :"Press F to fire!";
+
+    }
+
+    if(player.extraJumpPower){
+
+        if(player.fireballPower){
+
+            power="🔥 + 🪽";
+
+        }
+        else{
+
+            power="🪽 Extra Jump";
+
+        }
+
+        status =
+            player.fireballPower
+            ?"F = Fireball • SPACE = Extra Jump"
+            :"SPACE in air = Extra Jump";
+
+    }
+
+    document.getElementById("power")
+        .textContent=power;
+
+    document.getElementById("powerStatus")
+        .textContent=status;
+
+}
+
+
+/* =========================================================
+   SAVE COINS
+========================================================= */
+
+function saveCoins(){
+
+    localStorage.setItem(
+        "printWarsCoins",
+        String(game.filament)
+    );
+
+}
+
+
+/* =========================================================
+   SAVE SKINS
+========================================================= */
+
+function saveSkins(){
+
+    const owned =
+        skins
+        .filter(s=>s.owned)
+        .map(s=>s.id);
+
+    localStorage.setItem(
+        "printWarsSkins",
+        JSON.stringify(owned)
+    );
+
+}
+
+
+/* =========================================================
+   SHOP UI
+========================================================= */
+
+function renderShop(){
+
+    const container =
+        document.getElementById("skins");
+
+    document.getElementById(
+        "shopCoins"
+    ).textContent =
+        game.filament.toLocaleString();
+
+    container.innerHTML="";
+
+    for(const skin of skins){
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "skinCard"+
+            (
+                selectedSkin===skin.id
+                ?" selected"
+                :""
+            );
+
+        card.innerHTML = `
+
+            <div class="skinPreview">
+
+                <div class="skinHead"></div>
+
+                <div
+                    class="skinBody"
+                    style="
+                    background:${skin.color};
+                    "
+                ></div>
+
+            </div>
+
+            <div class="skinName">
+                ${skin.name}
+            </div>
+
+            ${
+                skin.owned
+                ?
+                `<div class="skinPrice">
+                    OWNED
+                </div>`
+                :
+                `<div class="skinPrice">
+                    🪙 ${SKIN_PRICE.toLocaleString()}
+                </div>`
+            }
+
+            <button
+                class="skinButton"
+                data-skin="${skin.id}"
+                ${
+                    skin.owned &&
+                    selectedSkin===skin.id
+                    ?"disabled"
+                    :""
+                }
+            >
+
+                ${
+                    selectedSkin===skin.id
+                    ?"SELECTED"
+                    :
+                    skin.owned
+                    ?"USE SKIN"
+                    :"BUY"
+                }
+
+            </button>
+
+        `;
+
+        container.appendChild(card);
+
+    }
+
+    document
+    .querySelectorAll(".skinButton")
+    .forEach(button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+                buyOrSelectSkin(
+                    button.dataset.skin
+                );
+
+            }
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   BUY / SELECT SKIN
+========================================================= */
+
+function buyOrSelectSkin(id){
+
+    const skin =
+        skins.find(
+            s=>s.id===id
+        );
+
+    if(!skin)return;
+
+    if(!skin.owned){
+
+        if(game.filament<SKIN_PRICE){
+
+            alert(
+                "You need 2,000 coins to buy this skin!"
+            );
+
+            return;
+
+        }
+
+        game.filament -=
+            SKIN_PRICE;
+
+        saveCoins();
+
+        skin.owned=true;
+
+        saveSkins();
+
+        beep(
+            800,
+            .12
+        );
+
+    }
+
+    selectedSkin=id;
+
+    localStorage.setItem(
+        "printWarsSkin",
+        id
+    );
+
+    renderShop();
+
+    updateHUD();
+
+}
+
+
+/* =========================================================
+   OPEN SHOP
+========================================================= */
+
+function openShop(nextLevel=false){
+
+    shopOpen=true;
+
+    document
+        .getElementById("shop")
+        .classList.add("show");
+
+    renderShop();
+
+}
+
+
+/* =========================================================
+   CLOSE SHOP
+========================================================= */
+
+function closeShop(){
+
+    shopOpen=false;
+
+    document
+        .getElementById("shop")
+        .classList.remove("show");
+
+    /*
+     * If the player is entering a level,
+     * show the level preview first.
+     */
+
+    if(
+        game.started &&
+        !game.over &&
+        !world.finished
+    ){
+
+        showLevelStart();
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW LEVEL START
+========================================================= */
+
+function showLevelStart(){
+
+    message.classList.remove("hidden");
+
+    const powers =
+        levelPowers[game.level-1];
+
+    messageText.innerHTML = `
+
+        <strong
+            style="
+            color:#60a5fa;
+            font-size:28px;
+            "
+        >
+            LEVEL ${game.level}
+        </strong>
+
+        <br>
+
+        <span style="color:#cbd5e1">
+            ${levels[game.level-1].name}
+        </span>
+
+        <br><br>
+
+        <strong style="color:#facc15">
+            ⚡ POWER-UPS IN THIS LEVEL
+        </strong>
+
+        <div id="powerPreview">
+
+            ${showPowerPreview(game.level)}
+
+        </div>
+
+        <br>
+
+        <span style="color:#94a3b8">
+            You do NOT start with these powers.
+            <br>
+            Find the glowing orbs and TOUCH them
+            to unlock the powers.
+        </span>
+
+        <br><br>
+
+        ${
+            powers.includes("fireball")
+            ?
+            "🔥 Fireball = press F after collecting it"
+            :
+            ""
+        }
+
+        <br>
+
+        ${
+            powers.includes("extraJump")
+            ?
+            "🪽 Extra Jump = press SPACE again in the air"
+            :
+            ""
+        }
+
+    `;
+
+    startButton.textContent =
+        "START LEVEL";
+
+    startButton.style.display=
+        "inline-block";
+
+    document.getElementById(
+        "messageShopButton"
+    ).style.display=
+        "inline-block";
+
+}
+
+
+/* =========================================================
+   SHOP BUTTON FROM MESSAGE
+========================================================= */
+
+document
+.getElementById("messageShopButton")
+.addEventListener(
+    "click",
+    ()=>{
+
+        openShop(false);
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE SHOP BUTTON
+========================================================= */
+
+document
+.getElementById("closeShop")
+.addEventListener(
+    "click",
+    ()=>{
+
+        closeShop();
+
+    }
+);
+
+
+/* =========================================================
+   START BUTTON
+========================================================= */
+
+const message =
+    document.getElementById("message");
+
+const messageText =
+    document.getElementById("messageText");
+
+const startButton =
+    document.getElementById("startButton");
+
+
+startButton.addEventListener(
+    "click",
+    ()=>{
+
+        startAudio();
+
+        /* PLAY AGAIN */
+
+        if(game.over){
+
+            game.score=0;
+
+            game.enemiesDefeated=0;
+
+            game.level=1;
+
+            game.started=true;
+
+            game.over=false;
+
+            game.filament =
+                Number(
+                    localStorage.getItem(
+                        "printWarsCoins"
+                    ) || 0
+                );
+
+            player.lives=3;
+
+            createLevel(1);
+
+            message.classList.add(
+                "hidden"
+            );
+
+            showLevelStart();
+
+            return;
+
+        }
+
+        /* FIRST START */
+
+        if(!game.started){
+
+            game.started=true;
+
+            game.over=false;
+
+            game.level=1;
+
+            game.score=0;
+
+            game.enemiesDefeated=0;
+
+            game.filament =
+                Number(
+                    localStorage.getItem(
+                        "printWarsCoins"
+                    ) || 0
+                );
+
+            player.lives=3;
+
+            createLevel(1);
+
+            message.classList.add(
+                "hidden"
+            );
+
+            /*
+             * Show shop before first level.
+             */
+
+            openShop(false);
+
+            return;
+
+        }
+
+        /* START CURRENT LEVEL */
+
+        if(
+            game.started &&
+            !world.finished
+        ){
+
+            message.classList.add(
+                "hidden"
+            );
+
+            return;
+
+        }
+
+    });
+
+
+/* =========================================================
+   GAME LOOP
+========================================================= */
+
+function update(){
+
+    if(
+        game.started &&
+        !game.over &&
+        !world.finished &&
+        !shopOpen
+    ){
+
+        updatePlayer();
+
+        updateCheckpoint();
+
+        updateEnemies();
+
+        updateFireballs();
+
+        updateBlocks();
+
+        updateCollectibles();
+
+        updatePowerups();
+
+        checkFinish();
+
+    }
+
+    updateParticles();
+
+    updateTexts();
+
+    updateHUD();
+
+}
+
+
+function loop(){
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(loop);
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+createLevel(1);
+
+updateHUD();
+
+loop();
+
+</script>
+
+</body>
+</html>
