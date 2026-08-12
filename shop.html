@@ -2,19 +2,37 @@
 
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Pervan 3D Shop</title>
 
 <style>
+
+/* =========================
+   GENERAL
+========================= */
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
 
 body{
 margin:0;
 font-family:Arial,sans-serif;
 background:#f5f5f5;
+color:#222;
+overflow-x:hidden;
 }
 
-/* 3D PRINTER BACKGROUND */
+/* =========================
+   3D PRINTER BACKGROUND
+========================= */
 
 .printer-area{
 position:fixed;
@@ -70,7 +88,12 @@ left:50%;
 transform:translateX(-50%);
 width:80%;
 height:12px;
-background:linear-gradient(90deg,#ff6600,#ffaa00,#ff6600);
+background:linear-gradient(
+90deg,
+#ff6600,
+#ffaa00,
+#ff6600
+);
 border-radius:10px;
 box-shadow:
 0 0 15px rgba(255,102,0,.5),
@@ -79,11 +102,19 @@ animation:bedGlow 1s infinite alternate;
 }
 
 @keyframes nozzleMove{
-0%{left:8%;}
-100%{left:82%;}
+
+0%{
+left:8%;
+}
+
+100%{
+left:82%;
+}
+
 }
 
 @keyframes extrude{
+
 from{
 height:14px;
 opacity:.6;
@@ -93,29 +124,48 @@ to{
 height:22px;
 opacity:1;
 }
+
 }
 
 @keyframes bedGlow{
-from{opacity:.6;}
-to{opacity:1;}
+
+from{
+opacity:.6;
 }
 
+to{
+opacity:1;
+}
+
+}
+
+/* =========================
+   HEADER
+========================= */
+
 header{
-background:#111;
+background:
+linear-gradient(
+135deg,
+#111,
+#222
+);
 color:white;
-padding:40px 20px;
+padding:45px 20px;
 text-align:center;
 position:relative;
+box-shadow:0 5px 20px rgba(0,0,0,.3);
 }
 
 header h1{
 margin:0;
-font-size:40px;
+font-size:42px;
 }
 
 header p{
 margin-top:10px;
-font-size:18px;
+font-size:19px;
+color:#ddd;
 }
 
 .back-btn{
@@ -126,46 +176,229 @@ padding:10px 20px;
 background:#444;
 color:white;
 text-decoration:none;
-border-radius:6px;
+border-radius:8px;
+transition:.25s;
 }
+
+.back-btn:hover{
+background:#ff6600;
+transform:translateY(-2px);
+}
+
+/* =========================
+   COLORS BANNER
+========================= */
 
 .colors-banner img{
 width:100%;
-height:100%;
+height:auto;
+max-height:300px;
 object-fit:cover;
+display:block;
 }
 
-/* SEARCH BAR */
+/* =========================
+   SEARCH
+========================= */
 
 .search-container{
-max-width:700px;
-margin:30px auto 0;
+max-width:750px;
+margin:30px auto 10px;
 padding:0 20px;
 text-align:center;
 }
 
 #productSearch{
 width:100%;
-max-width:650px;
-padding:16px 20px;
+padding:17px 22px;
 font-size:18px;
 border:2px solid #ddd;
-border-radius:30px;
+border-radius:35px;
 outline:none;
-box-sizing:border-box;
 background:white;
 box-shadow:0 5px 15px rgba(0,0,0,.12);
-transition:all .25s ease;
+transition:.25s;
 }
 
 #productSearch:focus{
 border-color:#ff6600;
-box-shadow:0 5px 20px rgba(255,102,0,.25);
+box-shadow:
+0 5px 25px rgba(255,102,0,.25);
+transform:scale(1.01);
 }
 
 #productSearch::placeholder{
 color:#999;
 }
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products{
+display:grid;
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(260px,1fr)
+);
+gap:22px;
+max-width:1250px;
+margin:auto;
+padding:35px 20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:18px;
+text-align:center;
+box-shadow:
+0 8px 20px rgba(0,0,0,.12);
+transition:
+transform .35s ease,
+box-shadow .35s ease;
+position:relative;
+overflow:hidden;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:
+0 18px 35px rgba(0,0,0,.25);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:contain;
+margin-bottom:10px;
+transition:
+transform .4s ease;
+}
+
+.card:hover img{
+transform:
+scale(1.08)
+rotate(2deg);
+}
+
+.card h3{
+margin:8px 0;
+font-size:20px;
+}
+
+.price{
+color:#ff6600;
+font-weight:bold;
+font-size:1.2em;
+}
+
+select,
+.card input{
+width:100%;
+max-width:220px;
+padding:10px;
+margin:6px 0;
+font-size:1em;
+border:1px solid #ccc;
+border-radius:8px;
+background:white;
+}
+
+.button{
+background:
+linear-gradient(
+45deg,
+#ff4d4d,
+#ff6600
+);
+color:white;
+border:none;
+padding:13px 20px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+transition:
+transform .2s ease,
+box-shadow .2s ease;
+box-shadow:
+0 5px 12px rgba(255,102,0,.25);
+}
+
+.button:hover{
+transform:
+translateY(-3px)
+scale(1.04);
+box-shadow:
+0 8px 18px rgba(255,102,0,.35);
+}
+
+.button:active{
+transform:scale(.96);
+}
+
+/* =========================
+   ADD TO CART ANIMATION
+========================= */
+
+.added-animation{
+animation:
+cardAdded .5s ease;
+}
+
+@keyframes cardAdded{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.05);
+box-shadow:
+0 0 30px rgba(255,102,0,.7);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+/* =========================
+   TOAST MESSAGE
+========================= */
+
+#toast{
+position:fixed;
+bottom:25px;
+right:25px;
+background:#111;
+color:white;
+padding:15px 22px;
+border-radius:12px;
+box-shadow:
+0 8px 25px rgba(0,0,0,.3);
+opacity:0;
+transform:
+translateY(30px);
+pointer-events:none;
+transition:
+opacity .3s ease,
+transform .3s ease;
+z-index:9999;
+font-weight:bold;
+}
+
+#toast.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* =========================
+   NO RESULTS
+========================= */
 
 #noResults{
 display:none;
@@ -176,93 +409,448 @@ color:#666;
 padding:50px 20px;
 }
 
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-max-width:1200px;
-margin:auto;
-padding:40px 20px;
+/* =========================
+   CUSTOM PRINTS
+========================= */
+
+.custom-section{
+max-width:1000px;
+margin:30px auto 50px;
+padding:0 20px;
 }
 
-.card{
-background:white;
-padding:20px;
-border-radius:16px;
-text-align:center;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-transition:all .35s ease;
-}
-
-.card:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 18px 35px rgba(0,0,0,.25);
-}
-
-.card img{
-width:100%;
-height:220px;
-object-fit:contain;
-margin-bottom:10px;
-transition:transform .4s ease;
-}
-
-.card:hover img{
-transform:scale(1.08) rotate(2deg);
-}
-
-.price{
-color:#ff6600;
-font-weight:bold;
-font-size:1.2em;
-}
-
-select,
-input{
-width:100%;
-max-width:220px;
-padding:8px;
-margin:6px 0;
-font-size:1em;
-box-sizing:border-box;
-}
-
-.button{
-background:linear-gradient(45deg,#ff4d4d,#ff6600);
+.custom-box{
+background:
+linear-gradient(
+135deg,
+#111,
+#242424
+);
 color:white;
-border:none;
-padding:12px 20px;
-border-radius:12px;
-cursor:pointer;
-font-weight:bold;
-margin-top:10px;
-transition:all .25s ease;
+border-radius:25px;
+padding:45px 30px;
+text-align:center;
+box-shadow:
+0 15px 35px rgba(0,0,0,.3);
+position:relative;
+overflow:hidden;
+border:2px solid #ff6600;
 }
 
-.button:hover{
-transform:translateY(-3px) scale(1.04);
+.custom-box::before{
+content:'';
+position:absolute;
+width:180px;
+height:180px;
+background:#ff6600;
+opacity:.08;
+border-radius:50%;
+top:-80px;
+left:-60px;
 }
+
+.custom-box::after{
+content:'';
+position:absolute;
+width:220px;
+height:220px;
+background:#ff6600;
+opacity:.06;
+border-radius:50%;
+bottom:-120px;
+right:-80px;
+}
+
+.custom-icon{
+font-size:55px;
+margin-bottom:10px;
+}
+
+.custom-box h2{
+font-size:32px;
+margin:5px 0 10px;
+}
+
+.custom-box p{
+font-size:18px;
+line-height:1.6;
+color:#ddd;
+max-width:700px;
+margin:10px auto;
+}
+
+.custom-email{
+display:inline-block;
+margin-top:15px;
+padding:14px 25px;
+background:
+linear-gradient(
+45deg,
+#ff4d4d,
+#ff6600
+);
+color:white;
+text-decoration:none;
+border-radius:12px;
+font-weight:bold;
+font-size:17px;
+transition:.25s;
+box-shadow:
+0 6px 18px rgba(255,102,0,.3);
+}
+
+.custom-email:hover{
+transform:
+translateY(-4px)
+scale(1.03);
+box-shadow:
+0 10px 25px rgba(255,102,0,.45);
+}
+
+.custom-note{
+font-size:14px !important;
+color:#aaa !important;
+}
+
+/* =========================
+   CART
+========================= */
 
 .cart{
 background:white;
-max-width:600px;
-margin:40px auto;
-padding:20px;
-border-radius:16px;
-box-shadow:0 5px 15px rgba(0,0,0,.2);
+max-width:700px;
+margin:35px auto;
+padding:25px;
+border-radius:18px;
+box-shadow:
+0 8px 25px rgba(0,0,0,.15);
+}
+
+.cart h3{
+margin-top:0;
+font-size:23px;
+}
+
+.cart input{
+width:100%;
+max-width:none;
+padding:12px;
+margin:7px 0;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+#cart{
+padding-left:0;
+list-style:none;
+}
+
+.cart-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+padding:14px 0;
+border-bottom:1px solid #eee;
+}
+
+.cart-item-info{
+flex:1;
+}
+
+.cart-item-name{
+font-weight:bold;
+}
+
+.cart-item-price{
+color:#ff6600;
+font-weight:bold;
+margin-top:4px;
+}
+
+.quantity-controls{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.quantity-button{
+width:32px;
+height:32px;
+border:none;
+border-radius:50%;
+background:#eee;
+cursor:pointer;
+font-size:18px;
+font-weight:bold;
+transition:.2s;
+}
+
+.quantity-button:hover{
+background:#ff6600;
+color:white;
+}
+
+.quantity-number{
+min-width:25px;
+text-align:center;
+font-weight:bold;
 }
 
 .remove{
-color:red;
+color:#e00000;
 cursor:pointer;
-margin-left:8px;
 font-weight:bold;
+font-size:18px;
+padding:5px;
 }
 
-.custom a{
-color:#0066cc;
+.cart-summary{
+margin-top:20px;
+border-top:2px solid #eee;
+padding-top:15px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+margin:8px 0;
+}
+
+.summary-total{
+font-size:23px;
 font-weight:bold;
-text-decoration:none;
+color:#ff6600;
+border-top:2px solid #ddd;
+padding-top:12px;
+margin-top:12px;
+}
+
+.empty-cart{
+text-align:center;
+color:#777;
+padding:20px;
+}
+
+/* =========================
+   FLOATING CART
+========================= */
+
+.floating-cart{
+position:fixed;
+right:20px;
+bottom:20px;
+background:
+linear-gradient(
+45deg,
+#ff4d4d,
+#ff6600
+);
+color:white;
+border:none;
+border-radius:50px;
+padding:15px 22px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:
+0 8px 25px rgba(0,0,0,.3);
+z-index:999;
+transition:.25s;
+}
+
+.floating-cart:hover{
+transform:
+translateY(-4px)
+scale(1.04);
+}
+
+.floating-cart.bump{
+animation:
+cartBump .5s ease;
+}
+
+@keyframes cartBump{
+
+0%{
+transform:scale(1);
+}
+
+40%{
+transform:scale(1.2);
+}
+
+70%{
+transform:scale(.95);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+/* =========================
+   DELIVERY
+========================= */
+
+#shipping{
+width:100%;
+max-width:none;
+padding:12px;
+font-size:16px;
+border-radius:8px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+header{
+padding:75px 15px 35px;
+}
+
+header h1{
+font-size:32px;
+}
+
+header p{
+font-size:16px;
+}
+
+.back-btn{
+top:15px;
+left:15px;
+padding:9px 14px;
+font-size:14px;
+}
+
+.colors-banner img{
+max-height:180px;
+}
+
+.search-container{
+margin-top:20px;
+}
+
+#productSearch{
+font-size:16px;
+padding:15px 18px;
+}
+
+.products{
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+gap:12px;
+padding:20px 10px;
+}
+
+.card{
+padding:12px;
+border-radius:14px;
+}
+
+.card img{
+height:145px;
+}
+
+.card h3{
+font-size:16px;
+}
+
+.card .price{
+font-size:16px;
+}
+
+select,
+.card input{
+max-width:none;
+font-size:14px;
+padding:9px;
+}
+
+.button{
+width:100%;
+padding:11px 8px;
+font-size:14px;
+}
+
+.custom-section{
+padding:0 12px;
+}
+
+.custom-box{
+padding:35px 20px;
+}
+
+.custom-box h2{
+font-size:27px;
+}
+
+.custom-box p{
+font-size:16px;
+}
+
+.cart{
+margin:25px 12px;
+padding:18px;
+}
+
+.cart-item{
+align-items:flex-start;
+flex-wrap:wrap;
+}
+
+.cart-item-info{
+min-width:55%;
+}
+
+.quantity-controls{
+margin-left:auto;
+}
+
+.floating-cart{
+right:12px;
+bottom:12px;
+padding:13px 18px;
+font-size:14px;
+}
+
+#toast{
+right:15px;
+left:15px;
+bottom:70px;
+text-align:center;
+}
+
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media(max-width:420px){
+
+.products{
+grid-template-columns:1fr;
+padding:20px 15px;
+}
+
+.card img{
+height:210px;
+}
+
+.card h3{
+font-size:19px;
+}
+
+.button{
+font-size:16px;
+}
+
 }
 
 </style>
@@ -271,302 +859,835 @@ text-decoration:none;
 
 <body>
 
+<!-- =========================
+     3D PRINTER BACKGROUND
+========================= -->
+
 <div class="printer-area">
-  <div class="printer-rail"></div>
-  <div class="nozzle"></div>
-  <div class="print-bed"></div>
+
+<div class="printer-rail"></div>
+
+<div class="nozzle"></div>
+
+<div class="print-bed"></div>
+
 </div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
+
 <h1>Pervan 3D Shop</h1>
+
 <p>3D Printed Fidgets & Gifts</p>
-<a href="index.html" class="back-btn">← Back</a>
+
+<a href="index.html" class="back-btn">
+← Back
+</a>
+
 </header>
 
+
+<!-- =========================
+     COLORS BANNER
+========================= -->
+
 <div class="colors-banner">
+
 <img src="colors.png">
+
 </div>
 
-<!-- SEARCH BAR -->
+
+<!-- =========================
+     SEARCH
+========================= -->
 
 <div class="search-container">
-  <input
-    type="text"
-    id="productSearch"
-    placeholder="🔍 Search for a product..."
-    oninput="searchProducts()"
-  >
+
+<input
+type="text"
+id="productSearch"
+placeholder="🔍 Search for a product..."
+oninput="searchProducts()"
+>
+
 </div>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
 
 <section class="products">
 
+
 <div class="card">
+
 <img src="treefidget.png">
+
 <h3>Tree Fidget</h3>
+
 <p class="price">$3</p>
+
 <select class="treeColor"></select>
+
 <select class="treeColor"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addTree('Tree Fidget',3,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="dragon.png">
+
 <h3>Dragon Fidget</h3>
+
 <p class="price">$5-$8</p>
+
 <select id="dragonSize">
+
 <option>Small</option>
+
 <option>Big</option>
+
 </select>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFidget('Dragon Fidget','dragonSize',this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="star.png">
+
 <h3>Star Fidget</h3>
+
 <p class="price">$5-$8</p>
+
 <select id="starSize">
+
 <option>Small</option>
+
 <option>Big</option>
+
 </select>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFidget('Star Fidget','starSize',this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="flexistar.png">
+
 <h3>Flexi Spinning Star Fidget</h3>
+
 <p class="price">$6-$10</p>
+
 <select id="spinSize">
+
 <option>Small</option>
+
 <option>Big</option>
+
 </select>
+
 <select class="color"></select>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addSpinningStar(this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addSpinningStar(this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="gearfidget.png">
+
 <h3>Gear Fidget</h3>
+
 <p class="price">$2</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Gear Fidget',2,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="pigkey.png">
+
 <h3>Pig Keychain</h3>
+
 <p class="price">$5</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Pig Keychain',5,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Pig Keychain',5,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="bigpig.png">
+
 <h3>Flexi Pig</h3>
+
 <p class="price">$5</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Flexi Pig',5,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Flexi Pig',5,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="otter.png">
+
 <h3>Otter</h3>
+
 <p class="price">$5</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Otter',5,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Otter',5,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="chameleon.png">
+
 <h3>Articulated Chameleon Keychain</h3>
+
 <p class="price">$5</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Articulated Chameleon Keychain',5,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Articulated Chameleon Keychain',5,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="cactus.png">
+
 <h3>Cactus Toothpick Holder</h3>
+
 <p class="price">$15</p>
+
 <select class="color"></select>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addTwoColor('Cactus Toothpick Holder',15,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="teachergift.png">
+
 <h3>Teacher Gift</h3>
+
 <p class="price">$5</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Teacher Gift',5,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Teacher Gift',5,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="names.png">
+
 <h3>Names</h3>
+
 <p class="price">
 $1.00 per letter
 </p>
-<input id="nameText" placeholder="Type name here">
-<select class="color"></select>
-<input type="number" value="1" min="1">
-<button class="button" onclick="addName(this)">Add to Cart</button>
-</div>
 
-<div class="card">
-<img src="">
-<h3>Custom Keyboard Clicker</h3>
-<p class="price">
-4 letters or less: $2.50 per letter<br>
-5+ letters: $2.00 per letter
-</p>
-
-<input class="keyboardText" placeholder="Type text here">
+<input
+id="nameText"
+placeholder="Type name here"
+>
 
 <select class="color"></select>
 
 <input type="number" value="1" min="1">
 
-<button class="button" onclick="addKeyboardClicker(this)">
+<button
+class="button"
+onclick="addName(this)"
+>
 Add to Cart
 </button>
+
 </div>
 
+
 <div class="card">
+
+<img src="">
+
+<h3>Custom Keyboard Clicker</h3>
+
+<p class="price">
+
+4 letters or less:
+$2.50 per letter
+
+<br>
+
+5+ letters:
+$2.00 per letter
+
+</p>
+
+<input
+class="keyboardText"
+placeholder="Type text here"
+>
+
+<select class="color"></select>
+
+<input type="number" value="1" min="1">
+
+<button
+class="button"
+onclick="addKeyboardClicker(this)"
+>
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="card">
+
 <img src="heartdish.png">
+
 <h3>Heart Dish</h3>
+
 <p class="price">$5</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Heart Dish',5,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="spring.png">
+
 <h3>Spring Fidget</h3>
+
 <p class="price">$2</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Spring Fidget',2,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="penholder.png">
+
 <h3>Knight Pen Holder</h3>
+
 <p class="price">$8</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Knight Pen Holder',8,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Knight Pen Holder',8,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="whistlekeychain.png">
+
 <h3>Whistle Keychain</h3>
+
 <p class="price">$2</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Whistle Keychain',2,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Whistle Keychain',2,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="grenadeclicker.png">
+
 <h3>Grenade Clicker</h3>
+
 <p class="price">$4</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Grenade Clicker',4,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Grenade Clicker',4,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="clickerfidget.png">
+
 <h3>Clicker Fidget</h3>
+
 <p class="price">$3</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Clicker Fidget',3,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Clicker Fidget',3,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="rotatingrings.png">
+
 <h3>Rotating Rings Fidget</h3>
+
 <p class="price">$4</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Rotating Rings Fidget',4,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Rotating Rings Fidget',4,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
+
 <div class="card">
+
 <img src="airpressuretank.png">
+
 <h3>Air Pressure Tank</h3>
+
 <p class="price">$11</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Air Pressure Tank',11,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Air Pressure Tank',11,this)"
+>
+Add to Cart
+</button>
+
 </div>
+
 
 <div class="card">
+
 <img src="flexishark.PNG">
+
 <h3>Articulated Shark</h3>
+
 <p class="price">$4</p>
+
 <select class="color"></select>
+
 <input type="number" value="1" min="1">
-<button class="button" onclick="addFixed('Articulated Shark',4,this)">Add to Cart</button>
+
+<button
+class="button"
+onclick="addFixed('Articulated Shark',4,this)"
+>
+Add to Cart
+</button>
+
 </div>
 
-<div class="card custom">
-<h3>Your Custom</h3>
-<p class="price">$1+</p>
-<p>Email me your idea:</p>
-<a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>
+
+</section>
+
+
+<!-- =========================
+     NO RESULTS
+========================= -->
+
+<div id="noResults">
+
+😕 No products found.
+
+<br>
+
+Try searching for something else!
+
+</div>
+
+
+<!-- =========================
+     CUSTOM PRINTS
+========================= -->
+
+<section class="custom-section">
+
+<div class="custom-box">
+
+<div class="custom-icon">
+🛠️
+</div>
+
+<h2>
+Have Your Own Idea?
+</h2>
+
+<p>
+Can't find exactly what you're looking for?
+</p>
+
+<p>
+We can make custom 3D prints just for you!
+Send us your idea, picture, design, or request and
+we'll see what we can create.
+</p>
+
+<a
+class="custom-email"
+href="mailto:ivanpervan09@gmail.com"
+>
+🎨 Request a Custom Print
+</a>
+
+<p class="custom-note">
+Custom prices depend on the size and complexity of the print.
+</p>
+
 </div>
 
 </section>
 
-<div id="noResults">
-  😕 No products found. Try searching for something else.
-</div>
+
+<!-- =========================
+     DELIVERY
+========================= -->
 
 <div class="cart">
-<h3>Delivery Method</h3>
-<select id="shipping" onchange="renderCart()">
-<option value="0">Local Pickup (Free)</option>
-<option value="6">Ship Order (+$6)</option>
+
+<h3>
+📦 Delivery Method
+</h3>
+
+<select
+id="shipping"
+onchange="renderCart()"
+>
+
+<option value="0">
+Local Pickup (Free)
+</option>
+
+<option value="6">
+Ship Order (+$6)
+</option>
+
 </select>
+
 </div>
 
-<div class="cart">
-<h3>🛒 Cart</h3>
-<input id="customerName" placeholder="Customer name required">
-<input id="customerPhone" placeholder="Phone number required">
-<input id="customerAddress" placeholder="Address required if shipping">
+
+<!-- =========================
+     CART
+========================= -->
+
+<div
+class="cart"
+id="cartSection"
+>
+
+<h3>
+🛒 Your Cart
+</h3>
+
+<input
+id="customerName"
+placeholder="Customer name required"
+>
+
+<input
+id="customerPhone"
+placeholder="Phone number required"
+>
+
+<input
+id="customerAddress"
+placeholder="Address required if shipping"
+>
+
 <ul id="cart"></ul>
-<p><strong>Total: $<span id="total">0.00</span></strong></p>
 
-<button class="button" onclick="checkout()">
-Pay with Venmo
-</button>
+<div class="cart-summary">
 
-<button class="button" onclick="zelleCheckout()" style="background:#6D1ED4;">
-Pay with Zelle
-</button>
+<div class="summary-row">
+
+<span>
+Subtotal
+</span>
+
+<strong>
+$<span id="subtotal">
+0.00
+</span>
+</strong>
+
 </div>
+
+<div class="summary-row">
+
+<span>
+Shipping
+</span>
+
+<strong>
+$<span id="shippingCost">
+0.00
+</span>
+</strong>
+
+</div>
+
+<div class="summary-row summary-total">
+
+<span>
+Total
+</span>
+
+<span>
+$<span id="total">
+0.00
+</span>
+</span>
+
+</div>
+
+</div>
+
+
+<button
+class="button"
+onclick="checkout()"
+style="width:100%;"
+>
+
+💳 Pay with Venmo
+
+</button>
+
+
+<button
+class="button"
+onclick="zelleCheckout()"
+style="
+width:100%;
+background:#6D1ED4;
+"
+>
+
+💜 Pay with Zelle
+
+</button>
+
+</div>
+
+
+<!-- =========================
+     FLOATING CART
+========================= -->
+
+<button
+class="floating-cart"
+id="floatingCart"
+onclick="scrollToCart()"
+>
+
+🛒 Cart
+<span id="cartCount">
+0
+</span>
+
+</button>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div id="toast">
+✓ Added to cart!
+</div>
+
 
 <script>
 
+/* =========================
+   COLORS
+========================= */
+
 const colors=[
+
 "Red",
 "Blue",
 "Black",
@@ -588,46 +1709,697 @@ const colors=[
 "Copper Purple Green (+$2)",
 "Multi Color Rose (+$2)",
 "Multi Color Blue (+$2)"
+
 ];
 
-document.querySelectorAll('.color,.treeColor').forEach(sel=>{
+
+/* =========================
+   ADD COLORS TO SELECTS
+========================= */
+
+document
+.querySelectorAll('.color,.treeColor')
+.forEach(sel=>{
+
 colors.forEach(c=>{
-let o=document.createElement('option');
-o.textContent=c;
-sel.appendChild(o);
+
+let option=
+document.createElement('option');
+
+option.textContent=c;
+
+sel.appendChild(option);
+
 });
+
 });
+
+
+/* =========================
+   CART
+========================= */
 
 let cartItems=[];
+
 let total=0;
 
-const upcharge=c=>c.includes('+$2')?2:0;
+
+/* =========================
+   COLOR UPCHARGE
+========================= */
+
+const upcharge=
+c=>c.includes('+$2')?2:0;
 
 
-/* SEARCH PRODUCTS */
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+const toast=
+document.getElementById('toast');
+
+toast.textContent=message;
+
+toast.classList.add('show');
+
+setTimeout(()=>{
+
+toast.classList.remove('show');
+
+},2000);
+
+}
+
+
+/* =========================
+   CART ANIMATION
+========================= */
+
+function animateCart(button){
+
+const card=
+button.parentElement;
+
+card.classList.remove(
+'added-animation'
+);
+
+void card.offsetWidth;
+
+card.classList.add(
+'added-animation'
+);
+
+
+const floatingCart=
+document.getElementById(
+'floatingCart'
+);
+
+floatingCart.classList.remove(
+'bump'
+);
+
+void floatingCart.offsetWidth;
+
+floatingCart.classList.add(
+'bump'
+);
+
+}
+
+
+/* =========================
+   UPDATE CART COUNT
+========================= */
+
+function updateCartCount(){
+
+const count=
+cartItems.reduce(
+(total,item)=>total+item.qty,
+0
+);
+
+document.getElementById(
+'cartCount'
+).textContent=count;
+
+}
+
+
+/* =========================
+   ADD ITEM
+========================= */
+
+function addItem(label,price,qty,button){
+
+const existing=
+cartItems.find(
+item=>
+item.label===label &&
+item.price===price
+);
+
+if(existing){
+
+existing.qty+=qty;
+
+}else{
+
+cartItems.push({
+
+label:label,
+
+price:price,
+
+qty:qty
+
+});
+
+}
+
+if(button){
+
+animateCart(button);
+
+}
+
+showToast(
+`✓ Added ${qty} item${qty>1?'s':''} to cart!`
+);
+
+renderCart();
+
+}
+
+
+/* =========================
+   TREE
+========================= */
+
+function addTree(name,base,btn){
+
+const card=
+btn.parentElement;
+
+const cs=[
+...card.querySelectorAll('.treeColor')
+].map(s=>s.value);
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+addItem(
+`${cs[0]} / ${cs[1]} ${name}`,
+base,
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   SIZE FIDGET
+========================= */
+
+function addFidget(
+name,
+sizeId,
+btn
+){
+
+const card=
+btn.parentElement;
+
+const size=
+card.querySelector(
+'#'+sizeId
+).value;
+
+const color=
+card.querySelector(
+'.color'
+).value;
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+let price=
+(size==='Big'?8:5)
++
+upcharge(color);
+
+addItem(
+`${color} ${name} (${size})`,
+price,
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   SPINNING STAR
+========================= */
+
+function addSpinningStar(btn){
+
+const card=
+btn.parentElement;
+
+const size=
+card.querySelector(
+'#spinSize'
+).value;
+
+const colorChoices=[
+...card.querySelectorAll('.color')
+].map(c=>c.value);
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+let base=
+size==='Big'?10:6;
+
+let price=
+base+
+colorChoices.reduce(
+(a,c)=>a+upcharge(c),
+0
+);
+
+addItem(
+`${colorChoices[0]} / ${colorChoices[1]} Flexi Spinning Star (${size})`,
+price,
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   FIXED PRICE
+========================= */
+
+function addFixed(
+name,
+base,
+btn
+){
+
+const card=
+btn.parentElement;
+
+const colorSelect=
+card.querySelector('.color');
+
+const color=
+colorSelect
+?colorSelect.value
+:'';
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+addItem(
+`${color} ${name}`,
+base+upcharge(color),
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   TWO COLOR
+========================= */
+
+function addTwoColor(
+name,
+base,
+btn
+){
+
+const card=
+btn.parentElement;
+
+const cs=[
+...card.querySelectorAll('.color')
+].map(s=>s.value);
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+let price=
+base+
+cs.reduce(
+(a,c)=>a+upcharge(c),
+0
+);
+
+addItem(
+`${cs[0]} / ${cs[1]} ${name}`,
+price,
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   KEYBOARD CLICKER
+========================= */
+
+function addKeyboardClicker(btn){
+
+const card=
+btn.parentElement;
+
+const textValue=
+card
+.querySelector('.keyboardText')
+.value
+.trim();
+
+const color=
+card.querySelector('.color')
+.value;
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+if(!textValue){
+
+alert(
+"Type the text for your keyboard clicker."
+);
+
+return;
+
+}
+
+const letters=
+textValue.length;
+
+const pricePerLetter=
+letters<=4
+?2.50
+:2.00;
+
+const price=
+(letters*pricePerLetter)
++
+upcharge(color);
+
+addItem(
+`${color} Keyboard Clicker: ${textValue}`,
+price,
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   NAMES
+========================= */
+
+function addName(btn){
+
+const card=
+btn.parentElement;
+
+const text=
+card
+.querySelector('#nameText')
+.value
+.trim();
+
+const color=
+card.querySelector('.color')
+.value;
+
+const qty=
+parseInt(
+card.querySelector(
+'input[type=number]'
+).value
+);
+
+if(!text){
+
+alert(
+'Type the name you want printed.'
+);
+
+return;
+
+}
+
+let price=
+text.length+
+upcharge(color);
+
+addItem(
+`${color} Name: ${text}`,
+price,
+qty,
+btn
+);
+
+}
+
+
+/* =========================
+   CHANGE QUANTITY
+========================= */
+
+function changeQuantity(
+index,
+change
+){
+
+cartItems[index].qty+=change;
+
+if(
+cartItems[index].qty<=0
+){
+
+cartItems.splice(index,1);
+
+}
+
+renderCart();
+
+}
+
+
+/* =========================
+   REMOVE ITEM
+========================= */
+
+function removeItem(index){
+
+cartItems.splice(index,1);
+
+renderCart();
+
+}
+
+
+/* =========================
+   RENDER CART
+========================= */
+
+function renderCart(){
+
+const ul=
+document.getElementById('cart');
+
+ul.innerHTML='';
+
+total=0;
+
+
+if(cartItems.length===0){
+
+ul.innerHTML=`
+
+<li class="empty-cart">
+
+🛒 Your cart is empty.
+
+<br><br>
+
+Add some awesome 3D prints!
+
+</li>
+
+`;
+
+}else{
+
+cartItems.forEach(
+(item,i)=>{
+
+const itemTotal=
+item.price*item.qty;
+
+total+=itemTotal;
+
+const li=
+document.createElement('li');
+
+li.className=
+'cart-item';
+
+li.innerHTML=`
+
+<div class="cart-item-info">
+
+<div class="cart-item-name">
+
+${item.label}
+
+</div>
+
+<div class="cart-item-price">
+
+$${itemTotal.toFixed(2)}
+
+</div>
+
+</div>
+
+
+<div class="quantity-controls">
+
+<button
+class="quantity-button"
+onclick="changeQuantity(${i},-1)"
+>
+−
+</button>
+
+<span class="quantity-number">
+${item.qty}
+</span>
+
+<button
+class="quantity-button"
+onclick="changeQuantity(${i},1)"
+>
++
+</button>
+
+</div>
+
+
+<span
+class="remove"
+onclick="removeItem(${i})"
+title="Remove item"
+>
+✖
+</span>
+
+`;
+
+ul.appendChild(li);
+
+});
+
+}
+
+
+const shipping=
+parseFloat(
+document.getElementById(
+'shipping'
+).value
+);
+
+const finalTotal=
+total+shipping;
+
+
+document.getElementById(
+'subtotal'
+).innerText=
+total.toFixed(2);
+
+
+document.getElementById(
+'shippingCost'
+).innerText=
+shipping.toFixed(2);
+
+
+document.getElementById(
+'total'
+).innerText=
+finalTotal.toFixed(2);
+
+
+updateCartCount();
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
 
 function searchProducts(){
 
-const search=document
-.getElementById('productSearch')
+const search=
+document
+.getElementById(
+'productSearch'
+)
 .value
 .toLowerCase()
 .trim();
 
-const products=document.querySelectorAll('.products .card');
+const products=
+document.querySelectorAll(
+'.products .card'
+);
 
 let visibleProducts=0;
 
+
 products.forEach(card=>{
 
-const productName=card
+const productName=
+card
 .querySelector('h3')
 ?.textContent
-.toLowerCase() || '';
+.toLowerCase()
+||'';
 
-if(productName.includes(search)){
+
+if(
+productName.includes(search)
+){
 
 card.style.display='';
+
 visibleProducts++;
 
 }else{
@@ -638,368 +2410,316 @@ card.style.display='none';
 
 });
 
-const noResults=document.getElementById('noResults');
+
+const noResults=
+document.getElementById(
+'noResults'
+);
+
 
 if(visibleProducts===0){
 
-noResults.style.display='block';
+noResults.style.display=
+'block';
 
 }else{
 
-noResults.style.display='none';
+noResults.style.display=
+'none';
 
 }
 
 }
 
 
-function addItem(label,price,qty){
-
-for(let i=0;i<qty;i++){
-
-cartItems.push({label,price});
-
-}
-
-renderCart();
-
-}
-
-
-function addTree(name,base,btn){
-
-const card=btn.parentElement;
-
-const cs=[...card.querySelectorAll('.treeColor')]
-.map(s=>s.value);
-
-const qty=parseInt(card.querySelector('input').value);
-
-addItem(`${cs[0]} / ${cs[1]} ${name}`,base,qty);
-
-}
-
-
-function addFidget(name,sizeId,btn){
-
-const card=btn.parentElement;
-
-const size=card.querySelector('#'+sizeId).value;
-
-const color=card.querySelector('.color').value;
-
-const qty=parseInt(card.querySelector('input').value);
-
-let price=(size==='Big'?8:5)+upcharge(color);
-
-addItem(`${color} ${name} (${size})`,price,qty);
-
-}
-
-
-function addSpinningStar(btn){
-
-const card=btn.parentElement;
-
-const size=card.querySelector('#spinSize').value;
-
-const colors=[...card.querySelectorAll('.color')]
-.map(c=>c.value);
-
-const qty=parseInt(card.querySelector('input').value);
-
-let base=size==='Big'?10:6;
-
-let price=base+
-colors.reduce((a,c)=>a+upcharge(c),0);
-
-addItem(
-`${colors[0]} / ${colors[1]} Flexi Spinning Star (${size})`,
-price,
-qty
-);
-
-}
-
-
-function addFixed(name,base,btn){
-
-const card=btn.parentElement;
-
-const colorSelect=card.querySelector('.color');
-
-const color=colorSelect?colorSelect.value:'';
-
-const qty=parseInt(card.querySelector('input').value);
-
-addItem(
-`${color} ${name}`,
-base+upcharge(color),
-qty
-);
-
-}
-
-
-function addTwoColor(name,base,btn){
-
-const card=btn.parentElement;
-
-const cs=[...card.querySelectorAll('.color')]
-.map(s=>s.value);
-
-const qty=parseInt(card.querySelector('input').value);
-
-let price=base+
-cs.reduce((a,c)=>a+upcharge(c),0);
-
-addItem(
-`${cs[0]} / ${cs[1]} ${name}`,
-price,
-qty
-);
-
-}
-
-
-function addKeyboardClicker(btn){
-
-const card=btn.parentElement;
-
-const textValue=card
-.querySelector('.keyboardText')
-.value
-.trim();
-
-const color=card.querySelector('.color').value;
-
-const qty=parseInt(
-card.querySelector('input[type=number]').value
-);
-
-if(!textValue){
-
-alert("Type the text");
-
-return;
-
-}
-
-const letters=textValue.length;
-
-const pricePerLetter=
-letters<=4?2.50:2.00;
-
-const price=
-(letters*pricePerLetter)+upcharge(color);
-
-addItem(
-`${color} Keyboard Clicker: ${textValue}`,
-price,
-qty
-);
-
-}
-
-
-function addName(btn){
-
-const card=btn.parentElement;
-
-const text=card
-.querySelector('#nameText')
-.value
-.trim();
-
-const color=card.querySelector('.color').value;
-
-const qty=parseInt(
-card.querySelector('input[type=number]').value
-);
-
-if(!text){
-
-alert('Type the name');
-
-return;
-
-}
-
-let price=text.length+upcharge(color);
-
-addItem(
-`${color} Name: ${text}`,
-price,
-qty
-);
-
-}
-
-
-function renderCart(){
-
-const ul=document.getElementById('cart');
-
-ul.innerHTML='';
-
-total=0;
-
-cartItems.forEach((item,i)=>{
-
-total+=item.price;
-
-const li=document.createElement('li');
-
-li.innerHTML=
-`${item.label} - $${item.price.toFixed(2)}
-<span class="remove">✖</span>`;
-
-li.querySelector('.remove').onclick=()=>{
-
-cartItems.splice(i,1);
-
-renderCart();
-
-};
-
-ul.appendChild(li);
-
+/* =========================
+   SCROLL TO CART
+========================= */
+
+function scrollToCart(){
+
+document
+.getElementById('cartSection')
+.scrollIntoView({
+behavior:'smooth',
+block:'start'
 });
 
-const shipping=
-parseFloat(
-document.getElementById('shipping').value
-);
-
-const finalTotal=total+shipping;
-
-document.getElementById('total').innerText=
-finalTotal.toFixed(2);
-
 }
 
+
+/* =========================
+   VENMO
+========================= */
 
 function checkout(){
 
 if(cartItems.length===0){
 
-alert('Cart is empty');
+alert(
+'Your cart is empty.'
+);
 
 return;
 
 }
 
+
 const name=
-document.getElementById('customerName')
+document
+.getElementById(
+'customerName'
+)
 .value
 .trim();
 
 const phone=
-document.getElementById('customerPhone')
+document
+.getElementById(
+'customerPhone'
+)
 .value
 .trim();
 
 const address=
-document.getElementById('customerAddress')
+document
+.getElementById(
+'customerAddress'
+)
 .value
 .trim();
 
-const shipping=
-parseFloat(
-document.getElementById('shipping').value
+
+if(!name){
+
+alert(
+'Please enter your name.'
 );
 
-const finalTotal=total+shipping;
+return;
 
-let note=`Pervan 3D Order\n\n`;
+}
 
-note+=`Customer: ${name}\n`;
 
-note+=`Phone: ${phone}\n`;
+if(!phone){
 
-note+=`Address: ${address}\n\n`;
+alert(
+'Please enter your phone number.'
+);
 
-note+=`ITEMS:\n`;
+return;
 
-cartItems.forEach(i=>{
+}
+
+
+const shipping=
+parseFloat(
+document.getElementById(
+'shipping'
+).value
+);
+
+
+if(
+shipping>0 &&
+!address
+){
+
+alert(
+'Please enter your shipping address.'
+);
+
+return;
+
+}
+
+
+const finalTotal=
+total+shipping;
+
+
+let note=
+`Pervan 3D Order\n\n`;
 
 note+=
-`${i.label} - $${i.price.toFixed(2)}\n`;
+`Customer: ${name}\n`;
+
+note+=
+`Phone: ${phone}\n`;
+
+note+=
+`Address: ${address}\n\n`;
+
+note+=
+`ITEMS:\n`;
+
+
+cartItems.forEach(item=>{
+
+note+=
+`${item.label} x${item.qty} - $${(item.price*item.qty).toFixed(2)}\n`;
 
 });
+
+
+note+=
+`\nSubtotal: $${total.toFixed(2)}`;
+
+note+=
+`\nShipping: $${shipping.toFixed(2)}`;
 
 note+=
 `\nTotal: $${finalTotal.toFixed(2)}`;
 
+
 window.open(
+
 `https://venmo.com/?txn=pay&recipients=@Pervan3D&amount=${finalTotal.toFixed(2)}&note=${encodeURIComponent(note)}`,
+
 '_blank'
+
 );
 
 }
 
+
+/* =========================
+   ZELLE
+========================= */
 
 function zelleCheckout(){
 
 if(cartItems.length===0){
 
-alert('Cart is empty');
+alert(
+'Your cart is empty.'
+);
 
 return;
 
 }
 
+
 const name=
-document.getElementById('customerName')
+document
+.getElementById(
+'customerName'
+)
 .value
 .trim();
 
 const phone=
-document.getElementById('customerPhone')
+document
+.getElementById(
+'customerPhone'
+)
 .value
 .trim();
 
 const address=
-document.getElementById('customerAddress')
+document
+.getElementById(
+'customerAddress'
+)
 .value
 .trim();
 
-const shipping=
-parseFloat(
-document.getElementById('shipping').value
+
+if(!name){
+
+alert(
+'Please enter your name.'
 );
 
-const finalTotal=total+shipping;
+return;
 
-let note=`Pervan 3D Order\n\n`;
+}
 
-note+=`Customer: ${name}\n`;
 
-note+=`Phone: ${phone}\n`;
+if(!phone){
 
-note+=`Address: ${address}\n\n`;
+alert(
+'Please enter your phone number.'
+);
 
-note+=`ITEMS:\n`;
+return;
 
-cartItems.forEach(i=>{
+}
+
+
+const shipping=
+parseFloat(
+document.getElementById(
+'shipping'
+).value
+);
+
+
+if(
+shipping>0 &&
+!address
+){
+
+alert(
+'Please enter your shipping address.'
+);
+
+return;
+
+}
+
+
+const finalTotal=
+total+shipping;
+
+
+let note=
+`Pervan 3D Order\n\n`;
 
 note+=
-`${i.label} - $${i.price.toFixed(2)}\n`;
+`Customer: ${name}\n`;
+
+note+=
+`Phone: ${phone}\n`;
+
+note+=
+`Address: ${address}\n\n`;
+
+note+=
+`ITEMS:\n`;
+
+
+cartItems.forEach(item=>{
+
+note+=
+`${item.label} x${item.qty} - $${(item.price*item.qty).toFixed(2)}\n`;
 
 });
 
-note+=
-`\nTotal: $${finalTotal.toFixed(2)}\n`;
 
 note+=
-`\nSend payment to: tammypervan@hotmail.com`;
+`\nSubtotal: $${total.toFixed(2)}`;
 
-navigator.clipboard.writeText(note);
+note+=
+`\nShipping: $${shipping.toFixed(2)}`;
+
+note+=
+`\nTotal: $${finalTotal.toFixed(2)}`;
+
+note+=
+`\n\nSend payment to: tammypervan@hotmail.com`;
+
+
+navigator.clipboard
+.writeText(note)
+.catch(()=>{});
+
 
 window.open(
 'https://www.zellepay.com/',
 '_blank'
 );
+
 
 alert(
 'Order copied for Zelle payment! Paste the copied order into the Zelle note.'
@@ -1007,6 +2727,10 @@ alert(
 
 }
 
+
+/* =========================
+   INITIAL CART
+========================= */
 
 renderCart();
 
