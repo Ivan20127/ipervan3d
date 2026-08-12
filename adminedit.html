@@ -14,19 +14,16 @@ html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-}
-
-body{
-    background:#050b16;
-    color:white;
+    background:#020617;
     font-family:Arial,Helvetica,sans-serif;
+    color:white;
     user-select:none;
 }
 
 canvas{
     display:block;
     margin:auto;
-    background:#111827;
+    background:#0f172a;
 }
 
 #ui{
@@ -34,47 +31,47 @@ canvas{
     top:10px;
     left:10px;
     z-index:20;
-    background:rgba(2,6,23,.86);
-    border:1px solid rgba(255,255,255,.15);
+    background:rgba(2,6,23,.88);
+    border:1px solid rgba(255,255,255,.18);
     border-radius:14px;
-    padding:11px 15px;
+    padding:10px 14px;
+    min-width:190px;
     font-size:14px;
     line-height:1.55;
-    min-width:190px;
-    box-shadow:0 8px 30px rgba(0,0,0,.4);
+    box-shadow:0 8px 30px rgba(0,0,0,.5);
 }
 
 #ui strong{color:#60a5fa}
-.power{color:#c084fc}
+#power{color:#facc15}
 
 #mobileControls{
     position:fixed;
-    bottom:16px;
+    bottom:15px;
     left:0;
     right:0;
     z-index:30;
     display:flex;
     justify-content:space-between;
-    padding:0 18px;
+    padding:0 15px;
     pointer-events:none;
 }
 
 .controlGroup{
     display:flex;
-    gap:10px;
+    gap:8px;
 }
 
 .touchButton{
-    width:62px;
-    height:62px;
+    width:58px;
+    height:58px;
     border-radius:50%;
     border:2px solid rgba(255,255,255,.25);
-    background:rgba(15,23,42,.85);
+    background:rgba(15,23,42,.86);
     color:white;
-    font-size:24px;
+    font-size:23px;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     pointer-events:auto;
     touch-action:none;
 }
@@ -84,18 +81,16 @@ canvas{
     transform:scale(.94);
 }
 
-#message,
-#shop,
-#levelPreview{
+#message{
     position:fixed;
     z-index:50;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
-    width:min(92%,620px);
+    width:min(92%,650px);
     max-height:90vh;
     overflow:auto;
-    padding:30px;
+    padding:28px;
     background:linear-gradient(135deg,#0f172a,#1e293b);
     border:2px solid #475569;
     border-radius:22px;
@@ -103,174 +98,85 @@ canvas{
     box-shadow:0 25px 100px rgba(0,0,0,.8);
 }
 
-#message h1,
-#shop h1,
-#levelPreview h1{
-    margin:0 0 15px;
-    font-size:36px;
+#message h1{
+    margin:0 0 12px;
+    font-size:38px;
     color:#60a5fa;
 }
 
 #messageText{
-    line-height:1.65;
+    line-height:1.55;
     color:#dbeafe;
 }
 
-button.menuButton{
-    margin:8px;
-    padding:12px 24px;
+#startButton{
+    margin-top:20px;
+    padding:13px 32px;
     border:0;
     border-radius:11px;
     background:#2563eb;
     color:white;
-    font-size:16px;
+    font-size:17px;
     font-weight:bold;
     cursor:pointer;
 }
 
-button.menuButton:hover{
-    background:#3b82f6;
-}
+#startButton:hover{background:#3b82f6}
 
-button.green{
-    background:#16a34a;
-}
-
-button.green:hover{
-    background:#22c55e;
-}
-
-button.red{
-    background:#dc2626;
-}
-
-button.gold{
-    background:#ca8a04;
-}
-
-.hidden{
-    display:none!important;
-}
+.hidden{display:none!important}
 
 .powerPreview{
-    display:flex;
-    justify-content:center;
-    gap:18px;
-    flex-wrap:wrap;
-    margin:20px 0;
-}
-
-.powerCard{
-    width:210px;
-    padding:18px;
-    border-radius:16px;
-    background:rgba(15,23,42,.9);
-    border:2px solid #475569;
-}
-
-.powerOrb{
-    width:75px;
-    height:75px;
-    margin:0 auto 10px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:38px;
-    box-shadow:0 0 25px currentColor;
-}
-
-.fireOrb{
-    background:#ef4444;
-    color:#f97316;
-}
-
-.jumpOrb{
-    background:#8b5cf6;
-    color:#c084fc;
-}
-
-.shopCoins{
-    color:#facc15;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.skinGrid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-    gap:12px;
-    margin:20px 0;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:18px;
 }
 
-.skin{
-    padding:14px;
-    border-radius:14px;
-    background:#111827;
-    border:2px solid #334155;
+.preview{
+    padding:12px 7px;
+    border-radius:12px;
+    background:rgba(15,23,42,.8);
+    border:1px solid rgba(255,255,255,.12);
 }
 
-.skinPreview{
-    width:45px;
-    height:55px;
-    margin:5px auto 10px;
-    border-radius:10px;
+.previewIcon{
+    font-size:30px;
 }
 
-.price{
+.previewName{
+    font-weight:bold;
     color:#facc15;
-    font-weight:bold;
+    font-size:13px;
 }
 
-#bossBar{
-    position:fixed;
-    top:12px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:25;
-    width:min(70%,500px);
-    display:none;
-    text-align:center;
-}
-
-#bossName{
-    font-size:18px;
-    font-weight:bold;
-    color:#fca5a5;
-    margin-bottom:5px;
-}
-
-#bossOuter{
-    height:22px;
-    border-radius:15px;
-    overflow:hidden;
-    background:#450a0a;
-    border:2px solid #fecaca;
-}
-
-#bossInner{
-    width:100%;
-    height:100%;
-    background:linear-gradient(90deg,#ef4444,#f97316);
-    transition:width .15s;
+.previewHelp{
+    color:#94a3b8;
+    font-size:11px;
+    margin-top:4px;
 }
 
 @media(max-width:700px){
     #ui{
         font-size:11px;
-        min-width:150px;
-        padding:8px 10px;
+        min-width:145px;
+        padding:7px 10px;
     }
 
     .touchButton{
-        width:56px;
-        height:56px;
+        width:52px;
+        height:52px;
     }
 
-    #message,
-    #shop,
-    #levelPreview{
+    #message{
         padding:20px;
+    }
+
+    #message h1{
+        font-size:28px;
+    }
+
+    .powerPreview{
+        grid-template-columns:1fr;
     }
 }
 </style>
@@ -284,17 +190,8 @@ button.gold{
     <div>Score: <span id="score">0</span></div>
     <div>🧵 Filament: <span id="coins">0</span></div>
     <div>❤️ Lives: <span id="lives">♥ ♥ ♥</span></div>
-    <div>⚡ Power: <span id="power" class="power">Normal</span></div>
-    <div style="margin-top:5px;color:#94a3b8">
-        ← → Move &nbsp; SPACE Jump &nbsp; X Dash &nbsp; F Fireball
-    </div>
-</div>
-
-<div id="bossBar">
-    <div id="bossName">🤖 MEGA PRINT BOSS</div>
-    <div id="bossOuter">
-        <div id="bossInner"></div>
-    </div>
+    <div>⚡ Power: <span id="power">Normal</span></div>
+    <div id="powerTimer"></div>
 </div>
 
 <canvas id="game" width="960" height="540"></canvas>
@@ -308,99 +205,21 @@ button.gold{
     <div class="controlGroup">
         <button class="touchButton" data-key=" ">▲</button>
         <button class="touchButton" data-key="x">⚡</button>
-        <button class="touchButton" data-key="f">🔥</button>
     </div>
 </div>
-
-<!-- MAIN MESSAGE -->
 
 <div id="message">
 
-    <h1>🖨️ PRINT WARS</h1>
+<h1>🖨️ PRINT WARS</h1>
 
-    <div id="messageText">
-        Welcome to the secret 3D-printing factory!
-        <br><br>
-        Run, jump, defeat rogue products,
-        collect filament and reach the printer.
-        <br><br>
-        <strong>There are 5 increasingly difficult levels.</strong>
-    </div>
-
-    <div>
-        <button id="startButton" class="menuButton">
-            START GAME
-        </button>
-
-        <button id="shopButton" class="menuButton gold">
-            🛒 SHOP
-        </button>
-    </div>
-
+<div id="messageText">
+    Welcome to the secret 3D-printing factory!
+    <br><br>
+    Run, jump, collect filament, defeat rogue products
+    and reach the Mega Printer.
 </div>
 
-<!-- LEVEL PREVIEW -->
-
-<div id="levelPreview" class="hidden">
-
-    <h1 id="previewTitle">LEVEL 1</h1>
-
-    <div id="previewDescription"></div>
-
-    <h2 style="color:#facc15">⚡ POWER-UPS IN THIS LEVEL</h2>
-
-    <div class="powerPreview">
-
-        <div class="powerCard">
-            <div class="powerOrb fireOrb">🔥</div>
-            <strong>FIREBALL</strong>
-            <p>
-                Touch the red orb to unlock
-                fireballs.
-                Press <strong>F</strong> to shoot.
-            </p>
-        </div>
-
-        <div class="powerCard">
-            <div class="powerOrb jumpOrb">⬆</div>
-            <strong>EXTRA JUMP</strong>
-            <p>
-                Touch the purple orb to unlock
-                an extra jump in the air.
-            </p>
-        </div>
-
-    </div>
-
-    <button id="beginLevelButton" class="menuButton green">
-        ▶ START LEVEL
-    </button>
-
-    <button id="previewShopButton" class="menuButton gold">
-        🛒 SHOP
-    </button>
-
-</div>
-
-<!-- SHOP -->
-
-<div id="shop" class="hidden">
-
-    <h1>🛒 PRINT SHOP</h1>
-
-    <div>
-        Filament:
-        <span class="shopCoins" id="shopCoins">0</span>
-        🧵
-    </div>
-
-    <p>Every skin costs <strong>2,000 filament</strong>.</p>
-
-    <div class="skinGrid" id="skinGrid"></div>
-
-    <button id="closeShopButton" class="menuButton">
-        ← BACK
-    </button>
+<button id="startButton">START GAME</button>
 
 </div>
 
@@ -410,50 +229,49 @@ button.gold{
    CANVAS
 ========================================================= */
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
 
-const WIDTH = 960;
-const HEIGHT = 540;
+const WIDTH=960;
+const HEIGHT=540;
 
 
 /* =========================================================
    AUDIO
 ========================================================= */
 
-let audioCtx = null;
+let audioCtx=null;
 
 function startAudio(){
     if(!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        audioCtx=new(window.AudioContext||window.webkitAudioContext)();
     }
 
-    if(audioCtx.state === "suspended"){
+    if(audioCtx.state==="suspended"){
         audioCtx.resume();
     }
 }
 
-function beep(freq,duration=.08,type="square",volume=.05){
-    if(!audioCtx) return;
+function beep(freq,duration=.08,type="square",volume=.04){
+    if(!audioCtx)return;
 
-    const oscillator = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const o=audioCtx.createOscillator();
+    const g=audioCtx.createGain();
 
-    oscillator.type = type;
-    oscillator.frequency.value = freq;
+    o.type=type;
+    o.frequency.value=freq;
 
-    gain.gain.setValueAtTime(volume,audioCtx.currentTime);
-
-    gain.gain.exponentialRampToValueAtTime(
+    g.gain.setValueAtTime(volume,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(
         .001,
-        audioCtx.currentTime + duration
+        audioCtx.currentTime+duration
     );
 
-    oscillator.connect(gain);
-    gain.connect(audioCtx.destination);
+    o.connect(g);
+    g.connect(audioCtx.destination);
 
-    oscillator.start();
-    oscillator.stop(audioCtx.currentTime + duration);
+    o.start();
+    o.stop(audioCtx.currentTime+duration);
 }
 
 
@@ -461,7 +279,7 @@ function beep(freq,duration=.08,type="square",volume=.05){
    INPUT
 ========================================================= */
 
-const keys = {};
+const keys={};
 
 window.addEventListener("keydown",e=>{
 
@@ -470,82 +288,79 @@ window.addEventListener("keydown",e=>{
         "ArrowRight",
         "ArrowUp",
         " ",
-        "x",
-        "X",
-        "f",
-        "F"
+        "x","X",
+        "f","F",
+        "g","G",
+        "r","R",
+        "v","V"
     ].includes(e.key)){
         e.preventDefault();
     }
 
-    keys[e.key] = true;
+    keys[e.key]=true;
 
-    if(
-        (e.key===" " || e.key==="ArrowUp") &&
-        game.started &&
-        !game.over &&
-        !world.finished
-    ){
+    if(!game.started || game.over || world.finished)return;
+
+    if(e.key===" " || e.key==="ArrowUp"){
         jump();
     }
 
-    if(
-        (e.key==="x" || e.key==="X") &&
-        game.started &&
-        !game.over &&
-        !world.finished
-    ){
+    if(e.key==="x" || e.key==="X"){
         dash();
     }
 
-    if(
-        (e.key==="f" || e.key==="F") &&
-        game.started &&
-        !game.over &&
-        !world.finished
-    ){
-        shootFireball();
+    if(e.key==="f" || e.key==="F"){
+        useFireball();
+    }
+
+    if(e.key==="g" || e.key==="G"){
+        groundSmash();
+    }
+
+    if(e.key==="r" || e.key==="R"){
+        freezeRay();
+    }
+
+    if(e.key==="v" || e.key==="V"){
+        ghostMode();
     }
 
 });
 
 window.addEventListener("keyup",e=>{
-    keys[e.key] = false;
+    keys[e.key]=false;
 });
 
 
 document.querySelectorAll(".touchButton").forEach(button=>{
 
-    const key = button.dataset.key;
+    const key=button.dataset.key;
 
     button.addEventListener("pointerdown",e=>{
         e.preventDefault();
+        keys[key]=true;
 
-        keys[key] = true;
-
-        if(key===" ") jump();
-        if(key==="x") dash();
-        if(key==="f") shootFireball();
+        if(key===" ")jump();
+        if(key==="x")dash();
     });
 
     button.addEventListener("pointerup",e=>{
         e.preventDefault();
-        keys[key] = false;
+        keys[key]=false;
     });
 
     button.addEventListener("pointercancel",()=>{
-        keys[key] = false;
+        keys[key]=false;
     });
 
 });
 
 
 /* =========================================================
-   GAME STATE
+   GAME
 ========================================================= */
 
-const game = {
-
+const game={
     started:false,
     over:false,
     score:0,
@@ -553,85 +368,19 @@ const game = {
     enemiesDefeated:0,
     level:1,
     totalLevels:5
-
 };
-
-
-/* =========================================================
-   SAVE FILAMENT / SKINS
-========================================================= */
-
-let savedCoins =
-    Number(localStorage.getItem("printWarsCoins") || 0);
-
-let ownedSkins =
-    JSON.parse(
-        localStorage.getItem("printWarsSkins") ||
-        '["Classic"]'
-    );
-
-let currentSkin =
-    localStorage.getItem("printWarsCurrentSkin") ||
-    "Classic";
-
-
-const skins = [
-
-    {
-        name:"Classic",
-        color:"#60a5fa"
-    },
-
-    {
-        name:"Red Printer",
-        color:"#ef4444"
-    },
-
-    {
-        name:"Golden",
-        color:"#facc15"
-    },
-
-    {
-        name:"Toxic",
-        color:"#4ade80"
-    },
-
-    {
-        name:"Purple",
-        color:"#c084fc"
-    },
-
-    {
-        name:"Ice",
-        color:"#67e8f9"
-    },
-
-    {
-        name:"Lava",
-        color:"#f97316"
-    },
-
-    {
-        name:"Galaxy",
-        color:"#a78bfa"
-    }
-
-];
 
 
 /* =========================================================
    WORLD
 ========================================================= */
 
-const world = {
-
+const world={
     width:5000,
     cameraX:0,
     groundY:450,
     finishX:4800,
     finished:false
-
 };
 
 
@@ -639,11 +388,9 @@ const world = {
    PLAYER
 ========================================================= */
 
-const player = {
-
+const player={
     x:100,
     y:350,
-
     w:30,
     h:52,
 
@@ -653,35 +400,43 @@ const player = {
     maxSpeed:6,
     acceleration:.65,
     friction:.78,
-
     jumpPower:13,
 
     onGround:false,
-
     facing:1,
 
     lives:3,
-
     invincible:0,
 
     dashCooldown:0,
     dashTimer:0,
 
-    big:false,
-    starTimer:0,
+    jumpsUsed:0,
 
     checkpoint:100,
 
-    /* POWER-UPS */
+    currentPower:null,
 
-    fireball:false,
+    fireballTimer:0,
+    fireballCooldown:0,
 
-    extraJump:false,
+    speedTimer:0,
+    shield:false,
 
-    jumpsUsed:0,
+    magnetTimer:0,
 
-    fireCooldown:0
+    smashTimer:0,
 
+    freezeTimer:0,
+    freezeCooldown:0,
+
+    superDashTimer:0,
+
+    starTimer:0,
+
+    ghostTimer:0,
+
+    multiplierTimer:0
 };
 
 
@@ -689,442 +444,456 @@ const player = {
    ARRAYS
 ========================================================= */
 
-let platforms = [];
-let spikes = [];
-let blocks = [];
-let enemies = [];
-let collectibles = [];
-let powerups = [];
-let fireballs = [];
-let bossFireballs = [];
-let particles = [];
-let texts = [];
+let platforms=[];
+let spikes=[];
+let blocks=[];
+let enemies=[];
+let collectibles=[];
+let powerups=[];
+let fireballs=[];
+let playerShots=[];
+let particles=[];
+let texts=[];
 
 
 /* =========================================================
    BOSS
 ========================================================= */
 
-let boss = {
+let boss=null;
+let bossFireballs=[];
 
-    active:false,
-    x:0,
-    y:330,
-    w:110,
-    h:110,
 
-    health:100,
-    maxHealth:100,
+/* =========================================================
+   POWER-UP DEFINITIONS
+========================================================= */
 
-    fireTimer:100,
-    direction:1,
+const POWERUPS={
 
-    defeated:false
+    fireball:{
+        icon:"🔥",
+        name:"FIREBALL",
+        color:"#ef4444",
+        help:"Press F to shoot fireballs."
+    },
+
+    extraJump:{
+        icon:"🪽",
+        name:"EXTRA JUMP",
+        color:"#a78bfa",
+        help:"Press SPACE again in the air."
+    },
+
+    speed:{
+        icon:"⚡",
+        name:"SPEED BOOST",
+        color:"#facc15",
+        help:"Automatically makes you faster."
+    },
+
+    shield:{
+        icon:"🛡️",
+        name:"SHIELD",
+        color:"#38bdf8",
+        help:"Blocks your next hit."
+    },
+
+    magnet:{
+        icon:"🧲",
+        name:"FILAMENT MAGNET",
+        color:"#22c55e",
+        help:"Automatically attracts filament."
+    },
+
+    smash:{
+        icon:"💥",
+        name:"GROUND SMASH",
+        color:"#f97316",
+        help:"Press G in the air."
+    },
+
+    freeze:{
+        icon:"❄️",
+        name:"FREEZE RAY",
+        color:"#67e8f9",
+        help:"Press R to freeze enemies."
+    },
+
+    superDash:{
+        icon:"🚀",
+        name:"SUPER DASH",
+        color:"#c084fc",
+        help:"Press X for a powerful dash."
+    },
+
+    star:{
+        icon:"🌟",
+        name:"INVINCIBILITY",
+        color:"#facc15",
+        help:"Automatically makes you invincible."
+    },
+
+    life:{
+        icon:"❤️",
+        name:"EXTRA LIFE",
+        color:"#fb7185",
+        help:"Immediately gives +1 life."
+    },
+
+    ghost:{
+        icon:"👻",
+        name:"GHOST MODE",
+        color:"#e2e8f0",
+        help:"Press V to pass through enemies."
+    },
+
+    multiplier:{
+        icon:"💰",
+        name:"COIN MULTIPLIER",
+        color:"#fbbf24",
+        help:"Doubles filament collected."
+    }
 
 };
 
 
 /* =========================================================
-   PRODUCT NAMES
+   LEVELS
 ========================================================= */
 
-const productNames = [
+const levels=[
 
-    "Gear Fidget",
-    "Dragon",
-    "Pig",
-    "Otter",
-    "Shark",
-    "Knight Holder",
-    "Cactus",
-    "Air Tank"
+/* LEVEL 1 */
+{
+    name:"Factory Floor",
+    theme:"factory",
+    width:5000,
+
+    grounds:[
+        [0,900],[1050,700],[1900,700],
+        [2750,800],[3750,1100]
+    ],
+
+    platforms:[
+        [400,360,180],
+        [700,300,140],
+        [1100,350,170],
+        [1370,285,150],
+        [1650,350,140],
+        [2000,340,170],
+        [2300,285,140],
+        [2550,350,160],
+        [2950,330,180],
+        [3250,270,150],
+        [3550,350,160],
+        [3950,320,170],
+        [4250,270,150],
+        [4500,340,170]
+    ],
+
+    spikes:[
+        [1500,425,70],
+        [2400,425,70],
+        [3650,425,70]
+    ],
+
+    enemies:[
+        [500,"patrol"],
+        [1150,"patrol"],
+        [1700,"jumper"],
+        [2050,"patrol"],
+        [2600,"patrol"],
+        [3000,"jumper"],
+        [3600,"patrol"],
+        [4000,"patrol"],
+        [4500,"jumper"]
+    ],
+
+    powers:["fireball","extraJump","speed"]
+},
+
+/* LEVEL 2 */
+{
+    name:"Filament Warehouse",
+    theme:"warehouse",
+    width:5500,
+
+    grounds:[
+        [0,650],[800,650],[1600,600],
+        [2350,700],[3200,700],
+        [4150,700],[5000,700]
+    ],
+
+    platforms:[
+        [300,350,150],
+        [570,280,130],
+        [900,340,160],
+        [1180,250,140],
+        [1650,340,160],
+        [1900,270,130],
+        [2150,350,150],
+        [2450,280,140],
+        [2750,340,170],
+        [3050,250,140],
+        [3300,340,150],
+        [3600,280,130],
+        [3900,350,170],
+        [4250,290,140],
+        [4500,340,170],
+        [4800,270,140],
+        [5100,340,170]
+    ],
+
+    spikes:[
+        [700,425,90],
+        [1450,425,100],
+        [2280,425,80],
+        [3150,425,100],
+        [4050,425,100],
+        [4700,425,70]
+    ],
+
+    enemies:[
+        [350,"patrol"],
+        [650,"jumper"],
+        [950,"patrol"],
+        [1220,"fire"],
+        [1680,"jumper"],
+        [1940,"patrol"],
+        [2180,"fire"],
+        [2800,"jumper"],
+        [3070,"patrol"],
+        [3350,"fire"],
+        [3650,"jumper"],
+        [3950,"patrol"],
+        [4300,"fire"],
+        [4550,"jumper"],
+        [5130,"patrol"]
+    ],
+
+    powers:["shield","magnet","smash"]
+},
+
+/* LEVEL 3 */
+{
+    name:"3D Print Canyon",
+    theme:"canyon",
+    width:6100,
+
+    grounds:[
+        [0,600],[750,500],[1400,700],
+        [2200,500],[2900,800],
+        [3900,550],[4600,650],[5400,700]
+    ],
+
+    platforms:[
+        [220,340,150],
+        [470,270,120],
+        [800,350,140],
+        [1030,250,130],
+        [1450,330,150],
+        [1700,240,120],
+        [1950,350,140],
+        [2250,280,130],
+        [2500,200,120],
+        [3000,340,150],
+        [3250,260,130],
+        [3500,340,150],
+        [3900,280,140],
+        [4200,350,160],
+        [4650,300,150],
+        [4900,220,120],
+        [5200,340,160],
+        [5550,280,140],
+        [5800,350,150]
+    ],
+
+    spikes:[
+        [600,425,100],
+        [1250,425,100],
+        [2050,425,100],
+        [2780,425,100],
+        [3750,425,100],
+        [4400,425,100],
+        [5050,425,80],
+        [5700,425,80]
+    ],
+
+    enemies:[
+        [300,"jumper"],
+        [510,"fire"],
+        [830,"jumper"],
+        [1060,"fire"],
+        [1480,"patrol"],
+        [1730,"jumper"],
+        [1980,"fire"],
+        [2280,"jumper"],
+        [2530,"fire"],
+        [3030,"patrol"],
+        [3280,"jumper"],
+        [3530,"fire"],
+        [3930,"jumper"],
+        [4230,"fire"],
+        [4680,"jumper"],
+        [4930,"fire"],
+        [5230,"jumper"],
+        [5580,"fire"],
+        [5830,"jumper"]
+    ],
+
+    powers:["freeze","superDash","ghost"]
+},
+
+/* LEVEL 4 */
+{
+    name:"Prototype Lab",
+    theme:"lab",
+    width:6600,
+
+    grounds:[
+        [0,700],[850,500],[1500,750],
+        [2450,550],[3150,850],
+        [4250,600],[5000,700],[5900,700]
+    ],
+
+    platforms:[
+        [350,350,150],
+        [620,280,130],
+        [900,340,150],
+        [1170,250,140],
+        [1550,340,150],
+        [1800,250,130],
+        [2100,330,150],
+        [2500,270,150],
+        [2750,190,120],
+        [3200,340,160],
+        [3500,250,140],
+        [3800,340,150],
+        [4300,300,160],
+        [4600,210,130],
+        [5050,330,170],
+        [5350,250,130],
+        [5600,340,160],
+        [6000,300,150],
+        [6250,220,130]
+    ],
+
+    spikes:[
+        [650,425,90],
+        [1000,425,100],
+        [1400,425,80],
+        [2150,425,100],
+        [2850,425,100],
+        [3650,425,100],
+        [4100,425,80],
+        [4800,425,100],
+        [5500,425,90],
+        [5800,425,80]
+    ],
+
+    enemies:[
+        [400,"jumper"],
+        [650,"fire"],
+        [950,"jumper"],
+        [1200,"fire"],
+        [1580,"jumper"],
+        [1830,"fire"],
+        [2130,"jumper"],
+        [2530,"fire"],
+        [2780,"jumper"],
+        [3230,"fire"],
+        [3530,"jumper"],
+        [3830,"fire"],
+        [4330,"jumper"],
+        [4630,"fire"],
+        [5080,"jumper"],
+        [5380,"fire"],
+        [5630,"jumper"],
+        [6030,"fire"],
+        [6280,"jumper"]
+    ],
+
+    powers:["star","life","multiplier"]
+},
+
+/* LEVEL 5 */
+{
+    name:"The Mega Printer",
+    theme:"mega",
+    width:7200,
+
+    grounds:[
+        [0,700],[850,650],[1650,600],
+        [2400,800],[3400,650],
+        [4200,700],[5100,650],
+        [6000,1200]
+    ],
+
+    platforms:[
+        [300,350,170],
+        [600,270,130],
+        [900,340,150],
+        [1150,240,130],
+        [1700,330,150],
+        [1950,230,120],
+        [2200,320,140],
+        [2500,230,120],
+        [2750,170,110],
+        [3450,340,150],
+        [3750,250,130],
+        [4000,330,140],
+        [4300,230,120],
+        [4650,340,150],
+        [4950,240,130],
+        [5200,320,140],
+        [5550,220,130],
+        [5850,330,150]
+    ],
+
+    spikes:[
+        [700,425,100],
+        [1250,425,100],
+        [1450,425,100],
+        [2300,425,100],
+        [2850,425,100],
+        [3300,425,100],
+        [4100,425,100],
+        [4500,425,100],
+        [5000,425,100],
+        [5400,425,100]
+    ],
+
+    enemies:[
+        [350,"jumper"],
+        [620,"fire"],
+        [930,"jumper"],
+        [1180,"fire"],
+        [1730,"jumper"],
+        [1980,"fire"],
+        [2230,"jumper"],
+        [2530,"fire"],
+        [2780,"jumper"],
+        [3480,"fire"],
+        [3780,"jumper"],
+        [4030,"fire"],
+        [4330,"jumper"],
+        [4680,"fire"],
+        [4980,"jumper"],
+        [5230,"fire"],
+        [5580,"jumper"],
+        [5880,"fire"]
+    ],
+
+    powers:["fireball","extraJump","star"],
+
+    boss:true
+}
 
 ];
 
 
 /* =========================================================
-   LEVEL DATA
-========================================================= */
-
-const levels = [
-
-    /* LEVEL 1 */
-
-    {
-        name:"Factory Floor",
-        theme:"factory",
-        width:4800,
-
-        grounds:[
-            [0,850],
-            [1000,750],
-            [1850,700],
-            [2700,850],
-            [3750,1050]
-        ],
-
-        platforms:[
-            [400,360,180],
-            [690,300,140],
-            [1080,350,170],
-            [1330,285,150],
-            [1600,350,140],
-            [1950,340,170],
-            [2250,285,140],
-            [2500,350,160],
-            [2900,330,180],
-            [3200,270,150],
-            [3500,350,160],
-            [3900,320,170],
-            [4200,270,150],
-            [4450,340,170]
-        ],
-
-        spikes:[
-            [1520,425,60],
-            [2390,425,70],
-            [3660,425,70]
-        ],
-
-        enemies:[
-            [500,"patrol"],
-            [1130,"patrol"],
-            [2010,"patrol"],
-            [2540,"patrol"],
-            [2950,"patrol"],
-            [3550,"patrol"],
-            [3950,"patrol"],
-            [4490,"patrol"]
-        ]
-
-    },
-
-
-    /* LEVEL 2 */
-
-    {
-        name:"Filament Warehouse",
-        theme:"warehouse",
-        width:5400,
-
-        grounds:[
-            [0,650],
-            [800,650],
-            [1600,600],
-            [2350,700],
-            [3200,700],
-            [4150,700],
-            [5000,700]
-        ],
-
-        platforms:[
-            [300,350,150],
-            [570,280,130],
-            [900,340,160],
-            [1180,250,140],
-            [1650,340,160],
-            [1900,270,130],
-            [2150,350,150],
-            [2450,280,140],
-            [2750,340,170],
-            [3050,250,140],
-            [3300,340,150],
-            [3600,280,130],
-            [3900,350,170],
-            [4250,290,140],
-            [4500,340,170],
-            [4800,270,140],
-            [5100,340,170]
-        ],
-
-        spikes:[
-            [700,425,90],
-            [1450,425,100],
-            [2280,425,80],
-            [3150,425,100],
-            [4050,425,100],
-            [4700,425,70]
-        ],
-
-        enemies:[
-            [350,"patrol"],
-            [650,"jumper"],
-            [950,"patrol"],
-            [1220,"fire"],
-            [1680,"jumper"],
-            [1940,"patrol"],
-            [2180,"fire"],
-            [2800,"jumper"],
-            [3070,"patrol"],
-            [3350,"fire"],
-            [3650,"jumper"],
-            [3950,"patrol"],
-            [4300,"fire"],
-            [4550,"jumper"],
-            [5130,"patrol"]
-        ]
-
-    },
-
-
-    /* LEVEL 3 */
-
-    {
-        name:"3D Print Canyon",
-        theme:"canyon",
-        width:6000,
-
-        grounds:[
-            [0,600],
-            [750,500],
-            [1400,700],
-            [2200,500],
-            [2900,800],
-            [3900,550],
-            [4600,650],
-            [5400,600]
-        ],
-
-        platforms:[
-            [220,340,150],
-            [470,270,120],
-            [800,350,140],
-            [1030,250,130],
-            [1450,330,150],
-            [1700,240,120],
-            [1950,350,140],
-            [2250,280,130],
-            [2500,200,120],
-            [3000,340,150],
-            [3250,260,130],
-            [3500,340,150],
-            [3900,280,140],
-            [4200,350,160],
-            [4650,300,150],
-            [4900,220,120],
-            [5200,340,160],
-            [5550,280,140],
-            [5800,350,150]
-        ],
-
-        spikes:[
-            [600,425,100],
-            [1250,425,100],
-            [2050,425,100],
-            [2780,425,100],
-            [3750,425,100],
-            [4400,425,100],
-            [5050,425,80],
-            [5700,425,80]
-        ],
-
-        enemies:[
-            [300,"jumper"],
-            [510,"fire"],
-            [830,"jumper"],
-            [1060,"fire"],
-            [1480,"patrol"],
-            [1730,"jumper"],
-            [1980,"fire"],
-            [2280,"jumper"],
-            [2530,"fire"],
-            [3030,"patrol"],
-            [3280,"jumper"],
-            [3530,"fire"],
-            [3930,"jumper"],
-            [4230,"fire"],
-            [4680,"jumper"],
-            [4930,"fire"],
-            [5230,"jumper"],
-            [5580,"fire"],
-            [5830,"jumper"]
-        ]
-
-    },
-
-
-    /* LEVEL 4 */
-
-    {
-        name:"Prototype Lab",
-        theme:"lab",
-        width:6500,
-
-        grounds:[
-            [0,700],
-            [850,500],
-            [1500,750],
-            [2450,550],
-            [3150,850],
-            [4250,600],
-            [5000,700],
-            [5900,600]
-        ],
-
-        platforms:[
-            [350,350,150],
-            [620,280,130],
-            [900,340,150],
-            [1170,250,140],
-            [1550,340,150],
-            [1800,250,130],
-            [2100,330,150],
-            [2500,270,150],
-            [2750,190,120],
-            [3200,340,160],
-            [3500,250,140],
-            [3800,340,150],
-            [4300,300,160],
-            [4600,210,130],
-            [5050,330,170],
-            [5350,250,130],
-            [5600,340,160],
-            [6000,300,150],
-            [6250,220,130]
-        ],
-
-        spikes:[
-            [650,425,90],
-            [1000,425,100],
-            [1400,425,80],
-            [2150,425,100],
-            [2850,425,100],
-            [3650,425,100],
-            [4100,425,80],
-            [4800,425,100],
-            [5500,425,90],
-            [5800,425,80]
-        ],
-
-        enemies:[
-            [400,"jumper"],
-            [650,"fire"],
-            [950,"jumper"],
-            [1200,"fire"],
-            [1580,"jumper"],
-            [1830,"fire"],
-            [2130,"jumper"],
-            [2530,"fire"],
-            [2780,"jumper"],
-            [3230,"fire"],
-            [3530,"jumper"],
-            [3830,"fire"],
-            [4330,"jumper"],
-            [4630,"fire"],
-            [5080,"jumper"],
-            [5380,"fire"],
-            [5630,"jumper"],
-            [6030,"fire"],
-            [6280,"jumper"]
-        ]
-
-    },
-
-
-    /* LEVEL 5 */
-
-    {
-        name:"The Mega Printer",
-        theme:"mega",
-        width:7200,
-
-        grounds:[
-            [0,700],
-            [850,650],
-            [1650,600],
-            [2400,800],
-            [3400,650],
-            [4200,700],
-            [5100,650],
-            [6000,1200]
-        ],
-
-        platforms:[
-            [300,350,170],
-            [600,270,130],
-            [900,340,150],
-            [1150,240,130],
-            [1700,330,150],
-            [1950,230,120],
-            [2200,320,140],
-            [2500,230,120],
-            [2750,170,110],
-            [3450,340,150],
-            [3750,250,130],
-            [4000,330,140],
-            [4300,230,120],
-            [4650,340,150],
-            [4950,240,130],
-            [5200,320,140],
-            [5550,220,130],
-            [5850,330,150],
-            [6200,240,130],
-            [6500,330,150],
-            [6800,230,170]
-        ],
-
-        spikes:[
-            [700,425,100],
-            [1250,425,100],
-            [1450,425,100],
-            [2300,425,100],
-            [2850,425,100],
-            [3300,425,100],
-            [4100,425,100],
-            [4500,425,100],
-            [5000,425,100],
-            [5400,425,100],
-            [5950,425,100],
-            [6350,425,100]
-        ],
-
-        enemies:[
-            [350,"jumper"],
-            [620,"fire"],
-            [930,"jumper"],
-            [1180,"fire"],
-            [1730,"jumper"],
-            [1980,"fire"],
-            [2230,"jumper"],
-            [2530,"fire"],
-            [2780,"jumper"],
-            [3480,"fire"],
-            [3780,"jumper"],
-            [4030,"fire"],
-            [4330,"jumper"],
-            [4680,"fire"],
-            [4980,"jumper"],
-            [5230,"fire"],
-            [5580,"jumper"],
-            [5880,"fire"],
-            [6230,"jumper"],
-            [6530,"fire"],
-            [6830,"jumper"]
-        ]
-
-    }
-
-];
-
-
-/* =========================================================
-   LEVEL POWER-UPS
-   TWO PER LEVEL
-========================================================= */
-
-const levelPowerups = [
-
-    ["fireball","doublejump"],
-    ["fireball","doublejump"],
-    ["fireball","doublejump"],
-    ["fireball","doublejump"],
-    ["fireball","doublejump"]
-
-];
-
-
-/* =========================================================
-   HELPERS
+   CREATE OBJECTS
 ========================================================= */
 
 function addPlatform(x,y,w,h=25){
@@ -1132,110 +901,96 @@ function addPlatform(x,y,w,h=25){
 }
 
 function addSpike(x,y,w){
-    spikes.push({
-        x,
-        y,
-        w,
-        h:25
-    });
+    spikes.push({x,y,w,h:25});
 }
 
 function addBlock(x,y){
     blocks.push({
-        x,
-        y,
-        w:42,
-        h:42,
-        used:false
+        x,y,w:42,h:42,used:false
     });
 }
 
 function addFilament(x,y){
     collectibles.push({
-        x,
-        y,
-        r:9,
-        collected:false
+        x,y,r:9,collected:false
     });
 }
-
-
-/* =========================================================
-   POWER-UP ORBS
-========================================================= */
 
 function addPowerup(x,y,type){
-
     powerups.push({
-
-        x,
-        y,
-
-        w:32,
-        h:32,
-
+        x,y,w:32,h:32,
         type,
-
         collected:false,
-
-        pulse:Math.random()*Math.PI*2
-
+        pulse:Math.random()*6
     });
-
 }
-
-
-/* =========================================================
-   ENEMIES
-========================================================= */
 
 function addEnemy(x,type){
 
     enemies.push({
-
         x,
-
         y:390,
-
         w:34,
         h:34,
 
         vx:0,
         vy:0,
 
-        direction:
-            Math.random()>.5 ? 1 : -1,
+        direction:Math.random()>.5?1:-1,
 
         speed:
             type==="jumper"
-            ?1.1 + game.level*.08
-            :1.15 + game.level*.10,
+            ?1.15+game.level*.1
+            :1.2+game.level*.12,
 
         type,
-
         alive:true,
-
         onGround:false,
 
-        jumpTimer:
-            type==="jumper"
-            ?80+Math.random()*100
-            :999999,
+        jumpTimer:80+Math.random()*100,
+        fireTimer:80+Math.random()*100,
 
-        fireTimer:
-            type==="fire"
-            ?80+Math.random()*100
-            :999999,
-
-        name:
-            productNames[
-                Math.floor(
-                    Math.random()*productNames.length
-                )
-            ]
-
+        name:[
+            "Gear Fidget",
+            "Dragon",
+            "Pig",
+            "Otter",
+            "Shark",
+            "Knight Holder",
+            "Cactus",
+            "Air Tank"
+        ][Math.floor(Math.random()*8)]
     });
+}
 
+
+/* =========================================================
+   CREATE BOSS
+========================================================= */
+
+function createBoss(){
+
+    boss={
+        x:world.width-700,
+        y:330,
+
+        w:90,
+        h:100,
+
+        vx:-1.5,
+        vy:0,
+
+        health:100,
+        maxHealth:100,
+
+        fireTimer:80,
+        jumpTimer:180,
+
+        alive:true,
+        phase:1
+    };
+
+    bossFireballs=[];
 }
 
 
@@ -1245,7 +1000,7 @@ function addEnemy(x,type){
 
 function createLevel(number){
 
-    const data = levels[number-1];
+    const data=levels[number-1];
 
     platforms=[];
     spikes=[];
@@ -1254,160 +1009,106 @@ function createLevel(number){
     collectibles=[];
     powerups=[];
     fireballs=[];
-    bossFireballs=[];
+    playerShots=[];
     particles=[];
     texts=[];
 
-    world.width=data.width;
-    world.finished=false;
-    world.finishX=data.width-150;
+    boss=null;
+    bossFireballs=[];
 
-    /* GROUND */
+    world.width=data.width;
+    world.finishX=data.width-150;
+    world.finished=false;
 
     for(const g of data.grounds){
-        addPlatform(
-            g[0],
-            450,
-            g[1],
-            100
-        );
+        addPlatform(g[0],450,g[1],100);
     }
-
-    /* PLATFORMS */
 
     for(const p of data.platforms){
-        addPlatform(
-            p[0],
-            p[1],
-            p[2],
-            25
-        );
+        addPlatform(p[0],p[1],p[2],25);
     }
-
-    /* SPIKES */
 
     for(const s of data.spikes){
-        addSpike(
-            s[0],
-            s[1],
-            s[2]
-        );
+        addSpike(s[0],s[1],s[2]);
     }
 
-    /* BLOCKS */
-
-    for(
-        let i=0;
-        i<data.platforms.length;
-        i+=2
-    ){
-
-        const p=data.platforms[i];
-
-        addBlock(
-            p[0]+20,
-            p[1]-60
-        );
-
+    for(const b of data.platforms){
+        if(Math.random()<.45){
+            addBlock(b[0]+20,b[1]-60);
+        }
     }
 
-    /* FILAMENT */
+    for(let x=120;x<data.width-200;x+=180){
 
-    for(
-        let x=120;
-        x<data.width-180;
-        x+=190
-    ){
-
-        const y=
-            370-
-            ((x/190)%3)*35;
+        const y=370-((x/180)%3)*30;
 
         addFilament(x,y);
-
     }
-
-    /* PLATFORM FILAMENT */
 
     for(const p of data.platforms){
 
         for(
-            let x=p[0]+20;
+            let x=p[0]+25;
             x<p[0]+p[2]-10;
-            x+=48
+            x+=55
         ){
 
-            addFilament(
-                x,
-                p[1]-28
-            );
-
+            addFilament(x,p[1]-25);
         }
-
     }
-
-    /* ENEMIES */
 
     for(const e of data.enemies){
         addEnemy(e[0],e[1]);
     }
 
-    /* POWER ORB 1 */
+    /* EXACTLY THREE POWER ORBS */
 
-    const p1 =
-        data.platforms[
-            Math.min(3,data.platforms.length-1)
-        ];
+    const powerPositions=[
+        [data.platforms[2][0]+40,data.platforms[2][1]-60],
+        [data.platforms[Math.floor(data.platforms.length/2)][0]+40,
+         data.platforms[Math.floor(data.platforms.length/2)][1]-60],
+        [data.platforms[data.platforms.length-3][0]+45,
+         data.platforms[data.platforms.length-3][1]-60]
+    ];
 
-    addPowerup(
-        p1[0]+p1[2]/2-16,
-        p1[1]-65,
-        levelPowerups[number-1][0]
-    );
-
-    /* POWER ORB 2 */
-
-    const middle =
-        Math.floor(data.platforms.length*.60);
-
-    const p2=data.platforms[middle];
-
-    addPowerup(
-        p2[0]+p2[2]/2-16,
-        p2[1]-65,
-        levelPowerups[number-1][1]
-    );
-
-    /* PLAYER */
+    data.powers.forEach((type,i)=>{
+        addPowerup(
+            powerPositions[i][0],
+            powerPositions[i][1],
+            type
+        );
+    });
 
     player.x=100;
     player.y=350;
     player.vx=0;
     player.vy=0;
-    player.invincible=120;
+
+    player.invincible=100;
     player.checkpoint=100;
-
-    player.fireball=false;
-    player.extraJump=false;
+    player.onGround=false;
     player.jumpsUsed=0;
-    player.fireCooldown=0;
-    player.big=false;
+
+    /* RESET TEMPORARY POWERS */
+
+    player.currentPower=null;
+
+    player.fireballTimer=0;
+    player.fireballCooldown=0;
+    player.speedTimer=0;
+    player.shield=false;
+    player.magnetTimer=0;
+    player.smashTimer=0;
+    player.freezeTimer=0;
+    player.freezeCooldown=0;
+    player.superDashTimer=0;
     player.starTimer=0;
+    player.ghostTimer=0;
+    player.multiplierTimer=0;
 
-    /* BOSS ONLY LEVEL 5 */
-
-    boss.active = number===5;
-    boss.defeated=false;
-    boss.health=100;
-    boss.maxHealth=100;
-    boss.fireTimer=120;
-    boss.x=data.width-600;
-    boss.y=330;
-
-    document.getElementById("bossBar").style.display =
-        number===5 ? "block" : "none";
-
-    updateBossBar();
+    if(data.boss){
+        createBoss();
+    }
 
     addText(
         player.x+300,
@@ -1426,7 +1127,86 @@ function createLevel(number){
     );
 
     beep(350,.12);
+}
 
+
+/* =========================================================
+   POWER-UP COLLECTION
+========================================================= */
+
+function collectPower(type){
+
+    const p=POWERUPS[type];
+
+    player.currentPower=type;
+
+    addText(
+        player.x+player.w/2,
+        player.y-25,
+        p.icon+" "+p.name+"!",
+        p.color,
+        18
+    );
+
+    burst(
+        player.x+15,
+        player.y+20,
+        p.color,
+        20
+    );
+
+    beep(700,.12,"sine");
+
+    switch(type){
+
+        case "fireball":
+            player.fireballTimer=999999;
+            break;
+
+        case "extraJump":
+            break;
+
+        case "speed":
+            player.speedTimer=900;
+            break;
+
+        case "shield":
+            player.shield=true;
+            break;
+
+        case "magnet":
+            player.magnetTimer=1000;
+            break;
+
+        case "smash":
+            player.smashTimer=1000;
+            break;
+
+        case "freeze":
+            player.freezeTimer=1000;
+            break;
+
+        case "superDash":
+            player.superDashTimer=1000;
+            break;
+
+        case "star":
+            player.starTimer=900;
+            player.invincible=900;
+            break;
+
+        case "life":
+            player.lives++;
+            break;
+
+        case "ghost":
+            player.ghostTimer=800;
+            break;
+
+        case "multiplier":
+            player.multiplierTimer=1200;
+            break;
+    }
 }
 
 
@@ -1437,12 +1217,11 @@ function createLevel(number){
 function overlap(a,b){
 
     return(
-        a.x < b.x+b.w &&
-        a.x+a.w > b.x &&
-        a.y < b.y+b.h &&
-        a.y+a.h > b.y
+        a.x<b.x+b.w &&
+        a.x+a.w>b.x &&
+        a.y<b.y+b.h &&
+        a.y+a.h>b.y
     );
-
 }
 
 
@@ -1456,11 +1235,7 @@ function jump(){
         !game.started ||
         game.over ||
         world.finished
-    ){
-        return;
-    }
-
-    /* NORMAL JUMP */
+    )return;
 
     if(player.onGround){
 
@@ -1469,32 +1244,28 @@ function jump(){
         player.jumpsUsed=1;
 
         beep(500,.07);
-
         return;
-
     }
 
     /* EXTRA JUMP */
 
     if(
-        player.extraJump &&
+        levels[game.level-1].powers.includes("extraJump") &&
         player.jumpsUsed<2
     ){
 
         player.vy=-player.jumpPower;
-        player.jumpsUsed++;
+        player.jumpsUsed=2;
 
         burst(
             player.x+15,
-            player.y+50,
-            "#c084fc",
-            12
+            player.y+45,
+            "#a78bfa",
+            10
         );
 
-        beep(750,.08);
-
+        beep(750,.09);
     }
-
 }
 
 
@@ -1504,28 +1275,33 @@ function jump(){
 
 function dash(){
 
-    if(
-        player.dashCooldown>0 ||
-        !game.started ||
-        game.over
-    ){
-        return;
-    }
+    if(player.dashCooldown>0)return;
 
-    player.dashTimer=12;
-    player.dashCooldown=70;
+    const superDash=
+        player.superDashTimer>0;
 
-    player.vx=player.facing*13;
+    player.dashTimer=
+        superDash?20:12;
+
+    player.dashCooldown=
+        superDash?45:70;
+
+    player.vx=
+        player.facing*
+        (superDash?18:13);
 
     burst(
         player.x,
         player.y+25,
-        "#60a5fa",
+        superDash?"#c084fc":"#60a5fa",
         12
     );
 
-    beep(180,.1,"sawtooth");
-
+    beep(
+        superDash?260:180,
+        .1,
+        "sawtooth"
+    );
 }
 
 
@@ -1533,43 +1309,98 @@ function dash(){
    FIREBALL POWER
 ========================================================= */
 
-function shootFireball(){
+function useFireball(){
 
-    if(
-        !player.fireball ||
-        player.fireCooldown>0 ||
-        !game.started ||
-        game.over ||
-        world.finished
-    ){
-        return;
-    }
+    if(player.fireballTimer<=0)return;
+    if(player.fireballCooldown>0)return;
 
-    player.fireCooldown=22;
+    player.fireballCooldown=25;
 
-    fireballs.push({
+    playerShots.push({
 
         x:player.x+player.w/2,
         y:player.y+20,
 
-        w:20,
-        h:20,
+        w:18,
+        h:18,
 
         vx:player.facing*9,
-        vy:0,
-
-        life:100,
-
-        rotation:0
-
+        life:120
     });
 
-    beep(
-        500,
-        .08,
-        "sawtooth"
+    beep(520,.08,"sawtooth");
+}
+
+
+/* =========================================================
+   GROUND SMASH
+========================================================= */
+
+function groundSmash(){
+
+    if(player.smashTimer<=0)return;
+    if(player.onGround)return;
+
+    player.vy=18;
+
+    burst(
+        player.x+15,
+        player.y+50,
+        "#f97316",
+        12
+    );
+}
+
+
+/* =========================================================
+   FREEZE RAY
+========================================================= */
+
+function freezeRay(){
+
+    if(player.freezeTimer<=0)return;
+    if(player.freezeCooldown>0)return;
+
+    player.freezeCooldown=100;
+
+    for(const enemy of enemies){
+
+        if(
+            Math.abs(enemy.x-player.x)<450
+        ){
+            enemy.frozen=180;
+        }
+    }
+
+    if(boss && Math.abs(boss.x-player.x)<600){
+        boss.frozen=100;
+    }
+
+    addText(
+        player.x,
+        player.y-35,
+        "❄️ FROZEN!",
+        "#67e8f9",
+        20
     );
 
+    beep(300,.18,"sine");
+}
+
+
+/* =========================================================
+   GHOST MODE
+========================================================= */
+
+function ghostMode(){
+
+    if(player.ghostTimer<=0)return;
+
+    /* If ghost power is active, pressing V toggles it */
+
+    if(player.ghostTimer>400){
+        player.ghostTimer=1;
+    }
 }
 
 
@@ -1583,14 +1414,12 @@ function updatePlayer(){
 
         player.vx-=player.acceleration;
         player.facing=-1;
-
     }
 
     if(keys["ArrowRight"]){
 
         player.vx+=player.acceleration;
         player.facing=1;
-
     }
 
     if(
@@ -1599,31 +1428,56 @@ function updatePlayer(){
     ){
 
         player.vx*=player.friction;
-
     }
 
+    const maxSpeed=
+        player.speedTimer>0
+        ?10
+        :6;
+
     player.vx=Math.max(
-        -player.maxSpeed,
-        Math.min(
-            player.maxSpeed,
-            player.vx
-        )
+        -maxSpeed,
+        Math.min(maxSpeed,player.vx)
     );
 
     if(player.dashTimer>0){
 
         player.dashTimer--;
         player.vx*=.97;
-
     }
 
-    if(player.dashCooldown>0){
+    if(player.dashCooldown>0)
         player.dashCooldown--;
-    }
 
-    if(player.fireCooldown>0){
-        player.fireCooldown--;
-    }
+    if(player.fireballCooldown>0)
+        player.fireballCooldown--;
+
+    if(player.freezeCooldown>0)
+        player.freezeCooldown--;
+
+    if(player.speedTimer>0)
+        player.speedTimer--;
+
+    if(player.magnetTimer>0)
+        player.magnetTimer--;
+
+    if(player.smashTimer>0)
+        player.smashTimer--;
+
+    if(player.freezeTimer>0)
+        player.freezeTimer--;
+
+    if(player.superDashTimer>0)
+        player.superDashTimer--;
+
+    if(player.starTimer>0)
+        player.starTimer--;
+
+    if(player.ghostTimer>0)
+        player.ghostTimer--;
+
+    if(player.multiplierTimer>0)
+        player.multiplierTimer--;
 
     player.vy+=.6;
 
@@ -1638,22 +1492,18 @@ function updatePlayer(){
     for(const p of platforms){
 
         if(
-
             player.x+player.w>p.x &&
             player.x<p.x+p.w &&
             oldBottom<=p.y &&
             player.y+player.h>=p.y &&
             player.vy>=0
-
         ){
 
             player.y=p.y-player.h;
             player.vy=0;
             player.onGround=true;
             player.jumpsUsed=0;
-
         }
-
     }
 
     player.x=Math.max(
@@ -1664,30 +1514,30 @@ function updatePlayer(){
         )
     );
 
-    /* SPIKES */
+    if(player.onGround===false && player.vy<0){
+        /* no-op */
+    }
 
     for(const spike of spikes){
 
         if(
             overlap(
                 player,
-                spike
+                {
+                    x:spike.x,
+                    y:spike.y,
+                    w:spike.w,
+                    h:spike.h
+                }
             )
         ){
-
             loseLife();
-
         }
-
     }
-
-    /* FALL */
 
     if(player.y>600){
         loseLife();
     }
-
-    /* CAMERA */
 
     world.cameraX=
         player.x-300;
@@ -1700,26 +1550,25 @@ function updatePlayer(){
         )
     );
 
-    if(player.invincible>0){
+    if(player.invincible>0)
         player.invincible--;
-    }
-
-    if(player.starTimer>0){
-        player.starTimer--;
-    }
-
 }
 
 
 /* =========================================================
-   ENEMY UPDATE
+   ENEMIES
 ========================================================= */
 
 function updateEnemies(){
 
     for(const enemy of enemies){
 
-        if(!enemy.alive) continue;
+        if(!enemy.alive)continue;
+
+        if(enemy.frozen>0){
+            enemy.frozen--;
+            continue;
+        }
 
         enemy.vy+=.55;
 
@@ -1733,46 +1582,35 @@ function updateEnemies(){
         for(const p of platforms){
 
             if(
-
                 enemy.x+enemy.w>p.x &&
                 enemy.x<p.x+p.w &&
                 oldBottom<=p.y &&
                 enemy.y+enemy.h>=p.y &&
                 enemy.vy>=0
-
             ){
 
                 enemy.y=p.y-enemy.h;
                 enemy.vy=0;
                 enemy.onGround=true;
-
             }
-
         }
 
-        enemy.x+=
-            enemy.direction*
-            enemy.speed;
+        enemy.x+=enemy.direction*enemy.speed;
 
         let support=null;
 
         for(const p of platforms){
 
             if(
-
                 enemy.x+enemy.w>p.x &&
                 enemy.x<p.x+p.w &&
                 Math.abs(
                     enemy.y+enemy.h-p.y
                 )<8
-
             ){
-
                 support=p;
                 break;
-
             }
-
         }
 
         if(support){
@@ -1784,22 +1622,15 @@ function updateEnemies(){
                 enemy.w;
 
             if(enemy.x<=left){
-
                 enemy.x=left;
                 enemy.direction=1;
-
             }
 
             if(enemy.x>=right){
-
                 enemy.x=right;
                 enemy.direction=-1;
-
             }
-
         }
-
-        /* JUMPER */
 
         if(enemy.type==="jumper"){
 
@@ -1811,23 +1642,15 @@ function updateEnemies(){
             ){
 
                 enemy.direction=
-                    player.x>enemy.x
-                    ?1
-                    :-1;
+                    player.x>enemy.x?1:-1;
 
                 enemy.vy=
-                    -10-
-                    game.level*.35;
+                    -10-game.level*.3;
 
                 enemy.jumpTimer=
-                    90+
-                    Math.random()*80;
-
+                    80+Math.random()*90;
             }
-
         }
-
-        /* FIRE ENEMY */
 
         if(enemy.type==="fire"){
 
@@ -1838,94 +1661,37 @@ function updateEnemies(){
                 spitFire(enemy);
 
                 enemy.fireTimer=
-                    100-
-                    game.level*5+
-                    Math.random()*60;
-
+                    100-game.level*4+
+                    Math.random()*70;
             }
-
         }
 
-        /* PLAYER */
-
         if(
-            overlap(
-                player,
-                enemy
-            )
+            overlap(player,enemy) &&
+            player.ghostTimer<=0
         ){
-
-            const playerBottom=
-                player.y+player.h;
 
             if(
                 player.vy>0 &&
-                playerBottom-enemy.y<20
+                player.y+player.h-enemy.y<20
             ){
 
                 killEnemy(enemy);
-                player.vy=-10;
 
+                player.vy=-10;
+            }
+            else if(player.starTimer>0){
+
+                killEnemy(enemy);
             }
             else{
 
                 loseLife();
-
             }
-
         }
-
     }
 
-    enemies=
-        enemies.filter(
-            e=>e.alive
-        );
-
-}
-
-
-/* =========================================================
-   ENEMY FIRE
-========================================================= */
-
-function spitFire(enemy){
-
-    if(
-        Math.abs(
-            player.x-enemy.x
-        )>800
-    ){
-        return;
-    }
-
-    const direction=
-        player.x>enemy.x
-        ?1
-        :-1;
-
-    fireballs.push({
-
-        x:enemy.x+17,
-        y:enemy.y+8,
-
-        w:16,
-        h:16,
-
-        vx:
-            direction*
-            (4.5+game.level*.25),
-
-        vy:-2,
-
-        life:180,
-
-        enemyFire:true,
-
-        rotation:0
-
-    });
-
+    enemies=enemies.filter(e=>e.alive);
 }
 
 
@@ -1938,25 +1704,91 @@ function killEnemy(enemy){
     enemy.alive=false;
 
     game.enemiesDefeated++;
-
     game.score+=150;
 
     burst(
         enemy.x+17,
         enemy.y+17,
         "#facc15",
-        14
+        15
     );
 
-    addText(
-        enemy.x+17,
-        enemy.y-10,
-        "+150",
-        "#facc15"
-    );
+    beep(700,.06);
+}
 
-    beep(800,.08);
 
+/* =========================================================
+   ENEMY FIRE
+========================================================= */
+
+function spitFire(enemy){
+
+    fireballs.push({
+
+        x:enemy.x+17,
+        y:enemy.y+10,
+
+        w:16,
+        h:16,
+
+        vx:
+            (player.x>enemy.x?1:-1)*
+            (4.5+game.level*.25),
+
+        vy:-2,
+
+        life:180,
+        rotation:0
+    });
+}
+
+
+/* =========================================================
+   PLAYER FIREBALLS
+========================================================= */
+
+function updatePlayerShots(){
+
+    for(const shot of playerShots){
+
+        shot.x+=shot.vx;
+        shot.life--;
+
+        for(const enemy of enemies){
+
+            if(
+                enemy.alive &&
+                overlap(shot,enemy)
+            ){
+
+                killEnemy(enemy);
+                shot.life=0;
+                break;
+            }
+        }
+
+        if(boss && boss.alive && overlap(shot,boss)){
+
+            boss.health-=5;
+            shot.life=0;
+
+            burst(
+                shot.x,
+                shot.y,
+                "#facc15",
+                8
+            );
+
+            if(boss.health<=0){
+                defeatBoss();
+            }
+        }
+    }
+
+    playerShots=
+        playerShots.filter(
+            s=>s.life>0
+        );
 }
 
 
@@ -1971,258 +1803,38 @@ function updateFireballs(){
         fire.x+=fire.vx;
         fire.y+=fire.vy;
 
-        fire.vy+=.04;
-
+        fire.vy+=.1;
         fire.life--;
         fire.rotation+=.2;
 
-        /* PLAYER / ENEMY FIRE */
+        if(
+            overlap(player,fire) &&
+            player.ghostTimer<=0
+        ){
 
-        if(fire.enemyFire){
+            fire.life=0;
 
-            if(
-                overlap(
-                    player,
-                    fire
-                )
-            ){
-
-                fire.life=0;
+            if(player.starTimer>0){
+                game.score+=100;
+            }
+            else{
                 loseLife();
-
             }
-
         }
-        else{
-
-            /* PLAYER FIRE HITS ENEMIES */
-
-            for(const enemy of enemies){
-
-                if(
-                    enemy.alive &&
-                    overlap(
-                        fire,
-                        enemy
-                    )
-                ){
-
-                    fire.life=0;
-                    killEnemy(enemy);
-
-                }
-
-            }
-
-            /* PLAYER FIRE HITS BOSS */
-
-            if(
-                boss.active &&
-                !boss.defeated &&
-                overlap(
-                    fire,
-                    boss
-                )
-            ){
-
-                fire.life=0;
-
-                boss.health-=8;
-
-                burst(
-                    fire.x,
-                    fire.y,
-                    "#facc15",
-                    8
-                );
-
-                updateBossBar();
-
-                if(boss.health<=0){
-
-                    boss.health=0;
-                    boss.defeated=true;
-
-                    game.score+=10000;
-
-                    burst(
-                        boss.x+55,
-                        boss.y+55,
-                        "#ef4444",
-                        60
-                    );
-
-                    beep(200,.2,"sawtooth");
-
-                    setTimeout(
-                        finishLevel,
-                        700
-                    );
-
-                }
-
-            }
-
-        }
-
-        /* PLATFORM */
 
         for(const p of platforms){
 
-            if(
-                overlap(
-                    fire,
-                    p
-                )
-            ){
-
+            if(overlap(fire,p)){
                 fire.life=0;
-
-                burst(
-                    fire.x,
-                    fire.y,
-                    "#fb923c",
-                    7
-                );
-
+                break;
             }
-
         }
-
     }
 
     fireballs=
         fireballs.filter(
             f=>f.life>0
         );
-
-}
-
-
-/* =========================================================
-   POWER-UP UPDATE
-========================================================= */
-
-function updatePowerups(){
-
-    for(const item of powerups){
-
-        if(item.collected) continue;
-
-        item.pulse+=.08;
-
-        if(
-            overlap(
-                player,
-                item
-            )
-        ){
-
-            item.collected=true;
-
-            if(item.type==="fireball"){
-
-                player.fireball=true;
-
-                game.score+=500;
-
-                addText(
-                    player.x,
-                    player.y-20,
-                    "🔥 FIREBALL!",
-                    "#fb923c",
-                    20
-                );
-
-                burst(
-                    player.x+15,
-                    player.y+20,
-                    "#ef4444",
-                    20
-                );
-
-                beep(600,.15);
-
-            }
-
-            if(item.type==="doublejump"){
-
-                player.extraJump=true;
-
-                game.score+=500;
-
-                addText(
-                    player.x,
-                    player.y-20,
-                    "⬆ EXTRA JUMP!",
-                    "#c084fc",
-                    20
-                );
-
-                burst(
-                    player.x+15,
-                    player.y+20,
-                    "#a855f7",
-                    20
-                );
-
-                beep(750,.15);
-
-            }
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   BLOCKS
-========================================================= */
-
-function updateBlocks(){
-
-    for(const block of blocks){
-
-        if(block.used) continue;
-
-        if(
-
-            player.vy<0 &&
-            player.x+player.w>block.x &&
-            player.x<block.x+block.w &&
-            player.y<block.y+block.h &&
-            player.y+player.h>block.y
-
-        ){
-
-            block.used=true;
-
-            game.filament++;
-            game.score+=100;
-
-            addText(
-                block.x+21,
-                block.y-10,
-                "+FILAMENT",
-                "#60a5fa",
-                13
-            );
-
-            burst(
-                block.x+21,
-                block.y+20,
-                "#facc15",
-                8
-            );
-
-            beep(650,.08);
-
-        }
-
-    }
-
 }
 
 
@@ -2234,85 +1846,105 @@ function updateCollectibles(){
 
     for(const item of collectibles){
 
-        if(item.collected) continue;
+        if(item.collected)continue;
+
+        /* MAGNET */
+
+        if(
+            player.magnetTimer>0 &&
+            Math.abs(item.x-player.x)<230 &&
+            Math.abs(item.y-player.y)<180
+        ){
+
+            item.x+=(player.x-item.x)*.08;
+            item.y+=(player.y-item.y)*.08;
+        }
 
         const box={
-
             x:item.x-9,
             y:item.y-9,
             w:18,
             h:18
-
         };
 
-        if(
-            overlap(
-                player,
-                box
-            )
-        ){
+        if(overlap(player,box)){
 
             item.collected=true;
 
-            game.filament++;
-            game.score+=50;
+            const amount=
+                player.multiplierTimer>0?2:1;
+
+            game.filament+=amount;
+            game.score+=50*amount;
 
             addText(
                 item.x,
                 item.y-15,
-                "+50",
+                "+"+(50*amount),
                 "#60a5fa"
             );
 
-            beep(
-                850,
-                .06,
-                "sine"
-            );
-
+            beep(850,.06,"sine");
         }
-
     }
-
 }
 
 
 /* =========================================================
-   CHECKPOINT
+   POWER ORBS
 ========================================================= */
 
-function updateCheckpoint(){
+function updatePowerups(){
 
-    const checkpoint=
-        Math.floor(
-            player.x/1000
-        )*1000+100;
+    for(const item of powerups){
 
-    if(
-        checkpoint>
-            player.checkpoint &&
-        checkpoint<
-            world.width-100
-    ){
+        if(item.collected)continue;
 
-        player.checkpoint=checkpoint;
+        item.pulse+=.08;
 
-        addText(
-            checkpoint,
-            300,
-            "CHECKPOINT!",
-            "#4ade80",
-            16
-        );
+        if(overlap(player,item)){
 
-        beep(
-            600,
-            .08,
-            "sine"
-        );
+            item.collected=true;
 
+            collectPower(item.type);
+        }
     }
+}
 
+
+/* =========================================================
+   BLOCKS
+========================================================= */
+
+function updateBlocks(){
+
+    for(const block of blocks){
+
+        if(block.used)continue;
+
+        if(
+            player.vy<0 &&
+            player.x+player.w>block.x &&
+            player.x<block.x+block.w &&
+            player.y<block.y+block.h &&
+            player.y+player.h>block.y
+        ){
+
+            block.used=true;
+
+            game.filament++;
+            game.score+=100;
+
+            burst(
+                block.x+21,
+                block.y+20,
+                "#facc15",
+                8
+            );
+
+            beep(650,.08);
+        }
+    }
 }
 
 
@@ -2322,116 +1954,136 @@ function updateCheckpoint(){
 
 function updateBoss(){
 
-    if(
-        !boss.active ||
-        boss.defeated
-    ){
+    if(!boss || !boss.alive)return;
+
+    if(boss.frozen>0){
+        boss.frozen--;
         return;
     }
 
-    /* BOSS FOLLOWS PLAYER */
+    boss.phase=
+        boss.health<50?2:1;
 
-    if(player.x>boss.x){
-        boss.direction=1;
+    boss.vy+=.5;
+
+    boss.y+=boss.vy;
+
+    if(boss.y+boss.h>=450){
+
+        boss.y=450-boss.h;
+        boss.vy=0;
+    }
+
+    /* FOLLOW PLAYER */
+
+    if(player.x<boss.x){
+        boss.vx=-(
+            boss.phase===2?2.3:1.5
+        );
     }
     else{
-        boss.direction=-1;
+        boss.vx=(
+            boss.phase===2?2.3:1.5
+        );
     }
 
-    boss.x+=
-        boss.direction*
-        .45;
+    boss.x+=boss.vx;
 
     boss.x=Math.max(
         world.width-850,
         Math.min(
-            world.width-220,
+            world.width-200,
             boss.x
         )
     );
-
-    /* SHOOT FIREBALLS */
 
     boss.fireTimer--;
 
     if(boss.fireTimer<=0){
 
-        shootBossFireball();
+        bossShoot();
 
         boss.fireTimer=
-            55+
-            Math.random()*45;
-
+            boss.phase===2
+            ?35
+            :65;
     }
 
-    /* BOSS COLLISION */
+    boss.jumpTimer--;
 
     if(
-        overlap(
-            player,
-            boss
-        )
+        boss.jumpTimer<=0 &&
+        boss.y+boss.h>=450
     ){
 
-        if(player.starTimer>0){
+        boss.vy=
+            boss.phase===2
+            ?-13
+            :-11;
 
-            boss.health-=2;
-
-            updateBossBar();
-
-        }
-        else{
-
-            loseLife();
-
-        }
-
+        boss.jumpTimer=
+            boss.phase===2
+            ?100
+            :160;
     }
 
+    if(
+        overlap(player,boss) &&
+        player.starTimer<=0 &&
+        player.ghostTimer<=0
+    ){
+
+        loseLife();
+    }
 }
 
 
 /* =========================================================
-   BOSS FIREBALL
+   BOSS FIREBALLS
 ========================================================= */
 
-function shootBossFireball(){
+function bossShoot(){
 
-    const direction=
-        player.x>
-        boss.x
-        ?1
-        :-1;
+    const count=
+        boss.phase===2?3:1;
 
-    bossFireballs.push({
+    for(let i=0;i<count;i++){
 
-        x:boss.x+55,
-        y:boss.y+45,
+        const targetY=
+            player.y+20+
+            (i-1)*60;
 
-        w:25,
-        h:25,
+        const dx=
+            player.x-boss.x;
 
-        vx:
-            direction*
-            (5+
-            game.level*.35),
+        const dy=
+            targetY-(boss.y+40);
 
-        vy:
-            -2-
-            Math.random()*2,
+        const length=
+            Math.sqrt(dx*dx+dy*dy)||1;
 
-        life:220,
+        bossFireballs.push({
 
-        rotation:0
+            x:boss.x+boss.w/2,
+            y:boss.y+40,
 
-    });
+            w:20,
+            h:20,
 
+            vx:dx/length*
+                (5+game.level*.4),
+
+            vy:dy/length*
+                (5+game.level*.4),
+
+            life:180,
+            rotation:0
+        });
+    }
+
+    beep(120,.12,"sawtooth");
 }
 
-
-/* =========================================================
-   BOSS FIREBALL UPDATE
-========================================================= */
 
 function updateBossFireballs(){
 
@@ -2439,54 +2091,63 @@ function updateBossFireballs(){
 
         fire.x+=fire.vx;
         fire.y+=fire.vy;
-
-        fire.vy+=.12;
-
+        fire.life--;
         fire.rotation+=.2;
 
-        fire.life--;
-
         if(
-            overlap(
-                player,
-                fire
-            )
+            overlap(player,fire) &&
+            player.ghostTimer<=0
         ){
 
             fire.life=0;
 
-            loseLife();
-
+            if(player.starTimer<=0){
+                loseLife();
+            }
         }
-
     }
 
     bossFireballs=
         bossFireballs.filter(
             f=>f.life>0
         );
-
 }
 
 
 /* =========================================================
-   BOSS BAR
+   DEFEAT BOSS
 ========================================================= */
 
-function updateBossBar(){
+function defeatBoss(){
 
-    const percent=
-        Math.max(
-            0,
-            boss.health/
-            boss.maxHealth*100
-        );
+    if(!boss || !boss.alive)return;
 
-    document.getElementById(
-        "bossInner"
-    ).style.width=
-        percent+"%";
+    boss.alive=false;
 
+    game.score+=10000;
+
+    burst(
+        boss.x+45,
+        boss.y+50,
+        "#facc15",
+        80
+    );
+
+    addText(
+        boss.x+45,
+        boss.y-20,
+        "💥 BOSS DEFEATED!",
+        "#facc15",
+        26
+    );
+
+    beep(500,.2);
+    setTimeout(()=>beep(800,.2),150);
+    setTimeout(()=>beep(1100,.25),300);
+
+    setTimeout(()=>{
+        finishLevel();
+    },1200);
 }
 
 
@@ -2496,111 +2157,76 @@ function updateBossBar(){
 
 function checkFinish(){
 
-    /* LEVEL 5 REQUIRES BOSS */
-
-    if(game.level===5){
-
-        if(
-            boss.defeated &&
-            player.x>=world.finishX
-        ){
-
-            finishLevel();
-
-        }
-
-        return;
-
-    }
-
     if(
-        player.x>=world.finishX
+        game.level===5 &&
+        boss &&
+        boss.alive
     ){
-
-        finishLevel();
-
+        return;
     }
 
+    if(player.x>=world.finishX){
+        finishLevel();
+    }
 }
 
 
-/* =========================================================
-   FINISH LEVEL
-========================================================= */
-
 function finishLevel(){
 
-    if(world.finished) return;
-
-    /* BOSS MUST BE DEAD ON LEVEL 5 */
-
-    if(
-        game.level===5 &&
-        !boss.defeated
-    ){
-        return;
-    }
+    if(world.finished)return;
 
     world.finished=true;
 
     game.score+=2500*game.level;
 
-    /* SAVE FILAMENT */
-
-    savedCoins+=game.filament;
-
-    localStorage.setItem(
-        "printWarsCoins",
-        savedCoins
-    );
-
     if(game.level<game.totalLevels){
 
         message.classList.remove("hidden");
 
-        messageText.innerHTML=`
-
-            <strong style="
-                color:#4ade80;
-                font-size:28px;
-            ">
-                🎉 LEVEL ${game.level} COMPLETE!
-            </strong>
-
-            <br><br>
-
-            ${levels[game.level-1].name}
-
-            <br><br>
-
-            Score:
-            <strong style="color:#facc15">
-                ${game.score.toLocaleString()}
-            </strong>
-
-            <br><br>
-
-            🧵 Filament earned:
-            <strong style="color:#60a5fa">
-                ${game.filament}
-            </strong>
-
-            <br><br>
-
-            You can visit the shop before
-            continuing to Level ${game.level+1}.
-        `;
-
-        startButton.textContent=
-            "NEXT LEVEL";
+        showLevelComplete();
 
     }
     else{
 
         gameWon();
-
     }
+}
 
+
+/* =========================================================
+   LEVEL COMPLETE
+========================================================= */
+
+function showLevelComplete(){
+
+    messageText.innerHTML=`
+
+        <strong style="
+            color:#4ade80;
+            font-size:27px;
+        ">
+            LEVEL ${game.level} COMPLETE!
+        </strong>
+
+        <br><br>
+
+        ${levels[game.level-1].name}
+
+        <br><br>
+
+        Score:
+        <strong style="color:#facc15">
+            ${game.score.toLocaleString()}
+        </strong>
+
+        <br><br>
+
+        You are ready for Level
+        <strong>${game.level+1}</strong>.
+
+    `;
+
+    startButton.textContent="NEXT LEVEL";
 }
 
 
@@ -2612,29 +2238,21 @@ function gameWon(){
 
     game.over=true;
 
-    document.getElementById(
-        "bossBar"
-    ).style.display="none";
-
     message.classList.remove("hidden");
 
     messageText.innerHTML=`
 
         <strong style="
             color:#facc15;
-            font-size:30px;
+            font-size:28px;
         ">
             🏆 PRINT WARS COMPLETE!
         </strong>
 
         <br><br>
 
-        YOU DEFEATED THE
-        <strong>MEGA PRINTER BOSS!</strong>
-
-        <br><br>
-
-        All 5 levels completed!
+        You defeated all five levels
+        and destroyed the Mega Printer boss!
 
         <br><br>
 
@@ -2650,20 +2268,11 @@ function gameWon(){
         <br><br>
 
         Products defeated:
-        <strong>
-            ${game.enemiesDefeated}
-        </strong>
+        <strong>${game.enemiesDefeated}</strong>
 
-        <br><br>
-
-        🧵 Filament:
-        <strong style="color:#facc15">
-            ${game.filament}
-        </strong>
     `;
 
-    startButton.textContent=
-        "PLAY AGAIN";
+    startButton.textContent="PLAY AGAIN";
 
     beep(700,.2);
 
@@ -2671,7 +2280,6 @@ function gameWon(){
         ()=>beep(900,.2),
         160
     );
-
 }
 
 
@@ -2681,7 +2289,32 @@ function gameWon(){
 
 function loseLife(){
 
-    if(player.invincible>0){
+    if(player.invincible>0)return;
+
+    /* SHIELD */
+
+    if(player.shield){
+
+        player.shield=false;
+        player.invincible=100;
+
+        addText(
+            player.x,
+            player.y-20,
+            "🛡️ BLOCKED!",
+            "#38bdf8",
+            18
+        );
+
+        burst(
+            player.x+15,
+            player.y+25,
+            "#38bdf8",
+            20
+        );
+
+        beep(800,.12);
+
         return;
     }
 
@@ -2689,34 +2322,51 @@ function loseLife(){
 
     player.invincible=120;
 
-    game.score=
-        Math.max(
-            0,
-            game.score-200
-        );
+    game.score=Math.max(
+        0,
+        game.score-200
+    );
 
-    player.x=
-        player.checkpoint;
-
+    player.x=player.checkpoint;
     player.y=300;
 
     player.vx=0;
     player.vy=-8;
 
-    player.jumpsUsed=0;
-
-    beep(
-        120,
-        .2,
-        "sawtooth"
-    );
+    beep(120,.2,"sawtooth");
 
     if(player.lives<=0){
-
         gameOver();
-
     }
+}
 
+
+/* =========================================================
+   CHECKPOINT
+========================================================= */
+
+function updateCheckpoint(){
+
+    const checkpoint=
+        Math.floor(player.x/1000)*1000+100;
+
+    if(
+        checkpoint>player.checkpoint &&
+        checkpoint<world.width-100
+    ){
+
+        player.checkpoint=checkpoint;
+
+        addText(
+            checkpoint,
+            300,
+            "CHECKPOINT!",
+            "#4ade80",
+            16
+        );
+
+        beep(600,.08,"sine");
+    }
 }
 
 
@@ -2741,20 +2391,16 @@ function gameOver(){
 
         <br><br>
 
-        The products took over
-        the factory.
+        The products took over the factory.
 
         <br><br>
 
         You reached Level
-        <strong>
-            ${game.level}
-        </strong>.
+        <strong>${game.level}</strong>.
 
         <br><br>
 
         Score:
-
         <strong style="color:#facc15">
             ${game.score.toLocaleString()}
         </strong>
@@ -2762,14 +2408,11 @@ function gameOver(){
         <br><br>
 
         Products defeated:
-        <strong>
-            ${game.enemiesDefeated}
-        </strong>
+        ${game.enemiesDefeated}
+
     `;
 
-    startButton.textContent=
-        "TRY AGAIN";
-
+    startButton.textContent="TRY AGAIN";
 }
 
 
@@ -2777,45 +2420,27 @@ function gameOver(){
    PARTICLES
 ========================================================= */
 
-function burst(
-    x,
-    y,
-    color,
-    amount=10
-){
+function burst(x,y,color,amount=10){
 
-    for(
-        let i=0;
-        i<amount;
-        i++
-    ){
+    for(let i=0;i<amount;i++){
 
         particles.push({
 
             x,
             y,
 
-            vx:
-                (Math.random()-.5)*8,
+            vx:(Math.random()-.5)*8,
+            vy:(Math.random()-.5)*8,
 
-            vy:
-                (Math.random()-.5)*8,
-
-            size:
-                2+
-                Math.random()*4,
+            size:2+Math.random()*4,
 
             color,
 
-            life:
-                25+
-                Math.random()*30
-
+            life:25+Math.random()*30
         });
-
     }
-
 }
+
 
 function updateParticles(){
 
@@ -2827,14 +2452,12 @@ function updateParticles(){
         p.vy+=.18;
 
         p.life--;
-
     }
 
     particles=
         particles.filter(
             p=>p.life>0
         );
-
 }
 
 
@@ -2843,25 +2466,17 @@ function updateParticles(){
 ========================================================= */
 
 function addText(
-    x,
-    y,
-    text,
+    x,y,text,
     color="white",
     size=16
 ){
 
     texts.push({
-
-        x,
-        y,
-        text,
-        color,
-        size,
+        x,y,text,color,size,
         life:65
-
     });
-
 }
+
 
 function updateTexts(){
 
@@ -2869,14 +2484,12 @@ function updateTexts(){
 
         t.y-=.6;
         t.life--;
-
     }
 
     texts=
         texts.filter(
             t=>t.life>0
         );
-
 }
 
 
@@ -2886,87 +2499,59 @@ function updateTexts(){
 
 function drawBackground(){
 
-    let top="#071426";
-    let bottom="#172554";
-
     const theme=
         levels[game.level-1].theme;
 
-    if(theme==="warehouse"){
+    let top="#071426";
+    let bottom="#172554";
 
+    if(theme==="warehouse"){
         top="#111827";
         bottom="#312e81";
-
     }
 
     if(theme==="canyon"){
-
         top="#431407";
         bottom="#7c2d12";
-
     }
 
     if(theme==="lab"){
-
         top="#071e2f";
         bottom="#164e63";
-
     }
 
     if(theme==="mega"){
-
         top="#1e1b4b";
         bottom="#312e81";
-
     }
 
     const gradient=
         ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            HEIGHT
+            0,0,0,HEIGHT
         );
 
-    gradient.addColorStop(
-        0,
-        top
-    );
-
-    gradient.addColorStop(
-        1,
-        bottom
-    );
+    gradient.addColorStop(0,top);
+    gradient.addColorStop(1,bottom);
 
     ctx.fillStyle=gradient;
 
     ctx.fillRect(
-        0,
-        0,
-        WIDTH,
-        HEIGHT
+        0,0,WIDTH,HEIGHT
     );
 
-    /* BUILDINGS */
-
-    for(
-        let i=0;
-        i<35;
-        i++
-    ){
+    for(let i=0;i<35;i++){
 
         const x=
             i*80-
             (world.cameraX*.18%80);
 
         const h=
-            70+
-            (i*47)%140;
+            70+(i*47)%140;
 
         ctx.fillStyle=
             i%2
-            ?"#0f1b2e"
-            :"#142238";
+            ?"rgba(15,23,42,.85)"
+            :"rgba(20,34,56,.85)";
 
         ctx.fillRect(
             x,
@@ -2977,8 +2562,8 @@ function drawBackground(){
 
         ctx.fillStyle=
             i%3===0
-            ?"#facc15"
-            :"#38bdf8";
+            ?"rgba(250,204,21,.7)"
+            :"rgba(56,189,248,.7)";
 
         for(
             let y=470-h;
@@ -2987,35 +2572,23 @@ function drawBackground(){
         ){
 
             ctx.fillRect(
-                x+10,
-                y,
-                6,
-                8
+                x+10,y,6,8
             );
 
             ctx.fillRect(
-                x+30,
-                y,
-                6,
-                8
+                x+30,y,6,8
             );
 
             ctx.fillRect(
-                x+50,
-                y,
-                6,
-                8
+                x+50,y,6,8
             );
-
         }
-
     }
-
 }
 
 
 /* =========================================================
-   PLATFORM DRAW
+   DRAW PLATFORM
 ========================================================= */
 
 function drawPlatform(p){
@@ -3023,25 +2596,17 @@ function drawPlatform(p){
     ctx.fillStyle="#334155";
 
     ctx.fillRect(
-        p.x,
-        p.y,
-        p.w,
-        p.h
+        p.x,p.y,p.w,p.h
     );
 
     ctx.fillStyle="#64748b";
 
     ctx.fillRect(
-        p.x,
-        p.y,
-        p.w,
-        7
+        p.x,p.y,p.w,7
     );
 
     ctx.strokeStyle=
         "rgba(255,255,255,.08)";
-
-    ctx.lineWidth=2;
 
     for(
         let x=p.x+10;
@@ -3051,25 +2616,16 @@ function drawPlatform(p){
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            x,
-            p.y+10
-        );
-
-        ctx.lineTo(
-            x,
-            p.y+p.h
-        );
+        ctx.moveTo(x,p.y+10);
+        ctx.lineTo(x,p.y+p.h);
 
         ctx.stroke();
-
     }
-
 }
 
 
 /* =========================================================
-   SPIKES
+   DRAW SPIKE
 ========================================================= */
 
 function drawSpike(s){
@@ -3080,18 +2636,12 @@ function drawSpike(s){
             Math.floor(s.w/18)
         );
 
-    const spikeW=
-        s.w/count;
+    const spikeW=s.w/count;
 
-    for(
-        let i=0;
-        i<count;
-        i++
-    ){
+    for(let i=0;i<count;i++){
 
         const x=
-            s.x+
-            i*spikeW;
+            s.x+i*spikeW;
 
         ctx.fillStyle="#cbd5e1";
 
@@ -3115,24 +2665,19 @@ function drawSpike(s){
         ctx.closePath();
 
         ctx.fill();
-
-        ctx.strokeStyle="#64748b";
-        ctx.stroke();
-
     }
-
 }
 
 
 /* =========================================================
-   BLOCK
+   DRAW BLOCK
 ========================================================= */
 
 function drawBlock(block){
 
     ctx.fillStyle=
         block.used
-        ?"#475569"
+        ?" #475569"
         :"#f59e0b";
 
     ctx.fillRect(
@@ -3152,221 +2697,22 @@ function drawBlock(block){
         block.h-4
     );
 
-    ctx.fillStyle=
-        block.used
-        ?"#64748b"
-        :"#fff7ae";
-
+    ctx.fillStyle="white";
     ctx.font="bold 24px Arial";
     ctx.textAlign="center";
 
     ctx.fillText(
-        block.used ? "✓" : "?",
+        block.used?"✓":"?",
         block.x+21,
         block.y+29
     );
 
     ctx.textAlign="left";
-
 }
 
 
 /* =========================================================
-   POWER ORB DRAW
-========================================================= */
-
-function drawPowerup(item){
-
-    const pulse=
-        Math.sin(item.pulse)*5;
-
-    const centerX=
-        item.x+16;
-
-    const centerY=
-        item.y+16;
-
-    /* OUTER GLOW */
-
-    ctx.save();
-
-    ctx.shadowBlur=
-        25+
-        pulse;
-
-    ctx.shadowColor=
-        item.type==="fireball"
-        ?"#ef4444"
-        :"#a855f7";
-
-    ctx.fillStyle=
-        item.type==="fireball"
-        ?"#ef4444"
-        :"#8b5cf6";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        centerX,
-        centerY,
-        17+pulse*.15,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.shadowBlur=0;
-
-    ctx.fillStyle="white";
-
-    ctx.font="bold 20px Arial";
-
-    ctx.textAlign="center";
-
-    ctx.fillText(
-        item.type==="fireball"
-        ?"🔥"
-        :"⬆",
-        centerX,
-        centerY+7
-    );
-
-    ctx.textAlign="left";
-
-    /* POWER LABEL */
-
-    ctx.fillStyle=
-        item.type==="fireball"
-        ?"#fecaca"
-        :"#e9d5ff";
-
-    ctx.font="bold 11px Arial";
-
-    ctx.textAlign="center";
-
-    ctx.fillText(
-        item.type==="fireball"
-        ?"FIREBALL"
-        :"EXTRA JUMP",
-        centerX,
-        item.y-9
-    );
-
-    ctx.textAlign="left";
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   ENEMY DRAW
-========================================================= */
-
-function drawEnemy(enemy){
-
-    ctx.fillStyle="rgba(0,0,0,.3)";
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        enemy.x+17,
-        enemy.y+37,
-        22,
-        6,
-        0,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.fillStyle=
-        enemy.type==="fire"
-        ?"#ef4444"
-        :enemy.type==="jumper"
-        ?"#a855f7"
-        :"#f97316";
-
-    ctx.beginPath();
-
-    ctx.roundRect(
-        enemy.x,
-        enemy.y,
-        enemy.w,
-        enemy.h,
-        7
-    );
-
-    ctx.fill();
-
-    ctx.strokeStyle=
-        "rgba(255,255,255,.2)";
-
-    ctx.lineWidth=2;
-
-    for(
-        let y=enemy.y+8;
-        y<enemy.y+enemy.h;
-        y+=7
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            enemy.x+4,
-            y
-        );
-
-        ctx.lineTo(
-            enemy.x+enemy.w-4,
-            y
-        );
-
-        ctx.stroke();
-
-    }
-
-    ctx.fillStyle="white";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        enemy.x+10,
-        enemy.y+12,
-        4,
-        0,
-        Math.PI*2
-    );
-
-    ctx.arc(
-        enemy.x+24,
-        enemy.y+12,
-        4,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.fillStyle="#e2e8f0";
-    ctx.font="10px Arial";
-    ctx.textAlign="center";
-
-    ctx.fillText(
-        enemy.name,
-        enemy.x+17,
-        enemy.y-8
-    );
-
-    ctx.textAlign="left";
-
-}
-
-
-/* =========================================================
-   FILAMENT DRAW
+   DRAW FILAMENT
 ========================================================= */
 
 function drawFilament(item){
@@ -3400,173 +2746,139 @@ function drawFilament(item){
     );
 
     ctx.stroke();
-
 }
 
 
 /* =========================================================
-   FIREBALL DRAW
+   DRAW POWER ORB
 ========================================================= */
 
-function drawFireball(fire){
+function drawPowerup(item){
+
+    const p=POWERUPS[item.type];
+
+    const pulse=
+        Math.sin(item.pulse)*5;
+
+    const cx=
+        item.x+item.w/2;
+
+    const cy=
+        item.y+item.h/2;
+
+    /* OUTER GLOW */
 
     ctx.save();
 
-    ctx.translate(
-        fire.x+fire.w/2,
-        fire.y+fire.h/2
-    );
-
-    ctx.rotate(
-        fire.rotation
-    );
-
-    ctx.shadowColor="#f97316";
-    ctx.shadowBlur=15;
+    ctx.shadowColor=p.color;
+    ctx.shadowBlur=25+pulse;
 
     ctx.fillStyle=
-        fire.enemyFire
-        ?"#ef4444"
-        :"#f97316";
+        p.color;
+
+    ctx.globalAlpha=.25;
 
     ctx.beginPath();
 
     ctx.arc(
-        0,
-        0,
-        11,
+        cx,
+        cy,
+        25+pulse,
         0,
         Math.PI*2
     );
 
     ctx.fill();
 
-    ctx.fillStyle="#facc15";
+    ctx.globalAlpha=1;
+
+    /* ORB */
+
+    ctx.fillStyle=p.color;
 
     ctx.beginPath();
 
     ctx.arc(
-        0,
-        0,
-        6,
+        cx,
+        cy,
+        15,
         0,
         Math.PI*2
     );
 
     ctx.fill();
+
+    ctx.fillStyle="white";
+    ctx.font="20px Arial";
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        p.icon,
+        cx,
+        cy+7
+    );
+
+    /* LABEL */
+
+    ctx.font="bold 10px Arial";
+    ctx.fillStyle="white";
+
+    ctx.fillText(
+        p.name,
+        cx,
+        cy-28
+    );
 
     ctx.restore();
 
+    ctx.textAlign="left";
 }
 
 
 /* =========================================================
-   BOSS DRAW
+   DRAW ENEMY
 ========================================================= */
 
-function drawBoss(){
+function drawEnemy(enemy){
 
-    if(
-        !boss.active ||
-        boss.defeated
-    ){
-        return;
-    }
+    ctx.fillStyle=
+        enemy.frozen>0
+        ?"rgba(103,232,249,.9)"
+        :"#f97316";
 
-    const x=boss.x;
-    const y=boss.y;
+    if(enemy.type==="fire")
+        ctx.fillStyle="#ef4444";
 
-    /* GLOW */
-
-    ctx.shadowColor="#ef4444";
-    ctx.shadowBlur=20;
-
-    /* BODY */
-
-    ctx.fillStyle="#7f1d1d";
+    if(enemy.type==="jumper")
+        ctx.fillStyle="#a855f7";
 
     ctx.beginPath();
 
     ctx.roundRect(
-        x,
-        y,
-        boss.w,
-        boss.h,
-        18
+        enemy.x,
+        enemy.y,
+        enemy.w,
+        enemy.h,
+        7
     );
 
     ctx.fill();
 
-    ctx.shadowBlur=0;
-
-    /* PRINT LAYERS */
-
-    ctx.strokeStyle=
-        "rgba(255,255,255,.18)";
-
-    for(
-        let yy=y+15;
-        yy<y+boss.h;
-        yy+=12
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x+8,
-            yy
-        );
-
-        ctx.lineTo(
-            x+boss.w-8,
-            yy
-        );
-
-        ctx.stroke();
-
-    }
-
-    /* EYES */
-
-    ctx.fillStyle="#fef2f2";
+    ctx.fillStyle="white";
 
     ctx.beginPath();
 
     ctx.arc(
-        x+32,
-        y+35,
-        9,
-        0,
-        Math.PI*2
-    );
-
-    ctx.arc(
-        x+78,
-        y+35,
-        9,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    /* EYE CORES */
-
-    ctx.fillStyle="#111827";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x+32,
-        y+35,
+        enemy.x+10,
+        enemy.y+12,
         4,
         0,
         Math.PI*2
     );
 
     ctx.arc(
-        x+78,
-        y+35,
+        enemy.x+24,
+        enemy.y+12,
         4,
         0,
         Math.PI*2
@@ -3574,117 +2886,40 @@ function drawBoss(){
 
     ctx.fill();
 
-    /* MOUTH */
-
-    ctx.fillStyle="#111827";
-
-    ctx.fillRect(
-        x+25,
-        y+65,
-        60,
-        15
-    );
-
-    ctx.fillStyle="#ef4444";
-
-    for(
-        let i=0;
-        i<5;
-        i++
-    ){
-
-        ctx.fillRect(
-            x+29+i*11,
-            y+65,
-            6,
-            8
-        );
-
-    }
-
-    /* BOSS LABEL */
-
-    ctx.fillStyle="#fecaca";
-    ctx.font="bold 13px Arial";
+    ctx.fillStyle="#e2e8f0";
+    ctx.font="10px Arial";
     ctx.textAlign="center";
 
     ctx.fillText(
-        "MEGA PRINTER",
-        x+55,
-        y-12
+        enemy.name,
+        enemy.x+17,
+        enemy.y-10
     );
+
+    if(enemy.frozen>0){
+
+        ctx.font="16px Arial";
+
+        ctx.fillText(
+            "❄️",
+            enemy.x+17,
+            enemy.y-24
+        );
+    }
 
     ctx.textAlign="left";
-
 }
 
 
 /* =========================================================
-   BOSS FIREBALL DRAW
-========================================================= */
-
-function drawBossFireball(fire){
-
-    ctx.save();
-
-    ctx.translate(
-        fire.x+12,
-        fire.y+12
-    );
-
-    ctx.rotate(
-        fire.rotation
-    );
-
-    ctx.shadowColor="#ff0000";
-    ctx.shadowBlur=20;
-
-    ctx.fillStyle="#dc2626";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        16,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.fillStyle="#facc15";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        8,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   PLAYER DRAW
+   DRAW PLAYER
 ========================================================= */
 
 function drawPlayer(){
 
     if(
-
         player.invincible>0 &&
-        Math.floor(
-            player.invincible/6
-        )%2===0
-
+        Math.floor(player.invincible/6)%2===0
     ){
         return;
     }
@@ -3692,53 +2927,59 @@ function drawPlayer(){
     const x=player.x;
     const y=player.y;
 
-    const width=
-        player.big
-        ?36
-        :30;
-
-    const height=
-        player.big
-        ?62
-        :52;
-
-    const skin =
-        skins.find(
-            s=>s.name===currentSkin
-        ) ||
-        skins[0];
+    /* STAR */
 
     if(player.starTimer>0){
 
         ctx.shadowColor="#facc15";
-        ctx.shadowBlur=25;
-
+        ctx.shadowBlur=30;
     }
 
-    /* BODY */
+    /* GHOST */
 
-    ctx.fillStyle=skin.color;
+    if(player.ghostTimer>0){
 
-    ctx.beginPath();
+        ctx.globalAlpha=.45;
+    }
 
-    ctx.roundRect(
+    /* SHIELD */
+
+    if(player.shield){
+
+        ctx.strokeStyle="#38bdf8";
+        ctx.lineWidth=4;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x+15,
+            y+27,
+            30,
+            0,
+            Math.PI*2
+        );
+
+        ctx.stroke();
+    }
+
+    ctx.fillStyle=
+        player.starTimer>0
+        ?" #facc15"
+        :"#60a5fa";
+
+    ctx.fillRect(
         x,
         y+15,
-        width,
-        height-15,
-        7
+        30,
+        37
     );
-
-    ctx.fill();
-
-    /* HEAD */
 
     ctx.fillStyle="#f8fafc";
 
     ctx.beginPath();
 
     ctx.arc(
-        x+width/2,
+        x+15,
         y+10,
         11,
         0,
@@ -3747,77 +2988,346 @@ function drawPlayer(){
 
     ctx.fill();
 
-    /* VISOR */
-
     ctx.fillStyle="#0f172a";
 
     ctx.fillRect(
         x+5,
         y+5,
-        width-10,
+        20,
         7
     );
-
-    /* BACKPACK */
 
     ctx.fillStyle="#7c3aed";
 
     ctx.fillRect(
-
         player.facing===1
         ?x-5
-        :x+width,
-
+        :x+30,
         y+22,
-
         7,
         22
-
     );
-
-    /* LEGS */
 
     ctx.strokeStyle="#e2e8f0";
     ctx.lineWidth=5;
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        x+9,
-        y+height-3
-    );
+    ctx.moveTo(x+9,y+49);
+    ctx.lineTo(x+5,y+59);
 
-    ctx.lineTo(
-        x+5,
-        y+height+7
-    );
-
-    ctx.moveTo(
-        x+width-9,
-        y+height-3
-    );
-
-    ctx.lineTo(
-        x+width-5,
-        y+height+7
-    );
+    ctx.moveTo(x+21,y+49);
+    ctx.lineTo(x+25,y+59);
 
     ctx.stroke();
 
+    ctx.globalAlpha=1;
     ctx.shadowBlur=0;
-
 }
 
 
 /* =========================================================
-   FINISH PRINTER
+   DRAW PLAYER SHOTS
+========================================================= */
+
+function drawPlayerShots(){
+
+    for(const shot of playerShots){
+
+        ctx.shadowColor="#ef4444";
+        ctx.shadowBlur=18;
+
+        ctx.fillStyle="#ef4444";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            shot.x+9,
+            shot.y+9,
+            10,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.fillStyle="#facc15";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            shot.x+9,
+            shot.y+9,
+            5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.shadowBlur=0;
+    }
+}
+
+
+/* =========================================================
+   DRAW FIREBALL
+========================================================= */
+
+function drawFireball(fire){
+
+    ctx.save();
+
+    ctx.translate(
+        fire.x+8,
+        fire.y+8
+    );
+
+    ctx.rotate(
+        fire.rotation
+    );
+
+    ctx.fillStyle="#ef4444";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,0,
+        10,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle="#facc15";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,0,
+        5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   DRAW BOSS
+========================================================= */
+
+function drawBoss(){
+
+    if(!boss || !boss.alive)return;
+
+    /* BOSS GLOW */
+
+    ctx.shadowColor=
+        boss.phase===2
+        ?"red"
+        :"#a855f7";
+
+    ctx.shadowBlur=25;
+
+    ctx.fillStyle=
+        boss.phase===2
+        ?" #dc2626"
+        :"#7c3aed";
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        boss.x,
+        boss.y,
+        boss.w,
+        boss.h,
+        15
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+    /* EYES */
+
+    ctx.fillStyle="#f8fafc";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        boss.x+25,
+        boss.y+30,
+        8,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        boss.x+65,
+        boss.y+30,
+        8,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    /* PRINT LAYERS */
+
+    ctx.strokeStyle=
+        "rgba(255,255,255,.3)";
+
+    for(
+        let y=boss.y+15;
+        y<boss.y+boss.h;
+        y+=12
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            boss.x+8,
+            y
+        );
+
+        ctx.lineTo(
+            boss.x+boss.w-8,
+            y
+        );
+
+        ctx.stroke();
+    }
+
+    /* NAME */
+
+    ctx.fillStyle="white";
+    ctx.font="bold 15px Arial";
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        "MEGA PRINTER BOSS",
+        boss.x+45,
+        boss.y-18
+    );
+
+    ctx.textAlign="left";
+
+    /* HEALTH BAR */
+
+    const barW=180;
+
+    ctx.fillStyle="#450a0a";
+
+    ctx.fillRect(
+        boss.x-45,
+        boss.y-45,
+        barW,
+        18
+    );
+
+    ctx.fillStyle=
+        boss.health<50
+        ?"red"
+        :"#22c55e";
+
+    ctx.fillRect(
+        boss.x-45,
+        boss.y-45,
+        barW*
+        (boss.health/boss.maxHealth),
+        18
+    );
+
+    ctx.strokeStyle="white";
+
+    ctx.strokeRect(
+        boss.x-45,
+        boss.y-45,
+        barW,
+        18
+    );
+
+    ctx.fillStyle="white";
+    ctx.font="bold 11px Arial";
+
+    ctx.fillText(
+        Math.max(0,Math.ceil(boss.health))+
+        " / "+
+        boss.maxHealth,
+        boss.x+25,
+        boss.y-31
+    );
+}
+
+
+/* =========================================================
+   DRAW BOSS FIREBALLS
+========================================================= */
+
+function drawBossFireballs(){
+
+    for(const fire of bossFireballs){
+
+        ctx.save();
+
+        ctx.translate(
+            fire.x+10,
+            fire.y+10
+        );
+
+        ctx.rotate(
+            fire.rotation
+        );
+
+        ctx.shadowColor="red";
+        ctx.shadowBlur=25;
+
+        ctx.fillStyle="#ef4444";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,0,
+            13,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.fillStyle="#facc15";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,0,
+            6,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.restore();
+    }
+}
+
+
+/* =========================================================
+   DRAW FINISH
 ========================================================= */
 
 function drawFinish(){
 
     if(
         game.level===5 &&
-        !boss.defeated
+        boss &&
+        boss.alive
     ){
         return;
     }
@@ -3851,24 +3361,7 @@ function drawFinish(){
         8
     );
 
-    ctx.strokeStyle="#a78bfa";
-    ctx.lineWidth=6;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        x+105,
-        355
-    );
-
-    ctx.lineTo(
-        x+105,
-        410
-    );
-
-    ctx.stroke();
-
-    ctx.fillStyle="#e2e8f0";
+    ctx.fillStyle="#a78bfa";
 
     ctx.fillRect(
         x,
@@ -3881,20 +3374,9 @@ function drawFinish(){
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        x+8,
-        200
-    );
-
-    ctx.lineTo(
-        x+105,
-        230
-    );
-
-    ctx.lineTo(
-        x+8,
-        260
-    );
+    ctx.moveTo(x+8,200);
+    ctx.lineTo(x+105,230);
+    ctx.lineTo(x+8,260);
 
     ctx.closePath();
 
@@ -3908,7 +3390,59 @@ function drawFinish(){
         x+30,
         235
     );
+}
 
+
+/* =========================================================
+   DRAW PARTICLES + TEXT
+========================================================= */
+
+function drawEffects(){
+
+    for(const p of particles){
+
+        ctx.globalAlpha=
+            Math.max(
+                0,
+                p.life/40
+            );
+
+        ctx.fillStyle=p.color;
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            p.size,
+            p.size
+        );
+    }
+
+    ctx.globalAlpha=1;
+
+    for(const t of texts){
+
+        ctx.globalAlpha=
+            Math.min(
+                1,
+                t.life/20
+            );
+
+        ctx.fillStyle=t.color;
+
+        ctx.font=
+            `bold ${t.size}px Arial`;
+
+        ctx.textAlign="center";
+
+        ctx.fillText(
+            t.text,
+            t.x,
+            t.y
+        );
+    }
+
+    ctx.globalAlpha=1;
+    ctx.textAlign="left";
 }
 
 
@@ -3934,127 +3468,80 @@ function draw(){
         0
     );
 
-    /* PLATFORMS */
-
-    for(const p of platforms){
+    for(const p of platforms)
         drawPlatform(p);
-    }
 
-    /* SPIKES */
-
-    for(const s of spikes){
+    for(const s of spikes)
         drawSpike(s);
-    }
 
-    /* BLOCKS */
-
-    for(const b of blocks){
+    for(const b of blocks)
         drawBlock(b);
-    }
-
-    /* FILAMENT */
 
     for(const item of collectibles){
 
-        if(!item.collected){
+        if(!item.collected)
             drawFilament(item);
-        }
-
     }
-
-    /* POWERUPS */
 
     for(const item of powerups){
 
-        if(!item.collected){
+        if(!item.collected)
             drawPowerup(item);
-        }
-
     }
 
-    /* ENEMIES */
-
-    for(const enemy of enemies){
+    for(const enemy of enemies)
         drawEnemy(enemy);
-    }
 
-    /* PLAYER FIRE */
+    drawPlayerShots();
 
-    for(const fire of fireballs){
+    for(const fire of fireballs)
         drawFireball(fire);
-    }
 
-    /* BOSS */
+    drawBossFireballs();
 
     drawBoss();
 
-    /* BOSS FIRE */
-
-    for(const fire of bossFireballs){
-        drawBossFireball(fire);
-    }
-
-    /* FINISH */
-
     drawFinish();
-
-    /* PLAYER */
 
     drawPlayer();
 
-    /* PARTICLES */
-
-    for(const p of particles){
-
-        ctx.globalAlpha=
-            Math.max(
-                0,
-                p.life/40
-            );
-
-        ctx.fillStyle=p.color;
-
-        ctx.fillRect(
-            p.x,
-            p.y,
-            p.size,
-            p.size
-        );
-
-    }
-
-    ctx.globalAlpha=1;
-
-    /* TEXT */
-
-    for(const t of texts){
-
-        ctx.globalAlpha=
-            Math.min(
-                1,
-                t.life/20
-            );
-
-        ctx.fillStyle=t.color;
-
-        ctx.font=
-            `bold ${t.size}px Arial`;
-
-        ctx.textAlign="center";
-
-        ctx.fillText(
-            t.text,
-            t.x,
-            t.y
-        );
-
-    }
-
-    ctx.globalAlpha=1;
-    ctx.textAlign="left";
+    drawEffects();
 
     ctx.restore();
 
+    /* STAR EFFECT */
+
+    if(player.starTimer>0){
+
+        ctx.fillStyle=
+            "rgba(250,204,21,.06)";
+
+        ctx.fillRect(
+            0,
+            0,
+            WIDTH,
+            HEIGHT
+        );
+    }
+
+    /* BOSS WARNING */
+
+    if(
+        game.level===5 &&
+        boss &&
+        boss.alive
+    ){
+
+        ctx.fillStyle=
+            "rgba(255,0,0,.08)";
+
+        ctx.fillRect(
+            0,
+            0,
+            WIDTH,
+            HEIGHT
+        );
+    }
 }
 
 
@@ -4064,24 +3551,21 @@ function draw(){
 
 function updateHUD(){
 
-    document.getElementById(
-        "score"
-    ).textContent=
+    document.getElementById("score")
+        .textContent=
         game.score.toLocaleString();
 
-    document.getElementById(
-        "coins"
-    ).textContent=
+    document.getElementById("coins")
+        .textContent=
         game.filament;
 
-    document.getElementById(
-        "level"
-    ).textContent=
-        game.level+"-"+game.level;
+    document.getElementById("level")
+        .textContent=
+        game.level+"-"+
+        game.level;
 
-    document.getElementById(
-        "lives"
-    ).textContent=
+    document.getElementById("lives")
+        .textContent=
         "♥ ".repeat(
             Math.max(
                 0,
@@ -4091,29 +3575,62 @@ function updateHUD(){
 
     let power="Normal";
 
-    if(player.fireball){
-        power="🔥 Fireball";
-    }
-
-    if(player.extraJump){
+    if(player.currentPower){
 
         power=
-            player.fireball
-            ?"🔥 Fireball + ⬆ Extra Jump"
-            :"⬆ Extra Jump";
-
+            POWERUPS[
+                player.currentPower
+            ].icon+
+            " "+
+            POWERUPS[
+                player.currentPower
+            ].name;
     }
 
-    document.getElementById(
-        "power"
-    ).textContent=
-        power;
+    document.getElementById("power")
+        .textContent=power;
 
+    let timer="";
+
+    const timers=[
+        ["Speed",player.speedTimer],
+        ["Magnet",player.magnetTimer],
+        ["Smash",player.smashTimer],
+        ["Freeze",player.freezeTimer],
+        ["Super Dash",player.superDashTimer],
+        ["Star",player.starTimer],
+        ["Ghost",player.ghostTimer],
+        ["Multiplier",player.multiplierTimer]
+    ];
+
+    for(const [name,value] of timers){
+
+        if(value>0){
+
+            timer+=
+                `<div style="color:#facc15">
+                    ${name}: ${Math.ceil(value/60)}s
+                </div>`;
+
+            break;
+        }
+    }
+
+    if(player.shield){
+
+        timer+=
+            `<div style="color:#38bdf8">
+                🛡️ Shield Ready
+            </div>`;
+    }
+
+    document.getElementById("powerTimer")
+        .innerHTML=timer;
 }
 
 
 /* =========================================================
-   GAME UPDATE
+   UPDATE
 ========================================================= */
 
 function update(){
@@ -4125,31 +3642,33 @@ function update(){
     ){
 
         updatePlayer();
-
         updateCheckpoint();
 
         updateEnemies();
-
         updateFireballs();
-
-        updateBoss();
-
-        updateBossFireballs();
-
-        updateBlocks();
+        updatePlayerShots();
 
         updateCollectibles();
-
         updatePowerups();
+        updateBlocks();
+
+        if(
+            game.level===5 &&
+            boss &&
+            boss.alive
+        ){
+
+            updateBoss();
+            updateBossFireballs();
+        }
 
         checkFinish();
-
     }
 
     updateParticles();
     updateTexts();
-    updateHUD();
 
+    updateHUD();
 }
 
 
@@ -4157,513 +3676,189 @@ function update(){
    LEVEL PREVIEW
 ========================================================= */
 
-const levelPreview =
-    document.getElementById(
-        "levelPreview"
-    );
+function showLevelPreview(){
 
-const previewTitle =
-    document.getElementById(
-        "previewTitle"
-    );
+    const data=levels[game.level-1];
 
-const previewDescription =
-    document.getElementById(
-        "previewDescription"
-    );
+    let cards="";
 
-function showLevelPreview(levelNumber){
+    for(const type of data.powers){
 
-    const data=
-        levels[levelNumber-1];
+        const p=POWERUPS[type];
 
-    previewTitle.textContent=
-        "LEVEL "+levelNumber+
-        " — "+
-        data.name;
+        cards+=`
 
-    let difficulty="⭐";
+            <div class="preview">
 
-    if(levelNumber===2){
-        difficulty="⭐⭐";
-    }
-
-    if(levelNumber===3){
-        difficulty="⭐⭐⭐";
-    }
-
-    if(levelNumber===4){
-        difficulty="⭐⭐⭐⭐";
-    }
-
-    if(levelNumber===5){
-        difficulty="⭐⭐⭐⭐⭐ BOSS";
-
-    }
-
-    previewDescription.innerHTML=`
-
-        <p>
-            Difficulty:
-            <strong style="color:#facc15">
-                ${difficulty}
-            </strong>
-        </p>
-
-        <p>
-            ${levelNumber===5
-                ?"<strong style='color:#ef4444'>⚠️ WARNING: The Mega Printer Boss awaits you!</strong>"
-                :"Reach the printer at the end of the level."
-            }
-        </p>
-    `;
-
-    levelPreview.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* =========================================================
-   SHOP
-========================================================= */
-
-const shop =
-    document.getElementById("shop");
-
-const shopCoins =
-    document.getElementById("shopCoins");
-
-const skinGrid =
-    document.getElementById("skinGrid");
-
-
-function renderShop(){
-
-    shopCoins.textContent=
-        savedCoins.toLocaleString();
-
-    skinGrid.innerHTML="";
-
-    for(const skin of skins){
-
-        const div=
-            document.createElement("div");
-
-        div.className="skin";
-
-        const owned=
-            ownedSkins.includes(
-                skin.name
-            );
-
-        const selected=
-            currentSkin===
-            skin.name;
-
-        div.innerHTML=`
-
-            <div
-                class="skinPreview"
-                style="
-                    background:${skin.color};
-                    box-shadow:0 0 18px ${skin.color};
-                "
-            ></div>
-
-            <strong>
-                ${skin.name}
-            </strong>
-
-            <br><br>
-
-            ${
-                selected
-                ?`<button class="menuButton green">
-                    EQUIPPED
-                  </button>`
-                :
-                owned
-                ?`<button
-                    class="menuButton equipSkin"
-                    data-skin="${skin.name}">
-                    EQUIP
-                  </button>`
-                :
-                `<div class="price">
-                    🧵 2,000
+                <div class="previewIcon">
+                    ${p.icon}
                 </div>
 
-                <br>
+                <div class="previewName"
+                     style="color:${p.color}">
+                    ${p.name}
+                </div>
 
-                <button
-                    class="menuButton buySkin"
-                    data-skin="${skin.name}">
-                    BUY
-                </button>`
-            }
+                <div class="previewHelp">
+                    ${p.help}
+                </div>
 
+            </div>
         `;
-
-        skinGrid.appendChild(div);
-
     }
 
-    document
-        .querySelectorAll(".buySkin")
-        .forEach(button=>{
+    messageText.innerHTML=`
 
-            button.addEventListener(
-                "click",
-                ()=>buySkin(
-                    button.dataset.skin
-                )
-            );
+        <strong style="
+            color:#60a5fa;
+            font-size:27px;
+        ">
+            LEVEL ${game.level}
+        </strong>
 
-        });
+        <br>
 
-    document
-        .querySelectorAll(".equipSkin")
-        .forEach(button=>{
+        <strong>
+            ${data.name}
+        </strong>
 
-            button.addEventListener(
-                "click",
-                ()=>equipSkin(
-                    button.dataset.skin
-                )
-            );
+        <br><br>
 
-        });
+        ${
+            game.level===5
+            ?`
+                <strong style="color:#fb7185">
+                    ⚠️ WARNING: BOSS FIGHT
+                </strong>
+                <br>
+                The Mega Printer has
+                <strong>100 HP</strong>
+                and launches fireballs!
+                <br><br>
+            `
+            :""
+        }
 
+        <strong style="color:#facc15">
+            ⚡ POWER-UPS IN THIS LEVEL
+        </strong>
+
+        <div class="powerPreview">
+            ${cards}
+        </div>
+
+        <br>
+
+        <span style="color:#94a3b8">
+            Touch an orb during the level
+            to activate its power.
+        </span>
+    `;
+
+    startButton.textContent=
+        game.started
+        ? "START LEVEL"
+        : "START GAME";
 }
 
 
-function buySkin(name){
+/* =========================================================
+   START BUTTON
+========================================================= */
 
-    if(
-        ownedSkins.includes(name)
-    ){
+const message=
+    document.getElementById("message");
+
+const messageText=
+    document.getElementById("messageText");
+
+const startButton=
+    document.getElementById("startButton");
+
+
+startButton.addEventListener("click",()=>{
+
+    startAudio();
+
+    /* PLAY AGAIN */
+
+    if(game.over){
+
+        game.score=0;
+        game.filament=0;
+        game.enemiesDefeated=0;
+        game.level=1;
+
+        game.started=true;
+        game.over=false;
+
+        player.lives=3;
+
+        createLevel(1);
+
+        showLevelPreview();
+
         return;
     }
 
-    if(savedCoins<2000){
+    /* NEXT LEVEL */
 
-        alert(
-            "You need 2,000 filament to buy this skin!"
-        );
+    if(world.finished){
 
-        return;
+        game.level++;
 
-    }
+        createLevel(game.level);
 
-    savedCoins-=2000;
+        showLevelPreview();
 
-    ownedSkins.push(name);
-
-    currentSkin=name;
-
-    localStorage.setItem(
-        "printWarsCoins",
-        savedCoins
-    );
-
-    localStorage.setItem(
-        "printWarsSkins",
-        JSON.stringify(
-            ownedSkins
-        )
-    );
-
-    localStorage.setItem(
-        "printWarsCurrentSkin",
-        currentSkin
-    );
-
-    renderShop();
-
-    beep(800,.12);
-
-}
-
-
-function equipSkin(name){
-
-    if(
-        !ownedSkins.includes(name)
-    ){
         return;
     }
 
-    currentSkin=name;
+    /* FIRST START */
 
-    localStorage.setItem(
-        "printWarsCurrentSkin",
-        currentSkin
+    if(!game.started){
+
+        game.started=true;
+        game.over=false;
+
+        game.level=1;
+        game.score=0;
+        game.filament=0;
+        game.enemiesDefeated=0;
+
+        player.lives=3;
+
+        createLevel(1);
+
+        showLevelPreview();
+
+        return;
+    }
+
+    /* START CURRENT LEVEL */
+
+    message.classList.add("hidden");
+
+    beep(440,.1);
+
+    setTimeout(
+        ()=>beep(660,.1),
+        100
     );
-
-    renderShop();
-
-    beep(600,.1);
-
-}
+});
 
 
 /* =========================================================
-   SHOP BUTTONS
+   INITIALIZE
 ========================================================= */
 
-function openShop(){
+createLevel(1);
 
-    message.classList.add(
-        "hidden"
-    );
+updateHUD();
 
-    levelPreview.classList.add(
-        "hidden"
-    );
+showLevelPreview();
 
-    renderShop();
-
-    shop.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-function closeShop(){
-
-    shop.classList.add(
-        "hidden"
-    );
-
-    /*
-       IMPORTANT:
-       The shop always returns to
-       the correct screen.
-    */
-
-    if(
-        game.started &&
-        !game.over &&
-        !world.finished
-    ){
-
-        levelPreview.classList.add(
-            "hidden"
-        );
-
-        message.classList.add(
-            "hidden"
-        );
-
-    }
-    else if(
-        game.started &&
-        world.finished &&
-        !game.over
-    ){
-
-        message.classList.remove(
-            "hidden"
-        );
-
-    }
-    else{
-
-        message.classList.remove(
-            "hidden"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   START / NEXT LEVEL
-========================================================= */
-
-const message =
-    document.getElementById(
-        "message"
-    );
-
-const messageText =
-    document.getElementById(
-        "messageText"
-    );
-
-const startButton =
-    document.getElementById(
-        "startButton"
-    );
-
-
-startButton.addEventListener(
-    "click",
-    ()=>{
-
-        startAudio();
-
-        /* PLAY AGAIN */
-
-        if(game.over){
-
-            game.score=0;
-            game.filament=0;
-            game.enemiesDefeated=0;
-
-            game.level=1;
-
-            game.started=true;
-            game.over=false;
-
-            player.lives=3;
-
-            createLevel(1);
-
-            message.classList.add(
-                "hidden"
-            );
-
-            showLevelPreview(1);
-
-            return;
-
-        }
-
-        /* NEXT LEVEL */
-
-        if(world.finished){
-
-            if(
-                game.level<
-                game.totalLevels
-            ){
-
-                game.level++;
-
-                message.classList.add(
-                    "hidden"
-                );
-
-                showLevelPreview(
-                    game.level
-                );
-
-                return;
-
-            }
-
-        }
-
-        /* FIRST START */
-
-        if(!game.started){
-
-            game.started=true;
-            game.over=false;
-
-            game.level=1;
-            game.score=0;
-            game.filament=0;
-            game.enemiesDefeated=0;
-
-            player.lives=3;
-
-            message.classList.add(
-                "hidden"
-            );
-
-            showLevelPreview(1);
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   BEGIN LEVEL
-========================================================= */
-
-document
-    .getElementById(
-        "beginLevelButton"
-    )
-    .addEventListener(
-        "click",
-        ()=>{
-
-            startAudio();
-
-            levelPreview.classList.add(
-                "hidden"
-            );
-
-            createLevel(
-                game.level
-            );
-
-            game.started=true;
-            game.over=false;
-
-            player.lives=
-                player.lives<=0
-                ?3
-                :player.lives;
-
-            beep(
-                440,
-                .1
-            );
-
-            setTimeout(
-                ()=>beep(
-                    660,
-                    .1
-                ),
-                100
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   SHOP NAVIGATION
-========================================================= */
-
-document
-    .getElementById(
-        "shopButton"
-    )
-    .addEventListener(
-        "click",
-        openShop
-    );
-
-
-document
-    .getElementById(
-        "previewShopButton"
-    )
-    .addEventListener(
-        "click",
-        openShop
-    );
-
-
-document
-    .getElementById(
-        "closeShopButton"
-    )
-    .addEventListener(
-        "click",
-        closeShop
-    );
+loop();
 
 
 /* =========================================================
@@ -4675,24 +3870,8 @@ function loop(){
     update();
     draw();
 
-    requestAnimationFrame(
-        loop
-    );
-
+    requestAnimationFrame(loop);
 }
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-createLevel(1);
-
-updateHUD();
-
-renderShop();
-
-loop();
 
 </script>
 
