@@ -2,345 +2,360 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>3D Print Wars</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Print Wars</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    overflow:hidden;
-    background:#07111f;
-    font-family:Arial,Helvetica,sans-serif;
-    color:white;
-    user-select:none;
+margin:0;
+overflow:hidden;
+background:#071426;
+font-family:Arial,Helvetica,sans-serif;
+color:white;
+user-select:none;
 }
 
 canvas{
-    display:block;
-    width:100vw;
-    height:100vh;
-    image-rendering:auto;
+display:block;
+margin:0 auto;
+background:#111827;
 }
 
-#hud{
-    position:fixed;
-    top:12px;
-    left:12px;
-    z-index:10;
+#ui{
+position:fixed;
+top:10px;
+left:10px;
+z-index:20;
 
-    background:rgba(4,10,20,.82);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:12px;
+background:rgba(0,0,0,.72);
 
-    padding:10px 14px;
+padding:12px 16px;
 
-    font-size:14px;
-    line-height:1.55;
+border-radius:12px;
 
-    box-shadow:0 8px 30px rgba(0,0,0,.35);
+border:1px solid rgba(255,255,255,.15);
+
+font-size:14px;
+
+line-height:1.5;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.3);
 }
 
-#hud span{
-    font-weight:bold;
+#ui strong{
+color:#60a5fa;
 }
 
-#score{
-    color:#facc15;
+#mobileControls{
+position:fixed;
+bottom:18px;
+left:0;
+right:0;
+
+display:flex;
+justify-content:space-between;
+
+padding:0 20px;
+
+z-index:30;
+
+pointer-events:none;
 }
 
-#coins{
-    color:#60a5fa;
-}
-
-#level{
-    color:#4ade80;
-}
-
-#lives{
-    color:#fb7185;
-}
-
-#power{
-    color:#c084fc;
-}
-
-#message{
-    position:fixed;
-    inset:0;
-    z-index:20;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(2,6,15,.55);
-}
-
-.panel{
-    width:min(520px,90vw);
-
-    text-align:center;
-
-    padding:35px;
-
-    background:rgba(8,15,30,.96);
-
-    border:1px solid rgba(96,165,250,.35);
-
-    border-radius:22px;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.6);
-}
-
-.panel h1{
-    margin:0 0 10px;
-
-    font-size:46px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #22d3ee,
-            #60a5fa,
-            #a78bfa,
-            #f472b6
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-}
-
-.panel p{
-    color:#cbd5e1;
-    line-height:1.6;
-}
-
-button{
-    border:0;
-    border-radius:12px;
-
-    padding:13px 28px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #7c3aed
-        );
-
-    color:white;
-
-    font-size:17px;
-    font-weight:bold;
-
-    cursor:pointer;
-}
-
-button:hover{
-    transform:translateY(-2px);
-    filter:brightness(1.15);
-}
-
-.hidden{
-    display:none!important;
-}
-
-#touch{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:18px;
-
-    display:none;
-
-    justify-content:space-between;
-
-    padding:0 18px;
-
-    z-index:15;
-
-    pointer-events:none;
-}
-
-.touchGroup{
-    display:flex;
-    gap:10px;
+.controlGroup{
+display:flex;
+gap:10px;
 }
 
 .touchButton{
-    width:58px;
-    height:58px;
 
-    border-radius:50%;
+width:65px;
+height:65px;
 
-    background:rgba(15,23,42,.8);
+border-radius:50%;
 
-    border:1px solid rgba(255,255,255,.2);
+border:2px solid rgba(255,255,255,.3);
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+background:rgba(15,23,42,.8);
 
-    font-size:23px;
+color:white;
 
-    pointer-events:auto;
-    touch-action:none;
+font-size:25px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+pointer-events:auto;
+
+touch-action:none;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.4);
 }
 
-@media(max-width:700px){
-
-    #touch{
-        display:flex;
-    }
-
-    #hud{
-        font-size:11px;
-    }
-
-    .panel h1{
-        font-size:34px;
-    }
+.touchButton:active{
+background:#2563eb;
 }
+
+#message{
+
+position:fixed;
+
+left:50%;
+top:50%;
+
+transform:translate(-50%,-50%);
+
+z-index:50;
+
+width:min(90%,500px);
+
+padding:30px;
+
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#1e293b
+);
+
+border-radius:20px;
+
+border:2px solid #475569;
+
+text-align:center;
+
+box-shadow:
+0 20px 80px rgba(0,0,0,.7);
+}
+
+#message h1{
+
+margin-top:0;
+
+font-size:34px;
+
+color:#60a5fa;
+}
+
+#messageText{
+line-height:1.7;
+}
+
+#startButton{
+
+margin-top:20px;
+
+padding:13px 30px;
+
+border:0;
+
+border-radius:10px;
+
+background:#2563eb;
+
+color:white;
+
+font-weight:bold;
+
+font-size:17px;
+
+cursor:pointer;
+
+box-shadow:
+0 5px 15px rgba(37,99,235,.4);
+}
+
+#startButton:hover{
+background:#3b82f6;
+}
+
+.hidden{
+display:none!important;
+}
+
 </style>
 </head>
 
 <body>
 
-<canvas id="game"></canvas>
 
-<div id="hud">
+<div id="ui">
 
-    ❤️ Lives:
-    <span id="lives">♥ ♥ ♥</span>
+<div>
+🏭 <strong>PRINT WARS</strong>
+</div>
 
-    <br>
+<div>
+Level:
+<span id="level">1-1</span>
+</div>
 
-    ⭐ Score:
-    <span id="score">0</span>
+<div>
+Score:
+<span id="score">0</span>
+</div>
 
-    &nbsp;&nbsp;
+<div>
+🧵 Filament:
+<span id="coins">0</span>
+</div>
 
-    🧵 Filament:
-    <span id="coins">0</span>
+<div>
+❤️ Lives:
+<span id="lives">♥ ♥ ♥</span>
+</div>
 
-    <br>
+<div>
+⚡ Power:
+<span id="power">Normal</span>
+</div>
 
-    🌎 Level:
-    <span id="level">1-1</span>
-
-    &nbsp;&nbsp;
-
-    🔥 Power:
-    <span id="power">Normal</span>
-
-    <br>
-
-    <small style="color:#94a3b8">
-        ← → Run &nbsp; SPACE Jump &nbsp; X Dash
-    </small>
+<div style="margin-top:5px;color:#94a3b8">
+← → Move &nbsp; SPACE Jump &nbsp; X Dash
+</div>
 
 </div>
+
+
+<canvas
+id="game"
+width="960"
+height="540">
+</canvas>
+
+
+<div id="mobileControls">
+
+<div class="controlGroup">
+
+<button
+class="touchButton"
+data-key="ArrowLeft">
+◀
+</button>
+
+<button
+class="touchButton"
+data-key="ArrowRight">
+▶
+</button>
+
+</div>
+
+<div class="controlGroup">
+
+<button
+class="touchButton"
+data-key=" ">
+▲
+</button>
+
+<button
+class="touchButton"
+data-key="x">
+⚡
+</button>
+
+</div>
+
+</div>
+
 
 <div id="message">
 
-    <div class="panel">
+<h1>🖨️ PRINT WARS</h1>
 
-        <h1>3D PRINT WARS</h1>
+<div id="messageText">
 
-        <p id="messageText">
+Welcome to the secret
+3D-printing factory!
 
-            The factory has gone wild!<br><br>
+<br><br>
 
-            Run through the print factory,
-            collect filament,
-            stomp rogue prints,
-            and reach the giant printer.
+Defeat the rogue products,
+collect filament and reach
+the printer at the end of
+each level.
 
-        </p>
+<br><br>
 
-        <button id="startButton">
-            START PRINT
-        </button>
+<strong>
+Watch out for fire-spitting
+products!
+</strong>
 
-    </div>
+</div>
+
+<button id="startButton">
+START GAME
+</button>
 
 </div>
 
-<div id="touch">
-
-    <div class="touchGroup">
-
-        <div class="touchButton" data-key="ArrowLeft">
-            ◀
-        </div>
-
-        <div class="touchButton" data-key="ArrowRight">
-            ▶
-        </div>
-
-    </div>
-
-    <div class="touchGroup">
-
-        <div class="touchButton" data-key=" ">
-            ▲
-        </div>
-
-        <div class="touchButton" data-key="x">
-            ⚡
-        </div>
-
-    </div>
-
-</div>
 
 <script>
+
+/* =========================================================
+   PRINT WARS
+   5 LEVEL 3D PRINT PLATFORM GAME
+========================================================= */
+
 
 /* =========================================================
    CANVAS
 ========================================================= */
 
 const canvas =
-    document.getElementById("game");
+document.getElementById("game");
 
 const ctx =
-    canvas.getContext("2d");
+canvas.getContext("2d");
 
-const VIEW_W = 960;
-const VIEW_H = 540;
+const WIDTH = 960;
+const HEIGHT = 540;
 
-canvas.width = VIEW_W;
-canvas.height = VIEW_H;
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
 
 
 /* =========================================================
    AUDIO
 ========================================================= */
 
-let audio = null;
+let audioCtx = null;
 
 function startAudio(){
 
-    if(!audio){
+    if(!audioCtx){
 
-        audio =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+        audioCtx =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
 
     }
 
-    if(audio.state === "suspended"){
-        audio.resume();
+    if(
+        audioCtx.state ===
+        "suspended"
+    ){
+
+        audioCtx.resume();
+
     }
+
 }
+
 
 function beep(
     frequency,
@@ -349,37 +364,44 @@ function beep(
     volume=.05
 ){
 
-    if(!audio) return;
+    if(!audioCtx)
+        return;
 
-    const osc =
-        audio.createOscillator();
+    const oscillator =
+    audioCtx.createOscillator();
 
     const gain =
-        audio.createGain();
+    audioCtx.createGain();
 
-    osc.type = type;
+    oscillator.type=type;
 
-    osc.frequency.value =
-        frequency;
+    oscillator.frequency.value=
+    frequency;
 
     gain.gain.setValueAtTime(
         volume,
-        audio.currentTime
+        audioCtx.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
         .001,
-        audio.currentTime + duration
+        audioCtx.currentTime+
+        duration
     );
 
-    osc.connect(gain);
-    gain.connect(audio.destination);
+    oscillator.connect(gain);
 
-    osc.start();
-
-    osc.stop(
-        audio.currentTime + duration
+    gain.connect(
+        audioCtx.destination
     );
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioCtx.currentTime+
+        duration
+    );
+
 }
 
 
@@ -387,99 +409,148 @@ function beep(
    INPUT
 ========================================================= */
 
-const keys = {};
+const keys={};
 
 window.addEventListener(
-    "keydown",
-    e => {
+"keydown",
+e=>{
 
-        if(
-            ["ArrowLeft",
-             "ArrowRight",
-             " ",
-             "ArrowUp",
-             "x",
-             "X"].includes(e.key)
-        ){
-            e.preventDefault();
-        }
+    if(
+        [
+            "ArrowLeft",
+            "ArrowRight",
+            "ArrowUp",
+            " ",
+            "x",
+            "X"
+        ].includes(e.key)
+    ){
 
-        keys[e.key] = true;
+        e.preventDefault();
 
-        if(
-            e.key === " " ||
-            e.key === "ArrowUp"
-        ){
-            jump();
-        }
-
-        if(
-            e.key === "x" ||
-            e.key === "X"
-        ){
-            dash();
-        }
     }
-);
+
+    keys[e.key]=true;
+
+
+    if(
+        (
+            e.key===" " ||
+            e.key==="ArrowUp"
+        ) &&
+        game.started &&
+        !game.over
+    ){
+
+        jump();
+
+    }
+
+
+    if(
+        (
+            e.key==="x" ||
+            e.key==="X"
+        ) &&
+        game.started &&
+        !game.over
+    ){
+
+        dash();
+
+    }
+
+});
+
 
 window.addEventListener(
-    "keyup",
-    e => {
-        keys[e.key] = false;
-    }
-);
+"keyup",
+e=>{
+
+    keys[e.key]=false;
+
+});
 
 
 /* =========================================================
-   TOUCH
+   MOBILE CONTROLS
 ========================================================= */
 
 document
 .querySelectorAll(".touchButton")
-.forEach(button => {
+.forEach(button=>{
 
-    const key =
-        button.dataset.key;
+    const key=
+    button.dataset.key;
 
-    button.addEventListener(
-        "pointerdown",
-        e => {
-
-            e.preventDefault();
-
-            keys[key] = true;
-
-            if(key === " "){
-                jump();
-            }
-
-            if(key === "x"){
-                dash();
-            }
-        }
-    );
 
     button.addEventListener(
-        "pointerup",
-        () => {
-            keys[key] = false;
-        }
-    );
+    "pointerdown",
+    e=>{
+
+        e.preventDefault();
+
+        keys[key]=true;
+
+
+        if(key===" ")
+            jump();
+
+
+        if(key==="x")
+            dash();
+
+    });
+
 
     button.addEventListener(
-        "pointercancel",
-        () => {
-            keys[key] = false;
-        }
-    );
+    "pointerup",
+    e=>{
+
+        e.preventDefault();
+
+        keys[key]=false;
+
+    });
+
+
+    button.addEventListener(
+    "pointercancel",
+    ()=>{
+        keys[key]=false;
+    });
+
 });
+
+
+/* =========================================================
+   GAME DATA
+========================================================= */
+
+const game={
+
+    started:false,
+
+    over:false,
+
+    score:0,
+
+    filament:0,
+
+    enemiesDefeated:0,
+
+    level:1,
+
+    totalLevels:5
+
+};
 
 
 /* =========================================================
    WORLD
 ========================================================= */
 
-const world = {
+const world={
 
     width:5000,
 
@@ -487,9 +558,9 @@ const world = {
 
     cameraX:0,
 
-    level:1,
+    finished:false,
 
-    finished:false
+    finishX:4800
 
 };
 
@@ -498,7 +569,7 @@ const world = {
    PLAYER
 ========================================================= */
 
-const player = {
+const player={
 
     x:100,
 
@@ -540,49 +611,31 @@ const player = {
 
 
 /* =========================================================
-   GAME
+   ARRAYS
 ========================================================= */
 
-const game = {
-
-    started:false,
-
-    over:false,
-
-    score:0,
-
-    filament:0,
-
-    enemiesDefeated:0
-
-};
+let platforms=[];
+let blocks=[];
+let enemies=[];
+let collectibles=[];
+let powerups=[];
+let fireballs=[];
+let particles=[];
+let texts=[];
 
 
 /* =========================================================
-   OBJECT ARRAYS
+   PRODUCT NAMES
 ========================================================= */
 
-let platforms = [];
-let blocks = [];
-let enemies = [];
-let collectibles = [];
-let powerups = [];
-let particles = [];
-let texts = [];
-
-
-/* =========================================================
-   PRODUCT TYPES
-========================================================= */
-
-const products = [
+const productNames=[
 
     "Gear Fidget",
     "Dragon",
     "Pig",
     "Otter",
     "Shark",
-    "Knight Holder",
+    "Knight",
     "Cactus",
     "Air Tank"
 
@@ -590,202 +643,672 @@ const products = [
 
 
 /* =========================================================
-   LEVEL CREATION
+   LEVELS
 ========================================================= */
 
-function createLevel(){
+const levels=[
 
-    platforms = [];
-    blocks = [];
-    enemies = [];
-    collectibles = [];
-    powerups = [];
+/* ================= LEVEL 1 ================= */
 
-    world.width = 5200;
+{
+
+name:"Factory Floor",
+
+width:5000,
+
+grounds:[
+
+[0,750],
+[850,650],
+[1620,600],
+[2350,900],
+[3400,800],
+[4350,650]
+
+],
+
+platforms:[
+
+[430,360,170],
+[650,300,130],
+[980,350,150],
+[1210,280,150],
+
+[1740,350,150],
+[1970,290,140],
+
+[2500,340,180],
+[2780,270,160],
+[3050,350,150],
+
+[3500,330,160],
+[3750,270,160],
+
+[4500,340,160],
+[4770,280,160]
+
+],
+
+enemies:[
+
+[380,"patrol"],
+[720,"fire"],
+[1020,"patrol"],
+[1160,"patrol"],
+[1700,"patrol"],
+[2020,"fire"],
+[2450,"patrol"],
+[2920,"fire"],
+[3150,"patrol"],
+[3500,"fire"],
+[3900,"patrol"],
+[4420,"fire"],
+[4750,"patrol"]
+
+],
+
+blocks:[
+
+[500,300],
+[550,300],
+[1030,290],
+[1080,290],
+[1780,290],
+[2550,280],
+[2600,280],
+[3600,270],
+[3650,270],
+[4550,280]
+
+]
+
+},
 
 
-    /*
-       GROUND SECTIONS
+/* ================= LEVEL 2 ================= */
 
-       The gaps are intentional.
-       Falling into one costs a life.
-    */
+{
 
-    addPlatform(
-        0,
-        450,
-        750,
-        90
+name:"Filament Warehouse",
+
+width:5600,
+
+grounds:[
+
+[0,600],
+[720,700],
+[1550,500],
+[2200,850],
+[3200,650],
+[4050,700],
+[4900,700]
+
+],
+
+platforms:[
+
+[300,350,180],
+[570,280,130],
+[820,330,180],
+[1100,240,150],
+
+[1600,350,150],
+[1810,280,140],
+
+[2250,350,180],
+[2520,270,150],
+[2780,350,130],
+
+[3250,300,180],
+[3500,230,140],
+
+[4100,330,180],
+[4380,260,150],
+
+[5000,330,180],
+[5250,260,150]
+
+],
+
+enemies:[
+
+[350,"patrol"],
+[530,"fire"],
+[900,"patrol"],
+[1160,"fire"],
+[1640,"patrol"],
+[1870,"fire"],
+[2300,"patrol"],
+[2750,"fire"],
+[3300,"patrol"],
+[3550,"fire"],
+[4150,"patrol"],
+[4420,"fire"],
+[5050,"patrol"],
+[5300,"fire"]
+
+],
+
+blocks:[
+
+[350,290],
+[400,290],
+[850,270],
+[1150,190],
+[1650,290],
+[2300,290],
+[2550,210],
+[3300,240],
+[4150,270],
+[5050,270]
+
+]
+
+},
+
+
+/* ================= LEVEL 3 ================= */
+
+{
+
+name:"3D Print Canyon",
+
+width:6000,
+
+grounds:[
+
+[0,550],
+[680,550],
+[1350,700],
+[2200,500],
+[2900,800],
+[3850,600],
+[4600,700],
+[5400,600]
+
+],
+
+platforms:[
+
+[220,340,150],
+[470,270,120],
+[750,350,140],
+[980,260,130],
+
+[1400,330,160],
+[1680,240,130],
+
+[1950,350,150],
+[2250,290,130],
+[2450,210,120],
+
+[3000,340,160],
+[3300,260,130],
+[3550,340,150],
+
+[3900,280,140],
+[4200,350,160],
+
+[4650,300,150],
+[4950,230,130],
+
+[5500,330,160]
+
+],
+
+enemies:[
+
+[300,"patrol"],
+[510,"fire"],
+[790,"patrol"],
+[1000,"fire"],
+[1430,"fire"],
+[1700,"patrol"],
+[1980,"fire"],
+[2280,"patrol"],
+[3020,"fire"],
+[3340,"patrol"],
+[3580,"fire"],
+[3920,"patrol"],
+[4230,"fire"],
+[4680,"patrol"],
+[4980,"fire"],
+[5530,"patrol"]
+
+],
+
+blocks:[
+
+[480,220],
+[800,300],
+[1010,210],
+[1430,280],
+[1710,190],
+[2260,240],
+[2460,160],
+[3030,290],
+[3330,210],
+[3920,230],
+[4680,250],
+[4980,180]
+
+]
+
+},
+
+
+/* ================= LEVEL 4 ================= */
+
+{
+
+name:"Printer Factory",
+
+width:6500,
+
+grounds:[
+
+[0,700],
+[850,500],
+[1500,750],
+[2450,550],
+[3150,900],
+[4250,600],
+[5000,700],
+[5900,600]
+
+],
+
+platforms:[
+
+[350,350,150],
+[620,280,130],
+[900,340,160],
+[1170,250,140],
+
+[1550,340,150],
+[1800,250,130],
+[2100,330,150],
+
+[2500,270,150],
+[2750,200,120],
+
+[3200,340,160],
+[3500,260,140],
+[3800,340,150],
+
+[4300,300,160],
+[4600,220,140],
+
+[5050,330,170],
+[5350,260,140],
+
+[6000,330,170],
+[6250,240,130]
+
+],
+
+enemies:[
+
+[400,"patrol"],
+[650,"fire"],
+[950,"fire"],
+[1200,"patrol"],
+[1580,"fire"],
+[1830,"patrol"],
+[2130,"fire"],
+[2530,"patrol"],
+[2780,"fire"],
+[3230,"fire"],
+[3530,"patrol"],
+[3830,"fire"],
+[4330,"patrol"],
+[4630,"fire"],
+[5080,"fire"],
+[5380,"patrol"],
+[6030,"fire"],
+[6280,"patrol"]
+
+],
+
+blocks:[
+
+[400,290],
+[650,220],
+[950,280],
+[1200,190],
+[1580,280],
+[1830,190],
+[2130,270],
+[2530,210],
+[2780,140],
+[3230,280],
+[3530,200],
+[3830,280],
+[4330,240],
+[4630,160],
+[5080,270],
+[5380,200],
+[6030,270]
+
+]
+
+},
+
+
+/* ================= LEVEL 5 ================= */
+
+{
+
+name:"The Mega Printer",
+
+width:7200,
+
+grounds:[
+
+[0,700],
+[850,650],
+[1650,600],
+[2400,850],
+[3400,650],
+[4200,700],
+[5100,650],
+[6000,1000]
+
+],
+
+platforms:[
+
+[300,350,170],
+[600,280,130],
+[900,340,150],
+[1150,250,140],
+
+[1700,330,150],
+[1950,240,130],
+[2200,320,150],
+[2500,240,130],
+[2750,180,110],
+
+[3450,340,160],
+[3750,260,140],
+[4000,330,150],
+[4300,250,140],
+
+[4650,340,160],
+[4950,260,140],
+[5200,330,150],
+[5550,250,150],
+[5850,330,160],
+[6200,260,150],
+[6500,330,160],
+[6800,250,160]
+
+],
+
+enemies:[
+
+[350,"patrol"],
+[620,"fire"],
+[930,"fire"],
+[1180,"patrol"],
+[1730,"fire"],
+[1980,"patrol"],
+[2230,"fire"],
+[2530,"patrol"],
+[2780,"fire"],
+[3480,"fire"],
+[3780,"patrol"],
+[4030,"fire"],
+[4330,"patrol"],
+[4680,"fire"],
+[4980,"patrol"],
+[5230,"fire"],
+[5580,"patrol"],
+[5880,"fire"],
+[6230,"patrol"],
+[6530,"fire"],
+[6830,"patrol"]
+
+],
+
+blocks:[
+
+[350,290],
+[620,220],
+[930,280],
+[1180,190],
+[1730,270],
+[1980,180],
+[2230,260],
+[2530,180],
+[2780,120],
+[3480,280],
+[3780,200],
+[4030,270],
+[4330,190],
+[4680,280],
+[4980,200],
+[5230,270],
+[5580,190],
+[5880,270],
+[6230,200],
+[6530,270]
+
+]
+
+}
+
+];
+
+
+/* =========================================================
+   CREATE LEVEL
+========================================================= */
+
+function createLevel(number){
+
+    const data=
+    levels[number-1];
+
+
+    platforms=[];
+    blocks=[];
+    enemies=[];
+    collectibles=[];
+    powerups=[];
+    fireballs=[];
+    particles=[];
+    texts=[];
+
+
+    world.width=
+    data.width;
+
+
+    world.finished=false;
+
+
+    world.finishX=
+    data.width-150;
+
+
+    /* GROUND */
+
+    for(
+        const g of data.grounds
+    ){
+
+        addPlatform(
+            g[0],
+            450,
+            g[1],
+            100
+        );
+
+    }
+
+
+    /* PLATFORMS */
+
+    for(
+        const p of data.platforms
+    ){
+
+        addPlatform(
+            p[0],
+            p[1],
+            p[2],
+            25
+        );
+
+    }
+
+
+    /* BLOCKS */
+
+    for(
+        const b of data.blocks
+    ){
+
+        addBlock(
+            b[0],
+            b[1]
+        );
+
+    }
+
+
+    /* FILAMENT */
+
+    for(
+        let x=100;
+        x<data.width-250;
+        x+=210
+    ){
+
+        const y=
+        390-
+        ((x/210)%3)*45;
+
+        addFilament(
+            x,
+            y
+        );
+
+    }
+
+
+    /* FILAMENT ON PLATFORMS */
+
+    for(
+        const p of data.platforms
+    ){
+
+        for(
+            let x=p[0]+25;
+            x<p[0]+p[2]-10;
+            x+=45
+        ){
+
+            addFilament(
+                x,
+                p[1]-28
+            );
+
+        }
+
+    }
+
+
+    /* ENEMIES */
+
+    for(
+        const e of data.enemies
+    ){
+
+        addEnemy(
+            e[0],
+            e[1]
+        );
+
+    }
+
+
+    /* POWERUP */
+
+    if(
+        data.platforms.length>1
+    ){
+
+        addPowerup(
+            data.platforms[1][0],
+            data.platforms[1][1]-55,
+            "printer"
+        );
+
+    }
+
+
+    /* STAR */
+
+    if(number>=3){
+
+        const index=
+        Math.floor(
+            data.platforms.length/2
+        );
+
+
+        addPowerup(
+            data.platforms[index][0],
+            data.platforms[index][1]-55,
+            "star"
+        );
+
+    }
+
+
+    /* PLAYER RESET */
+
+    player.x=100;
+
+    player.y=350;
+
+    player.vx=0;
+
+    player.vy=0;
+
+    player.invincible=100;
+
+
+    addText(
+        player.x+300,
+        150,
+        "LEVEL "+number,
+        "#60a5fa",
+        30
     );
 
-    addPlatform(
-        850,
-        450,
-        650,
-        90
-    );
 
-    addPlatform(
-        1620,
-        450,
-        600,
-        90
-    );
-
-    addPlatform(
-        2350,
-        450,
-        900,
-        90
-    );
-
-    addPlatform(
-        3400,
-        450,
-        800,
-        90
-    );
-
-    addPlatform(
-        4350,
-        450,
-        850,
-        90
+    addText(
+        player.x+300,
+        185,
+        data.name,
+        "#cbd5e1",
+        18
     );
 
 
-    /*
-       FLOATING PLATFORMS
-    */
-
-    addPlatform(430,360,170,25);
-    addPlatform(650,300,130,25);
-
-    addPlatform(980,350,150,25);
-    addPlatform(1210,280,150,25);
-
-    addPlatform(1740,350,150,25);
-    addPlatform(1970,290,140,25);
-
-    addPlatform(2500,340,180,25);
-    addPlatform(2780,270,160,25);
-
-    addPlatform(3050,350,150,25);
-
-    addPlatform(3500,330,160,25);
-    addPlatform(3750,270,160,25);
-
-    addPlatform(4500,340,160,25);
-    addPlatform(4770,280,160,25);
-
-
-    /*
-       QUESTION / PRINT BLOCKS
-    */
-
-    addBlock(500,300);
-    addBlock(550,300);
-
-    addBlock(1030,290);
-    addBlock(1080,290);
-
-    addBlock(1780,290);
-
-    addBlock(2550,280);
-    addBlock(2600,280);
-
-    addBlock(3600,270);
-    addBlock(3650,270);
-
-    addBlock(4550,280);
-
-
-    /*
-       FILAMENT
-    */
-
-    filamentLine(180,390,7,45);
-
-    filamentLine(460,320,4,45);
-
-    filamentLine(880,390,8,50);
-
-    filamentLine(1030,250,4,45);
-
-    filamentLine(1640,390,8,50);
-
-    filamentLine(1780,250,4,45);
-
-    filamentLine(2400,390,10,50);
-
-    filamentLine(2550,240,4,45);
-
-    filamentLine(3450,390,9,50);
-
-    filamentLine(3600,230,4,45);
-
-    filamentLine(4400,390,10,50);
-
-    filamentLine(4550,230,4,45);
-
-
-    /*
-       ENEMIES
-    */
-
-    addEnemy(380);
-    addEnemy(720);
-
-    addEnemy(1020);
-    addEnemy(1160);
-
-    addEnemy(1700);
-    addEnemy(2020);
-
-    addEnemy(2450);
-    addEnemy(2920);
-    addEnemy(3150);
-
-    addEnemy(3500);
-    addEnemy(3900);
-
-    addEnemy(4420);
-    addEnemy(4750);
-
-
-    /*
-       POWER UPS
-    */
-
-    addPowerup(
-        555,
-        250,
-        "printer"
+    beep(
+        400,
+        .12
     );
 
-    addPowerup(
-        1840,
-        240,
-        "star"
-    );
-
-    addPowerup(
-        3650,
-        220,
-        "printer"
-    );
-
-
-    /*
-       FINAL PRINTER
-    */
-
-    world.finishX = 5000;
 }
 
 
 /* =========================================================
-   LEVEL HELPERS
+   OBJECT CREATION
 ========================================================= */
 
 function addPlatform(
@@ -796,10 +1319,10 @@ function addPlatform(
 ){
 
     platforms.push({
-        x,
-        y,
-        w,
-        h
+        x:x,
+        y:y,
+        w:w,
+        h:h
     });
 
 }
@@ -812,8 +1335,8 @@ function addBlock(
 
     blocks.push({
 
-        x,
-        y,
+        x:x,
+        y:y,
 
         w:42,
         h:42,
@@ -825,37 +1348,33 @@ function addBlock(
 }
 
 
-function filamentLine(
+function addFilament(
     x,
-    y,
-    amount,
-    spacing
+    y
 ){
 
-    for(let i=0;i<amount;i++){
+    collectibles.push({
 
-        collectibles.push({
+        x:x,
+        y:y,
 
-            x:x+i*spacing,
+        r:9,
 
-            y:y,
+        collected:false
 
-            r:9,
-
-            collected:false
-
-        });
-
-    }
+    });
 
 }
 
 
-function addEnemy(x){
+function addEnemy(
+    x,
+    type
+){
 
     enemies.push({
 
-        x,
+        x:x,
 
         y:390,
 
@@ -863,26 +1382,31 @@ function addEnemy(x){
 
         h:34,
 
-        vx:0,
+        direction:
+        Math.random()>.5
+        ?1
+        :-1,
 
         speed:
-            1 +
-            Math.random()*.5,
+        type==="fire"
+        ?1.05
+        :1.25,
 
-        direction:
-            Math.random()>.5
-                ?1
-                :-1,
+        type:type,
 
         alive:true,
 
+        fireTimer:
+        80+
+        Math.random()*120,
+
         name:
-            products[
-                Math.floor(
-                    Math.random()*
-                    products.length
-                )
-            ]
+        productNames[
+            Math.floor(
+                Math.random()*
+                productNames.length
+            )
+        ]
 
     });
 
@@ -897,15 +1421,13 @@ function addPowerup(
 
     powerups.push({
 
-        x,
+        x:x,
+        y:y,
 
-        y,
+        w:28,
+        h:28,
 
-        w:26,
-
-        h:26,
-
-        type,
+        type:type,
 
         collected:false
 
@@ -920,15 +1442,19 @@ function addPowerup(
 
 function overlap(a,b){
 
-    return (
+    return(
 
-        a.x < b.x+b.w &&
+        a.x<
+        b.x+b.w &&
 
-        a.x+a.w > b.x &&
+        a.x+a.w>
+        b.x &&
 
-        a.y < b.y+b.h &&
+        a.y<
+        b.y+b.h &&
 
-        a.y+a.h > b.y
+        a.y+a.h>
+        b.y
 
     );
 
@@ -942,24 +1468,22 @@ function overlap(a,b){
 function jump(){
 
     if(
-        !game.started ||
-        game.over
-    ) return;
+        !player.onGround
+    )
+        return;
 
-    if(player.onGround){
 
-        player.vy =
-            -player.jumpPower;
+    player.vy=
+    -player.jumpPower;
 
-        player.onGround=false;
 
-        beep(
-            480,
-            .08,
-            "square"
-        );
+    player.onGround=false;
 
-    }
+
+    beep(
+        480,
+        .08
+    );
 
 }
 
@@ -971,168 +1495,164 @@ function jump(){
 function dash(){
 
     if(
-        !game.started ||
-        game.over
-    ) return;
+        player.dashCooldown>0
+    )
+        return;
 
-    if(
-        player.dashCooldown <=0
-    ){
 
-        player.dashTimer=10;
+    player.dashTimer=10;
 
-        player.dashCooldown=65;
+    player.dashCooldown=60;
 
-        player.vx =
-            player.facing*13;
 
-        beep(
-            180,
-            .1,
-            "sawtooth"
-        );
+    player.vx=
+    player.facing*13;
 
-        burst(
-            player.x,
-            player.y+25,
-            "#60a5fa",
-            8
-        );
 
-    }
+    burst(
+        player.x,
+        player.y+25,
+        "#60a5fa",
+        10
+    );
+
+
+    beep(
+        180,
+        .1,
+        "sawtooth"
+    );
 
 }
 
 
 /* =========================================================
-   UPDATE PLAYER
+   PLAYER UPDATE
 ========================================================= */
 
 function updatePlayer(){
 
-    /*
-       Running
-    */
+    /* MOVEMENT */
 
-    if(keys["ArrowLeft"]){
+    if(
+        keys["ArrowLeft"]
+    ){
 
-        player.vx -=
-            player.acceleration;
+        player.vx-=
+        player.acceleration;
 
         player.facing=-1;
 
     }
 
-    if(keys["ArrowRight"]){
 
-        player.vx +=
-            player.acceleration;
+    if(
+        keys["ArrowRight"]
+    ){
+
+        player.vx+=
+        player.acceleration;
 
         player.facing=1;
 
     }
 
 
-    /*
-       Friction
-    */
-
     if(
         !keys["ArrowLeft"] &&
         !keys["ArrowRight"]
     ){
 
-        player.vx *=
-            player.friction;
+        player.vx*=
+        player.friction;
 
     }
 
 
-    player.vx =
-        Math.max(
-            -player.maxSpeed,
-            Math.min(
-                player.maxSpeed,
-                player.vx
-            )
-        );
+    player.vx=
+    Math.max(
+        -player.maxSpeed,
+        Math.min(
+            player.maxSpeed,
+            player.vx
+        )
+    );
 
 
-    /*
-       Dash
-    */
+    /* DASH */
 
-    if(player.dashTimer>0){
+    if(
+        player.dashTimer>0
+    ){
 
         player.dashTimer--;
 
-        player.vx *= .96;
+        player.vx*=.96;
 
     }
 
-    if(player.dashCooldown>0){
+
+    if(
+        player.dashCooldown>0
+    ){
+
         player.dashCooldown--;
+
     }
 
 
-    /*
-       Gravity
-    */
+    /* GRAVITY */
 
-    player.vy += .6;
+    player.vy+=.6;
 
 
-    /*
-       Move horizontally
-    */
+    /* HORIZONTAL */
 
-    player.x += player.vx;
+    player.x+=
+    player.vx;
 
 
-    /*
-       Move vertically
-    */
+    /* VERTICAL */
 
-    const oldBottom =
-        player.y+player.h;
+    const oldBottom=
+    player.y+
+    player.h;
 
-    player.y += player.vy;
+
+    player.y+=
+    player.vy;
+
 
     player.onGround=false;
 
 
-    /*
-       Platform collision
-    */
+    /* PLATFORM COLLISION */
 
     for(
-        const platform of platforms
+        const p of platforms
     ){
 
         if(
 
             player.x+
-            player.w >
-            platform.x &&
+            player.w>
+            p.x &&
 
-            player.x <
-            platform.x+
-            platform.w &&
+            player.x<
+            p.x+p.w &&
 
-            oldBottom <=
-            platform.y &&
+            oldBottom<=p.y &&
 
             player.y+
-            player.h >=
-            platform.y &&
+            player.h>=p.y &&
 
             player.vy>=0
 
         ){
 
-            player.y =
-                platform.y-
-                player.h;
+            player.y=
+            p.y-
+            player.h;
 
             player.vy=0;
 
@@ -1143,62 +1663,67 @@ function updatePlayer(){
     }
 
 
-    /*
-       Bounds
-    */
+    /* WORLD BOUNDARIES */
 
-    if(player.x<0){
-        player.x=0;
-        player.vx=0;
-    }
-
-
-    /*
-       Camera
-    */
-
-    world.cameraX =
-        player.x-300;
-
-    world.cameraX =
-        Math.max(
-            0,
-            Math.min(
-                world.width-
-                VIEW_W,
-                world.cameraX
-            )
-        );
+    player.x=
+    Math.max(
+        0,
+        Math.min(
+            world.width-player.w,
+            player.x
+        )
+    );
 
 
-    /*
-       Falling into pit
-    */
+    /* FALL */
 
-    if(player.y>600){
+    if(
+        player.y>600
+    ){
 
         loseLife();
 
     }
 
 
-    /*
-       Invincibility
-    */
+    /* CAMERA */
 
-    if(player.invincible>0){
+    world.cameraX=
+    player.x-300;
+
+
+    world.cameraX=
+    Math.max(
+        0,
+        Math.min(
+            world.width-WIDTH,
+            world.cameraX
+        )
+    );
+
+
+    if(
+        player.invincible>0
+    ){
+
         player.invincible--;
+
     }
 
-    if(player.starTimer>0){
+
+    if(
+        player.starTimer>0
+    ){
+
         player.starTimer--;
+
     }
 
 }
 
 
 /* =========================================================
-   UPDATE ENEMIES
+   ENEMY UPDATE
 ========================================================= */
 
 function updateEnemies(){
@@ -1207,24 +1732,16 @@ function updateEnemies(){
         const enemy of enemies
     ){
 
-        if(!enemy.alive)
+        if(
+            !enemy.alive
+        )
             continue;
 
 
-        /*
-           Enemy movement
-        */
-
-        enemy.x +=
-            enemy.direction*
-            enemy.speed;
+        let support=null;
 
 
-        /*
-           Turn around at edges
-        */
-
-        let supported=false;
+        /* FIND PLATFORM */
 
         for(
             const p of platforms
@@ -1233,48 +1750,115 @@ function updateEnemies(){
             if(
 
                 enemy.x+
-                enemy.w >
+                enemy.w>
                 p.x &&
 
-                enemy.x <
+                enemy.x<
                 p.x+p.w &&
 
                 Math.abs(
                     enemy.y+
                     enemy.h-
                     p.y
-                )<5
+                )<8
 
             ){
 
-                supported=true;
+                support=p;
+
+                break;
 
             }
 
         }
 
-        if(!supported){
 
-            enemy.direction*=-1;
+        /* PATROL */
+
+        enemy.x+=
+        enemy.direction*
+        enemy.speed;
+
+
+        /* TURN AROUND */
+
+        if(support){
+
+            const left=
+            support.x;
+
+            const right=
+            support.x+
+            support.w-
+            enemy.w;
+
+
+            if(
+                enemy.x<=left
+            ){
+
+                enemy.x=left;
+
+                enemy.direction=1;
+
+            }
+
+
+            if(
+                enemy.x>=right
+            ){
+
+                enemy.x=right;
+
+                enemy.direction=-1;
+
+            }
 
         }
 
 
-        /*
-           Player collision
-        */
+        /* FIRE ENEMY */
 
         if(
-            overlap(player,enemy)
+            enemy.type==="fire"
         ){
 
-            /*
-               Jumping on enemy
-            */
+            enemy.fireTimer--;
 
-            const playerBottom =
-                player.y+
-                player.h;
+
+            if(
+                enemy.fireTimer<=0
+            ){
+
+                spitFire(
+                    enemy
+                );
+
+
+                enemy.fireTimer=
+                100+
+                Math.random()*100;
+
+            }
+
+        }
+
+
+        /* PLAYER HIT */
+
+        if(
+            overlap(
+                player,
+                enemy
+            )
+        ){
+
+            const playerBottom=
+            player.y+
+            player.h;
+
+
+            /* STOMP */
 
             if(
                 player.vy>0 &&
@@ -1282,66 +1866,29 @@ function updateEnemies(){
                 enemy.y<20
             ){
 
-                enemy.alive=false;
-
-                player.vy=-9;
-
-                game.score+=250;
-
-                game.enemiesDefeated++;
-
-                burst(
-                    enemy.x+17,
-                    enemy.y+17,
-                    "#f97316",
-                    14
+                killEnemy(
+                    enemy
                 );
 
-                addText(
-                    enemy.x,
-                    enemy.y-10,
-                    "+250",
-                    "#facc15"
-                );
-
-                beep(
-                    280,
-                    .08,
-                    "square"
-                );
+                player.vy=-10;
 
             }
 
-            /*
-               Star power
-            */
+
+            /* STAR */
 
             else if(
                 player.starTimer>0
             ){
 
-                enemy.alive=false;
-
-                game.score+=500;
-
-                burst(
-                    enemy.x,
-                    enemy.y,
-                    "#facc15",
-                    20
-                );
-
-                beep(
-                    800,
-                    .1,
-                    "square"
+                killEnemy(
+                    enemy
                 );
 
             }
 
-            /*
-               Otherwise damage
-            */
+
+            /* DAMAGE */
 
             else{
 
@@ -1353,11 +1900,215 @@ function updateEnemies(){
 
     }
 
-    enemies =
-        enemies.filter(
-            enemy =>
-                enemy.alive
-        );
+
+    enemies=
+    enemies.filter(
+        e=>e.alive
+    );
+
+}
+
+
+/* =========================================================
+   FIRE
+========================================================= */
+
+function spitFire(enemy){
+
+    if(
+        Math.abs(
+            player.x-
+            enemy.x
+        )>650
+    ){
+
+        return;
+
+    }
+
+
+    const direction=
+    player.x>
+    enemy.x
+    ?1
+    :-1;
+
+
+    fireballs.push({
+
+        x:
+        enemy.x+
+        enemy.w/2,
+
+        y:
+        enemy.y+12,
+
+        w:16,
+
+        h:16,
+
+        vx:
+        direction*5,
+
+        vy:-1.5,
+
+        life:180,
+
+        rotation:0
+
+    });
+
+
+    beep(
+        130,
+        .08,
+        "sawtooth",
+        .035
+    );
+
+}
+
+
+/* =========================================================
+   FIREBALL UPDATE
+========================================================= */
+
+function updateFireballs(){
+
+    for(
+        const fire of fireballs
+    ){
+
+        fire.x+=
+        fire.vx;
+
+        fire.y+=
+        fire.vy;
+
+        fire.vy+=.08;
+
+        fire.life--;
+
+        fire.rotation+=.2;
+
+
+        /* PLAYER */
+
+        if(
+            overlap(
+                player,
+                fire
+            )
+        ){
+
+            if(
+                player.starTimer>0
+            ){
+
+                fire.life=0;
+
+                game.score+=100;
+
+                burst(
+                    fire.x,
+                    fire.y,
+                    "#facc15",
+                    8
+                );
+
+            }
+
+            else{
+
+                fire.life=0;
+
+                loseLife();
+
+            }
+
+        }
+
+
+        /* PLATFORM */
+
+        for(
+            const p of platforms
+        ){
+
+            if(
+                overlap(
+                    fire,
+                    p
+                )
+            ){
+
+                fire.life=0;
+
+                burst(
+                    fire.x,
+                    fire.y,
+                    "#fb923c",
+                    8
+                );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    fireballs=
+    fireballs.filter(
+        f=>f.life>0
+    );
+
+}
+
+
+/* =========================================================
+   KILL ENEMY
+========================================================= */
+
+function killEnemy(enemy){
+
+    if(
+        !enemy.alive
+    )
+        return;
+
+
+    enemy.alive=false;
+
+
+    game.score+=250;
+
+    game.enemiesDefeated++;
+
+
+    burst(
+        enemy.x+17,
+        enemy.y+17,
+        "#f97316",
+        16
+    );
+
+
+    addText(
+        enemy.x,
+        enemy.y-15,
+        "+250",
+        "#facc15",
+        17
+    );
+
+
+    beep(
+        280,
+        .08
+    );
 
 }
 
@@ -1374,84 +2125,85 @@ function updateBlocks(){
 
         if(
             block.used
-        ) continue;
+        )
+            continue;
 
-
-        /*
-           Player hits underside
-        */
 
         if(
 
             player.vy<0 &&
 
             player.x+
-            player.w >
+            player.w>
             block.x &&
 
-            player.x <
+            player.x<
             block.x+
             block.w &&
 
-            player.y <
+            player.y<
             block.y+
             block.h &&
 
             player.y+
-            player.h >
+            player.h>
             block.y
 
         ){
 
             block.used=true;
 
-            /*
-               Mostly filament,
-               occasionally power.
-            */
 
             if(
-                Math.random()<.75
+                Math.random()<.2
             ){
+
+                addPowerup(
+                    block.x+7,
+                    block.y-35,
+                    "printer"
+                );
+
+
+                addText(
+                    block.x,
+                    block.y-15,
+                    "POWER!",
+                    "#c084fc",
+                    16
+                );
+
+            }
+
+            else{
 
                 game.filament++;
 
                 game.score+=100;
 
+
                 addText(
                     block.x,
                     block.y-15,
                     "+FILAMENT",
-                    "#60a5fa"
-                );
-
-                beep(
-                    650,
-                    .08,
-                    "square"
-                );
-
-            }else{
-
-                addPowerup(
-                    block.x+8,
-                    block.y-35,
-                    "printer"
-                );
-
-                beep(
-                    500,
-                    .08,
-                    "square"
+                    "#60a5fa",
+                    14
                 );
 
             }
+
 
             burst(
                 block.x+21,
                 block.y+20,
                 "#facc15",
-                7
+                8
+            );
+
+
+            beep(
+                650,
+                .08
             );
 
         }
@@ -1471,15 +2223,22 @@ function updateCollectibles(){
         const item of collectibles
     ){
 
-        if(item.collected)
+        if(
+            item.collected
+        )
             continue;
 
 
         const box={
+
             x:item.x-9,
+
             y:item.y-9,
+
             w:18,
+
             h:18
+
         };
 
 
@@ -1496,12 +2255,14 @@ function updateCollectibles(){
 
             game.score+=50;
 
+
             addText(
                 item.x,
-                item.y-15,
+                item.y-12,
                 "+50",
                 "#60a5fa"
             );
+
 
             beep(
                 900,
@@ -1526,15 +2287,10 @@ function updatePowerups(){
         const item of powerups
     ){
 
-        if(item.collected)
+        if(
+            item.collected
+        )
             continue;
-
-
-        item.y +=
-            Math.sin(
-                Date.now()/150+
-                item.x
-            )*.15;
 
 
         if(
@@ -1555,6 +2311,7 @@ function updatePowerups(){
 
                 game.score+=500;
 
+
                 addText(
                     player.x,
                     player.y-20,
@@ -1563,10 +2320,10 @@ function updatePowerups(){
                     20
                 );
 
+
                 beep(
                     500,
-                    .12,
-                    "square"
+                    .12
                 );
 
             }
@@ -1577,9 +2334,10 @@ function updatePowerups(){
             ){
 
                 player.starTimer=
-                    600;
+                600;
 
                 game.score+=1000;
+
 
                 addText(
                     player.x,
@@ -1589,10 +2347,10 @@ function updatePowerups(){
                     20
                 );
 
+
                 beep(
                     900,
-                    .15,
-                    "square"
+                    .15
                 );
 
             }
@@ -1611,7 +2369,8 @@ function updatePowerups(){
 function checkFinish(){
 
     if(
-        player.x>=world.finishX
+        player.x>=
+        world.finishX
     ){
 
         finishLevel();
@@ -1623,73 +2382,195 @@ function checkFinish(){
 
 function finishLevel(){
 
-    if(world.finished)
+    if(
+        world.finished
+    )
         return;
+
 
     world.finished=true;
 
-    game.score+=5000;
+
+    game.score+=
+    2500*
+    game.level;
+
+
+    if(
+        game.level<
+        game.totalLevels
+    ){
+
+        message.classList.remove(
+            "hidden"
+        );
+
+
+        document
+        .getElementById(
+            "messageText"
+        )
+        .innerHTML=`
+
+            <strong
+            style="
+            color:#4ade80;
+            font-size:25px;
+            "
+            >
+            LEVEL ${game.level}
+            COMPLETE!
+            </strong>
+
+            <br><br>
+
+            ${levels[
+                game.level-1
+            ].name}
+
+            <br><br>
+
+            Score:
+            <strong
+            style="color:#facc15"
+            >
+            ${game.score.toLocaleString()}
+            </strong>
+
+            <br><br>
+
+            Ready for Level
+            ${game.level+1}?
+
+        `;
+
+
+        document
+        .getElementById(
+            "startButton"
+        )
+        .textContent=
+        "NEXT LEVEL";
+
+    }
+
+    else{
+
+        gameWon();
+
+    }
+
+}
+
+
+/* =========================================================
+   GAME WON
+========================================================= */
+
+function gameWon(){
+
+    game.over=true;
+
 
     message.classList.remove(
         "hidden"
     );
 
+
     document
-    .getElementById("messageText")
+    .getElementById(
+        "messageText"
+    )
     .innerHTML=`
 
-        <strong style="color:#4ade80">
-            PRINT COMPLETE!
+        <strong
+        style="
+        color:#facc15;
+        font-size:28px;
+        "
+        >
+        🏆 PRINT WARS COMPLETE!
         </strong>
 
         <br><br>
 
-        You reached the
-        giant 3D printer!
+        You defeated the entire
+        3D printing factory!
 
         <br><br>
 
-        Score:
-        <strong style="color:#facc15">
-            ${game.score.toLocaleString()}
+        ⭐ Final Score:
+
+        <strong
+        style="color:#60a5fa"
+        >
+        ${game.score.toLocaleString()}
         </strong>
+
+        <br><br>
+
+        Products defeated:
+
+        ${game.enemiesDefeated}
+
+        <br><br>
+
+        🖨️ The Mega Printer
+        has been saved!
 
     `;
 
+
     document
-    .getElementById("startButton")
+    .getElementById(
+        "startButton"
+    )
     .textContent=
-        "PRINT LEVEL 2";
+    "PLAY AGAIN";
+
 
     beep(
-        600,
-        .15,
-        "square"
+        700,
+        .2
+    );
+
+
+    setTimeout(
+        ()=>{
+            beep(
+                900,
+                .2
+            );
+        },
+        150
     );
 
 }
 
 
 /* =========================================================
-   DAMAGE
+   LOSE LIFE
 ========================================================= */
 
 function loseLife(){
 
     if(
         player.invincible>0
-    ) return;
+    )
+        return;
 
 
     player.lives--;
 
     player.invincible=120;
 
+
     player.x=
-        Math.max(
-            100,
-            player.x-100
-        );
+    Math.max(
+        100,
+        player.x-100
+    );
+
 
     player.y=300;
 
@@ -1697,11 +2578,12 @@ function loseLife(){
 
     player.vy=-8;
 
+
     game.score=
-        Math.max(
-            0,
-            game.score-300
-        );
+    Math.max(
+        0,
+        game.score-300
+    );
 
 
     beep(
@@ -1730,23 +2612,45 @@ function gameOver(){
 
     game.over=true;
 
-    document
-    .getElementById("message")
-    .classList.remove(
+
+    message.classList.remove(
         "hidden"
     );
 
+
     document
-    .getElementById("messageText")
+    .getElementById(
+        "messageText"
+    )
     .innerHTML=`
 
-        The print factory got you!
+        <strong
+        style="
+        color:#fb7185;
+        font-size:26px;
+        "
+        >
+        🖨️ PRINT JAMMED!
+        </strong>
 
         <br><br>
 
-        Final Score:
-        <strong style="color:#facc15">
-            ${game.score.toLocaleString()}
+        The products
+        overran the factory.
+
+        <br><br>
+
+        You reached Level
+        ${game.level}.
+
+        <br><br>
+
+        Score:
+
+        <strong
+        style="color:#facc15"
+        >
+        ${game.score.toLocaleString()}
         </strong>
 
         <br><br>
@@ -1756,10 +2660,13 @@ function gameOver(){
 
     `;
 
+
     document
-    .getElementById("startButton")
+    .getElementById(
+        "startButton"
+    )
     .textContent=
-        "TRY AGAIN";
+    "TRY AGAIN";
 
 }
 
@@ -1772,7 +2679,7 @@ function burst(
     x,
     y,
     color,
-    amount
+    amount=10
 ){
 
     for(
@@ -1783,24 +2690,25 @@ function burst(
 
         particles.push({
 
-            x,
-            y,
+            x:x,
+
+            y:y,
 
             vx:
-                (Math.random()-.5)*8,
+            (Math.random()-.5)*8,
 
             vy:
-                (Math.random()-.5)*8,
+            (Math.random()-.5)*8,
 
             size:
-                2+
-                Math.random()*4,
+            2+
+            Math.random()*4,
 
-            color,
+            color:color,
 
             life:
-                25+
-                Math.random()*30
+            25+
+            Math.random()*30
 
         });
 
@@ -1816,6 +2724,7 @@ function updateParticles(){
     ){
 
         p.x+=p.vx;
+
         p.y+=p.vy;
 
         p.vy+=.18;
@@ -1824,10 +2733,11 @@ function updateParticles(){
 
     }
 
-    particles =
-        particles.filter(
-            p=>p.life>0
-        );
+
+    particles=
+    particles.filter(
+        p=>p.life>0
+    );
 
 }
 
@@ -1846,16 +2756,17 @@ function addText(
 
     texts.push({
 
-        x,
-        y,
+        x:x,
 
-        text,
+        y:y,
 
-        color,
+        text:text,
 
-        size,
+        color:color,
 
-        life:60
+        size:size,
+
+        life:65
 
     });
 
@@ -1869,75 +2780,82 @@ function updateTexts(){
     ){
 
         t.y-=.6;
+
         t.life--;
 
     }
 
-    texts =
-        texts.filter(
-            t=>t.life>0
-        );
+
+    texts=
+    texts.filter(
+        t=>t.life>0
+    );
 
 }
 
 
 /* =========================================================
-   DRAW BACKGROUND
+   BACKGROUND
 ========================================================= */
 
 function drawBackground(){
 
-    const gradient =
-        ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            VIEW_H
-        );
+    const gradient=
+    ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        HEIGHT
+    );
+
 
     gradient.addColorStop(
         0,
-        "#081426"
+        "#071426"
     );
+
 
     gradient.addColorStop(
         1,
         "#172554"
     );
 
-    ctx.fillStyle=gradient;
+
+    ctx.fillStyle=
+    gradient;
+
 
     ctx.fillRect(
         0,
         0,
-        VIEW_W,
-        VIEW_H
+        WIDTH,
+        HEIGHT
     );
 
 
-    /*
-       Factory skyline
-    */
+    /* FACTORY BUILDINGS */
 
     for(
         let i=0;
-        i<20;
+        i<30;
         i++
     ){
 
-        const x =
-            i*80-
-            (world.cameraX*.2%
-            80);
+        const x=
+        i*80-
+        (world.cameraX*.18%80);
 
-        const h =
-            80+
-            (i*37)%100;
 
-        ctx.fillStyle =
-            i%2
-                ? "#0f1b2e"
-                : "#142238";
+        const h=
+        70+
+        (i*47)%130;
+
+
+        ctx.fillStyle=
+        i%2
+        ?"#0f1b2e"
+        :"#142238";
+
 
         ctx.fillRect(
             x,
@@ -1947,110 +2865,78 @@ function drawBackground(){
         );
 
 
-        /*
-           Windows
-        */
+        /* WINDOWS */
 
         ctx.fillStyle=
-            "#38bdf8";
+        i%3===0
+        ?"#facc15"
+        :"#38bdf8";
+
 
         for(
-            let wy=
-                470-h;
-            wy<430;
-            wy+=20
+            let y=470-h;
+            y<420;
+            y+=22
         ){
 
             ctx.fillRect(
                 x+10,
-                wy,
+                y,
                 6,
-                7
+                8
             );
+
 
             ctx.fillRect(
                 x+30,
-                wy,
+                y,
                 6,
-                7
+                8
             );
+
 
             ctx.fillRect(
                 x+50,
-                wy,
+                y,
                 6,
-                7
+                8
             );
 
         }
 
     }
 
-}
 
-
-/* =========================================================
-   DRAW PLATFORM
-========================================================= */
-
-function drawPlatform(p){
-
-    /*
-       Dark base
-    */
-
-    ctx.fillStyle=
-        "#334155";
-
-    ctx.fillRect(
-        p.x,
-        p.y,
-        p.w,
-        p.h
-    );
-
-
-    /*
-       3D printed top
-    */
-
-    ctx.fillStyle=
-        "#64748b";
-
-    ctx.fillRect(
-        p.x,
-        p.y,
-        p.w,
-        7
-    );
-
-
-    /*
-       Print lines
-    */
+    /* PIPES */
 
     ctx.strokeStyle=
-        "rgba(255,255,255,.08)";
+    "rgba(96,165,250,.12)";
 
-    ctx.lineWidth=2;
+    ctx.lineWidth=18;
+
 
     for(
-        let x=p.x+10;
-        x<p.x+p.w;
-        x+=15
+        let x=0;
+        x<WIDTH+200;
+        x+=240
     ){
 
         ctx.beginPath();
 
+
         ctx.moveTo(
-            x,
-            p.y+10
+            x-
+            (world.cameraX*.1%240),
+            180
         );
 
+
         ctx.lineTo(
-            x,
-            p.y+p.h
+            x-
+            (world.cameraX*.1%240),
+            350
         );
+
 
         ctx.stroke();
 
@@ -2060,15 +2946,86 @@ function drawPlatform(p){
 
 
 /* =========================================================
-   DRAW BLOCK
+   PLATFORM DRAW
+========================================================= */
+
+function drawPlatform(p){
+
+    /* MAIN */
+
+    ctx.fillStyle=
+    "#334155";
+
+
+    ctx.fillRect(
+        p.x,
+        p.y,
+        p.w,
+        p.h
+    );
+
+
+    /* TOP */
+
+    ctx.fillStyle=
+    "#64748b";
+
+
+    ctx.fillRect(
+        p.x,
+        p.y,
+        p.w,
+        7
+    );
+
+
+    /* PRINT LAYERS */
+
+    ctx.strokeStyle=
+    "rgba(255,255,255,.08)";
+
+    ctx.lineWidth=2;
+
+
+    for(
+        let x=p.x+10;
+        x<p.x+p.w;
+        x+=15
+    ){
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            x,
+            p.y+10
+        );
+
+
+        ctx.lineTo(
+            x,
+            p.y+p.h
+        );
+
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* =========================================================
+   BLOCK DRAW
 ========================================================= */
 
 function drawBlock(block){
 
     ctx.fillStyle=
-        block.used
-            ? "#475569"
-            : "#f59e0b";
+    block.used
+    ?"#475569"
+    :"#f59e0b";
+
 
     ctx.fillRect(
         block.x,
@@ -2079,9 +3036,10 @@ function drawBlock(block){
 
 
     ctx.strokeStyle=
-        "#111827";
+    "#111827";
 
     ctx.lineWidth=3;
+
 
     ctx.strokeRect(
         block.x+2,
@@ -2091,51 +3049,53 @@ function drawBlock(block){
     );
 
 
-    /*
-       3D print symbol
-    */
-
     ctx.fillStyle=
-        block.used
-            ? "#64748b"
-            : "#fff7ae";
+    block.used
+    ?"#64748b"
+    :"#fff7ae";
+
 
     ctx.font=
-        "bold 24px Arial";
+    "bold 24px Arial";
 
-    ctx.textAlign="center";
+
+    ctx.textAlign=
+    "center";
+
 
     ctx.fillText(
         block.used
-            ? "✓"
-            : "?",
+        ?"✓"
+        :"?",
         block.x+21,
         block.y+29
     );
 
-    ctx.textAlign="left";
+
+    ctx.textAlign=
+    "left";
 
 }
 
 
 /* =========================================================
-   DRAW ENEMY
+   ENEMY DRAW
 ========================================================= */
 
 function drawEnemy(enemy){
 
-    /*
-       Shadow
-    */
+    /* SHADOW */
 
     ctx.fillStyle=
-        "rgba(0,0,0,.3)";
+    "rgba(0,0,0,.3)";
+
 
     ctx.beginPath();
 
+
     ctx.ellipse(
         enemy.x+17,
-        enemy.y+36,
+        enemy.y+37,
         22,
         6,
         0,
@@ -2143,17 +3103,20 @@ function drawEnemy(enemy){
         Math.PI*2
     );
 
+
     ctx.fill();
 
 
-    /*
-       Body
-    */
+    /* BODY */
 
     ctx.fillStyle=
-        "#f97316";
+    enemy.type==="fire"
+    ?"#ef4444"
+    :"#f97316";
+
 
     ctx.beginPath();
+
 
     ctx.roundRect(
         enemy.x,
@@ -2163,30 +3126,33 @@ function drawEnemy(enemy){
         7
     );
 
+
     ctx.fill();
 
 
-    /*
-       Printed layer lines
-    */
+    /* PRINT LAYERS */
 
     ctx.strokeStyle=
-        "rgba(255,255,255,.18)";
+    "rgba(255,255,255,.2)";
+
 
     ctx.lineWidth=2;
 
+
     for(
-        let y=enemy.y+9;
+        let y=enemy.y+8;
         y<enemy.y+enemy.h;
         y+=7
     ){
 
         ctx.beginPath();
 
+
         ctx.moveTo(
             enemy.x+4,
             y
         );
+
 
         ctx.lineTo(
             enemy.x+
@@ -2194,18 +3160,20 @@ function drawEnemy(enemy){
             y
         );
 
+
         ctx.stroke();
 
     }
 
 
-    /*
-       Eyes
-    */
+    /* EYES */
 
-    ctx.fillStyle="white";
+    ctx.fillStyle=
+    "white";
+
 
     ctx.beginPath();
+
 
     ctx.arc(
         enemy.x+10,
@@ -2215,6 +3183,7 @@ function drawEnemy(enemy){
         Math.PI*2
     );
 
+
     ctx.arc(
         enemy.x+24,
         enemy.y+12,
@@ -2223,44 +3192,79 @@ function drawEnemy(enemy){
         Math.PI*2
     );
 
+
     ctx.fill();
 
 
-    /*
-       Name
-    */
+    /* FIRE ICON */
 
-    ctx.font=
-        "10px Arial";
+    if(
+        enemy.type==="fire"
+    ){
 
-    ctx.textAlign="center";
+        ctx.font=
+        "12px Arial";
+
+
+        ctx.textAlign=
+        "center";
+
+
+        ctx.fillText(
+            "🔥",
+            enemy.x+17,
+            enemy.y-9
+        );
+
+
+        ctx.textAlign=
+        "left";
+
+    }
+
+
+    /* NAME */
 
     ctx.fillStyle=
-        "#e2e8f0";
+    "#e2e8f0";
+
+
+    ctx.font=
+    "10px Arial";
+
+
+    ctx.textAlign=
+    "center";
+
 
     ctx.fillText(
         enemy.name,
         enemy.x+17,
-        enemy.y-7
+        enemy.y-22
     );
 
-    ctx.textAlign="left";
+
+    ctx.textAlign=
+    "left";
 
 }
 
 
 /* =========================================================
-   DRAW FILAMENT
+   FILAMENT DRAW
 ========================================================= */
 
 function drawFilament(item){
 
     ctx.strokeStyle=
-        "#60a5fa";
+    "#60a5fa";
+
 
     ctx.lineWidth=5;
 
+
     ctx.beginPath();
+
 
     ctx.arc(
         item.x,
@@ -2270,15 +3274,19 @@ function drawFilament(item){
         Math.PI*2
     );
 
+
     ctx.stroke();
 
 
     ctx.strokeStyle=
-        "#dbeafe";
+    "#dbeafe";
+
 
     ctx.lineWidth=2;
 
+
     ctx.beginPath();
+
 
     ctx.arc(
         item.x,
@@ -2288,66 +3296,143 @@ function drawFilament(item){
         Math.PI*2
     );
 
+
     ctx.stroke();
 
 }
 
 
 /* =========================================================
-   DRAW POWERUP
+   POWERUP DRAW
 ========================================================= */
 
 function drawPowerup(item){
 
     ctx.fillStyle=
-        item.type==="star"
-            ? "#facc15"
-            : "#c084fc";
+    item.type==="star"
+    ?"#facc15"
+    :"#c084fc";
+
 
     ctx.beginPath();
 
+
     ctx.arc(
-        item.x+13,
-        item.y+13,
-        13,
+        item.x+14,
+        item.y+14,
+        14,
         0,
         Math.PI*2
     );
 
+
     ctx.fill();
 
 
-    ctx.fillStyle="white";
+    ctx.fillStyle=
+    "white";
+
 
     ctx.font=
-        "bold 15px Arial";
+    "bold 16px Arial";
 
-    ctx.textAlign="center";
+
+    ctx.textAlign=
+    "center";
+
 
     ctx.fillText(
         item.type==="star"
-            ? "★"
-            : "P",
-        item.x+13,
-        item.y+19
+        ?"★"
+        :"P",
+        item.x+14,
+        item.y+20
     );
 
-    ctx.textAlign="left";
+
+    ctx.textAlign=
+    "left";
 
 }
 
 
 /* =========================================================
-   DRAW PLAYER
+   FIREBALL DRAW
+========================================================= */
+
+function drawFireball(fire){
+
+    ctx.save();
+
+
+    ctx.translate(
+        fire.x+8,
+        fire.y+8
+    );
+
+
+    ctx.rotate(
+        fire.rotation
+    );
+
+
+    ctx.fillStyle=
+    "#ef4444";
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        0,
+        0,
+        10,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fill();
+
+
+    ctx.fillStyle=
+    "#facc15";
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        0,
+        0,
+        6,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   PLAYER DRAW
 ========================================================= */
 
 function drawPlayer(){
 
     if(
+
         player.invincible>0 &&
+
         Math.floor(
             player.invincible/6
         )%2===0
+
     ){
 
         return;
@@ -2355,44 +3440,50 @@ function drawPlayer(){
     }
 
 
-    const x=player.x;
-    const y=player.y;
+    const x=
+    player.x;
+
+
+    const y=
+    player.y;
+
 
     const width=
-        player.big
-            ? 36
-            : 30;
+    player.big
+    ?36
+    :30;
+
 
     const height=
-        player.big
-            ? 62
-            : 52;
+    player.big
+    ?62
+    :52;
 
 
-    /*
-       Star glow
-    */
+    /* STAR GLOW */
 
-    if(player.starTimer>0){
+    if(
+        player.starTimer>0
+    ){
 
         ctx.shadowColor=
-            "#facc15";
+        "#facc15";
 
-        ctx.shadowBlur=20;
+        ctx.shadowBlur=22;
 
     }
 
 
-    /*
-       Body
-    */
+    /* BODY */
 
     ctx.fillStyle=
-        player.big
-            ? "#a78bfa"
-            : "#60a5fa";
+    player.big
+    ?"#a78bfa"
+    :"#60a5fa";
+
 
     ctx.beginPath();
+
 
     ctx.roundRect(
         x,
@@ -2402,17 +3493,18 @@ function drawPlayer(){
         7
     );
 
+
     ctx.fill();
 
 
-    /*
-       Head
-    */
+    /* HEAD */
 
     ctx.fillStyle=
-        "#f8fafc";
+    "#f8fafc";
+
 
     ctx.beginPath();
+
 
     ctx.arc(
         x+width/2,
@@ -2422,15 +3514,15 @@ function drawPlayer(){
         Math.PI*2
     );
 
+
     ctx.fill();
 
 
-    /*
-       Visor
-    */
+    /* VISOR */
 
     ctx.fillStyle=
-        "#0f172a";
+    "#0f172a";
+
 
     ctx.fillRect(
         x+5,
@@ -2440,53 +3532,62 @@ function drawPlayer(){
     );
 
 
-    /*
-       Printer-pack
-    */
+    /* BACKPACK */
 
     ctx.fillStyle=
-        "#7c3aed";
+    "#7c3aed";
+
 
     ctx.fillRect(
+
         player.facing===1
-            ? x-5
-            : x+width,
+        ?x-5
+        :x+width,
+
         y+22,
+
         7,
+
         22
+
     );
 
 
-    /*
-       Legs
-    */
+    /* LEGS */
 
     ctx.strokeStyle=
-        "#e2e8f0";
+    "#e2e8f0";
+
 
     ctx.lineWidth=5;
 
+
     ctx.beginPath();
+
 
     ctx.moveTo(
         x+9,
         y+height-3
     );
 
+
     ctx.lineTo(
         x+5,
         y+height+7
     );
+
 
     ctx.moveTo(
         x+width-9,
         y+height-3
     );
 
+
     ctx.lineTo(
         x+width-5,
         y+height+7
     );
+
 
     ctx.stroke();
 
@@ -2497,110 +3598,146 @@ function drawPlayer(){
 
 
 /* =========================================================
-   DRAW FINISH
+   FINISH PRINTER
 ========================================================= */
 
 function drawFinish(){
 
-    const x=world.finishX;
+    const x=
+    world.finishX;
 
 
-    /*
-       Pole
-    */
+    /* PRINTER */
 
     ctx.fillStyle=
-        "#e2e8f0";
+    "#1e293b";
+
 
     ctx.fillRect(
-        x,
-        210,
-        8,
-        240
+        x+45,
+        350,
+        120,
+        100
     );
 
 
-    /*
-       Printer flag
-    */
+    ctx.fillStyle=
+    "#475569";
+
+
+    ctx.fillRect(
+        x+60,
+        320,
+        90,
+        35
+    );
+
 
     ctx.fillStyle=
-        "#a78bfa";
+    "#60a5fa";
+
+
+    ctx.fillRect(
+        x+75,
+        330,
+        60,
+        8
+    );
+
+
+    /* FILAMENT */
+
+    ctx.strokeStyle=
+    "#a78bfa";
+
+
+    ctx.lineWidth=6;
+
 
     ctx.beginPath();
 
+
+    ctx.moveTo(
+        x+105,
+        355
+    );
+
+
+    ctx.lineTo(
+        x+105,
+        410
+    );
+
+
+    ctx.stroke();
+
+
+    /* FLAG POLE */
+
+    ctx.fillStyle=
+    "#e2e8f0";
+
+
+    ctx.fillRect(
+        x,
+        190,
+        8,
+        260
+    );
+
+
+    /* FLAG */
+
+    ctx.fillStyle=
+    "#a78bfa";
+
+
+    ctx.beginPath();
+
+
     ctx.moveTo(
         x+8,
-        220
+        200
     );
 
+
     ctx.lineTo(
-        x+95,
-        245
+        x+105,
+        230
     );
+
 
     ctx.lineTo(
         x+8,
-        270
+        260
     );
 
+
     ctx.closePath();
+
 
     ctx.fill();
 
 
     ctx.fillStyle=
-        "white";
+    "white";
+
 
     ctx.font=
-        "bold 13px Arial";
+    "bold 14px Arial";
+
 
     ctx.fillText(
         "PRINT!",
-        x+25,
-        249
-    );
-
-
-    /*
-       Giant printer
-    */
-
-    ctx.fillStyle=
-        "#1e293b";
-
-    ctx.fillRect(
-        x+50,
-        390,
-        110,
-        60
-    );
-
-    ctx.fillStyle=
-        "#475569";
-
-    ctx.fillRect(
-        x+65,
-        365,
-        80,
-        30
-    );
-
-    ctx.fillStyle=
-        "#60a5fa";
-
-    ctx.fillRect(
-        x+80,
-        375,
-        50,
-        8
+        x+30,
+        235
     );
 
 }
 
 
 /* =========================================================
-   DRAW
+   MAIN DRAW
 ========================================================= */
 
 function draw(){
@@ -2608,19 +3745,16 @@ function draw(){
     ctx.clearRect(
         0,
         0,
-        VIEW_W,
-        VIEW_H
+        WIDTH,
+        HEIGHT
     );
 
 
     drawBackground();
 
 
-    /*
-       Camera
-    */
-
     ctx.save();
+
 
     ctx.translate(
         -world.cameraX,
@@ -2628,37 +3762,29 @@ function draw(){
     );
 
 
-    /*
-       World objects
-    */
+    /* PLATFORMS */
 
     for(
         const p of platforms
     ){
 
-        if(
-            p.x+p.w>
-            world.cameraX &&
-            p.x<
-            world.cameraX+
-            VIEW_W
-        ){
-
-            drawPlatform(p);
-
-        }
+        drawPlatform(p);
 
     }
 
+
+    /* BLOCKS */
 
     for(
-        const block of blocks
+        const b of blocks
     ){
 
-        drawBlock(block);
+        drawBlock(b);
 
     }
 
+
+    /* FILAMENT */
 
     for(
         const item of collectibles
@@ -2668,12 +3794,16 @@ function draw(){
             !item.collected
         ){
 
-            drawFilament(item);
+            drawFilament(
+                item
+            );
 
         }
 
     }
 
+
+    /* POWERUPS */
 
     for(
         const item of powerups
@@ -2683,43 +3813,67 @@ function draw(){
             !item.collected
         ){
 
-            drawPowerup(item);
+            drawPowerup(
+                item
+            );
 
         }
 
     }
 
 
+    /* ENEMIES */
+
     for(
         const enemy of enemies
     ){
 
-        drawEnemy(enemy);
+        drawEnemy(
+            enemy
+        );
 
     }
 
 
+    /* FIRE */
+
+    for(
+        const fire of fireballs
+    ){
+
+        drawFireball(
+            fire
+        );
+
+    }
+
+
+    /* FINISH */
+
     drawFinish();
+
+
+    /* PLAYER */
 
     drawPlayer();
 
 
-    /*
-       Particles
-    */
+    /* PARTICLES */
 
     for(
         const p of particles
     ){
 
         ctx.globalAlpha=
-            Math.max(
-                0,
-                p.life/40
-            );
+        Math.max(
+            0,
+            p.life/40
+        );
+
 
         ctx.fillStyle=
-            p.color;
+        p.color;
+
 
         ctx.fillRect(
             p.x,
@@ -2730,30 +3884,34 @@ function draw(){
 
     }
 
+
     ctx.globalAlpha=1;
 
 
-    /*
-       Floating text
-    */
+    /* TEXT */
 
     for(
         const t of texts
     ){
 
         ctx.globalAlpha=
-            Math.min(
-                1,
-                t.life/20
-            );
+        Math.min(
+            1,
+            t.life/20
+        );
+
 
         ctx.fillStyle=
-            t.color;
+        t.color;
+
 
         ctx.font=
-            `bold ${t.size}px Arial`;
+        `bold ${t.size}px Arial`;
 
-        ctx.textAlign="center";
+
+        ctx.textAlign=
+        "center";
+
 
         ctx.fillText(
             t.text,
@@ -2763,27 +3921,31 @@ function draw(){
 
     }
 
+
     ctx.globalAlpha=1;
 
-    ctx.textAlign="left";
+    ctx.textAlign=
+    "left";
+
 
     ctx.restore();
 
 
-    /*
-       Power indicator
-    */
+    /* STAR EFFECT */
 
-    if(player.starTimer>0){
+    if(
+        player.starTimer>0
+    ){
 
         ctx.fillStyle=
-            "rgba(250,204,21,.08)";
+        "rgba(250,204,21,.06)";
+
 
         ctx.fillRect(
             0,
             0,
-            VIEW_W,
-            VIEW_H
+            WIDTH,
+            HEIGHT
         );
 
     }
@@ -2798,14 +3960,20 @@ function draw(){
 function update(){
 
     if(
+
         game.started &&
+
         !game.over &&
+
         !world.finished
+
     ){
 
         updatePlayer();
 
         updateEnemies();
+
+        updateFireballs();
 
         updateBlocks();
 
@@ -2836,93 +4004,111 @@ function updateHUD(){
     document
     .getElementById("score")
     .textContent=
-        game.score.toLocaleString();
+    game.score.toLocaleString();
 
 
     document
     .getElementById("coins")
     .textContent=
-        game.filament;
+    game.filament;
 
 
     document
     .getElementById("level")
     .textContent=
-        "1-1";
+    game.level+"-"+game.level;
 
 
     document
     .getElementById("lives")
     .textContent=
-        "♥ ".repeat(
-            Math.max(
-                0,
-                player.lives
-            )
-        ).trim();
+    "♥ ".repeat(
+        Math.max(
+            0,
+            player.lives
+        )
+    ).trim();
 
 
-    let power="Normal";
+    let power=
+    "Normal";
 
-    if(player.big)
-        power="Print Power";
 
-    if(player.starTimer>0)
-        power="3D Star";
+    if(
+        player.big
+    ){
+
+        power=
+        "Print Power";
+
+    }
+
+
+    if(
+        player.starTimer>0
+    ){
+
+        power=
+        "3D Star";
+
+    }
 
 
     document
     .getElementById("power")
     .textContent=
-        power;
+    power;
 
 }
 
 
 /* =========================================================
-   START
+   START / NEXT LEVEL
 ========================================================= */
 
 const message=
-    document.getElementById(
-        "message"
-    );
+document.getElementById(
+    "message"
+);
+
 
 const messageText=
-    document.getElementById(
-        "messageText"
-    );
+document.getElementById(
+    "messageText"
+);
+
 
 const startButton=
-    document.getElementById(
-        "startButton"
-    );
+document.getElementById(
+    "startButton"
+);
 
 
 startButton.addEventListener(
-    "click",
-    () => {
+"click",
+()=>{
 
-        startAudio();
+    startAudio();
 
 
-        /*
-           Reset
-        */
+    /* NEW GAME */
 
-        game.started=true;
-        game.over=false;
+    if(
+        !game.started ||
+        game.over
+    ){
 
         game.score=0;
+
         game.filament=0;
+
         game.enemiesDefeated=0;
 
+        game.level=1;
 
-        player.x=100;
-        player.y=350;
+        game.started=true;
 
-        player.vx=0;
-        player.vy=0;
+        game.over=false;
 
         player.lives=3;
 
@@ -2930,47 +4116,51 @@ startButton.addEventListener(
 
         player.starTimer=0;
 
-        player.invincible=0;
+    }
 
 
-        world.cameraX=0;
+    /* NEXT LEVEL */
 
-        world.finished=false;
+    else if(
+        world.finished
+    ){
 
-
-        particles=[];
-        texts=[];
-
-
-        createLevel();
-
-
-        message.classList.add(
-            "hidden"
-        );
-
-
-        beep(
-            440,
-            .1,
-            "square"
-        );
-
-        setTimeout(
-            () => beep(
-                660,
-                .1,
-                "square"
-            ),
-            100
-        );
+        game.level++;
 
     }
-);
+
+
+    createLevel(
+        game.level
+    );
+
+
+    message.classList.add(
+        "hidden"
+    );
+
+
+    beep(
+        440,
+        .1
+    );
+
+
+    setTimeout(
+        ()=>{
+            beep(
+                660,
+                .1
+            );
+        },
+        100
+    );
+
+});
 
 
 /* =========================================================
-   LOOP
+   GAME LOOP
 ========================================================= */
 
 function loop(){
@@ -2986,7 +4176,11 @@ function loop(){
 }
 
 
-createLevel();
+/* =========================================================
+   START
+========================================================= */
+
+createLevel(1);
 
 updateHUD();
 
