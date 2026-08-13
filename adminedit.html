@@ -83,12 +83,12 @@ canvas{
 
 .controlGroup{
     display:flex;
-    gap:10px;
+    gap:16px;
 }
 
 .touchButton{
-    width:64px;
-    height:64px;
+    width:100px;
+    height:100px;
 
     border-radius:50%;
 
@@ -98,7 +98,7 @@ canvas{
 
     color:white;
 
-    font-size:25px;
+    font-size:40px;
 
     display:flex;
     align-items:center;
@@ -282,8 +282,9 @@ canvas{
     }
 
     .touchButton{
-        width:58px;
-        height:58px;
+        width:84px;
+        height:84px;
+        font-size:34px;
     }
 
     #message{
@@ -343,6 +344,7 @@ canvas{
         ← → Move
         &nbsp; SPACE Jump
         &nbsp; X Dash
+        &nbsp; F Fire
     </div>
 
 </div>
@@ -383,6 +385,12 @@ canvas{
             class="touchButton"
             data-key="x">
             ⚡
+        </button>
+
+        <button
+            class="touchButton"
+            data-key="f">
+            🔥
         </button>
 
     </div>
@@ -585,6 +593,16 @@ document
                 dash();
             }
 
+            if(
+                key==="f" &&
+                game.levelStarted &&
+                !game.over &&
+                !game.paused &&
+                player.fireballTimer>0
+            ){
+                shootPlayerFireball();
+            }
+
         }
     );
 
@@ -736,37 +754,37 @@ const skins=[
     {
         name:"Red Hot",
         color:"#ef4444",
-        cost:2000
+        cost:50
     },
 
     {
         name:"Purple Pro",
         color:"#a855f7",
-        cost:2000
+        cost:50
     },
 
     {
         name:"Golden Bot",
         color:"#facc15",
-        cost:2000
+        cost:50
     },
 
     {
         name:"Toxic Green",
         color:"#22c55e",
-        cost:2000
+        cost:50
     },
 
     {
         name:"Cyber Pink",
         color:"#ec4899",
-        cost:2000
+        cost:50
     },
 
     {
         name:"Ice Printer",
         color:"#67e8f9",
-        cost:2000
+        cost:50
     }
 
 ];
@@ -1426,6 +1444,48 @@ function addEnemy(x,type){
 
 }
 
+function addFlyer(x,y){
+
+    enemies.push({
+
+        x:x,
+
+        y:y,
+
+        w:32,
+
+        h:26,
+
+        vx:0,
+
+        vy:0,
+
+        direction:
+            -1,
+
+        speed:1.6,
+
+        type:"flyer",
+
+        alive:true,
+
+        onGround:false,
+
+        baseY:y,
+
+        wave:
+            Math.random()*Math.PI*2,
+
+        jumpTimer:0,
+
+        fireTimer:0,
+
+        name:"Drone"
+
+    });
+
+}
+
 
 /* =========================================================
    CREATE LEVEL
@@ -1638,6 +1698,18 @@ function createLevel(number){
             fireTimer:80,
 
             attackTimer:150,
+
+            spawnTimer:200,
+
+            jumpTimer:90,
+
+            vy:0,
+
+            groundY:300,
+
+            onGround:true,
+
+            enraged:false,
 
             alive:true
 
@@ -2124,6 +2196,16 @@ function updateEnemies(){
         if(!enemy.alive)
             continue;
 
+        if(
+            enemy.type==="flyer"
+        ){
+
+            updateFlyer(enemy);
+
+            continue;
+
+        }
+
         enemy.vy+=.55;
 
         const oldBottom=
@@ -2314,6 +2396,73 @@ function updateEnemies(){
         enemies.filter(
             e=>e.alive
         );
+
+}
+
+
+/* =========================================================
+   FLYING ENEMY
+========================================================= */
+
+function updateFlyer(enemy){
+
+    enemy.wave+=.06;
+
+    enemy.direction=
+        player.x>
+        enemy.x
+        ?1
+        :-1;
+
+    enemy.x+=
+        enemy.direction*
+        enemy.speed;
+
+    enemy.baseY+=
+        Math.max(
+            -1.4,
+            Math.min(
+                1.4,
+                (
+                    player.y-40-
+                    enemy.baseY
+                )*.02
+            )
+        );
+
+    enemy.y=
+        enemy.baseY+
+        Math.sin(enemy.wave)*18;
+
+    if(
+        overlap(
+            player,
+            enemy
+        )
+    ){
+
+        const playerBottom=
+            player.y+
+            player.h;
+
+        if(
+            player.vy>0 &&
+            playerBottom-
+            enemy.y<22
+        ){
+
+            killEnemy(enemy);
+
+            player.vy=-10;
+
+        }
+        else{
+
+            damagePlayer();
+
+        }
+
+    }
 
 }
 
@@ -2970,6 +3119,47 @@ function updateBoss(){
             boss.direction*
             .8;
 
+        /* FLYING MONSTER SPAWN */
+
+        boss.spawnTimer--;
+
+        if(
+            boss.spawnTimer<=0
+        ){
+
+            spawnBossFlyers();
+
+            boss.spawnTimer=
+                300+
+                Math.random()*120;
+
+        }
+
+        /* ENRAGE AND JUMP BELOW 1/3 HEALTH */
+
+        if(
+            boss.health<=
+            boss.maxHealth/3
+        ){
+
+            if(!boss.enraged){
+
+                boss.enraged=true;
+
+                addText(
+                    boss.x+55,
+                    boss.y-70,
+                    "MEGA PRINTER IS ENRAGED!",
+                    "#f87171",
+                    24
+                );
+
+            }
+
+            bossJumpUpdate();
+
+        }
+
         boss.fireTimer--;
 
         if(
@@ -3010,6 +3200,132 @@ function updateBoss(){
         }
 
     }
+
+}
+
+
+/* =========================================================
+   BOSS JUMP
+========================================================= */
+
+function bossJumpUpdate(){
+
+    if(boss.onGround){
+
+        boss.jumpTimer--;
+
+        if(boss.jumpTimer<=0){
+
+            boss.vy=-16;
+
+            boss.onGround=false;
+
+            boss.jumpTimer=
+                100+
+                Math.random()*80;
+
+            beep(
+                90,
+                .15,
+                "square",
+                .05
+            );
+
+        }
+
+        return;
+
+    }
+
+    boss.vy+=.7;
+
+    boss.y+=boss.vy;
+
+    if(
+        boss.y>=boss.groundY
+    ){
+
+        boss.y=boss.groundY;
+
+        boss.vy=0;
+
+        boss.onGround=true;
+
+        burst(
+            boss.x+55,
+            boss.y+boss.h,
+            "#f97316",
+            20
+        );
+
+        beep(
+            60,
+            .2,
+            "sawtooth",
+            .07
+        );
+
+        if(
+            Math.abs(
+                player.x-boss.x
+            )<260 &&
+            player.onGround
+        ){
+
+            damagePlayer();
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   BOSS FLYING MONSTERS
+========================================================= */
+
+function spawnBossFlyers(){
+
+    const flyersAlive=
+        enemies.filter(
+            e=>
+                e.alive &&
+                e.type==="flyer"
+        ).length;
+
+    if(flyersAlive>=4)
+        return;
+
+    const count=
+        boss.health<=
+        boss.maxHealth/3
+        ?2
+        :1;
+
+    for(let i=0;i<count;i++){
+
+        addFlyer(
+            boss.x+20+i*40,
+            boss.y-40-i*30
+        );
+
+    }
+
+    addText(
+        boss.x+55,
+        boss.y-30,
+        "DRONES INCOMING!",
+        "#67e8f9",
+        18
+    );
+
+    beep(
+        520,
+        .12,
+        "triangle",
+        .05
+    );
 
 }
 
@@ -3272,7 +3588,7 @@ function showShop(){
         <br><br>
 
         <span style="color:#cbd5e1">
-            Skins cost 2,000 filament each.
+            Skins cost 50 filament each.
         </span>
 
         <div class="shop">
@@ -3934,6 +4250,16 @@ function drawSpike(s){
 
 function drawEnemy(enemy){
 
+    if(
+        enemy.type==="flyer"
+    ){
+
+        drawFlyer(enemy);
+
+        return;
+
+    }
+
     ctx.fillStyle=
         "rgba(0,0,0,.3)";
 
@@ -4027,6 +4353,130 @@ function drawEnemy(enemy){
     ctx.fillText(
         enemy.name,
         enemy.x+17,
+        enemy.y-10
+    );
+
+    ctx.textAlign="left";
+
+}
+
+
+/* =========================================================
+   FLYING ENEMY DRAW
+========================================================= */
+
+function drawFlyer(enemy){
+
+    const centerX=
+        enemy.x+enemy.w/2;
+
+    const centerY=
+        enemy.y+enemy.h/2;
+
+    const flap=
+        Math.sin(enemy.wave*4)*8;
+
+    /* WINGS */
+
+    ctx.fillStyle="#a5b4fc";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        centerX-20,
+        centerY-flap,
+        14,
+        5,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.ellipse(
+        centerX+20,
+        centerY+flap,
+        14,
+        5,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    /* BODY */
+
+    ctx.fillStyle="#38bdf8";
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        enemy.x,
+        enemy.y,
+        enemy.w,
+        enemy.h,
+        9
+    );
+
+    ctx.fill();
+
+    /* EYES */
+
+    ctx.fillStyle="white";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centerX-7,
+        centerY-2,
+        4,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        centerX+7,
+        centerY-2,
+        4,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle="#0f172a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centerX-7+
+        enemy.direction*1.5,
+        centerY-2,
+        2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        centerX+7+
+        enemy.direction*1.5,
+        centerY-2,
+        2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle="#e2e8f0";
+
+    ctx.font="10px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        enemy.name,
+        centerX,
         enemy.y-10
     );
 
