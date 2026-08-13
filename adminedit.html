@@ -648,7 +648,9 @@ const game={
 
     level:1,
 
-    totalLevels:5,
+    totalLevels:10,
+
+    levelsPerWorld:5,
 
     nextLifeScore:15000,
 
@@ -733,6 +735,8 @@ const player={
     superJumpTimer:0,
 
     extraJumpTimer:0,
+
+    frozenTimer:0,
 
     skin:"#60a5fa"
 
@@ -959,6 +963,15 @@ const levels=[
         [3950,"patrol"],
         [4490,"patrol"]
 
+    ],
+
+    flyers:[
+
+        [900,300],
+        [2100,280],
+        [3400,300],
+        [4300,270]
+
     ]
 
 },
@@ -1043,6 +1056,16 @@ const levels=[
         [4300,"fire"],
         [4550,"jumper"],
         [5130,"patrol"]
+
+    ],
+
+    flyers:[
+
+        [700,290],
+        [1800,260],
+        [2900,300],
+        [3800,260],
+        [4900,290]
 
     ]
 
@@ -1137,6 +1160,17 @@ const levels=[
         [5230,"jumper"],
         [5580,"fire"],
         [5830,"jumper"]
+
+    ],
+
+    flyers:[
+
+        [600,280],
+        [1500,250],
+        [2400,290],
+        [3300,250],
+        [4200,280],
+        [5200,250]
 
     ]
 
@@ -1233,6 +1267,18 @@ const levels=[
         [5630,"jumper"],
         [6030,"fire"],
         [6280,"jumper"]
+
+    ],
+
+    flyers:[
+
+        [500,270],
+        [1400,240],
+        [2300,280],
+        [3200,240],
+        [4100,270],
+        [5000,240],
+        [5900,280]
 
     ]
 
@@ -1331,7 +1377,556 @@ const levels=[
 
     ],
 
+    flyers:[
+
+        [500,260],
+        [1300,240],
+        [2100,270],
+        [3000,240],
+        [3800,270],
+        [4600,240],
+        [5400,270]
+
+    ],
+
     boss:true
+
+},
+
+/* =========================================================
+   WORLD 2 - LEVEL 6
+========================================================= */
+
+{
+
+    name:"Cryo Vault",
+
+    theme:"ice",
+
+    width:6200,
+
+    powers:[
+        "shield",
+        "extraJump",
+        "magnet"
+    ],
+
+    grounds:[
+
+        [0,700],
+        [850,600],
+        [1600,650],
+        [2450,700],
+        [3300,600],
+        [4100,750],
+        [5050,700],
+        [5900,600]
+
+    ],
+
+    platforms:[
+
+        [300,350,160],
+        [600,270,130],
+        [900,340,150],
+        [1200,250,130],
+        [1650,340,150],
+        [1950,260,130],
+        [2250,340,150],
+        [2550,250,130],
+        [2900,330,150],
+        [3350,250,140],
+        [3650,340,150],
+        [4150,290,150],
+        [4450,220,130],
+        [4800,330,150],
+        [5150,250,140],
+        [5500,330,150],
+        [5950,270,150]
+
+    ],
+
+    spikes:[
+
+        [780,425,90],
+        [1500,425,100],
+        [2350,425,100],
+        [3200,425,100],
+        [4000,425,100],
+        [4950,425,100],
+        [5800,425,90]
+
+    ],
+
+    enemies:[
+
+        [350,"freezer"],
+        [650,"patrol"],
+        [950,"freezer"],
+        [1250,"jumper"],
+        [1700,"freezer"],
+        [2000,"fire"],
+        [2300,"freezer"],
+        [2600,"jumper"],
+        [2950,"pounder"],
+        [3400,"freezer"],
+        [3700,"patrol"],
+        [4200,"pounder"],
+        [4500,"freezer"],
+        [4850,"jumper"],
+        [5200,"freezer"],
+        [5550,"pounder"],
+        [6000,"freezer"]
+
+    ],
+
+    flyers:[
+
+        [700,260],
+        [1700,240],
+        [2800,270],
+        [3900,240],
+        [5000,260,"bomber"]
+
+    ]
+
+},
+
+/* =========================================================
+   LEVEL 7
+========================================================= */
+
+{
+
+    name:"Magma Extruder",
+
+    theme:"magma",
+
+    width:6600,
+
+    powers:[
+        "fireball",
+        "speed",
+        "superJump"
+    ],
+
+    grounds:[
+
+        [0,650],
+        [800,600],
+        [1550,700],
+        [2450,600],
+        [3250,750],
+        [4200,650],
+        [5050,700],
+        [5950,700]
+
+    ],
+
+    platforms:[
+
+        [280,340,150],
+        [560,260,130],
+        [880,340,150],
+        [1150,240,130],
+        [1600,330,150],
+        [1900,250,130],
+        [2200,330,150],
+        [2500,240,130],
+        [2850,320,140],
+        [3300,250,140],
+        [3600,330,150],
+        [3950,240,130],
+        [4250,330,150],
+        [4600,240,130],
+        [4950,330,150],
+        [5300,250,140],
+        [5650,330,150],
+        [6050,260,140],
+        [6350,340,150]
+
+    ],
+
+    spikes:[
+
+        [720,425,100],
+        [1450,425,100],
+        [2350,425,100],
+        [3150,425,100],
+        [4100,425,100],
+        [4950,425,100],
+        [5850,425,100],
+        [6250,425,80]
+
+    ],
+
+    enemies:[
+
+        [330,"pounder"],
+        [610,"fire"],
+        [930,"charger"],
+        [1200,"fire"],
+        [1650,"pounder"],
+        [1950,"charger"],
+        [2250,"fire"],
+        [2550,"pounder"],
+        [2900,"jumper"],
+        [3350,"charger"],
+        [3650,"fire"],
+        [4000,"pounder"],
+        [4300,"charger"],
+        [4650,"fire"],
+        [5000,"pounder"],
+        [5350,"charger"],
+        [5700,"fire"],
+        [6100,"pounder"],
+        [6400,"charger"]
+
+    ],
+
+    flyers:[
+
+        [600,260],
+        [1600,240],
+        [2600,270,"bomber"],
+        [3700,240],
+        [4700,260,"bomber"],
+        [5800,240]
+
+    ]
+
+},
+
+/* =========================================================
+   LEVEL 8
+========================================================= */
+
+{
+
+    name:"Circuit City",
+
+    theme:"circuit",
+
+    width:7000,
+
+    powers:[
+        "shield",
+        "magnet",
+        "extraJump"
+    ],
+
+    grounds:[
+
+        [0,700],
+        [850,650],
+        [1650,600],
+        [2400,700],
+        [3300,650],
+        [4150,700],
+        [5050,650],
+        [5900,750],
+        [6800,600]
+
+    ],
+
+    platforms:[
+
+        [300,340,150],
+        [580,250,130],
+        [880,330,150],
+        [1180,240,130],
+        [1620,330,150],
+        [1920,240,120],
+        [2220,320,140],
+        [2520,230,120],
+        [2900,320,150],
+        [3250,240,130],
+        [3600,330,150],
+        [3950,230,120],
+        [4300,330,150],
+        [4650,240,130],
+        [5000,320,150],
+        [5350,230,120],
+        [5700,330,150],
+        [6100,250,140],
+        [6450,330,150],
+        [6750,240,130]
+
+    ],
+
+    spikes:[
+
+        [760,425,100],
+        [1550,425,100],
+        [2320,425,100],
+        [3200,425,100],
+        [4050,425,100],
+        [4950,425,100],
+        [5800,425,100],
+        [6700,425,90]
+
+    ],
+
+    enemies:[
+
+        [350,"charger"],
+        [620,"freezer"],
+        [930,"pounder"],
+        [1230,"charger"],
+        [1670,"freezer"],
+        [1960,"pounder"],
+        [2270,"charger"],
+        [2560,"freezer"],
+        [2950,"pounder"],
+        [3300,"charger"],
+        [3650,"freezer"],
+        [4000,"pounder"],
+        [4350,"charger"],
+        [4700,"freezer"],
+        [5050,"pounder"],
+        [5400,"charger"],
+        [5750,"freezer"],
+        [6150,"pounder"],
+        [6500,"charger"]
+
+    ],
+
+    flyers:[
+
+        [500,250],
+        [1400,230],
+        [2300,260,"bomber"],
+        [3200,230],
+        [4100,260,"bomber"],
+        [5000,230],
+        [6000,260,"bomber"]
+
+    ]
+
+},
+
+/* =========================================================
+   LEVEL 9
+========================================================= */
+
+{
+
+    name:"Sky Gantry",
+
+    theme:"sky",
+
+    width:7400,
+
+    powers:[
+        "superJump",
+        "speed",
+        "shield"
+    ],
+
+    grounds:[
+
+        [0,600],
+        [800,450],
+        [1500,500],
+        [2250,450],
+        [3000,550],
+        [3800,450],
+        [4550,500],
+        [5300,450],
+        [6050,600],
+        [6950,450]
+
+    ],
+
+    platforms:[
+
+        [260,330,140],
+        [520,240,120],
+        [820,330,140],
+        [1120,230,120],
+        [1550,330,140],
+        [1850,230,120],
+        [2150,320,140],
+        [2450,220,120],
+        [2800,320,140],
+        [3150,230,120],
+        [3500,320,140],
+        [3850,220,120],
+        [4200,320,140],
+        [4550,230,120],
+        [4900,320,140],
+        [5250,220,120],
+        [5600,320,140],
+        [5950,230,120],
+        [6350,320,140],
+        [6750,230,130],
+        [7050,330,150]
+
+    ],
+
+    spikes:[
+
+        [700,425,100],
+        [1400,425,100],
+        [2150,425,100],
+        [2900,425,100],
+        [3700,425,100],
+        [4450,425,100],
+        [5200,425,100],
+        [5950,425,100],
+        [6850,425,100]
+
+    ],
+
+    enemies:[
+
+        [300,"charger"],
+        [560,"pounder"],
+        [860,"freezer"],
+        [1160,"charger"],
+        [1590,"pounder"],
+        [1890,"freezer"],
+        [2190,"charger"],
+        [2490,"pounder"],
+        [2840,"freezer"],
+        [3190,"charger"],
+        [3540,"pounder"],
+        [3890,"freezer"],
+        [4240,"charger"],
+        [4590,"pounder"],
+        [4940,"freezer"],
+        [5290,"charger"],
+        [5640,"pounder"],
+        [5990,"freezer"],
+        [6390,"charger"],
+        [6790,"pounder"],
+        [7090,"freezer"]
+
+    ],
+
+    flyers:[
+
+        [450,240],
+        [1200,220],
+        [2000,250,"bomber"],
+        [2800,220],
+        [3600,250,"bomber"],
+        [4400,220],
+        [5200,250,"bomber"],
+        [6100,220]
+
+    ]
+
+},
+
+/* =========================================================
+   LEVEL 10 - WORLD 2 BOSS
+========================================================= */
+
+{
+
+    name:"The Nano Core",
+
+    theme:"core",
+
+    width:7600,
+
+    powers:[
+        "fireball",
+        "shield",
+        "extraJump"
+    ],
+
+    grounds:[
+
+        [0,700],
+        [850,650],
+        [1650,600],
+        [2400,800],
+        [3400,650],
+        [4250,700],
+        [5150,650],
+        [6050,1550]
+
+    ],
+
+    platforms:[
+
+        [300,340,160],
+        [600,250,130],
+        [900,330,150],
+        [1150,230,130],
+        [1700,320,150],
+        [1950,220,120],
+        [2250,310,140],
+        [2550,220,120],
+        [2800,160,110],
+        [3450,330,150],
+        [3750,240,130],
+        [4050,320,140],
+        [4350,220,120],
+        [4700,330,150],
+        [5000,230,130],
+        [5300,310,140],
+        [5650,210,130],
+        [5950,320,150]
+
+    ],
+
+    spikes:[
+
+        [720,425,100],
+        [1250,425,100],
+        [1500,425,100],
+        [2320,425,100],
+        [2900,425,100],
+        [3320,425,100],
+        [4150,425,100],
+        [4550,425,100],
+        [5050,425,100],
+        [5450,425,100],
+        [6000,425,100]
+
+    ],
+
+    enemies:[
+
+        [350,"charger"],
+        [620,"freezer"],
+        [930,"pounder"],
+        [1180,"fire"],
+        [1730,"charger"],
+        [1980,"freezer"],
+        [2280,"pounder"],
+        [2580,"fire"],
+        [2830,"charger"],
+        [3480,"freezer"],
+        [3780,"pounder"],
+        [4080,"charger"],
+        [4380,"freezer"],
+        [4730,"pounder"],
+        [5030,"charger"],
+        [5330,"freezer"],
+        [5680,"pounder"],
+        [5980,"charger"]
+
+    ],
+
+    flyers:[
+
+        [500,250],
+        [1300,230],
+        [2100,260,"bomber"],
+        [3000,230],
+        [3800,260,"bomber"],
+        [4600,230],
+        [5400,260,"bomber"]
+
+    ],
+
+    boss:true,
+
+    megaBoss:true
 
 }
 
@@ -1394,6 +1989,31 @@ function addPowerup(x,y,type){
 
 }
 
+function difficulty(){
+
+    return 1+(game.level-1)*.11;
+
+}
+
+const enemyNames={
+
+    pounder:"Slam Bot",
+    freezer:"Cryo Bot",
+    charger:"Rush Bot"
+
+};
+
+const enemyBaseSpeed={
+
+    patrol:1.15,
+    jumper:1.1,
+    fire:1.05,
+    pounder:.9,
+    freezer:1,
+    charger:1.3
+
+};
+
 function addEnemy(x,type){
 
     enemies.push({
@@ -1402,9 +2022,15 @@ function addEnemy(x,type){
 
         y:390,
 
-        w:34,
+        w:
+            type==="pounder"
+            ?44
+            :34,
 
-        h:34,
+        h:
+            type==="pounder"
+            ?40
+            :34,
 
         vx:0,
 
@@ -1416,9 +2042,11 @@ function addEnemy(x,type){
             :-1,
 
         speed:
-            type==="jumper"
-            ?1.1+game.level*.1
-            :1.15+game.level*.12,
+            (
+                enemyBaseSpeed[type] ||
+                1.15
+            )*
+            difficulty(),
 
         type:type,
 
@@ -1426,13 +2054,27 @@ function addEnemy(x,type){
 
         onGround:false,
 
+        pounding:false,
+
+        charging:false,
+
+        chargeTimer:
+            60+Math.random()*90,
+
+        chargeDuration:0,
+
+        poundTimer:
+            90+Math.random()*90,
+
         jumpTimer:
             80+Math.random()*100,
 
         fireTimer:
-            80+Math.random()*100,
+            (80+Math.random()*100)/
+            difficulty(),
 
         name:
+            enemyNames[type] ||
             productNames[
                 Math.floor(
                     Math.random()*
@@ -1444,7 +2086,7 @@ function addEnemy(x,type){
 
 }
 
-function addFlyer(x,y){
+function addFlyer(x,y,type="flyer"){
 
     enemies.push({
 
@@ -1463,9 +2105,15 @@ function addFlyer(x,y){
         direction:
             -1,
 
-        speed:1.6,
+        speed:
+            (
+                type==="bomber"
+                ?1.3
+                :1.6
+            )*
+            difficulty(),
 
-        type:"flyer",
+        type:type,
 
         alive:true,
 
@@ -1478,9 +2126,13 @@ function addFlyer(x,y){
 
         jumpTimer:0,
 
-        fireTimer:0,
+        fireTimer:
+            90+Math.random()*80,
 
-        name:"Drone"
+        name:
+            type==="bomber"
+            ?"Bomb Drone"
+            :"Drone"
 
     });
 
@@ -1492,6 +2144,8 @@ function addFlyer(x,y){
 ========================================================= */
 
 function createLevel(number){
+
+    game.level=number;
 
     const data=
         levels[number-1];
@@ -1611,6 +2265,48 @@ function createLevel(number){
 
     }
 
+    /* FLYING MONSTERS */
+
+    for(
+        const f of (data.flyers||[])
+    ){
+
+        addFlyer(
+            f[0],
+            f[1],
+            f[2]||"flyer"
+        );
+
+    }
+
+    /* EXTRA FLYERS ON HARDER LEVELS */
+
+    const bonusFlyers=
+        Math.floor(number/2);
+
+    for(
+        let i=0;
+        i<bonusFlyers;
+        i++
+    ){
+
+        addFlyer(
+            600+
+            (i+1)*
+            (data.width-900)/
+            (bonusFlyers+1),
+
+            230+
+            (i%3)*30,
+
+            number>=6 &&
+            i%2===1
+            ?"bomber"
+            :"flyer"
+        );
+
+    }
+
     /* EXACTLY 3 POWERUPS */
 
     const selectedPowers=
@@ -1671,6 +2367,8 @@ function createLevel(number){
 
     player.extraJumpTimer=0;
 
+    player.frozenTimer=0;
+
     player.jumpsLeft=1;
 
     world.cameraX=0;
@@ -1679,19 +2377,32 @@ function createLevel(number){
 
     if(data.boss){
 
+        const bossHealth=
+            data.megaBoss
+            ?170
+            :100;
+
         boss={
+
+            mega:!!data.megaBoss,
 
             x:data.width-800,
 
             y:300,
 
-            w:110,
+            w:
+                data.megaBoss
+                ?140
+                :110,
 
-            h:120,
+            h:
+                data.megaBoss
+                ?140
+                :120,
 
-            health:100,
+            health:bossHealth,
 
-            maxHealth:100,
+            maxHealth:bossHealth,
 
             direction:-1,
 
@@ -1780,7 +2491,13 @@ function showLevelIntro(){
                 font-size:28px;
             "
         >
-            LEVEL ${game.level}
+            WORLD ${
+                Math.ceil(
+                    game.level/
+                    game.levelsPerWorld
+                )
+            }
+            – LEVEL ${game.level}
         </strong>
 
         <br>
@@ -1788,6 +2505,21 @@ function showLevelIntro(){
         <strong>
             ${data.name}
         </strong>
+
+        ${
+            game.level>
+            game.levelsPerWorld
+            ?`<br><br>
+            <span style="color:#f87171">
+                ⚠️ World 2 monsters:
+                Slam Bots ground pound,
+                Cryo Bots freeze you,
+                Rush Bots charge and
+                Bomb Drones bomb you
+                from above.
+            </span>`
+            :""
+        }
 
         <br><br>
 
@@ -1816,6 +2548,17 @@ function showLevelIntro(){
 
         🔥 Fireball:
         press F after collecting it.
+
+        ${
+            game.level===1
+            ?`<br><br>
+            <span style="color:#94a3b8">
+                Psst... walk backwards
+                at the very start to
+                find a secret door.
+            </span>`
+            :""
+        }
 
     `;
 
@@ -1859,7 +2602,8 @@ function jump(){
     if(
         !game.levelStarted ||
         game.over ||
-        game.paused
+        game.paused ||
+        player.frozenTimer>0
     )return;
 
     if(player.onGround){
@@ -1911,7 +2655,8 @@ function dash(){
 
     if(
         player.dashCooldown>0 ||
-        !game.levelStarted
+        !game.levelStarted ||
+        player.frozenTimer>0
     )return;
 
     player.dashTimer=12;
@@ -2002,8 +2747,30 @@ function shootPlayerFireball(){
 
 function updatePlayer(){
 
+    if(player.frozenTimer>0){
+
+        player.frozenTimer--;
+
+        player.vx*=.5;
+
+        if(
+            player.frozenTimer%6===0
+        ){
+
+            burst(
+                player.x+15,
+                player.y+20,
+                "#a5f3fc",
+                1
+            );
+
+        }
+
+    }
+
     if(
-        keys["ArrowLeft"]
+        keys["ArrowLeft"] &&
+        player.frozenTimer<=0
     ){
 
         player.vx-=
@@ -2014,7 +2781,8 @@ function updatePlayer(){
     }
 
     if(
-        keys["ArrowRight"]
+        keys["ArrowRight"] &&
+        player.frozenTimer<=0
     ){
 
         player.vx+=
@@ -2125,6 +2893,19 @@ function updatePlayer(){
             )
         );
 
+    /* SECRET PASSWORD GATE */
+
+    if(
+        game.level===1 &&
+        !levelSelectOpen &&
+        player.x<=2 &&
+        keys["ArrowLeft"]
+    ){
+
+        openPasswordGate();
+
+    }
+
     /* SPIKES */
 
     for(
@@ -2197,7 +2978,8 @@ function updateEnemies(){
             continue;
 
         if(
-            enemy.type==="flyer"
+            enemy.type==="flyer" ||
+            enemy.type==="bomber"
         ){
 
             updateFlyer(enemy);
@@ -2353,8 +3135,185 @@ function updateEnemies(){
                 spitFire(enemy);
 
                 enemy.fireTimer=
-                    100+
-                    Math.random()*70;
+                    (
+                        100+
+                        Math.random()*70
+                    )/
+                    difficulty();
+
+            }
+
+        }
+
+        /* GROUND POUND */
+
+        if(
+            enemy.type==="pounder"
+        ){
+
+            if(
+                enemy.onGround &&
+                !enemy.pounding
+            ){
+
+                enemy.poundTimer--;
+
+                if(
+                    enemy.poundTimer<=0 &&
+                    Math.abs(
+                        player.x-enemy.x
+                    )<430
+                ){
+
+                    enemy.direction=
+                        player.x>enemy.x
+                        ?1
+                        :-1;
+
+                    enemy.vy=-14;
+
+                    enemy.onGround=false;
+
+                    enemy.pounding=true;
+
+                    beep(
+                        150,
+                        .1,
+                        "square",
+                        .04
+                    );
+
+                }
+
+            }
+
+            if(
+                enemy.pounding
+            ){
+
+                if(enemy.vy>0){
+
+                    enemy.vy+=.9;
+
+                }
+
+                if(enemy.onGround){
+
+                    groundPound(enemy);
+
+                }
+
+            }
+
+        }
+
+        /* FREEZE SHOT */
+
+        if(
+            enemy.type==="freezer"
+        ){
+
+            enemy.fireTimer--;
+
+            if(
+                enemy.fireTimer<=0
+            ){
+
+                shootFreeze(enemy);
+
+                enemy.fireTimer=
+                    (
+                        130+
+                        Math.random()*80
+                    )/
+                    difficulty();
+
+            }
+
+        }
+
+        /* CHARGE ATTACK */
+
+        if(
+            enemy.type==="charger"
+        ){
+
+            if(enemy.charging){
+
+                enemy.x+=
+                    enemy.direction*
+                    (5.5+game.level*.15);
+
+                enemy.chargeDuration--;
+
+                if(
+                    Math.random()<.4
+                ){
+
+                    burst(
+                        enemy.x+17,
+                        enemy.y+30,
+                        "#fda4af",
+                        2
+                    );
+
+                }
+
+                if(
+                    enemy.chargeDuration<=0
+                ){
+
+                    enemy.charging=false;
+
+                    enemy.chargeTimer=
+                        (
+                            110+
+                            Math.random()*70
+                        )/
+                        difficulty();
+
+                }
+
+            }
+            else{
+
+                enemy.chargeTimer--;
+
+                if(
+                    enemy.chargeTimer<=0 &&
+                    Math.abs(
+                        player.x-enemy.x
+                    )<420 &&
+                    Math.abs(
+                        player.y-enemy.y
+                    )<90
+                ){
+
+                    enemy.charging=true;
+
+                    enemy.chargeDuration=45;
+
+                    enemy.direction=
+                        player.x>enemy.x
+                        ?1
+                        :-1;
+
+                    addText(
+                        enemy.x+17,
+                        enemy.y-18,
+                        "CHARGE!",
+                        "#fb7185",
+                        14
+                    );
+
+                    beep(
+                        260,
+                        .09,
+                        "sawtooth",
+                        .04
+                    );
+
+                }
 
             }
 
@@ -2401,12 +3360,240 @@ function updateEnemies(){
 
 
 /* =========================================================
+   GROUND POUND SHOCKWAVE
+========================================================= */
+
+function groundPound(enemy){
+
+    enemy.pounding=false;
+
+    enemy.poundTimer=
+        (
+            120+
+            Math.random()*90
+        )/
+        difficulty();
+
+    burst(
+        enemy.x+enemy.w/2,
+        enemy.y+enemy.h,
+        "#fbbf24",
+        22
+    );
+
+    addText(
+        enemy.x+enemy.w/2,
+        enemy.y-16,
+        "GROUND POUND!",
+        "#fbbf24",
+        16
+    );
+
+    beep(
+        70,
+        .18,
+        "sawtooth",
+        .06
+    );
+
+    if(
+        player.onGround &&
+        Math.abs(
+            player.x-enemy.x
+        )<210
+    ){
+
+        damagePlayer();
+
+    }
+
+}
+
+
+/* =========================================================
+   FREEZE SHOT
+========================================================= */
+
+function shootFreeze(enemy){
+
+    if(
+        Math.abs(
+            player.x-enemy.x
+        )>700
+    )return;
+
+    const direction=
+        player.x>enemy.x
+        ?1
+        :-1;
+
+    fireballs.push({
+
+        x:enemy.x+17,
+
+        y:enemy.y+8,
+
+        w:16,
+
+        h:16,
+
+        vx:
+            direction*
+            (4+game.level*.2),
+
+        vy:-1,
+
+        life:200,
+
+        rotation:0,
+
+        freeze:true,
+
+        playerShot:false
+
+    });
+
+    beep(
+        900,
+        .07,
+        "triangle",
+        .04
+    );
+
+}
+
+
+/* =========================================================
+   BOMB DROP
+========================================================= */
+
+function dropBomb(enemy){
+
+    fireballs.push({
+
+        x:enemy.x+8,
+
+        y:enemy.y+enemy.h,
+
+        w:18,
+
+        h:18,
+
+        vx:0,
+
+        vy:1.5,
+
+        life:220,
+
+        rotation:0,
+
+        bomb:true,
+
+        playerShot:false
+
+    });
+
+    beep(
+        200,
+        .06,
+        "square",
+        .04
+    );
+
+}
+
+
+/* =========================================================
+   FREEZE THE PLAYER
+========================================================= */
+
+function freezePlayer(){
+
+    if(player.invincible>0)
+        return;
+
+    if(player.shieldTimer>0){
+
+        player.shieldTimer=0;
+
+        player.invincible=70;
+
+        addText(
+            player.x+15,
+            player.y-20,
+            "SHIELD BLOCK!",
+            "#22c55e",
+            17
+        );
+
+        return;
+    }
+
+    if(player.frozenTimer>0)
+        return;
+
+    player.frozenTimer=90;
+
+    player.vx=0;
+
+    burst(
+        player.x+15,
+        player.y+25,
+        "#a5f3fc",
+        22
+    );
+
+    addText(
+        player.x+15,
+        player.y-25,
+        "🧊 FROZEN!",
+        "#67e8f9",
+        20
+    );
+
+    beep(
+        300,
+        .2,
+        "triangle",
+        .05
+    );
+
+}
+
+
+/* =========================================================
    FLYING ENEMY
 ========================================================= */
 
 function updateFlyer(enemy){
 
     enemy.wave+=.06;
+
+    if(
+        enemy.type==="bomber"
+    ){
+
+        enemy.fireTimer--;
+
+        if(
+            enemy.fireTimer<=0 &&
+            Math.abs(
+                player.x-enemy.x
+            )<260
+        ){
+
+            dropBomb(enemy);
+
+            enemy.fireTimer=
+                (
+                    110+
+                    Math.random()*70
+                )/
+                difficulty();
+
+        }
+
+    }
 
     enemy.direction=
         player.x>
@@ -2713,7 +3900,21 @@ function updateFireballs(){
 
             fire.life=0;
 
-            damagePlayer();
+            if(fire.freeze){
+
+                freezePlayer();
+
+            }
+            else if(fire.bomb){
+
+                explodeBomb(fire);
+
+            }
+            else{
+
+                damagePlayer();
+
+            }
 
         }
 
@@ -2732,10 +3933,18 @@ function updateFireballs(){
 
                 fire.life=0;
 
+                if(fire.bomb){
+
+                    explodeBomb(fire);
+
+                }
+
                 burst(
                     fire.x,
                     fire.y,
-                    "#fb923c",
+                    fire.freeze
+                    ?"#a5f3fc"
+                    :"#fb923c",
                     7
                 );
 
@@ -2749,6 +3958,45 @@ function updateFireballs(){
         fireballs.filter(
             f=>f.life>0
         );
+
+}
+
+
+/* =========================================================
+   BOMB EXPLOSION
+========================================================= */
+
+function explodeBomb(fire){
+
+    burst(
+        fire.x,
+        fire.y,
+        "#f97316",
+        26
+    );
+
+    beep(
+        90,
+        .16,
+        "sawtooth",
+        .06
+    );
+
+    const dx=
+        (player.x+player.w/2)-
+        fire.x;
+
+    const dy=
+        (player.y+player.h/2)-
+        fire.y;
+
+    if(
+        Math.sqrt(dx*dx+dy*dy)<95
+    ){
+
+        damagePlayer();
+
+    }
 
 }
 
@@ -3061,6 +4309,8 @@ function loseLife(){
 
     player.invincible=120;
 
+    player.frozenTimer=0;
+
     game.score=
         Math.max(
             0,
@@ -3149,7 +4399,9 @@ function updateBoss(){
                 addText(
                     boss.x+55,
                     boss.y-70,
-                    "MEGA PRINTER IS ENRAGED!",
+                    boss.mega
+                    ?"NANO CORE IS ENRAGED!"
+                    :"MEGA PRINTER IS ENRAGED!",
                     "#f87171",
                     24
                 );
@@ -3291,10 +4543,13 @@ function spawnBossFlyers(){
         enemies.filter(
             e=>
                 e.alive &&
-                e.type==="flyer"
+                (
+                    e.type==="flyer" ||
+                    e.type==="bomber"
+                )
         ).length;
 
-    if(flyersAlive>=4)
+    if(flyersAlive>=6)
         return;
 
     const count=
@@ -3307,7 +4562,10 @@ function spawnBossFlyers(){
 
         addFlyer(
             boss.x+20+i*40,
-            boss.y-40-i*30
+            boss.y-40-i*30,
+            boss.mega && i%2===1
+            ?"bomber"
+            :"flyer"
         );
 
     }
@@ -3342,7 +4600,13 @@ function bossShoot(){
         ?1
         :-1;
 
+    const freezeShot=
+        boss.mega &&
+        Math.random()<.4;
+
     fireballs.push({
+
+        freeze:freezeShot,
 
         x:
             boss.x+50,
@@ -3355,7 +4619,8 @@ function bossShoot(){
         h:25,
 
         vx:
-            direction*6,
+            direction*
+            (boss.mega?7:6),
 
         vy:
             -2+
@@ -3445,7 +4710,6 @@ function checkFinish(){
     ){
 
         if(
-            game.level===5 &&
             boss &&
             boss.alive
         ){
@@ -3484,6 +4748,7 @@ function finishLevel(){
 
         showLevelComplete();
 
+
     }
     else{
 
@@ -3515,6 +4780,22 @@ function showLevelComplete(){
             LEVEL ${game.level}
             COMPLETE!
         </strong>
+
+        ${
+            game.level===
+            game.levelsPerWorld
+            ?`<br><br>
+            <strong
+                style="color:#facc15">
+                🌍 WORLD 1 CLEARED!
+                WORLD 2 UNLOCKED —
+                new monsters can
+                ground pound,
+                freeze you and
+                bomb from the sky.
+            </strong>`
+            :""
+        }
 
         <br><br>
 
@@ -3825,8 +5106,9 @@ function gameWon(){
 
         <br><br>
 
-        You defeated the Mega
-        Printer Boss!
+        You cleared both worlds
+        and destroyed the
+        Nano Core Boss!
 
         <br><br>
 
@@ -4035,6 +5317,41 @@ function drawBackground(){
 
         top="#1e1b4b";
         bottom="#312e81";
+
+    }
+
+    if(theme==="ice"){
+
+        top="#082f49";
+        bottom="#0e7490";
+
+    }
+
+    if(theme==="magma"){
+
+        top="#450a0a";
+        bottom="#b45309";
+
+    }
+
+    if(theme==="circuit"){
+
+        top="#052e16";
+        bottom="#065f46";
+
+    }
+
+    if(theme==="sky"){
+
+        top="#0c4a6e";
+        bottom="#7dd3fc";
+
+    }
+
+    if(theme==="core"){
+
+        top="#2e1065";
+        bottom="#7e22ce";
 
     }
 
@@ -4251,7 +5568,8 @@ function drawSpike(s){
 function drawEnemy(enemy){
 
     if(
-        enemy.type==="flyer"
+        enemy.type==="flyer" ||
+        enemy.type==="bomber"
     ){
 
         drawFlyer(enemy);
@@ -4283,6 +5601,15 @@ function drawEnemy(enemy){
         :
         enemy.type==="jumper"
         ?" #a855f7"
+        :
+        enemy.type==="pounder"
+        ?"#eab308"
+        :
+        enemy.type==="freezer"
+        ?"#22d3ee"
+        :
+        enemy.type==="charger"
+        ?"#f43f5e"
         :"#f97316";
 
     ctx.beginPath();
@@ -4406,7 +5733,10 @@ function drawFlyer(enemy){
 
     /* BODY */
 
-    ctx.fillStyle="#38bdf8";
+    ctx.fillStyle=
+        enemy.type==="bomber"
+        ?"#f97316"
+        :"#38bdf8";
 
     ctx.beginPath();
 
@@ -4620,10 +5950,26 @@ function drawFireball(fire){
         fire.rotation||0
     );
 
-    ctx.shadowColor="#ef4444";
+    const outerColor=
+        fire.freeze
+        ?"#22d3ee"
+        :
+        fire.bomb
+        ?"#1f2937"
+        :"#ef4444";
+
+    const innerColor=
+        fire.freeze
+        ?"#e0f2fe"
+        :
+        fire.bomb
+        ?"#f97316"
+        :"#facc15";
+
+    ctx.shadowColor=outerColor;
     ctx.shadowBlur=15;
 
-    ctx.fillStyle="#ef4444";
+    ctx.fillStyle=outerColor;
 
     ctx.beginPath();
 
@@ -4637,7 +5983,7 @@ function drawFireball(fire){
 
     ctx.fill();
 
-    ctx.fillStyle="#facc15";
+    ctx.fillStyle=innerColor;
 
     ctx.beginPath();
 
@@ -5122,6 +6468,33 @@ function draw(){
 
     drawPlayer();
 
+    /* FROZEN PLAYER */
+
+    if(player.frozenTimer>0){
+
+        ctx.fillStyle=
+            "rgba(103,232,249,.35)";
+
+        ctx.fillRect(
+            player.x-6,
+            player.y-8,
+            player.w+12,
+            player.h+12
+        );
+
+        ctx.strokeStyle="#a5f3fc";
+
+        ctx.lineWidth=3;
+
+        ctx.strokeRect(
+            player.x-6,
+            player.y-8,
+            player.w+12,
+            player.h+12
+        );
+
+    }
+
     for(
         const p of particles
     ){
@@ -5220,7 +6593,15 @@ function updateHUD(){
     document
     .getElementById("level")
     .textContent=
-        game.level+"-"+game.level;
+        Math.ceil(
+            game.level/
+            game.levelsPerWorld
+        )+
+        "-"+
+        (
+            (game.level-1)%
+            game.levelsPerWorld+1
+        );
 
     document
     .getElementById("lives")
@@ -5235,6 +6616,13 @@ function updateHUD(){
     let power="Normal";
 
     if(
+        player.frozenTimer>0
+    ){
+
+        power="🧊 Frozen";
+
+    }
+    else if(
         player.fireballTimer>0
     ){
 
@@ -5325,6 +6713,276 @@ function update(){
     updateTexts();
 
     updateHUD();
+
+}
+
+
+/* =========================================================
+   SECRET PASSWORD GATE / LEVEL SELECT
+========================================================= */
+
+const SECRET_PASSWORD="123";
+
+let levelSelectOpen=false;
+
+function openPasswordGate(){
+
+    levelSelectOpen=true;
+
+    game.paused=true;
+
+    game.levelStarted=false;
+
+    for(const k in keys){
+        keys[k]=false;
+    }
+
+    message.classList.remove(
+        "hidden"
+    );
+
+    startButton.classList.add(
+        "hidden"
+    );
+
+    messageText.innerHTML=`
+
+        <strong
+            style="
+                color:#facc15;
+                font-size:26px;
+            "
+        >
+            🔐 SECRET DOOR
+        </strong>
+
+        <br><br>
+
+        You walked back to the
+        start of the factory and
+        found a locked door.
+
+        <br><br>
+
+        Enter the password to
+        unlock level select.
+
+        <br><br>
+
+        <input
+            id="passwordInput"
+            type="password"
+            inputmode="numeric"
+            placeholder="Password"
+            style="
+                padding:12px 16px;
+                font-size:20px;
+                border-radius:10px;
+                border:2px solid #475569;
+                background:#0f172a;
+                color:white;
+                text-align:center;
+                width:180px;
+            "
+        >
+
+        <div id="passwordError"
+            style="
+                color:#fb7185;
+                margin-top:10px;
+                min-height:20px;
+            "></div>
+
+        <br>
+
+        <button
+            class="menuButton"
+            onclick="submitPassword()"
+        >
+            UNLOCK
+        </button>
+
+        <button
+            class="menuButton secondaryButton"
+            onclick="closePasswordGate()"
+        >
+            BACK TO LEVEL
+        </button>
+
+    `;
+
+    const input=
+        document.getElementById(
+            "passwordInput"
+        );
+
+    input.focus();
+
+    input.addEventListener(
+        "keydown",
+        e=>{
+
+            e.stopPropagation();
+
+            if(e.key==="Enter"){
+                submitPassword();
+            }
+
+        }
+    );
+
+    beep(
+        420,
+        .1,
+        "triangle",
+        .05
+    );
+
+}
+
+function submitPassword(){
+
+    const input=
+        document.getElementById(
+            "passwordInput"
+        );
+
+    if(!input)
+        return;
+
+    if(
+        input.value.trim()===
+        SECRET_PASSWORD
+    ){
+
+        showLevelSelect();
+
+        return;
+    }
+
+    document.getElementById(
+        "passwordError"
+    ).textContent=
+        "Wrong password!";
+
+    input.value="";
+
+    input.focus();
+
+    beep(
+        140,
+        .15,
+        "sawtooth",
+        .05
+    );
+
+}
+
+function showLevelSelect(){
+
+    let buttons="";
+
+    for(
+        let i=1;
+        i<=game.totalLevels;
+        i++
+    ){
+
+        const worldNumber=
+            Math.ceil(
+                i/game.levelsPerWorld
+            );
+
+        buttons+=`
+
+            <button
+                class="menuButton"
+                style="margin:6px"
+                onclick="jumpToLevel(${i})"
+            >
+                ${worldNumber}-${
+                    (i-1)%
+                    game.levelsPerWorld+1
+                }
+                <br>
+                <span style="font-size:12px">
+                    ${levels[i-1].name}
+                </span>
+            </button>
+
+        `;
+
+    }
+
+    messageText.innerHTML=`
+
+        <strong
+            style="
+                color:#4ade80;
+                font-size:26px;
+            "
+        >
+            ✅ LEVEL SELECT UNLOCKED
+        </strong>
+
+        <br><br>
+
+        Pick any level to skip to.
+
+        <br><br>
+
+        ${buttons}
+
+    `;
+
+    beep(
+        820,
+        .12,
+        "sine",
+        .05
+    );
+
+}
+
+function jumpToLevel(number){
+
+    levelSelectOpen=false;
+
+    game.started=true;
+
+    game.over=false;
+
+    game.paused=false;
+
+    game.levelStarted=false;
+
+    createLevel(number);
+
+    startButton.classList.remove(
+        "hidden"
+    );
+
+    showLevelIntro();
+
+}
+
+function closePasswordGate(){
+
+    levelSelectOpen=false;
+
+    game.paused=false;
+
+    game.levelStarted=true;
+
+    player.x=60;
+
+    message.classList.add(
+        "hidden"
+    );
+
+    startButton.classList.remove(
+        "hidden"
+    );
 
 }
 
@@ -5446,8 +7104,6 @@ startButton.addEventListener(
             createLevel(
                 game.level+1
             );
-
-            game.level++;
 
             showLevelIntro();
 
