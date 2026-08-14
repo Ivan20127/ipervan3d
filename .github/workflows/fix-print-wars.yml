@@ -1,0 +1,74 @@
+name: Fix Print Wars
+on:
+  push:
+    branches: [print-wars-mobile-less-spawns-456]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, 'Fix Print Wars') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch adminedit.html safely
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('adminedit.html')
+          s=p.read_text(encoding='utf-8')
+
+          # Reduce ground spawns to about 50% while keeping land enemies more common than flyers.
+          old='''    for(\n        const e of data.enemies\n    ){\n\n        addEnemy(\n            e[0],\n            e[1]\n        );\n\n    }'''
+          new='''    for(\n        let i=0;\n        i<data.enemies.length;\n        i++\n    ){\n\n        if(i%2===1) continue;\n\n        const e=data.enemies[i];\n\n        addEnemy(\n            e[0],\n            e[1]\n        );\n\n    }'''
+          if old in s: s=s.replace(old,new,1)
+
+          # Make flying enemies much rarer: about 25% of the configured flyers.
+          old='''    for(\n        const f of (data.flyers||[])\n    ){\n\n        addFlyer(\n            f[0],\n            f[1],\n            f[2]||"flyer"\n        );\n\n    }'''
+          new='''    const flyers=data.flyers||[];\n\n    for(\n        let i=0;\n        i<flyers.length;\n        i++\n    ){\n\n        if(i%4!==0) continue;\n\n        const f=flyers[i];\n\n        addFlyer(\n            f[0],\n            f[1],\n            f[2]||"flyer"\n        );\n\n    }'''
+          if old in s: s=s.replace(old,new,1)
+
+          s=s.replace('const bonusFlyers=\n        Math.floor(number/2);','const bonusFlyers=\n        Math.floor(number/8);',1)
+          s=s.replace('const bonusFlyers=\n        Math.floor(number/4);','const bonusFlyers=\n        Math.floor(number/8);',1)
+
+          # Replace any previous secret block with a robust capture-phase version.
+          marker='/* Level 1 secret: move backward, then type 456. Lasts until refresh. */'
+          if marker in s:
+              start=s.index(marker)
+              end=s.find('</script>',start)
+              block=s[start:end]
+              # only remove the existing secret IIFE, preserving code after it
+              m=re.search(r'/\* Level 1 secret:.*?\*/\s*\(function\(\)\{.*?\n\}\)\(\);',block,re.S)
+              if m: s=s[:start+m.start()]+s[start+m.end():]
+
+          secret=r'''\n/* LEVEL 1 SECRET: move backward, then enter 456. Lasts until refresh. */\n(function(){\n  let wentBackward=false, code='', active=!!window.__printWarsSecret456;\n  function isLevel1(){ return typeof game!=='undefined' && (game.level===1 || game.level==='1' || game.level==='1-1'); }\n  function activate(){\n    active=true;\n    window.__printWarsSecret456=true;\n    if(typeof player!=='undefined') player.invincible=Number.MAX_SAFE_INTEGER;\n    if(typeof beep==='function'){ beep(880,.10,'square',.07); beep(1320,.16,'square',.06); }\n  }\n  window.addEventListener('keydown',function(e){\n    if(!isLevel1() || active) return;\n    if(e.key==='ArrowLeft' || e.key==='a' || e.key==='A'){ wentBackward=true; return; }\n    if(!wentBackward || !/^\\d$/.test(e.key)) return;\n    code=(code+e.key).slice(-3);\n    if(code==='456'){ e.preventDefault(); e.stopImmediatePropagation(); activate(); }\n  },true);\n  setInterval(function(){ if(active && typeof player!=='undefined') player.invincible=Number.MAX_SAFE_INTEGER; },50);\n})();\n'''
+          pos=s.rfind('</script>')
+          if pos<0: raise SystemExit('No closing script tag')
+          s=s[:pos]+secret+s[pos:]
+
+          # Add an explicit guard to every damage entry point, without changing normal behavior.
+          for fn in ('freezePlayer','damagePlayer','loseLife'):
+              pat=r'(function\\s+'+fn+r'\\s*\\(\\)\\s*\\{)'
+              if 'window.__printWarsSecret456' not in s[s.find(fn):s.find(fn)+500]:
+                  s,n=re.subn(pat,r'\\1\\n    if(window.__printWarsSecret456) return;',s,count=1)
+                  if n!=1: raise SystemExit('Could not patch '+fn)
+
+          # Validate basic structure and required features.
+          assert s.count('<script>')==s.count('</script>'), 'Unbalanced script tags'
+          assert 'if(i%2===1) continue;' in s
+          assert 'if(i%4!==0) continue;' in s
+          assert 'Math.floor(number/8)' in s
+          assert 'code===\'456\'' in s
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Check diff
+        run: git diff --check
+      - name: Commit and remove workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/fix-print-wars.yml
+          git add adminedit.html .github/workflows/fix-print-wars.yml
+          git diff --cached --check
+          git commit -m 'Fix Print Wars' || exit 0
+          git push
