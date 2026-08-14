@@ -1,0 +1,71 @@
+name: Reduce Print Wars monster spawns
+
+on:
+  push:
+    branches:
+      - print-wars-mobile-less-spawns-456
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reduce monster spawning
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('adminedit.html')
+          s=p.read_text(encoding='utf-8')
+
+          old='''    /* ENEMIES */\n\n    for(\n        let i=0;\n        i<data.enemies.length;\n        i++\n    ){\n        if(i%4===3) continue;\n        const e=data.enemies[i];\n        addEnemy(e[0],e[1]);\n    }'''
+          new='''    /* ENEMIES - MUCH LOWER SPAWN RATE */\n\n    for(\n        let i=0;\n        i<data.enemies.length;\n        i++\n    ){\n        /* Keep land enemies as the main enemy type, but cut them by about half. */\n        if(i%2===1) continue;\n        const e=data.enemies[i];\n        addEnemy(e[0],e[1]);\n    }'''
+          if old not in s:
+              raise SystemExit('Ground enemy block not found')
+          s=s.replace(old,new,1)
+
+          old='''    /* FLYING MONSTERS */\n\n    const flyers=data.flyers||[];\n    for(let i=0;i<flyers.length;i++){\n        if(i%2===1) continue;\n        const f=flyers[i];'''
+          new='''    /* FLYING MONSTERS - VERY RARE */\n\n    const flyers=data.flyers||[];\n    for(let i=0;i<flyers.length;i++){\n        /* Only one out of every four flyers spawns. */\n        if(i%4!==0) continue;\n        const f=flyers[i];'''
+          if old not in s:
+              raise SystemExit('Flyer block not found')
+          s=s.replace(old,new,1)
+
+          old='''    const bonusFlyers=\n        Math.floor(number/4);'''
+          new='''    const bonusFlyers=\n        Math.floor(number/8);'''
+          if old not in s:
+              raise SystemExit('Bonus flyer value not found')
+          s=s.replace(old,new,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Validate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('adminedit.html').read_text(encoding='utf-8')
+          required=[
+            'if(i%2===1) continue;',
+            'if(i%4!==0) continue;',
+            'Math.floor(number/8);'
+          ]
+          for x in required:
+            if x not in s: raise SystemExit('Missing expected change: '+x)
+          if s.count('<script>') != s.count('</script>'):
+            raise SystemExit('Unbalanced script tags')
+          if s.count('<style>') != s.count('</style>'):
+            raise SystemExit('Unbalanced style tags')
+          print('Validation passed')
+          PY
+
+      - name: Commit patch and remove workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add adminedit.html .github/workflows/reduce-print-wars-monsters.yml
+          git diff --cached --check
+          git commit -m 'Reduce Print Wars monster spawns'
+          git push
