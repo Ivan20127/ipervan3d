@@ -3505,6 +3505,9 @@ function dropBomb(enemy){
 
 function freezePlayer(){
 
+    if(godMode)
+        return;
+
     if(player.invincible>0)
         return;
 
@@ -3690,6 +3693,9 @@ function killEnemy(enemy){
 ========================================================= */
 
 function damagePlayer(){
+
+    if(godMode)
+        return;
 
     if(player.invincible>0)
         return;
@@ -4288,6 +4294,29 @@ function checkExtraLife(){
 ========================================================= */
 
 function loseLife(){
+
+    if(godMode){
+
+        if(player.y>600){
+
+            player.x=
+                player.checkpoint;
+
+            player.y=300;
+
+            player.vx=0;
+
+            player.vy=0;
+
+        }
+
+        player.frozenTimer=0;
+
+        player.invincible=20;
+
+        return;
+
+    }
 
     if(player.invincible>0)
         return;
@@ -6567,6 +6596,26 @@ function draw(){
 
     }
 
+    /* GOD MODE BADGE */
+
+    if(godMode){
+
+        ctx.fillStyle="#facc15";
+
+        ctx.font="bold 18px Arial";
+
+        ctx.textAlign="right";
+
+        ctx.fillText(
+            "⭐ INVINCIBLE",
+            WIDTH-16,
+            30
+        );
+
+        ctx.textAlign="left";
+
+    }
+
 }
 
 
@@ -6719,7 +6768,11 @@ function update(){
 
 const SECRET_PASSWORD="123";
 
+const GOD_PASSWORD="456";
+
 let levelSelectOpen=false;
+
+let godMode=false;
 
 function openPasswordGate(){
 
@@ -6760,8 +6813,8 @@ function openPasswordGate(){
 
         <br><br>
 
-        Enter the password to
-        unlock level select.
+        Enter a password to
+        unlock a secret.
 
         <br><br>
 
@@ -6846,12 +6899,19 @@ function submitPassword(){
     if(!input)
         return;
 
-    if(
-        input.value.trim()===
-        SECRET_PASSWORD
-    ){
+    const code=
+        input.value.trim();
+
+    if(code===SECRET_PASSWORD){
 
         showLevelSelect();
+
+        return;
+    }
+
+    if(code===GOD_PASSWORD){
+
+        enableGodMode();
 
         return;
     }
@@ -6869,6 +6929,52 @@ function submitPassword(){
         140,
         .15,
         "sawtooth",
+        .05
+    );
+
+}
+
+function enableGodMode(){
+
+    godMode=true;
+
+    player.invincible=0;
+
+    player.frozenTimer=0;
+
+    messageText.innerHTML=`
+
+        <strong
+            style="
+                color:#facc15;
+                font-size:26px;
+            "
+        >
+            ⭐ INVINCIBILITY ON
+        </strong>
+
+        <br><br>
+
+        Nothing can hurt you until
+        you refresh the page.
+
+        <br><br>
+
+        <button
+            class="menuButton"
+            onclick="closePasswordGate()"
+        >
+            BACK TO LEVEL
+        </button>
+
+    `;
+
+    updateHUD();
+
+    beep(
+        1040,
+        .16,
+        "sine",
         .05
     );
 
