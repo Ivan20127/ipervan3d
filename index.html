@@ -1,255 +1,1038 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
+
   <title>Pervan 3D | Custom 3D Printing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      transition: background 0.3s, color 0.3s;
+
+    /* =========================
+       GENERAL
+    ========================= */
+
+    * {
+      box-sizing: border-box;
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+
+      margin: 0;
+
+      font-family: Arial, sans-serif;
+
+      background: #f5f5f5;
+
+      color: #333;
+
+      transition:
+        background 0.3s,
+        color 0.3s;
+
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
+
       background: #111;
+
       color: white;
+
       padding: 40px 20px;
+
       text-align: center;
+
       position: relative;
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,0.25);
+
     }
+
 
     header h1 {
+
       margin: 0;
+
       font-size: 2.2em;
+
     }
+
 
     header p {
+
       margin-top: 10px;
+
       font-size: 1.1em;
+
     }
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
 
     .button {
+
       display: inline-block;
-      margin: 15px 10px;
+
+      margin: 15px 8px;
+
       padding: 12px 24px;
+
       background: #ff6600;
+
       color: white;
+
       text-decoration: none;
-      border-radius: 4px;
+
+      border-radius: 8px;
+
+      border: none;
+
       font-weight: bold;
-      font-size: 1.1em;
+
+      font-size: 1.05em;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+
     }
+
+
+    .button:hover {
+
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 7px 18px rgba(255,102,0,0.35);
+
+    }
+
+
+    /* =========================
+       PRINTS IN ACTION BUTTON
+    ========================= */
+
+    .prints-button {
+
+      background:
+        linear-gradient(
+          45deg,
+          #ff4d4d,
+          #ff6600
+        );
+
+    }
+
+
+    /* =========================
+       DARK MODE BUTTON
+    ========================= */
+
+    .dark-mode-button {
+
+      position: absolute;
+
+      top: 15px;
+
+      left: 20px;
+
+      padding: 9px 14px;
+
+      background: #333;
+
+      color: white;
+
+      border: none;
+
+      border-radius: 20px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+
+      font-size: 14px;
+
+      transition: 0.25s;
+
+    }
+
+
+    .dark-mode-button:hover {
+
+      background: #ff6600;
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    /* =========================
+       SECTIONS
+    ========================= */
 
     section {
+
       padding: 40px 20px;
+
       max-width: 1000px;
+
       margin: auto;
+
     }
+
 
     h2 {
+
       text-align: center;
+
       margin-bottom: 30px;
+
     }
+
+
+    /* =========================
+       WHAT WE MAKE BANNER
+    ========================= */
 
     .what-we-make-banner {
+
       width: 100%;
-      height: 100%;
+
       margin-bottom: 25px;
+
       overflow: hidden;
-      border-radius: 6px;
+
+      border-radius: 10px;
+
+      background: white;
+
     }
+
 
     .what-we-make-banner img {
+
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+
+      height: auto;
+
       display: block;
+
+      object-fit: contain;
+
     }
+
+
+    /* =========================
+       PRODUCTS
+    ========================= */
 
     .products {
+
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(260px, 1fr)
+        );
+
       gap: 20px;
+
     }
+
 
     .card {
+
       background: white;
+
       padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+      border-radius: 10px;
+
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.1);
+
       text-align: center;
+
+      transition:
+        background 0.3s,
+        color 0.3s,
+        transform 0.25s;
+
     }
 
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
+
+    .card:hover {
+
+      transform:
+        translateY(-4px);
+
     }
+
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    #contact-email {
+
+      color: blue;
+
+      font-weight: bold;
+
+      text-decoration: none;
+
+    }
+
+
+    /* =========================
+       ABOUT
+    ========================= */
 
     .about-author {
+
       text-align: center;
+
       padding: 60px 20px;
+
       background: #e9e9e9;
+
+      max-width: none;
+
     }
+
 
     .about-author h2 {
+
       margin-bottom: 20px;
+
     }
+
 
     .about-author img {
+
       width: 260px;
+
       max-width: 90%;
+
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+      box-shadow:
+        0 4px 10px rgba(0,0,0,0.2);
+
     }
+
+
+    /* =========================
+       ADMIN BUTTON
+    ========================= */
 
     .secret-admin-btn {
+
       position: absolute;
+
       top: 15px;
+
       right: 20px;
+
       width: 38px;
+
       height: 38px;
-      background: rgba(255,255,255,0.12);
+
+      background:
+        rgba(255,255,255,0.12);
+
       border: none;
+
       border-radius: 50%;
+
       cursor: pointer;
+
       opacity: 0.35;
-      transition: all 0.25s ease;
+
+      transition:
+        all 0.25s ease;
+
     }
+
 
     .secret-admin-btn:hover {
+
       opacity: 0.85;
-      transform: scale(1.15);
+
+      transform:
+        scale(1.15);
+
     }
+
 
     .secret-admin-btn::after {
+
       content: "⚙";
+
       position: absolute;
+
       top: 50%;
+
       left: 50%;
-      transform: translate(-50%, -50%);
+
+      transform:
+        translate(-50%, -50%);
+
       font-size: 18px;
+
       color: white;
+
     }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+
+      background: #111;
+
+      color: white;
+
+      text-align: center;
+
+      padding: 20px;
+
+      font-size: 0.9em;
+
+    }
+
+
+    /* =========================
+       DARK MODE
+    ========================= */
 
     body.dark {
+
       background: #121212;
+
       color: #eee;
+
     }
+
 
     body.dark .card {
+
       background: #1f1f1f;
+
       color: #eee;
+
+      box-shadow:
+        0 3px 12px rgba(0,0,0,0.4);
+
     }
 
+
     body.dark .about-author {
+
       background: #1a1a1a;
+
+      color: #eee;
+
     }
+
+
+    body.dark .what-we-make-banner {
+
+      background: #1f1f1f;
+
+    }
+
+
+    body.dark #contact-email {
+
+      color: #66aaff;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width:700px) {
+
+      header {
+
+        padding:
+          85px 15px 35px;
+
+      }
+
+
+      header h1 {
+
+        font-size: 2em;
+
+      }
+
+
+      header p {
+
+        font-size: 1em;
+
+      }
+
+
+      .dark-mode-button {
+
+        top: 15px;
+
+        left: 15px;
+
+        padding:
+          8px 12px;
+
+        font-size: 13px;
+
+      }
+
+
+      .secret-admin-btn {
+
+        top: 15px;
+
+        right: 15px;
+
+      }
+
+
+      .button {
+
+        display: block;
+
+        width: 100%;
+
+        max-width: 330px;
+
+        margin:
+          10px auto;
+
+        font-size: 16px;
+
+      }
+
+
+      section {
+
+        padding:
+          30px 15px;
+
+      }
+
+
+      .what-we-make-banner {
+
+        border-radius: 8px;
+
+      }
+
+
+      .about-author {
+
+        padding:
+          45px 15px;
+
+      }
+
+    }
+
+
+    /* =========================
+       SMALL PHONES
+    ========================= */
+
+    @media(max-width:420px) {
+
+      header h1 {
+
+        font-size: 1.8em;
+
+      }
+
+
+      header p {
+
+        font-size: 0.95em;
+
+      }
+
+
+      .button {
+
+        font-size: 15px;
+
+        padding:
+          11px 18px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header id="site-header">
-  <h1>Pervan 3D</h1>
-  <p>Custom 3D Printed Models & Fidgets</p>
 
-  <a class="button" href="#contact">Request a Quote</a>
-  <a class="button" href="shop.html">Go to Shop & Purchase</a>
 
-  <!-- NEW BUTTON -->
-  <a class="button" href="custom.html">Custom Orders</a>
+  <!-- DARK MODE -->
+
+  <button
+    class="dark-mode-button"
+    onclick="toggleDarkMode()"
+    id="darkModeButton"
+  >
+    🌙 Dark
+  </button>
+
+
+  <!-- ADMIN -->
 
   <button
     class="secret-admin-btn"
     onclick="window.location.href='admin-lock.html'"
     title="Admin Area"
   ></button>
+
+
+  <h1>
+    Pervan 3D
+  </h1>
+
+
+  <p>
+    Custom 3D Printed Models & Fidgets
+  </p>
+
+
+  <!-- REQUEST QUOTE -->
+
+  <a
+    class="button"
+    href="#contact"
+  >
+    Request a Quote
+  </a>
+
+
+  <!-- SHOP -->
+
+  <a
+    class="button"
+    href="shop.html"
+  >
+    🛒 Go to Shop & Purchase
+  </a>
+
+
+  <!-- CUSTOM ORDERS -->
+
+  <a
+    class="button"
+    href="custom.html"
+  >
+    🛠️ Custom Orders
+  </a>
+
+
+  <!-- PRINTS IN ACTION -->
+
+  <a
+    class="button prints-button"
+    href="prints.html"
+  >
+    🎥 Prints in Action
+  </a>
+
+
 </header>
 
+
+<!-- =========================
+     WHAT WE MAKE
+========================= -->
+
 <section>
-  <h2>What We Make</h2>
+
+  <h2>
+    What We Make
+  </h2>
+
 
   <div class="what-we-make-banner">
-    <img src="title.png" alt="What We Make">
+
+    <img
+      src="title.png"
+      alt="What We Make"
+    >
+
   </div>
+
 
   <div class="products">
+
     <div class="card">
-      <h3>3D Printed Models & Fidgets</h3>
+
+      <h3>
+        3D Printed Models & Fidgets
+      </h3>
+
       <p>
-        High-quality articulated fidgets and detailed models,
-        printed in multiple colors and sizes.
+        High-quality articulated fidgets
+        and detailed models, printed in
+        multiple colors and sizes.
       </p>
+
     </div>
+
   </div>
+
 </section>
+
+
+<!-- =========================
+     HOW ORDERING WORKS
+========================= -->
 
 <section>
-  <h2>How Ordering Works</h2>
-  <p style="text-align:center; max-width:700px; margin:auto;">
-    Browse the shop, choose your size and color, add items to your cart,
-    and pay securely. All items are printed with care and quality materials.
+
+  <h2>
+    How Ordering Works
+  </h2>
+
+
+  <p
+    style="
+      text-align:center;
+      max-width:700px;
+      margin:auto;
+    "
+  >
+
+    Browse the shop, choose your size
+    and color, add items to your cart,
+    and pay securely.
+
+    All items are printed with care
+    and quality materials.
+
   </p>
+
 </section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
 
 <section id="contact">
-  <h2>Contact & Quotes</h2>
 
-  <p style="text-align:center;">
-    Email us at:<br>
-    <a id="contact-email"
-       href="mailto:ivanpervan09@gmail.com"
-       style="color:blue; font-weight:bold; text-decoration:none;">
-       ivanpervan09@gmail.com
+  <h2>
+    Contact & Quotes
+  </h2>
+
+
+  <p
+    style="
+      text-align:center;
+    "
+  >
+
+    Email us at:
+
+    <br>
+
+    <a
+      id="contact-email"
+      href="mailto:ivanpervan09@gmail.com"
+    >
+      ivanpervan09@gmail.com
     </a>
+
   </p>
+
 </section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section class="about-author">
-  <h2>About the creator</h2>
-  <img src="abouttheauthor.png" alt="About the Author">
+
+  <h2>
+    About the creator
+  </h2>
+
+
+  <img
+    src="abouttheauthor.png"
+    alt="About the Author"
+  >
+
 </section>
 
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer id="site-footer">
-  <span id="footer-text">© 2026 Pervan 3D. All rights reserved.</span>
+
+  <span id="footer-text">
+
+    © 2026 Pervan 3D.
+    All rights reserved.
+
+  </span>
+
 </footer>
 
+
 <script>
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleDarkMode() {
+
+  document
+    .body
+    .classList
+    .toggle('dark');
+
+
+  const isDark =
+    document
+      .body
+      .classList
+      .contains('dark');
+
+
+  localStorage.setItem(
+    'pervan3d-dark-mode',
+    isDark
+  );
+
+
+  updateDarkModeButton();
+
+}
+
+
+/* =========================
+   DARK MODE BUTTON
+========================= */
+
+function updateDarkModeButton() {
+
+  const button =
+    document.getElementById(
+      'darkModeButton'
+    );
+
+
+  if (
+    document
+      .body
+      .classList
+      .contains('dark')
+  ) {
+
+    button.textContent =
+      '☀️ Light';
+
+  } else {
+
+    button.textContent =
+      '🌙 Dark';
+
+  }
+
+}
+
+
+/* =========================
+   APPLY SAVED DARK MODE
+========================= */
+
+const savedDarkMode =
+  localStorage.getItem(
+    'pervan3d-dark-mode'
+  );
+
+
+if (
+  savedDarkMode === 'true'
+) {
+
+  document
+    .body
+    .classList
+    .add('dark');
+
+}
+
+
+updateDarkModeButton();
+
+
+/* =========================
+   ADMIN SETTINGS
+========================= */
+
 (function applyAdminSettings() {
 
-  const settings = JSON.parse(localStorage.getItem('pervanSettings'));
+
+  const settings =
+    JSON.parse(
+      localStorage.getItem(
+        'pervanSettings'
+      )
+    );
+
+
   if (!settings) return;
 
+
+  /* EMAIL */
+
   if (settings.email) {
-    const emailEl = document.getElementById('contact-email');
-    emailEl.textContent = settings.email;
-    emailEl.href = "mailto:" + settings.email;
+
+    const emailEl =
+      document.getElementById(
+        'contact-email'
+      );
+
+
+    emailEl.textContent =
+      settings.email;
+
+
+    emailEl.href =
+      "mailto:" +
+      settings.email;
+
   }
 
-  if (settings.footerText)
-    document.getElementById('footer-text').textContent = settings.footerText;
 
-  if (settings.accentColor)
-    document.querySelectorAll('.button')
-      .forEach(btn => btn.style.background = settings.accentColor);
+  /* FOOTER */
+
+  if (settings.footerText) {
+
+    document
+      .getElementById(
+        'footer-text'
+      )
+      .textContent =
+      settings.footerText;
+
+  }
+
+
+  /* ACCENT COLOR */
+
+  if (settings.accentColor) {
+
+    document
+      .querySelectorAll(
+        '.button'
+      )
+      .forEach(btn => {
+
+        btn.style.background =
+          settings.accentColor;
+
+      });
+
+  }
+
+
+  /* HEADER */
 
   if (settings.headerBg) {
-    document.getElementById('site-header').style.background = settings.headerBg;
-    document.getElementById('site-footer').style.background = settings.headerBg;
+
+    document
+      .getElementById(
+        'site-header'
+      )
+      .style.background =
+      settings.headerBg;
+
+
+    document
+      .getElementById(
+        'site-footer'
+      )
+      .style.background =
+      settings.headerBg;
+
   }
 
-  if (settings.darkMode)
-    document.body.classList.add('dark');
+
+  /* ADMIN DARK MODE */
+
+  if (settings.darkMode) {
+
+    document
+      .body
+      .classList
+      .add('dark');
+
+  }
+
+
+  updateDarkModeButton();
+
 
 })();
+
 </script>
 
+
 </body>
+
 </html>
+```
