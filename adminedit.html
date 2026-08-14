@@ -2252,23 +2252,25 @@ function createLevel(number){
 
     }
 
-    /* ENEMIES */
+    /* ENEMIES - MUCH LOWER SPAWN RATE */
 
     for(
         let i=0;
         i<data.enemies.length;
         i++
     ){
-        if(i%4===3) continue;
+        /* Keep land enemies as the main enemy type, but cut them by about half. */
+        if(i%2===1) continue;
         const e=data.enemies[i];
         addEnemy(e[0],e[1]);
     }
 
-    /* FLYING MONSTERS */
+    /* FLYING MONSTERS - VERY RARE */
 
     const flyers=data.flyers||[];
     for(let i=0;i<flyers.length;i++){
-        if(i%2===1) continue;
+        /* Only one out of every four flyers spawns. */
+        if(i%4!==0) continue;
         const f=flyers[i];
         addFlyer(f[0],f[1],f[2]||"flyer");
     }
@@ -2276,7 +2278,7 @@ function createLevel(number){
     /* EXTRA FLYERS ON HARDER LEVELS */
 
     const bonusFlyers=
-        Math.floor(number/4);
+        Math.floor(number/8);
 
     for(
         let i=0;
