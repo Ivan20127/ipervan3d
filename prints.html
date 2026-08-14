@@ -1,6 +1,5 @@
 ```html
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,11 +7,12 @@
 <meta charset="UTF-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
 >
 
-<title>Pervan 3D - Prints in Action</title>
+<title>Pervan 3D | Prints in Action</title>
+
 
 <style>
 
@@ -49,20 +49,18 @@ background:#111;
 color:#eee;
 }
 
-body.dark .search-box,
-body.dark .print-card{
-background:#1e1e1e;
-color:#eee;
+body.dark .intro p{
+color:#aaa;
 }
 
-body.dark .search-box input{
+body.dark .search-box{
+background:#1e1e1e;
+}
+
+body.dark #printSearch{
 background:#2a2a2a;
 color:white;
 border-color:#444;
-}
-
-body.dark .print-info{
-border-color:#333;
 }
 
 body.dark .no-results{
@@ -85,7 +83,7 @@ linear-gradient(
 
 color:white;
 
-padding:45px 20px;
+padding:75px 20px 40px;
 
 text-align:center;
 
@@ -116,10 +114,10 @@ color:#ddd;
 
 
 /* =========================
-   BACK BUTTON
+   HOME BUTTON
 ========================= */
 
-.back-btn{
+.home-button{
 
 position:absolute;
 
@@ -137,11 +135,13 @@ text-decoration:none;
 
 border-radius:8px;
 
+font-weight:bold;
+
 transition:.25s;
 
 }
 
-.back-btn:hover{
+.home-button:hover{
 
 background:#ff6600;
 
@@ -155,7 +155,7 @@ translateY(-2px);
    DARK MODE BUTTON
 ========================= */
 
-.dark-mode-btn{
+.dark-mode-button{
 
 position:absolute;
 
@@ -181,7 +181,7 @@ transition:.25s;
 
 }
 
-.dark-mode-btn:hover{
+.dark-mode-button:hover{
 
 background:#ff6600;
 
@@ -225,12 +225,6 @@ color:#666;
 
 }
 
-body.dark .intro p{
-
-color:#aaa;
-
-}
-
 
 /* =========================
    SEARCH
@@ -270,7 +264,7 @@ transition:.25s;
 
 }
 
-# printSearch:focus{
+#printSearch:focus{
 
 border-color:#ff6600;
 
@@ -357,7 +351,7 @@ object-fit:cover;
 
 
 /* =========================
-   INFO
+   PRINT INFO
 ========================= */
 
 .print-info{
@@ -533,7 +527,7 @@ font-size:16px;
 
 }
 
-.back-btn{
+.home-button{
 
 top:15px;
 
@@ -546,7 +540,7 @@ font-size:14px;
 
 }
 
-.dark-mode-btn{
+.dark-mode-button{
 
 top:15px;
 
@@ -623,16 +617,17 @@ height:200px;
 
 <header>
 
+
 <a
 href="index.html"
-class="back-btn"
+class="home-button"
 >
-← Shop
+🏠 Home
 </a>
 
 
 <button
-class="dark-mode-btn"
+class="dark-mode-button"
 onclick="toggleDarkMode()"
 id="darkModeButton"
 >
@@ -644,8 +639,9 @@ id="darkModeButton"
 🖨️ Prints in Action
 </h1>
 
+
 <p>
-See Pervan 3D prints being made!
+Watch Pervan 3D prints being created
 </p>
 
 </header>
@@ -662,8 +658,8 @@ See Pervan 3D prints being made!
 </h2>
 
 <p>
-Watch time-lapse videos of Pervan 3D prints being created.
-Search by the customer's name or the product they ordered.
+See time-lapse videos of prints being made.
+Search for a customer's name or product.
 </p>
 
 </section>
@@ -687,6 +683,9 @@ oninput="searchPrints()"
 
 <!-- =========================
      PRINTS
+     
+     ADD YOUR PRINT CARDS HERE
+     
 ========================= -->
 
 <section
@@ -694,34 +693,14 @@ class="prints"
 id="prints"
 >
 
-
 <!--
-================================================
-ADD YOUR PRINTS HERE
-================================================
+YOUR PRINTS WILL GO HERE.
 
-Copy one print-card for every time-lapse.
-
-Change:
-
-CUSTOMER NAME
-PRODUCT NAME
-VIDEO FILE
-FILAMENT
-PRINT TIME
-DESCRIPTION
-
-================================================
--->
-
+Example structure to use later:
 
 <div
 class="print-card"
-data-search="
-Ivan
-Flexi Shark
-Blue
-"
+data-search="Customer Name Product Name"
 >
 
 <video
@@ -732,25 +711,21 @@ preload="metadata"
 >
 
 <source
-src="videos/ivan-shark.mp4"
+src="videos/your-video.mp4"
 type="video/mp4"
 >
 
-Your browser does not support video.
-
 </video>
-
 
 <div class="print-info">
 
 <h3>
-🦈 Flexi Shark
+Product Name
 </h3>
 
 <div class="customer">
-👤 Printed for Ivan
+👤 Printed for Customer Name
 </div>
-
 
 <div class="details">
 
@@ -764,17 +739,12 @@ Your browser does not support video.
 
 </div>
 
-
 <p class="description">
-
-A blue articulated Flexi Shark printed
-on the Pervan 3D printer.
-
+Your description here.
 </p>
 
-
 <a
-href="index.html"
+href="shop.html"
 class="shop-button"
 >
 🛒 Shop This Print
@@ -783,81 +753,7 @@ class="shop-button"
 </div>
 
 </div>
-
-
-<!-- =========================
-     EXAMPLE #2
-========================= -->
-
-<div
-class="print-card"
-data-search="
-John
-Dragon Fidget
-Red
-"
->
-
-<video
-class="print-video"
-controls
-playsinline
-preload="metadata"
->
-
-<source
-src="videos/john-dragon.mp4"
-type="video/mp4"
->
-
-Your browser does not support video.
-
-</video>
-
-
-<div class="print-info">
-
-<h3>
-🐉 Dragon Fidget
-</h3>
-
-<div class="customer">
-👤 Printed for John
-</div>
-
-
-<div class="details">
-
-<span class="detail">
-🔴 Red PLA
-</span>
-
-<span class="detail">
-⏱️ 1h 30m
-</span>
-
-</div>
-
-
-<p class="description">
-
-A flexible dragon fidget printed
-in red PLA.
-
-</p>
-
-
-<a
-href="index.html"
-class="shop-button"
->
-🛒 Shop This Print
-</a>
-
-</div>
-
-</div>
-
+-->
 
 </section>
 
@@ -882,9 +778,8 @@ Try searching for another name or product.
 
 <script>
 
-
 /* =========================
-   SEARCH PRINTS
+   SEARCH
 ========================= */
 
 function searchPrints(){
@@ -909,8 +804,7 @@ cards.forEach(card => {
 
 const searchable =
 (
-card
-.getAttribute('data-search')
+card.getAttribute('data-search')
 || ''
 )
 .toLowerCase();
@@ -937,7 +831,15 @@ const noResults =
 document.getElementById('noResults');
 
 
-if(visible === 0){
+/*
+   Don't show "No prints found"
+   when there aren't any prints yet.
+*/
+
+if(
+cards.length > 0 &&
+visible === 0
+){
 
 noResults.style.display='block';
 
@@ -988,7 +890,9 @@ function updateDarkButton(){
 
 const button =
 document
-.getElementById('darkModeButton');
+.getElementById(
+'darkModeButton'
+);
 
 
 if(
@@ -1021,7 +925,9 @@ localStorage.getItem(
 );
 
 
-if(savedDarkMode === 'true'){
+if(
+savedDarkMode === 'true'
+){
 
 document
 .body
