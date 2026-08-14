@@ -2255,34 +2255,28 @@ function createLevel(number){
     /* ENEMIES */
 
     for(
-        const e of data.enemies
+        let i=0;
+        i<data.enemies.length;
+        i++
     ){
-
-        addEnemy(
-            e[0],
-            e[1]
-        );
-
+        if(i%4===3) continue;
+        const e=data.enemies[i];
+        addEnemy(e[0],e[1]);
     }
 
     /* FLYING MONSTERS */
 
-    for(
-        const f of (data.flyers||[])
-    ){
-
-        addFlyer(
-            f[0],
-            f[1],
-            f[2]||"flyer"
-        );
-
+    const flyers=data.flyers||[];
+    for(let i=0;i<flyers.length;i++){
+        if(i%2===1) continue;
+        const f=flyers[i];
+        addFlyer(f[0],f[1],f[2]||"flyer");
     }
 
     /* EXTRA FLYERS ON HARDER LEVELS */
 
     const bonusFlyers=
-        Math.floor(number/2);
+        Math.floor(number/4);
 
     for(
         let i=0;
@@ -7205,6 +7199,25 @@ function loop(){
 
 loop();
 
+
+/* Level 1 secret: move backward, then type 456. Lasts until refresh. */
+(function(){
+  let wentBack=false, code="", active=false;
+  addEventListener("keydown",function(e){
+    if(game.level!==1 || !game.levelStarted || game.over || active) return;
+    if(e.key==="ArrowLeft" || e.key==="a" || e.key==="A"){ wentBack=true; return; }
+    if(!wentBack || !/^\d$/.test(e.key)) return;
+    code=(code+e.key).slice(-3);
+    if(code==="456"){
+      active=true;
+      window.__printWarsSecret456=true;
+      player.invincible=Number.MAX_SAFE_INTEGER;
+    }
+  });
+  setInterval(function(){
+    if(active) player.invincible=Number.MAX_SAFE_INTEGER;
+  },100);
+})();
 </script>
 
 </body>
