@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,116 +5,289 @@
 
   <meta charset="UTF-8">
 
-  <title>Pervan 3D | Custom 3D Printing</title>
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1"
   >
 
+  <title>Pervan 3D | Custom 3D Printing</title>
+
+
   <style>
 
-    /* =========================
+    /* =========================================================
+       PERVAN 3D
+       UPDATED COVER PAGE
+       ========================================================= */
+
+
+    /* =========================================================
        GENERAL
-    ========================= */
+       ========================================================= */
 
     * {
       box-sizing: border-box;
     }
 
+
     html {
       scroll-behavior: smooth;
     }
+
 
     body {
 
       margin: 0;
 
-      font-family: Arial, sans-serif;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-      background: #f5f5f5;
+      background:
+        #f4f4f4;
 
-      color: #333;
+      color:
+        #222;
 
       transition:
-        background 0.3s,
-        color 0.3s;
+        background 0.3s ease,
+        color 0.3s ease;
 
     }
 
 
-    /* =========================
-       HEADER
-    ========================= */
+    /* =========================================================
+       HEADER / HERO
+       ========================================================= */
 
     header {
 
-      background: #111;
+      background:
+        radial-gradient(
+          circle at 50% 10%,
+          rgba(255,102,0,0.18),
+          transparent 34%
+        ),
+        linear-gradient(
+          145deg,
+          #070707,
+          #181818 55%,
+          #0b0b0b
+        );
 
-      color: white;
+      color:
+        white;
 
-      padding: 40px 20px;
+      padding:
+        72px 20px 55px;
 
-      text-align: center;
+      text-align:
+        center;
 
-      position: relative;
+      position:
+        relative;
 
       box-shadow:
-        0 5px 20px rgba(0,0,0,0.25);
+        0 8px 30px rgba(0,0,0,0.24);
+
+      border-bottom:
+        3px solid #ff6600;
+
+      overflow:
+        hidden;
+
+    }
+
+
+    header::before {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      width:
+        320px;
+
+      height:
+        320px;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(255,102,0,0.05);
+
+      top:
+        -170px;
+
+      left:
+        -100px;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    header::after {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      width:
+        280px;
+
+      height:
+        280px;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(255,102,0,0.04);
+
+      bottom:
+        -180px;
+
+      right:
+        -80px;
+
+      pointer-events:
+        none;
 
     }
 
 
     header h1 {
 
-      margin: 0;
+      margin:
+        8px 0 8px;
 
-      font-size: 2.2em;
+      font-size:
+        clamp(
+          2.4rem,
+          6vw,
+          4.2rem
+        );
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        -1.5px;
+
+      line-height:
+        1.05;
+
+      text-shadow:
+        0 4px 16px rgba(0,0,0,0.45);
+
+      position:
+        relative;
+
+      z-index:
+        2;
 
     }
 
 
     header p {
 
-      margin-top: 10px;
+      margin:
+        0 auto 26px;
 
-      font-size: 1.1em;
+      max-width:
+        650px;
+
+      font-size:
+        clamp(
+          1rem,
+          2vw,
+          1.25rem
+        );
+
+      color:
+        #dddddd;
+
+      line-height:
+        1.5;
+
+      letter-spacing:
+        0.3px;
+
+      position:
+        relative;
+
+      z-index:
+        2;
 
     }
 
 
-    /* =========================
+    /* =========================================================
        BUTTONS
-    ========================= */
+       ========================================================= */
 
     .button {
 
-      display: inline-block;
+      display:
+        inline-block;
 
-      margin: 15px 8px;
+      margin:
+        8px 5px;
 
-      padding: 12px 24px;
+      padding:
+        13px 22px;
 
-      background: #ff6600;
+      background:
+        linear-gradient(
+          135deg,
+          #ff7a18,
+          #ff5a00
+        );
 
-      color: white;
+      color:
+        white;
 
-      text-decoration: none;
+      text-decoration:
+        none;
 
-      border-radius: 8px;
+      border-radius:
+        10px;
 
-      border: none;
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
 
-      font-weight: bold;
+      font-weight:
+        800;
 
-      font-size: 1.05em;
+      font-size:
+        1rem;
 
-      cursor: pointer;
+      cursor:
+        pointer;
+
+      box-shadow:
+        0 5px 15px
+        rgba(255,102,0,0.20);
 
       transition:
-        transform 0.2s,
-        box-shadow 0.2s,
-        background 0.2s;
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+
+      position:
+        relative;
+
+      z-index:
+        2;
 
     }
 
@@ -126,20 +298,32 @@
         translateY(-3px);
 
       box-shadow:
-        0 7px 18px rgba(255,102,0,0.35);
+        0 10px 24px
+        rgba(255,102,0,0.32);
+
+      filter:
+        brightness(1.06);
 
     }
 
 
-    /* =========================
+    .button:active {
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    /* =========================================================
        PRINTS IN ACTION BUTTON
-    ========================= */
+       ========================================================= */
 
     .prints-button {
 
       background:
         linear-gradient(
-          45deg,
+          135deg,
           #ff4d4d,
           #ff6600
         );
@@ -147,42 +331,62 @@
     }
 
 
-    /* =========================
+    /* =========================================================
        DARK MODE BUTTON
-    ========================= */
+       ========================================================= */
 
     .dark-mode-button {
 
-      position: absolute;
+      position:
+        absolute;
 
-      top: 15px;
+      top:
+        18px;
 
-      left: 20px;
+      left:
+        20px;
 
-      padding: 9px 14px;
+      padding:
+        9px 14px;
 
-      background: #333;
+      background:
+        rgba(255,255,255,0.10);
 
-      color: white;
+      color:
+        white;
 
-      border: none;
+      border:
+        1px solid
+        rgba(255,255,255,0.13);
 
-      border-radius: 20px;
+      border-radius:
+        20px;
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      font-weight: bold;
+      font-weight:
+        bold;
 
-      font-size: 14px;
+      font-size:
+        13px;
 
-      transition: 0.25s;
+      transition:
+        0.25s;
+
+      backdrop-filter:
+        blur(8px);
+
+      z-index:
+        10;
 
     }
 
 
     .dark-mode-button:hover {
 
-      background: #ff6600;
+      background:
+        #ff6600;
 
       transform:
         translateY(-2px);
@@ -190,98 +394,260 @@
     }
 
 
-    /* =========================
+    /* =========================================================
+       SECRET ADMIN BUTTON
+       ========================================================= */
+
+    .secret-admin-btn {
+
+      position:
+        absolute;
+
+      top:
+        18px;
+
+      right:
+        20px;
+
+      width:
+        38px;
+
+      height:
+        38px;
+
+      background:
+        rgba(255,255,255,0.10);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+      border-radius:
+        50%;
+
+      cursor:
+        pointer;
+
+      opacity:
+        0.45;
+
+      transition:
+        all 0.25s ease;
+
+      z-index:
+        10;
+
+    }
+
+
+    .secret-admin-btn:hover {
+
+      opacity:
+        0.95;
+
+      transform:
+        scale(1.1);
+
+      background:
+        rgba(255,102,0,0.25);
+
+    }
+
+
+    .secret-admin-btn::after {
+
+      content:
+        "⚙";
+
+      position:
+        absolute;
+
+      top:
+        50%;
+
+      left:
+        50%;
+
+      transform:
+        translate(
+          -50%,
+          -50%
+        );
+
+      font-size:
+        17px;
+
+      color:
+        white;
+
+    }
+
+
+    /* =========================================================
        SECTIONS
-    ========================= */
+       ========================================================= */
 
     section {
 
-      padding: 40px 20px;
+      padding:
+        55px 20px;
 
-      max-width: 1000px;
+      max-width:
+        1050px;
 
-      margin: auto;
+      margin:
+        auto;
 
     }
 
 
     h2 {
 
-      text-align: center;
+      text-align:
+        center;
 
-      margin-bottom: 30px;
+      margin:
+        0 0 28px;
+
+      font-size:
+        clamp(
+          1.7rem,
+          3vw,
+          2.3rem
+        );
+
+      letter-spacing:
+        -0.4px;
 
     }
 
 
-    /* =========================
+    h2::after {
+
+      content:
+        "";
+
+      display:
+        block;
+
+      width:
+        55px;
+
+      height:
+        4px;
+
+      margin:
+        12px auto 0;
+
+      background:
+        #ff6600;
+
+      border-radius:
+        10px;
+
+    }
+
+
+    /* =========================================================
        WHAT WE MAKE BANNER
-    ========================= */
+       ========================================================= */
 
     .what-we-make-banner {
 
-      width: 100%;
+      width:
+        100%;
 
-      margin-bottom: 25px;
+      margin:
+        0 auto 28px;
 
-      overflow: hidden;
+      overflow:
+        hidden;
 
-      border-radius: 10px;
+      border-radius:
+        16px;
 
-      background: white;
+      background:
+        white;
+
+      box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.09);
+
+      border:
+        1px solid
+        rgba(0,0,0,0.06);
 
     }
 
 
     .what-we-make-banner img {
 
-      width: 100%;
+      width:
+        100%;
 
-      height: auto;
+      height:
+        auto;
 
-      display: block;
+      display:
+        block;
 
-      object-fit: contain;
+      object-fit:
+        contain;
 
     }
 
 
-    /* =========================
-       PRODUCTS
-    ========================= */
+    /* =========================================================
+       PRODUCTS / DESCRIPTION CARD
+       ========================================================= */
 
     .products {
 
-      display: grid;
+      display:
+        grid;
 
       grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(260px, 1fr)
-        );
+        minmax(0,1fr);
 
-      gap: 20px;
+      gap:
+        20px;
+
+      max-width:
+        850px;
+
+      margin:
+        auto;
 
     }
 
 
     .card {
 
-      background: white;
+      background:
+        white;
 
-      padding: 20px;
+      padding:
+        28px;
 
-      border-radius: 10px;
+      border-radius:
+        16px;
 
       box-shadow:
-        0 2px 8px rgba(0,0,0,0.1);
+        0 7px 22px
+        rgba(0,0,0,0.08);
 
-      text-align: center;
+      border:
+        1px solid
+        rgba(0,0,0,0.06);
+
+      text-align:
+        center;
 
       transition:
-        background 0.3s,
-        color 0.3s,
-        transform 0.25s;
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 
     }
 
@@ -291,255 +657,391 @@
       transform:
         translateY(-4px);
 
+      box-shadow:
+        0 12px 28px
+        rgba(0,0,0,0.12);
+
     }
 
 
-    /* =========================
+    .card h3 {
+
+      margin-top:
+        0;
+
+      font-size:
+        1.35rem;
+
+    }
+
+
+    .card p {
+
+      line-height:
+        1.7;
+
+      color:
+        #555;
+
+      margin-bottom:
+        0;
+
+    }
+
+
+    /* =========================================================
+       HOW ORDERING WORKS
+       ========================================================= */
+
+    #how-ordering-works {
+
+      text-align:
+        center;
+
+    }
+
+
+    #how-ordering-works p {
+
+      max-width:
+        700px;
+
+      margin:
+        auto;
+
+      line-height:
+        1.8;
+
+      color:
+        #555;
+
+      font-size:
+        1.05rem;
+
+    }
+
+
+    /* =========================================================
        CONTACT
-    ========================= */
+       ========================================================= */
+
+    #contact {
+
+      text-align:
+        center;
+
+    }
+
+
+    #contact p {
+
+      line-height:
+        1.7;
+
+    }
+
 
     #contact-email {
 
-      color: blue;
+      display:
+        inline-block;
 
-      font-weight: bold;
+      margin-top:
+        8px;
 
-      text-decoration: none;
+      color:
+        #e85b00;
+
+      font-weight:
+        800;
+
+      text-decoration:
+        none;
+
+      padding:
+        12px 18px;
+
+      background:
+        white;
+
+      border-radius:
+        10px;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0,0,0,0.07);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        color 0.2s ease;
 
     }
 
 
-    /* =========================
-       ABOUT
-    ========================= */
+    #contact-email:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 8px 20px
+        rgba(0,0,0,0.11);
+
+      color:
+        #ff6600;
+
+    }
+
+
+    /* =========================================================
+       ABOUT THE CREATOR
+       ========================================================= */
 
     .about-author {
 
-      text-align: center;
+      text-align:
+        center;
 
-      padding: 60px 20px;
+      padding:
+        60px 20px;
 
-      background: #e9e9e9;
+      background:
+        linear-gradient(
+          180deg,
+          #eeeeee,
+          #e5e5e5
+        );
 
-      max-width: none;
+      max-width:
+        none;
 
     }
 
 
     .about-author h2 {
 
-      margin-bottom: 20px;
+      margin-bottom:
+        25px;
 
     }
 
 
     .about-author img {
 
-      width: 260px;
+      width:
+        260px;
 
-      max-width: 90%;
+      max-width:
+        90%;
 
-      border-radius: 10px;
+      border-radius:
+        16px;
 
       box-shadow:
-        0 4px 10px rgba(0,0,0,0.2);
-
-    }
-
-
-    /* =========================
-       ADMIN BUTTON
-    ========================= */
-
-    .secret-admin-btn {
-
-      position: absolute;
-
-      top: 15px;
-
-      right: 20px;
-
-      width: 38px;
-
-      height: 38px;
-
-      background:
-        rgba(255,255,255,0.12);
-
-      border: none;
-
-      border-radius: 50%;
-
-      cursor: pointer;
-
-      opacity: 0.35;
+        0 10px 28px
+        rgba(0,0,0,0.18);
 
       transition:
-        all 0.25s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 
     }
 
 
-    .secret-admin-btn:hover {
-
-      opacity: 0.85;
+    .about-author img:hover {
 
       transform:
-        scale(1.15);
+        translateY(-4px);
+
+      box-shadow:
+        0 14px 32px
+        rgba(0,0,0,0.22);
 
     }
 
 
-    .secret-admin-btn::after {
-
-      content: "⚙";
-
-      position: absolute;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform:
-        translate(-50%, -50%);
-
-      font-size: 18px;
-
-      color: white;
-
-    }
-
-
-    /* =========================
+    /* =========================================================
        FOOTER
-    ========================= */
+       ========================================================= */
 
     footer {
 
-      background: #111;
+      background:
+        #0b0b0b;
 
-      color: white;
+      color:
+        #cccccc;
 
-      text-align: center;
+      text-align:
+        center;
 
-      padding: 20px;
+      padding:
+        24px 20px;
 
-      font-size: 0.9em;
+      font-size:
+        0.9em;
+
+      border-top:
+        2px solid
+        #ff6600;
 
     }
 
 
-    /* =========================
+    /* =========================================================
        DARK MODE
-    ========================= */
+       ========================================================= */
 
     body.dark {
 
-      background: #121212;
+      background:
+        #101010;
 
-      color: #eee;
+      color:
+        #eeeeee;
 
     }
 
 
     body.dark .card {
 
-      background: #1f1f1f;
+      background:
+        #1b1b1b;
 
-      color: #eee;
+      color:
+        #eeeeee;
+
+      border-color:
+        #2b2b2b;
 
       box-shadow:
-        0 3px 12px rgba(0,0,0,0.4);
+        0 5px 20px
+        rgba(0,0,0,0.35);
+
+    }
+
+
+    body.dark .card p {
+
+      color:
+        #cccccc;
 
     }
 
 
     body.dark .about-author {
 
-      background: #1a1a1a;
+      background:
+        #171717;
 
-      color: #eee;
+      color:
+        #eeeeee;
 
     }
 
 
     body.dark .what-we-make-banner {
 
-      background: #1f1f1f;
+      background:
+        #1b1b1b;
+
+      border-color:
+        #2b2b2b;
 
     }
 
 
     body.dark #contact-email {
 
-      color: #66aaff;
+      color:
+        #ff9a5c;
+
+      background:
+        #1b1b1b;
 
     }
 
 
-    /* =========================
+    body.dark #how-ordering-works p {
+
+      color:
+        #cccccc;
+
+    }
+
+
+    /* =========================================================
        MOBILE
-    ========================= */
+       ========================================================= */
 
     @media(max-width:700px) {
 
       header {
 
         padding:
-          85px 15px 35px;
+          82px 15px 38px;
 
       }
 
 
       header h1 {
 
-        font-size: 2em;
+        font-size:
+          2.35rem;
 
       }
 
 
       header p {
 
-        font-size: 1em;
+        font-size:
+          1rem;
 
       }
 
 
       .dark-mode-button {
 
-        top: 15px;
+        top:
+          14px;
 
-        left: 15px;
+        left:
+          14px;
 
         padding:
-          8px 12px;
-
-        font-size: 13px;
+          8px 11px;
 
       }
 
 
       .secret-admin-btn {
 
-        top: 15px;
+        top:
+          14px;
 
-        right: 15px;
+        right:
+          14px;
 
       }
 
 
       .button {
 
-        display: block;
+        display:
+          block;
 
-        width: 100%;
+        width:
+          100%;
 
-        max-width: 330px;
+        max-width:
+          340px;
 
         margin:
           10px auto;
 
-        font-size: 16px;
+        font-size:
+          15px;
 
       }
 
@@ -547,14 +1049,23 @@
       section {
 
         padding:
-          30px 15px;
+          42px 15px;
 
       }
 
 
       .what-we-make-banner {
 
-        border-radius: 8px;
+        border-radius:
+          12px;
+
+      }
+
+
+      .card {
+
+        padding:
+          23px;
 
       }
 
@@ -562,43 +1073,55 @@
       .about-author {
 
         padding:
-          45px 15px;
+          48px 15px;
 
       }
 
     }
 
 
-    /* =========================
+    /* =========================================================
        SMALL PHONES
-    ========================= */
+       ========================================================= */
 
     @media(max-width:420px) {
 
       header h1 {
 
-        font-size: 1.8em;
+        font-size:
+          2rem;
 
       }
 
 
       header p {
 
-        font-size: 0.95em;
+        font-size:
+          0.94rem;
 
       }
 
 
       .button {
 
-        font-size: 15px;
+        font-size:
+          14px;
 
         padding:
-          11px 18px;
+          11px 17px;
+
+      }
+
+
+      h2 {
+
+        font-size:
+          1.7rem;
 
       }
 
     }
+
 
   </style>
 
@@ -608,431 +1131,481 @@
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
 
-<header id="site-header">
-
-
-  <!-- DARK MODE -->
-
-  <button
-    class="dark-mode-button"
-    onclick="toggleDarkMode()"
-    id="darkModeButton"
-  >
-    🌙 Dark
-  </button>
+  <header id="site-header">
 
 
-  <!-- ADMIN -->
+    <!-- DARK MODE -->
 
-  <button
-    class="secret-admin-btn"
-    onclick="window.location.href='admin-lock.html'"
-    title="Admin Area"
-  ></button>
-
-
-  <h1>
-    Pervan 3D
-  </h1>
-
-
-  <p>
-    Custom 3D Printed Models & Fidgets
-  </p>
-
-
-  <!-- REQUEST QUOTE -->
-
-  <a
-    class="button"
-    href="#contact"
-  >
-    Request a Quote
-  </a>
-
-
-  <!-- SHOP -->
-
-  <a
-    class="button"
-    href="shop.html"
-  >
-    🛒 Go to Shop & Purchase
-  </a>
-
-
-  <!-- CUSTOM ORDERS -->
-
-  <a
-    class="button"
-    href="custom.html"
-  >
-    🛠️ Custom Orders
-  </a>
-
-
-  <!-- PRINTS IN ACTION -->
-
-  <a
-    class="button prints-button"
-    href="prints.html"
-  >
-    🎥 Prints in Action
-  </a>
-
-
-</header>
-
-
-<!-- =========================
-     WHAT WE MAKE
-========================= -->
-
-<section>
-
-  <h2>
-    What We Make
-  </h2>
-
-
-  <div class="what-we-make-banner">
-
-    <img
-      src="title.png"
-      alt="What We Make"
+    <button
+      class="dark-mode-button"
+      onclick="toggleDarkMode()"
+      id="darkModeButton"
+      type="button"
     >
+      🌙 Dark
+    </button>
 
-  </div>
+
+    <!-- ADMIN -->
+
+    <button
+      class="secret-admin-btn"
+      onclick="window.location.href='admin-lock.html'"
+      title="Admin Area"
+      aria-label="Admin Area"
+      type="button"
+    ></button>
 
 
-  <div class="products">
+    <!-- BUSINESS NAME -->
 
-    <div class="card">
+    <h1>
+      Pervan 3D
+    </h1>
 
-      <h3>
-        3D Printed Models & Fidgets
-      </h3>
 
-      <p>
-        High-quality articulated fidgets
-        and detailed models, printed in
-        multiple colors and sizes.
-      </p>
+    <p>
+      Custom 3D Printed Models & Fidgets
+    </p>
+
+
+    <!-- REQUEST QUOTE -->
+
+    <a
+      class="button"
+      href="#contact"
+    >
+      Request a Quote
+    </a>
+
+
+    <!-- SHOP -->
+
+    <a
+      class="button"
+      href="shop.html"
+    >
+      🛒 Go to Shop & Purchase
+    </a>
+
+
+    <!-- CUSTOM ORDERS -->
+
+    <a
+      class="button"
+      href="custom.html"
+    >
+      🛠️ Custom Orders
+    </a>
+
+
+    <!-- PRINTS IN ACTION -->
+
+    <a
+      class="button prints-button"
+      href="prints.html"
+    >
+      🎥 Prints in Action
+    </a>
+
+
+  </header>
+
+
+  <!-- =========================================================
+       WHAT WE MAKE
+       ========================================================= -->
+
+  <section>
+
+    <h2>
+      What We Make
+    </h2>
+
+
+    <!-- IMPORTANT:
+         KEEPING YOUR EXISTING IMAGE EXACTLY THE SAME -->
+
+    <div class="what-we-make-banner">
+
+      <img
+        src="title.png"
+        alt="What We Make"
+      >
 
     </div>
 
-  </div>
 
-</section>
+    <div class="products">
 
+      <div class="card">
 
-<!-- =========================
-     HOW ORDERING WORKS
-========================= -->
+        <h3>
+          3D Printed Models & Fidgets
+        </h3>
 
-<section>
+        <p>
+          High-quality articulated fidgets
+          and detailed models, printed in
+          multiple colors and sizes.
+        </p>
 
-  <h2>
-    How Ordering Works
-  </h2>
+      </div>
 
+    </div>
 
-  <p
-    style="
-      text-align:center;
-      max-width:700px;
-      margin:auto;
-    "
-  >
-
-    Browse the shop, choose your size
-    and color, add items to your cart,
-    and pay securely.
-
-    All items are printed with care
-    and quality materials.
-
-  </p>
-
-</section>
+  </section>
 
 
-<!-- =========================
-     CONTACT
-========================= -->
+  <!-- =========================================================
+       HOW ORDERING WORKS
+       ========================================================= -->
 
-<section id="contact">
+  <section id="how-ordering-works">
 
-  <h2>
-    Contact & Quotes
-  </h2>
+    <h2>
+      How Ordering Works
+    </h2>
 
 
-  <p
-    style="
-      text-align:center;
-    "
-  >
+    <p>
 
-    Email us at:
+      Browse the shop, choose your size
+      and color, add items to your cart,
+      and pay securely.
 
-    <br>
+      <br><br>
 
-    <a
-      id="contact-email"
-      href="mailto:ivanpervan09@gmail.com"
+      All items are printed with care
+      and quality materials.
+
+    </p>
+
+
+  </section>
+
+
+  <!-- =========================================================
+       CONTACT
+       ========================================================= -->
+
+  <section id="contact">
+
+    <h2>
+      Contact & Quotes
+    </h2>
+
+
+    <p>
+
+      Have a question or want something
+      custom printed?
+
+      <br>
+
+      Email us at:
+
+      <br>
+
+      <a
+        id="contact-email"
+        href="mailto:ivanpervan09@gmail.com"
+      >
+        ivanpervan09@gmail.com
+      </a>
+
+    </p>
+
+
+  </section>
+
+
+  <!-- =========================================================
+       ABOUT THE CREATOR
+       ========================================================= -->
+
+  <section class="about-author">
+
+    <h2>
+      About the Creator
+    </h2>
+
+
+    <!-- IMPORTANT:
+         KEEPING YOUR EXISTING IMAGE EXACTLY THE SAME -->
+
+    <img
+      src="abouttheauthor.png"
+      alt="About the Creator"
     >
-      ivanpervan09@gmail.com
-    </a>
 
-  </p>
-
-</section>
+  </section>
 
 
-<!-- =========================
-     ABOUT
-========================= -->
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
 
-<section class="about-author">
+  <footer id="site-footer">
 
-  <h2>
-    About the creator
-  </h2>
+    <span id="footer-text">
 
+      © 2026 Pervan 3D.
+      All rights reserved.
 
-  <img
-    src="abouttheauthor.png"
-    alt="About the Author"
-  >
+    </span>
 
-</section>
+  </footer>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
 
-<footer id="site-footer">
-
-  <span id="footer-text">
-
-    © 2026 Pervan 3D.
-    All rights reserved.
-
-  </span>
-
-</footer>
+  <script>
 
 
-<script>
+    /* =========================================================
+       DARK MODE
+       ========================================================= */
+
+    function toggleDarkMode() {
+
+      document
+        .body
+        .classList
+        .toggle('dark');
 
 
-/* =========================
-   DARK MODE
-========================= */
-
-function toggleDarkMode() {
-
-  document
-    .body
-    .classList
-    .toggle('dark');
+      const isDark =
+        document
+          .body
+          .classList
+          .contains('dark');
 
 
-  const isDark =
-    document
-      .body
-      .classList
-      .contains('dark');
-
-
-  localStorage.setItem(
-    'pervan3d-dark-mode',
-    isDark
-  );
-
-
-  updateDarkModeButton();
-
-}
-
-
-/* =========================
-   DARK MODE BUTTON
-========================= */
-
-function updateDarkModeButton() {
-
-  const button =
-    document.getElementById(
-      'darkModeButton'
-    );
-
-
-  if (
-    document
-      .body
-      .classList
-      .contains('dark')
-  ) {
-
-    button.textContent =
-      '☀️ Light';
-
-  } else {
-
-    button.textContent =
-      '🌙 Dark';
-
-  }
-
-}
-
-
-/* =========================
-   APPLY SAVED DARK MODE
-========================= */
-
-const savedDarkMode =
-  localStorage.getItem(
-    'pervan3d-dark-mode'
-  );
-
-
-if (
-  savedDarkMode === 'true'
-) {
-
-  document
-    .body
-    .classList
-    .add('dark');
-
-}
-
-
-updateDarkModeButton();
-
-
-/* =========================
-   ADMIN SETTINGS
-========================= */
-
-(function applyAdminSettings() {
-
-
-  const settings =
-    JSON.parse(
-      localStorage.getItem(
-        'pervanSettings'
-      )
-    );
-
-
-  if (!settings) return;
-
-
-  /* EMAIL */
-
-  if (settings.email) {
-
-    const emailEl =
-      document.getElementById(
-        'contact-email'
+      localStorage.setItem(
+        'pervan3d-dark-mode',
+        isDark
       );
 
 
-    emailEl.textContent =
-      settings.email;
+      updateDarkModeButton();
+
+    }
 
 
-    emailEl.href =
-      "mailto:" +
-      settings.email;
+    /* =========================================================
+       DARK MODE BUTTON
+       ========================================================= */
 
-  }
+    function updateDarkModeButton() {
 
-
-  /* FOOTER */
-
-  if (settings.footerText) {
-
-    document
-      .getElementById(
-        'footer-text'
-      )
-      .textContent =
-      settings.footerText;
-
-  }
+      const button =
+        document.getElementById(
+          'darkModeButton'
+        );
 
 
-  /* ACCENT COLOR */
+      if (
+        document
+          .body
+          .classList
+          .contains('dark')
+      ) {
 
-  if (settings.accentColor) {
+        button.textContent =
+          '☀️ Light';
 
-    document
-      .querySelectorAll(
-        '.button'
-      )
-      .forEach(btn => {
+      } else {
 
-        btn.style.background =
-          settings.accentColor;
+        button.textContent =
+          '🌙 Dark';
 
-      });
+      }
 
-  }
-
-
-  /* HEADER */
-
-  if (settings.headerBg) {
-
-    document
-      .getElementById(
-        'site-header'
-      )
-      .style.background =
-      settings.headerBg;
+    }
 
 
-    document
-      .getElementById(
-        'site-footer'
-      )
-      .style.background =
-      settings.headerBg;
+    /* =========================================================
+       APPLY SAVED DARK MODE
+       ========================================================= */
 
-  }
-
-
-  /* ADMIN DARK MODE */
-
-  if (settings.darkMode) {
-
-    document
-      .body
-      .classList
-      .add('dark');
-
-  }
+    const savedDarkMode =
+      localStorage.getItem(
+        'pervan3d-dark-mode'
+      );
 
 
-  updateDarkModeButton();
+    if (
+      savedDarkMode === 'true'
+    ) {
+
+      document
+        .body
+        .classList
+        .add('dark');
+
+    }
 
 
-})();
+    updateDarkModeButton();
 
-</script>
+
+    /* =========================================================
+       ADMIN SETTINGS
+       ========================================================= */
+
+    (function applyAdminSettings() {
+
+
+      const settings =
+        JSON.parse(
+          localStorage.getItem(
+            'pervanSettings'
+          )
+        );
+
+
+      if (!settings) {
+        return;
+      }
+
+
+      /* =======================================================
+         EMAIL
+         ======================================================= */
+
+      if (settings.email) {
+
+        const emailEl =
+          document.getElementById(
+            'contact-email'
+          );
+
+
+        if (emailEl) {
+
+          emailEl.textContent =
+            settings.email;
+
+
+          emailEl.href =
+            "mailto:" +
+            settings.email;
+
+        }
+
+      }
+
+
+      /* =======================================================
+         FOOTER
+         ======================================================= */
+
+      if (settings.footerText) {
+
+        const footerEl =
+          document.getElementById(
+            'footer-text'
+          );
+
+
+        if (footerEl) {
+
+          footerEl.textContent =
+            settings.footerText;
+
+        }
+
+      }
+
+
+      /* =======================================================
+         ACCENT COLOR
+         ======================================================= */
+
+      if (settings.accentColor) {
+
+        document
+          .querySelectorAll(
+            '.button'
+          )
+          .forEach(
+            function(btn) {
+
+              btn.style.background =
+                settings.accentColor;
+
+            }
+          );
+
+      }
+
+
+      /* =======================================================
+         HEADER
+         ======================================================= */
+
+      if (settings.headerBg) {
+
+        const header =
+          document.getElementById(
+            'site-header'
+          );
+
+
+        const footer =
+          document.getElementById(
+            'site-footer'
+          );
+
+
+        if (header) {
+
+          header.style.background =
+            settings.headerBg;
+
+        }
+
+
+        if (footer) {
+
+          footer.style.background =
+            settings.headerBg;
+
+        }
+
+      }
+
+
+      /* =======================================================
+         ADMIN DARK MODE
+         ======================================================= */
+
+      if (settings.darkMode) {
+
+        document
+          .body
+          .classList
+          .add('dark');
+
+      }
+
+
+      updateDarkModeButton();
+
+
+    })();
+
+
+  </script>
 
 
 </body>
 
 </html>
-```
