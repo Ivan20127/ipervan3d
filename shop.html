@@ -752,6 +752,7 @@ function populateColors() {
 function renderColorPalette() {
  const palette = document.getElementById("colorPalette");
 
+ if (!palette) return;
  colors.forEach(color => {
   const item = document.createElement("div");
   item.className = "swatch";
@@ -1202,8 +1203,8 @@ function checkout() {
   + "&amount=" + encodeURIComponent(order.finalTotal.toFixed(2))
   + "&note=" + encodeURIComponent(note);
 
- const opened = window.open(url,"_blank","noopener,noreferrer");
-
+const opened = window.open(url, "_blank");
+if (opened) opened.opener = null;
  if (!opened) {
   alert("Your browser blocked the payment window. Please allow pop-ups and try again.");
   return;
