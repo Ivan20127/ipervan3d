@@ -393,7 +393,7 @@ footer p{margin:5px 0}
 
 <header>
  <h1>Pervan 3D Shop</h1>
- <p>3D Printed Fidgets &amp; Gifts</p>
+ <p>3D Printed Fidgets & Gifts</p>
  <a href="index.html" class="back-btn">← Back</a>
 </header>
 
@@ -421,11 +421,11 @@ footer p{margin:5px 0}
  <div class="featured-grid">
   <div class="featured-card">
    <div class="featured-icon">🐉</div>
-   <div><h3>Fidgets &amp; Creatures</h3><p>Discover dragons, articulated animals, and fun fidgets.</p></div>
+   <div><h3>Fidgets & Creatures</h3><p>Discover dragons, articulated animals, and fun fidgets.</p></div>
   </div>
   <div class="featured-card">
    <div class="featured-icon">🎁</div>
-   <div><h3>Gifts &amp; Accessories</h3><p>Find keychains, desk accessories, and thoughtful gifts.</p></div>
+   <div><h3>Gifts & Accessories</h3><p>Find keychains, desk accessories, and thoughtful gifts.</p></div>
   </div>
   <div class="featured-card">
    <div class="featured-icon">🎨</div>
@@ -542,14 +542,11 @@ footer p{margin:5px 0}
 
  <div class="card">
  <img src="flexigingerbread.png" alt="flexi gingerbread" loading="lazy">
- <h3>Flexi Gingerbread</h3><p class="price">$4</p>
-<input type="number" value="1" min="1" step="1"
- aria-label="Flexi Gingerbread quantity">
-<button class="button"
- onclick="addFixed('Flexi Gingerbread',4,this)">
-    Add to Cart
-</button>
-  
+ <h3>Flexi Gingerbread</h3><p class="price">$4
+ <input type="number" value="1" min="1" step="1" aria-label="Flexi Gingerbread quantity">
+ <button class="button" onclick="addFixed('Flexi Gingerbread',4,this)">Add to Cart</button>
+</div>
+ 
 <div class="card">
  <img src="vase.png" alt="Vase" loading="lazy">
  <h3>Vase</h3><p class="price">$30</p>
@@ -763,7 +760,7 @@ footer p{margin:5px 0}
 
 <footer>
  <p><strong>Pervan 3D Shop</strong></p>
- <p>3D Printed Fidgets &amp; Gifts</p>
+ <p>3D Printed Fidgets & Gifts</p>
  <p><a href="mailto:ivanpervan09@gmail.com">Contact Us</a> · <a href="#faq">FAQ</a> · <a href="#reviews">Customer Feedback</a></p>
  <p>Thank you for supporting our small shop!</p>
 </footer>
@@ -1002,20 +999,13 @@ function addSpinningStar(button) {
 }
 
 /* FIXED-PRICE PRODUCTS */
-function addFixed(name, base, button) {
-    const card = button.closest(".card");
+function addFixed(name,base,button) {
+ const card = button.closest(".card");
+ const color = card.querySelector(".color").value;
+ const qty = getQuantity(card);
+ if (qty === null) return;
 
-    const colorSelect = card.querySelector(".color");
-    const color = colorSelect ? colorSelect.value : "";
-
-    const qty = getQuantity(card);
-    if (qty === null) return;
-
-    const price = base + upcharge(color);
-    const label = color ? `${color} ${name}` : name;
-
-    addItem(label, price, qty, button);
-}
+ addItem(`${color} ${name}`,base + upcharge(color),qty,button);
 }
 
 /* TWO-COLOR PRODUCTS */
@@ -1339,4 +1329,3 @@ window.addKeyboardClicker = addKeyboardClicker;
 renderCart();
 </script>
 </body>
-</html>
