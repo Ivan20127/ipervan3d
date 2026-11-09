@@ -542,11 +542,14 @@ footer p{margin:5px 0}
 
  <div class="card">
  <img src="flexigingerbread.png" alt="flexi gingerbread" loading="lazy">
- <h3>Flexi Gingerbread</h3><p class="price">$4
- <input type="number" value="1" min="1" step="1" aria-label="Flexi Gingerbread quantity">
- <button class="button" onclick="addFixed('Flexi Gingerbread',4,this)">Add to Cart</button>
-</div>
- 
+ <h3>Flexi Gingerbread</h3><p class="price">$4</p>
+<input type="number" value="1" min="1" step="1"
+ aria-label="Flexi Gingerbread quantity">
+<button class="button"
+ onclick="addFixed('Flexi Gingerbread',4,this)">
+    Add to Cart
+</button>
+  
 <div class="card">
  <img src="vase.png" alt="Vase" loading="lazy">
  <h3>Vase</h3><p class="price">$30</p>
@@ -999,13 +1002,20 @@ function addSpinningStar(button) {
 }
 
 /* FIXED-PRICE PRODUCTS */
-function addFixed(name,base,button) {
- const card = button.closest(".card");
- const color = card.querySelector(".color").value;
- const qty = getQuantity(card);
- if (qty === null) return;
+function addFixed(name, base, button) {
+    const card = button.closest(".card");
 
- addItem(`${color} ${name}`,base + upcharge(color),qty,button);
+    const colorSelect = card.querySelector(".color");
+    const color = colorSelect ? colorSelect.value : "";
+
+    const qty = getQuantity(card);
+    if (qty === null) return;
+
+    const price = base + upcharge(color);
+    const label = color ? `${color} ${name}` : name;
+
+    addItem(label, price, qty, button);
+}
 }
 
 /* TWO-COLOR PRODUCTS */
