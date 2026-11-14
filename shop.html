@@ -529,12 +529,12 @@ footer p{margin:5px 0}
  <img src="ButterClicker.png" alt="ButterClicker" loading="lazy">
  <h3>Butter Clicker</h3><p class="price">$3</p>
  <input type="number" value="1" min="1" step="1" aria-label="Butter Clicker quantity">
- <button class="button" onclick="addFixed('Butter Clikcer',3,this)">Add to Cart</button>
+ <button class="button" onclick="addFixed('Butter Clicker',3,this)">Add to Cart</button>
 </div>
 
  <div class="card">
  <img src="flexigingerbread.png" alt="flexi gingerbread" loading="lazy">
- <h3>Flexi Gingerbread</h3><p class="price">$4
+ <h3>Flexi Gingerbread</h3><p class="price">$4</p>
  <input type="number" value="1" min="1" step="1" aria-label="Flexi Gingerbread quantity">
  <button class="button" onclick="addFixed('Flexi Gingerbread',4,this)">Add to Cart</button>
 </div>
@@ -956,7 +956,9 @@ function addTree(name,base,button) {
  const qty = getQuantity(card);
  if (qty === null) return;
 
-const price = base + cs.reduce((sum,color) => sum + upcharge(color,base),0);
+ const hasSpecial = cs.some(color => color.includes("(+$2)"));
+ const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
+
  addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty,button);
 }
 
@@ -971,7 +973,7 @@ function addFidget(name,sizeId,button) {
 const base = size === "Big" ? 8 : 5;
 const price = base + upcharge(color,base);
  addItem(`${color} ${name}`,base + upcharge(color,base),qty,button);
-
+}
 /* SPINNING STAR */
 function addSpinningStar(button) {
  const card = button.closest(".card");
@@ -981,7 +983,8 @@ function addSpinningStar(button) {
  if (qty === null) return;
 
  const base = size === "Big" ? 10 : 6;
-const price = base + colorChoices.reduce((sum,color) => sum + upcharge(color,base),0);
+const hasSpecial = colorChoices.some(color => color.includes("(+$2)"));
+const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
 
  addItem(
   `${colorChoices[0]} / ${colorChoices[1]} Flexi Spinning Star (${size})`,
@@ -1009,7 +1012,9 @@ function addTwoColor(name,base,button) {
  const qty = getQuantity(card);
  if (qty === null) return;
 
- const price = base + cs.reduce((sum,color) => sum + upcharge(color),0);
+ const hasSpecial = cs.some(color => color.includes("(+$2)"));
+ const hasSpecial = colorChoices.some(color => color.includes("(+$2)"));
+const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
  addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty,button);
 }
 
