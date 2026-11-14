@@ -507,7 +507,7 @@ footer p{margin:5px 0}
  <div class="card">
  <img src="reindeer.png" alt="Reindeer" loading="lazy">
  <h3>Flexi Reindeer 1 inch</h3><p class="price">$1</p>
-  <input type="number" value="1" min="1" step="1" aria-label=" Narwhal quantity">
+  <input type="number" value="1" min="1" step="1" aria-label="Reindeer quantity">
  <button class="button" onclick="addFixed('Reindeer',1,this)">Add to Cart</button>
 </div>
  
@@ -810,7 +810,11 @@ function populateColors() {
 
 function renderColorPalette() {
  const palette = document.getElementById("colorPalette");
-
+<section class="color-guide">
+    <h2>Available Colors</h2>
+    <p>Choose from our available 3D printing colors.</p>
+    <div class="palette" id="colorPalette"></div>
+</section>
  if (!palette) return;
  colors.forEach(color => {
   const item = document.createElement("div");
@@ -972,7 +976,8 @@ function addFidget(name,sizeId,button) {
 
 const base = size === "Big" ? 8 : 5;
 const price = base + upcharge(color,base);
- addItem(`${color} ${name}`,base + upcharge(color,base),qty,button);
+
+addItem(`${color} ${name} (${size})`,price,qty,button);
 }
 /* SPINNING STAR */
 function addSpinningStar(button) {
@@ -1013,9 +1018,9 @@ function addTwoColor(name,base,button) {
  if (qty === null) return;
 
  const hasSpecial = cs.some(color => color.includes("(+$2)"));
- const hasSpecial = colorChoices.some(color => color.includes("(+$2)"));
-const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
- addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty,button);
+ const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
+
+addItem(`${name} (${cs[0]} / ${cs[1]})`,price,qty,button);
 }
 
 /* KEYBOARD CLICKER */
@@ -1329,3 +1334,4 @@ window.addKeyboardClicker = addKeyboardClicker;
 renderCart();
 </script>
 </body>
+ </html>
