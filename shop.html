@@ -68,48 +68,6 @@ header p{margin-top:10px;font-size:19px;color:#ddd}
 .back-btn:hover{background:#ff6600;transform:translateY(-2px)}
 
 
-/* COLOR BANNER — SHOW THE WHOLE PHOTO */
-.colors-banner{
- position:relative;
- overflow:hidden;
- background:#fff;
- border-bottom:3px solid #ff6600;
-}
-
-.colors-banner img{
- display:block;
- width:100%;
- height:auto;
- max-width:100%;
- object-fit:contain;
- object-position:center;
-}
-
-.colors-overlay{
- position:static;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
- text-align:center;
- padding:24px 16px;
- background:#fff;
- color:#222;
-}
-
-.colors-overlay h2{
- font-size:clamp(25px,4vw,40px);
- margin:0 0 10px;
- color:#222;
-}
-
-.colors-overlay p{
- margin:0;
- color:#555;
- font-size:16px;
- line-height:1.6;
-}
-
 /* GENERAL SECTIONS */
 .section-heading{text-align:center;padding:15px 20px 0}
 .section-heading h2{font-size:29px;margin:10px 0}
@@ -176,6 +134,11 @@ header p{margin-top:10px;font-size:19px;color:#ddd}
 }
 .color-guide h2{text-align:center;margin:0 0 8px}
 .color-guide>p{text-align:center;color:#666;line-height:1.6}
+.color-guide h2{font-size:clamp(25px,4vw,36px)}
+.color-group{margin-top:22px}
+.color-group h3{margin:0 0 4px;font-size:18px;color:#333}
+.color-group-note{margin:0;font-size:13px;color:#777}
+.color-group .palette{margin-top:12px}
 .palette{
  display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
  gap:15px;margin-top:25px
@@ -185,7 +148,7 @@ header p{margin-top:10px;font-size:19px;color:#ddd}
  background:#fff;text-align:center;min-width:0
 }
 .swatch-color{height:52px;border-bottom:1px solid #ddd}
-.swatch-label{padding:9px 5px;font-size:12px;font-weight:bold;overflow-wrap:anywhere}
+.swatch-label{padding:9px 5px;font-size:12px;font-weight:bold;overflow-wrap:break-word}
 .swatch-note{font-size:11px;color:#777;padding:0 4px 9px}
 .color-notice{
  margin:20px auto 0;padding:13px 15px;border-radius:10px;
@@ -264,6 +227,7 @@ header p{margin-top:10px;font-size:19px;color:#ddd}
  border-radius:18px;box-shadow:0 8px 25px #00000026
 }
 .cart h3{margin-top:0;font-size:23px}
+.cart label{display:block;font-size:14px;font-weight:bold;color:#444;margin-top:8px}
 .cart input{
  width:100%;max-width:none;padding:12px;margin:7px 0;
  font-size:16px;border:1px solid #ccc;border-radius:8px
@@ -303,7 +267,8 @@ header p{margin-top:10px;font-size:19px;color:#ddd}
 
 /* DELIVERY */
 #shipping{
- width:100%;max-width:none;padding:12px;font-size:16px;border-radius:8px
+ width:100%;max-width:none;padding:12px;margin-top:7px;font-size:16px;
+ border:1px solid #ccc;border-radius:8px;background:#fff
 }
 
 /* FLOATING CART */
@@ -323,7 +288,7 @@ header p{margin-top:10px;font-size:19px;color:#ddd}
 
 /* TOAST */
 #toast{
- position:fixed;bottom:25px;right:25px;background:#111;color:white;
+ position:fixed;bottom:85px;right:25px;background:#111;color:white;
  padding:15px 22px;border-radius:12px;box-shadow:0 8px 25px #0000004d;
  opacity:0;transform:translateY(25px);pointer-events:none;
  transition:.25s;z-index:9999;font-weight:bold;max-width:calc(100% - 30px)
@@ -394,21 +359,23 @@ footer p{margin:5px 0}
 <header>
  <h1>Pervan 3D Shop</h1>
  <p>3D Printed Fidgets & Gifts</p>
- <a href="index.html" class="back-btn">← Back</a>
+ <a href="index.html" class="back-btn">â† Back</a>
 </header>
 
-<section class="colors-banner" aria-label="Our 3D printing colors">
- <img src="colors.png" alt="Available 3D printing filament colors"
- onerror="this.style.display='none'">
- <div class="colors-overlay">
-  <h2>Make It Your Color.</h2>
-  <p>Choose your favorite colors and customize your next 3D print.</p>
+<section class="color-guide" id="colors" aria-labelledby="colorsHeading">
+ <h2 id="colorsHeading">Make It Your Color.</h2>
+ <p>Choose your favorite colors and customize your next 3D print.</p>
+ <div id="colorPalette"></div>
+ <div class="color-notice">
+  âœ¨ Specialty colors add <strong>$1</strong> per item on items $10 or less,
+  and <strong>$2</strong> per item on items over $10. The color dropdowns show the exact extra cost for each item.
+  Colors on screen may look slightly different from the real filament.
  </div>
 </section>
 
 <section class="search-container" aria-label="Product search">
  <input type="search" id="productSearch"
- placeholder="🔍 Search for a product..."
+ placeholder="ðŸ” Search for a product..."
  aria-label="Search products">
 </section>
 
@@ -420,15 +387,15 @@ footer p{margin:5px 0}
 <section class="featured-section" aria-label="Featured products">
  <div class="featured-grid">
   <div class="featured-card">
-   <div class="featured-icon">🐉</div>
+   <div class="featured-icon">ðŸ‰</div>
    <div><h3>Fidgets & Creatures</h3><p>Discover dragons, articulated animals, and fun fidgets.</p></div>
   </div>
   <div class="featured-card">
-   <div class="featured-icon">🎁</div>
+   <div class="featured-icon">ðŸŽ</div>
    <div><h3>Gifts & Accessories</h3><p>Find keychains, desk accessories, and thoughtful gifts.</p></div>
   </div>
   <div class="featured-card">
-   <div class="featured-icon">🎨</div>
+   <div class="featured-icon">ðŸŽ¨</div>
    <div><h3>Custom Creations</h3><p>Bring your own idea to life with a custom print request.</p></div>
   </div>
  </div>
@@ -436,167 +403,165 @@ footer p{margin:5px 0}
 
 <section class="products" id="products">
 
-<div class="card">
+<div class="card" data-price="3">
  <img src="treefidget.png" alt="Tree Fidget" loading="lazy">
  <h3>Tree Fidget</h3><p class="price">$3</p>
- <label class="field-label">First color</label><select class="treeColor" aria-label="Tree Fidget first color"></select>
- <label class="field-label">Second color</label><select class="treeColor" aria-label="Tree Fidget second color"></select>
+ <label class="field-label">Inner color</label><select class="color" aria-label="Tree Fidget inner color"></select>
+ <label class="field-label">Outer color</label><select class="color" aria-label="Tree Fidget outer color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Tree Fidget quantity">
  <button class="button" onclick="addTree('Tree Fidget',3,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-small="5" data-big="8">
  <img src="dragon.png" alt="Dragon Fidget" loading="lazy">
- <h3>Dragon Fidget</h3><p class="price">$5–$8</p>
+ <h3>Dragon Fidget</h3><p class="price">$5â€“$8</p>
  <label class="field-label">Size</label>
- <select id="dragonSize" aria-label="Dragon size"><option>Small</option><option>Big</option></select>
+ <select id="dragonSize" class="size" aria-label="Dragon size"><option value="Small">Small â€“ $5</option><option value="Big">Big â€“ $8</option></select>
  <label class="field-label">Color</label><select class="color" aria-label="Dragon color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Dragon quantity">
  <button class="button" onclick="addFidget('Dragon Fidget','dragonSize',this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-small="5" data-big="8">
  <img src="star.png" alt="Star Fidget" loading="lazy">
- <h3>Star Fidget</h3><p class="price">$5–$8</p>
+ <h3>Star Fidget</h3><p class="price">$5â€“$8</p>
  <label class="field-label">Size</label>
- <select id="starSize" aria-label="Star size"><option>Small</option><option>Big</option></select>
+ <select id="starSize" class="size" aria-label="Star size"><option value="Small">Small â€“ $5</option><option value="Big">Big â€“ $8</option></select>
  <label class="field-label">Color</label><select class="color" aria-label="Star color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Star quantity">
  <button class="button" onclick="addFidget('Star Fidget','starSize',this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-small="6" data-big="10">
  <img src="flexistar.png" alt="Flexi Spinning Star Fidget" loading="lazy">
- <h3>Flexi Spinning Star Fidget</h3><p class="price">$6–$10</p>
+ <h3>Flexi Spinning Star Fidget</h3><p class="price">$6â€“$10</p>
  <label class="field-label">Size</label>
- <select id="spinSize" aria-label="Spinning Star size"><option>Small</option><option>Big</option></select>
- <label class="field-label">First color</label><select class="color" aria-label="Spinning Star first color"></select>
- <label class="field-label">Second color</label><select class="color" aria-label="Spinning Star second color"></select>
+ <select id="spinSize" class="size" aria-label="Spinning Star size"><option value="Small">Small â€“ $6</option><option value="Big">Big â€“ $10</option></select>
+ <label class="field-label">Stick color</label><select class="color" aria-label="Spinning Star stick color"></select>
+ <label class="field-label">Star color</label><select class="color" aria-label="Spinning Star star color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Spinning Star quantity">
  <button class="button" onclick="addSpinningStar(this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="2">
  <img src="gearfidget.png" alt="Gear Fidget" loading="lazy">
  <h3>Gear Fidget</h3><p class="price">$2</p>
  <input type="number" value="1" min="1" step="1" aria-label="Gear Fidget quantity">
  <button class="button" onclick="addFixed('Gear Fidget',2,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="5">
  <img src="pigkey.png" alt="Pig Keychain" loading="lazy">
  <h3>Pig Keychain</h3><p class="price">$5</p>
  <input type="number" value="1" min="1" step="1" aria-label="Pig Keychain quantity">
  <button class="button" onclick="addFixed('Pig Keychain',5,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="5">
  <img src="bigpig.png" alt="Flexi Pig" loading="lazy">
  <h3>Flexi Pig</h3><p class="price">$5</p>
  <input type="number" value="1" min="1" step="1" aria-label="Flexi Pig quantity">
  <button class="button" onclick="addFixed('Flexi Pig',5,this)">Add to Cart</button>
 </div>
 
- <div class="card">
+<div class="card" data-price="1">
  <img src="whitedog.png" alt="White dog keychain" loading="lazy">
- <h3>White Dog keychain 2 inch</h3><p class="price">$1</p>
- <input type="number" value="1" min="1" step="1" aria-label="White Dog Kechain quantity">
- <button class="button" onclick="addFixed('White Dog Keychain',1,this)">Add to Cart</button>
+ <h3>White Dog Keychain 2 inch</h3><p class="price">$1</p>
+ <input type="number" value="1" min="1" step="1" aria-label="White Dog Keychain quantity">
+ <button class="button" onclick="addFixed('White Dog Keychain 2 inch',1,this)">Add to Cart</button>
 </div>
 
- <div class="card">
- <img src="reindeer.png" alt="Reindeer" loading="lazy">
+<div class="card" data-price="1">
+ <img src="reindeer.png" alt="Flexi Reindeer" loading="lazy">
  <h3>Flexi Reindeer 1 inch</h3><p class="price">$1</p>
-  <input type="number" value="1" min="1" step="1" aria-label="Reindeer quantity">
- <button class="button" onclick="addFixed('Reindeer',1,this)">Add to Cart</button>
-</div>
- 
- <div class="card">
- <img src="Narwhal.png" alt="Narwhal" loading="lazy">
- <h3>Flexi Narwhal 1 inch</h3><p class="price">$1</p>
- <input type="number" value="1" min="1" step="1" aria-label=" Narwhal quantity">
- <button class="button" onclick="addFixed('Narwhal',1,this)">Add to Cart</button>
+ <input type="number" value="1" min="1" step="1" aria-label="Reindeer quantity">
+ <button class="button" onclick="addFixed('Flexi Reindeer 1 inch',1,this)">Add to Cart</button>
 </div>
 
- <div class="card">
+<div class="card" data-price="1">
+ <img src="Narwhal.png" alt="Flexi Narwhal" loading="lazy">
+ <h3>Flexi Narwhal 1 inch</h3><p class="price">$1</p>
+ <input type="number" value="1" min="1" step="1" aria-label="Narwhal quantity">
+ <button class="button" onclick="addFixed('Flexi Narwhal 1 inch',1,this)">Add to Cart</button>
+</div>
+
+<div class="card" data-price="15">
  <img src="pie.png" alt="Pie Fidget" loading="lazy">
  <h3>Pie Fidget</h3><p class="price">$15</p>
- <input type="number" value="1" min="1" step="1" aria-label=" Pie Fidget quantity">
+ <input type="number" value="1" min="1" step="1" aria-label="Pie Fidget quantity">
  <button class="button" onclick="addFixed('Pie Fidget',15,this)">Add to Cart</button>
 </div>
- 
- <div class="card">
- <img src="ButterClicker.png" alt="ButterClicker" loading="lazy">
+
+<div class="card" data-price="3">
+ <img src="ButterClicker.png" alt="Butter Clicker" loading="lazy">
  <h3>Butter Clicker</h3><p class="price">$3</p>
  <input type="number" value="1" min="1" step="1" aria-label="Butter Clicker quantity">
  <button class="button" onclick="addFixed('Butter Clicker',3,this)">Add to Cart</button>
 </div>
 
- <div class="card">
- <img src="flexigingerbread.png" alt="flexi gingerbread" loading="lazy">
+<div class="card" data-price="4">
+ <img src="flexigingerbread.png" alt="Flexi Gingerbread" loading="lazy">
  <h3>Flexi Gingerbread</h3><p class="price">$4</p>
  <input type="number" value="1" min="1" step="1" aria-label="Flexi Gingerbread quantity">
  <button class="button" onclick="addFixed('Flexi Gingerbread',4,this)">Add to Cart</button>
 </div>
- 
-<div class="card">
+
+<div class="card" data-price="30">
  <img src="vase.png" alt="Vase" loading="lazy">
  <h3>Vase</h3><p class="price">$30</p>
  <input type="number" value="1" min="1" step="1" aria-label="Vase quantity">
  <button class="button" onclick="addFixed('Vase',30,this)">Add to Cart</button>
 </div>
- 
-  <div class="card">
+
+<div class="card" data-price="4">
  <img src="Christmastree.png" alt="Christmas Tree" loading="lazy">
  <h3>Christmas Tree</h3><p class="price">$4</p>
- <label class="field-label">Color</label><select class="color" aria-label="Christmas Tree"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Christmas Tree quantity">
  <button class="button" onclick="addFixed('Christmas Tree',4,this)">Add to Cart</button>
 </div>
- 
 
- <div class="card">
+
+<div class="card" data-price="4">
  <img src="gravityblade.png" alt="Gravity Blade" loading="lazy">
  <h3>Gravity Blade</h3><p class="price">$4</p>
- <label class="field-label">Color</label><select class="color" aria-label="Gravity Blade"></select>
- <input type="number" value="1" min="1" step="1" aria-label=" Gravity Blade quantity">
+ <label class="field-label">Color</label><select class="color" aria-label="Gravity Blade color"></select>
+ <input type="number" value="1" min="1" step="1" aria-label="Gravity Blade quantity">
  <button class="button" onclick="addFixed('Gravity Blade',4,this)">Add to Cart</button>
- </div>
+</div>
 
- <div class="card">
+<div class="card" data-price="5">
  <img src="otter.png" alt="Otter" loading="lazy">
  <h3>Otter</h3><p class="price">$5</p>
  <input type="number" value="1" min="1" step="1" aria-label="Otter quantity">
  <button class="button" onclick="addFixed('Otter',5,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="5">
  <img src="chameleon.png" alt="Articulated Chameleon Keychain" loading="lazy">
  <h3>Articulated Chameleon Keychain</h3><p class="price">$5</p>
  <input type="number" value="1" min="1" step="1" aria-label="Chameleon quantity">
  <button class="button" onclick="addFixed('Articulated Chameleon Keychain',5,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="15">
  <img src="cactus.png" alt="Cactus Toothpick Holder" loading="lazy">
  <h3>Cactus Toothpick Holder</h3><p class="price">$15</p>
- <label class="field-label">First color</label><select class="color" aria-label="Cactus first color"></select>
- <label class="field-label">Second color</label><select class="color" aria-label="Cactus second color"></select>
+ <label class="field-label">Base color</label><select class="color" aria-label="Cactus base color"></select>
+ <label class="field-label">Cactus color</label><select class="color" aria-label="Cactus color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Cactus quantity">
  <button class="button" onclick="addTwoColor('Cactus Toothpick Holder',15,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="5">
  <img src="teachergift.png" alt="Teacher Gift" loading="lazy">
  <h3>Teacher Gift</h3><p class="price">$5</p>
- <label class="field-label">Color</label><select class="color" aria-label="Teacher Gift color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Teacher Gift quantity">
  <button class="button" onclick="addFixed('Teacher Gift',5,this)">Add to Cart</button>
 </div>
 
 <div class="card">
  <img src="names.png" alt="Custom 3D Printed Name" loading="lazy">
- <h3>Names</h3><p class="price">$1.00 per letter</p>
+ <h3>Names</h3><p class="price">$1.00 per letter<br><small>(spaces are free)</small></p>
  <label class="field-label">Name</label>
  <input class="nameText" maxlength="40" placeholder="Type name here" aria-label="Name to print">
  <label class="field-label">Color</label><select class="color" aria-label="Name color"></select>
@@ -610,12 +575,13 @@ footer p{margin:5px 0}
  <p class="price">4 letters or less: $2.50 per letter<br>5+ letters: $2.00 per letter</p>
  <label class="field-label">Text</label>
  <input class="keyboardText" maxlength="40" placeholder="Type text here" aria-label="Keyboard clicker text">
- <label class="field-label">Color</label><select class="color" aria-label="Keyboard Clicker color"></select>
+ <label class="field-label">Base color</label><select class="color" aria-label="Keyboard Clicker base color"></select>
+ <label class="field-label">Keys color</label><select class="color" aria-label="Keyboard Clicker keys color"></select>
  <input type="number" value="1" min="1" step="1" aria-label="Keyboard Clicker quantity">
  <button class="button" onclick="addKeyboardClicker(this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="5">
  <img src="heartdish.png" alt="Heart Dish" loading="lazy">
  <h3>Heart Dish</h3><p class="price">$5</p>
  <label class="field-label">Color</label><select class="color" aria-label="Heart Dish color"></select>
@@ -623,7 +589,7 @@ footer p{margin:5px 0}
  <button class="button" onclick="addFixed('Heart Dish',5,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="2">
  <img src="spring.png" alt="Spring Fidget" loading="lazy">
  <h3>Spring Fidget</h3><p class="price">$2</p>
  <label class="field-label">Color</label><select class="color" aria-label="Spring Fidget color"></select>
@@ -631,14 +597,14 @@ footer p{margin:5px 0}
  <button class="button" onclick="addFixed('Spring Fidget',2,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="8">
  <img src="penholder.png" alt="Knight Pen Holder" loading="lazy">
  <h3>Knight Pen Holder</h3><p class="price">$8</p>
  <input type="number" value="1" min="1" step="1" aria-label="Pen Holder quantity">
  <button class="button" onclick="addFixed('Knight Pen Holder',8,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="2">
  <img src="whistlekeychain.png" alt="Whistle Keychain" loading="lazy">
  <h3>Whistle Keychain</h3><p class="price">$2</p>
  <label class="field-label">Color</label><select class="color" aria-label="Whistle Keychain color"></select>
@@ -646,14 +612,14 @@ footer p{margin:5px 0}
  <button class="button" onclick="addFixed('Whistle Keychain',2,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="4">
  <img src="grenadeclicker.png" alt="Grenade Clicker" loading="lazy">
  <h3>Grenade Clicker</h3><p class="price">$4</p>
  <input type="number" value="1" min="1" step="1" aria-label="Grenade Clicker quantity">
  <button class="button" onclick="addFixed('Grenade Clicker',4,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="3">
  <img src="clickerfidget.png" alt="Clicker Fidget" loading="lazy">
  <h3>Clicker Fidget</h3><p class="price">$3</p>
  <label class="field-label">Color</label><select class="color" aria-label="Clicker Fidget color"></select>
@@ -661,7 +627,7 @@ footer p{margin:5px 0}
  <button class="button" onclick="addFixed('Clicker Fidget',3,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="4">
  <img src="rotatingrings.png" alt="Rotating Rings Fidget" loading="lazy">
  <h3>Rotating Rings Fidget</h3><p class="price">$4</p>
  <label class="field-label">Color</label><select class="color" aria-label="Rotating Rings color"></select>
@@ -669,7 +635,7 @@ footer p{margin:5px 0}
  <button class="button" onclick="addFixed('Rotating Rings Fidget',4,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="11">
  <img src="airpressuretank.png" alt="Air Pressure Tank" loading="lazy">
  <h3>Air Pressure Tank</h3><p class="price">$11</p>
  <label class="field-label">Color</label><select class="color" aria-label="Air Pressure Tank color"></select>
@@ -677,7 +643,7 @@ footer p{margin:5px 0}
  <button class="button" onclick="addFixed('Air Pressure Tank',11,this)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="card" data-price="4">
  <img src="flexishark.PNG" alt="Articulated Shark" loading="lazy">
  <h3>Articulated Shark</h3><p class="price">$4</p>
  <label class="field-label">Color</label><select class="color" aria-label="Shark color"></select>
@@ -688,26 +654,51 @@ footer p{margin:5px 0}
 </section>
 
 <div id="noResults" role="status">
- 😕 No products found.<br>Try searching for something else!
+ ðŸ˜• No products found.<br>Try searching for something else!
 </div>
+
 
 
 <!-- CUSTOM PRINTS -->
 <section class="custom-section" id="customPrints">
  <div class="custom-box">
-  <div class="custom-icon">🛠️</div>
+  <div class="custom-icon">ðŸ› ï¸</div>
   <h2>Have Your Own Idea?</h2>
   <p>Can't find exactly what you're looking for?</p>
   <p>We can make custom 3D prints just for you! Send us your idea, picture, design, or request and we'll see what we can create.</p>
-  <a class="custom-email" href="mailto:ivanpervan09@gmail.com?subject=Custom%203D%20Print%20Request">🎨 Request a Custom Print</a>
+  <a class="custom-email" href="mailto:ivanpervan09@gmail.com?subject=Custom%203D%20Print%20Request">ðŸŽ¨ Request a Custom Print</a>
   <p class="custom-note">Custom prices depend on the size and complexity of the print.</p>
  </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq-section" id="faq" aria-labelledby="faqHeading">
+ <h2 id="faqHeading">Frequently Asked Questions</h2>
+ <details class="faq-item">
+  <summary>How do I get my order?</summary>
+  <p>Choose Local Pickup (free) or Ship Order (+$6) in the Delivery Method box. If you choose shipping, please enter your address in the cart.</p>
+ </details>
+ <details class="faq-item">
+  <summary>How do I pay?</summary>
+  <p>Add your items to the cart, fill in your name and phone number, then continue with Venmo or Zelle. Payment is not automatically verified by this website, so please double-check the amount and recipient before paying.</p>
+ </details>
+ <details class="faq-item">
+  <summary>Do special colors cost extra?</summary>
+  <p>Yes. Specialty colors (multi-color and effect filaments) add $1 per item on items $10 or less, and $2 per item on items over $10. The color dropdown on each product shows the exact extra cost.</p>
+ </details>
+ <details class="faq-item">
+  <summary>Can you make something custom?</summary>
+  <p>Yes! Use the "Request a Custom Print" button to email us your idea, picture, or design. Custom prices depend on the size and complexity of the print.</p>
+ </details>
+ <details class="faq-item">
+  <summary>How do I contact you?</summary>
+  <p>Email us at <a href="mailto:ivanpervan09@gmail.com">ivanpervan09@gmail.com</a>.</p>
+ </details>
+</section>
 
 <!-- DELIVERY -->
 <section class="cart" aria-labelledby="deliveryHeading">
- <h3 id="deliveryHeading">📦 Delivery Method</h3>
+ <h3 id="deliveryHeading">ðŸ“¦ Delivery Method</h3>
  <label for="shipping">Choose your delivery method</label>
  <select id="shipping">
   <option value="0">Local Pickup (Free)</option>
@@ -717,7 +708,7 @@ footer p{margin:5px 0}
 
 <!-- CART -->
 <section class="cart" id="cartSection" aria-labelledby="cartHeading">
- <h3 id="cartHeading">🛒 Your Cart</h3>
+ <h3 id="cartHeading">ðŸ›’ Your Cart</h3>
 
  <label for="customerName">Customer name *</label>
  <input id="customerName" autocomplete="name" maxlength="100" placeholder="Customer name">
@@ -742,19 +733,19 @@ footer p{margin:5px 0}
   by this website.
  </div>
 
- <button class="button payment-button" onclick="checkout()">💳 Continue with Venmo</button>
- <button class="button payment-button zelle" onclick="zelleCheckout()">💜 Continue with Zelle</button>
+ <button class="button payment-button" onclick="checkout()">ðŸ’³ Continue with Venmo</button>
+ <button class="button payment-button zelle" onclick="zelleCheckout()">ðŸ’œ Continue with Zelle</button>
 </section>
 
 <footer>
  <p><strong>Pervan 3D Shop</strong></p>
  <p>3D Printed Fidgets & Gifts</p>
- <p><a href="mailto:ivanpervan09@gmail.com">Contact Us</a> · <a href="#faq">FAQ</a> · <a href="#reviews">Customer Feedback</a></p>
+ <p><a href="mailto:ivanpervan09@gmail.com">Contact Us</a> Â· <a href="#faq">FAQ</a></p>
  <p>Thank you for supporting our small shop!</p>
 </footer>
 
 <button class="floating-cart" id="floatingCart" onclick="scrollToCart()" aria-label="View shopping cart">
- 🛒 Cart (<span id="cartCount">0</span>)
+ ðŸ›’ Cart (<span id="cartCount">0</span>)
 </button>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -762,82 +753,203 @@ footer p{margin:5px 0}
 <script>
 "use strict";
 
-/* AVAILABLE COLORS */
-const colors = [
- "Red","Blue","Black","Light Green","Yellow","Grey","Candy Red",
- "Champagne","White","Titan Grey","Candy Green","Brown","Gold",
- "Orange","Purple","Black Gold Green (+$2)",
- "Blue Orange Green (+$2)","Phantom Blue (+$2)",
- "Copper Purple Green (+$2)","Multi Color Rose (+$2)",
- "Multi Color Blue (+$2)"
+/* AVAILABLE COLORS
+   Groups: "Standard", "Silk", "Specialty".
+   Specialty colors cost extra: +$1 on items $10 or less, +$2 on items over $10.
+   "hex" is only used to draw the swatch; it can be a color or a CSS gradient. */
+const SILK = "linear-gradient(120deg,#ffffff00 30%,#ffffff8c 48%,#ffffff00 66%),";
+const colorGroups = [
+ {name:"Standard", note:"Regular price"},
+ {name:"Silk", note:"Shiny, smooth finish â€” regular price"},
+ {name:"Specialty", note:"Multi-color and effect filaments â€” +$1 on items $10 or less, +$2 on items over $10"}
 ];
 
-/* COLOR DISPLAY VALUES */
-const colorHex = {
- "Red":"#e53935",
- "Blue":"#2878d0",
- "Black":"#222222",
- "Light Green":"#8bcf83",
- "Yellow":"#f5d547",
- "Grey":"#929292",
- "Candy Red":"#d72545",
- "Champagne":"#e7d3a0",
- "White":"#ffffff",
- "Titan Grey":"#55585d",
- "Candy Green":"#21a86b",
- "Brown":"#87512e",
- "Gold":"#d6a52c",
- "Orange":"#ff831f",
- "Purple":"#843fba",
- "Black Gold Green (+$2)":"linear-gradient(135deg,#151515 0 33%,#d5ad32 33% 66%,#188b4c 66%)",
- "Blue Orange Green (+$2)":"linear-gradient(135deg,#2878d0 0 33%,#ff831f 33% 66%,#188b4c 66%)",
- "Phantom Blue (+$2)":"linear-gradient(135deg,#101a40,#237ed1,#7bd9ff)",
- "Copper Purple Green (+$2)":"linear-gradient(135deg,#b56a38,#8b44bd,#22834e)",
- "Multi Color Rose (+$2)":"linear-gradient(135deg,#ee8eb0,#c7356c,#ffd5df)",
- "Multi Color Blue (+$2)":"linear-gradient(135deg,#31a5ee,#344cbf,#72e1ec)"
-};
+const colors = [
+ /* STANDARD */
+ {name:"White",group:"Standard",hex:"#f4f4f1"},
+ {name:"Cool White",group:"Standard",hex:"#eef3f8"},
+ {name:"Black",group:"Standard",hex:"#1d1d1d"},
+ {name:"Khaki",group:"Standard",hex:"#c3b091"},
+ {name:"Brown",group:"Standard",hex:"#7a4a2a"},
+ {name:"Yellow",group:"Standard",hex:"#f7d117"},
+ {name:"Orange",group:"Standard",hex:"#ff7a1a"},
+ {name:"Gold",group:"Standard",hex:"#d4a52c"},
+ {name:"True Red",group:"Standard",hex:"#d0201f"},
+ {name:"Firehouse Red",group:"Standard",hex:"#b3131b"},
+ {name:"Pink",group:"Standard",hex:"#f39ac0"},
+ {name:"Purple",group:"Standard",hex:"#6c3fa6"},
+ {name:"Light Blue",group:"Standard",hex:"#7cc4ec"},
+ {name:"True Green",group:"Standard",hex:"#1f9a3e"},
+ {name:"Forest Green",group:"Standard",hex:"#2d5a32"},
+ {name:"Neon Green",group:"Standard",hex:"#7dff3a"},
+ {name:"Transparent",group:"Standard",
+  hex:"linear-gradient(135deg,#ffffff66,#ffffffcc),repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 0 0/14px 14px"},
 
+ /* SILK */
+ {name:"White Silk",group:"Silk",hex:SILK+"#e9e7e2"},
+ {name:"Champagne Silk",group:"Silk",hex:SILK+"#d9bf8c"},
+ {name:"Yellow Silk",group:"Silk",hex:SILK+"#f2c81e"},
+ {name:"Gray Silk",group:"Silk",hex:SILK+"#8d9196"},
+ {name:"Rose Gold Silk",group:"Silk",hex:SILK+"#d79a8a"},
+ {name:"Red Silk",group:"Silk",hex:SILK+"#c1121f"},
+ {name:"Green Silk",group:"Silk",hex:SILK+"#1d8a4a"},
+ {name:"Blue Silk",group:"Silk",hex:SILK+"#2a6fd6"},
+
+ /* SPECIALTY (extra charge) */
+ {name:"Gold/Red/Green Mystic Silk",group:"Specialty",special:true,
+  hex:SILK+"linear-gradient(135deg,#d4a52c 0 33%,#c1121f 33% 66%,#1d8a4a 66%)"},
+ {name:"Copper/Purple/Green Mystic Silk",group:"Specialty",special:true,
+  hex:SILK+"linear-gradient(135deg,#b56a38 0 33%,#7b3fb0 33% 66%,#22834e 66%)"},
+ {name:"Gold/Green/Black Mystic Silk",group:"Specialty",special:true,
+  hex:SILK+"linear-gradient(135deg,#d4a52c 0 33%,#188b4c 33% 66%,#151515 66%)"},
+ {name:"Phantom Blue",group:"Specialty",special:true,
+  hex:SILK+"linear-gradient(135deg,#0f1530,#2350c8 50%,#0b0b0b)"},
+ {name:"Gradient Rainbow",group:"Specialty",special:true,
+  hex:"linear-gradient(90deg,#e53935,#ff9800,#fdd835,#43a047,#1e88e5,#8e24aa)"},
+ {name:"Chameleon Bronze",group:"Specialty",special:true,
+  hex:"linear-gradient(135deg,#7a4b1e,#c08a3e 35%,#5c7a3a 65%,#3b2a5c)"},
+ {name:"Black and Orange",group:"Specialty",special:true,
+  hex:"linear-gradient(135deg,#1d1d1d 0 50%,#ff7a1a 50%)"},
+ {name:"Marble",group:"Specialty",special:true,
+  hex:"radial-gradient(circle at 20% 30%,#555 0 2px,transparent 3px),radial-gradient(circle at 70% 60%,#777 0 1.5px,transparent 2.5px),radial-gradient(circle at 45% 80%,#444 0 2px,transparent 3px),radial-gradient(circle at 85% 20%,#666 0 1.5px,transparent 2.5px),#e8e5df"},
+ {name:"Glass Watermelon Red",group:"Specialty",special:true,
+  hex:"linear-gradient(135deg,#ffffff55,#ffffff00 60%),#f0465e"}
+];
+
+const specialColors = new Set(colors.filter(c => c.special).map(c => c.name));
+
+/* PRICING HELPERS */
+function isSpecial(color) {
+ return specialColors.has(color);
+}
+
+/* Special colors add $1 if the item is $10 or less, $2 if it is over $10 */
+function specialCharge(basePrice) {
+ return basePrice <= 10 ? 1 : 2;
+}
+
+function upcharge(colorList, basePrice) {
+ const list = Array.isArray(colorList) ? colorList : [colorList];
+ return list.some(isSpecial) ? specialCharge(basePrice) : 0;
+}
+
+/* Count letters for Names / Keyboard Clicker (spaces are free) */
+function countLetters(text) {
+ return [...text.replace(/\s+/g,"")].length;
+}
+
+function keyboardBase(letters) {
+ return letters * (letters <= 4 ? 2.50 : 2.00);
+}
+
+/* Works out the item's base price from the card, so the
+   color dropdown can show the correct extra charge */
+function getCardBase(card) {
+ if (card.dataset.price) return Number(card.dataset.price);
+
+ const sizeSelect = card.querySelector(".size");
+ if (sizeSelect) {
+  return Number(sizeSelect.value === "Big" ? card.dataset.big : card.dataset.small);
+ }
+
+ const nameInput = card.querySelector(".nameText");
+ if (nameInput) return countLetters(nameInput.value);
+
+ const keyboardInput = card.querySelector(".keyboardText");
+ if (keyboardInput) return keyboardBase(countLetters(keyboardInput.value));
+
+ return 0;
+}
+
+function formatMoney(amount) {
+ return Number.isInteger(amount) ? `$${amount}` : `$${amount.toFixed(2)}`;
+}
+
+/* FILL THE COLOR DROPDOWNS (grouped) */
 function populateColors() {
- document.querySelectorAll(".color,.treeColor").forEach(select => {
-  colors.forEach(color => {
-   const option = document.createElement("option");
-   option.value = color;
-   option.textContent = color;
-   select.appendChild(option);
+ document.querySelectorAll(".products .color").forEach(select => {
+  colorGroups.forEach(group => {
+   const optgroup = document.createElement("optgroup");
+   optgroup.label = group.name === "Specialty" ? "Specialty (extra charge)" : group.name;
+
+   colors.filter(color => color.group === group.name).forEach(color => {
+    const option = document.createElement("option");
+    option.value = color.name;
+    option.textContent = color.name;
+    optgroup.appendChild(option);
+   });
+
+   select.appendChild(optgroup);
+  });
+ });
+
+ document.querySelectorAll(".products .card").forEach(card => {
+  if (!card.querySelector(".color")) return;
+  updateColorLabels(card);
+
+  /* Size, name and keyboard text change the price, so refresh the labels */
+  card.querySelectorAll(".size,.nameText,.keyboardText").forEach(input => {
+   input.addEventListener("input",() => updateColorLabels(card));
+   input.addEventListener("change",() => updateColorLabels(card));
   });
  });
 }
 
+function updateColorLabels(card) {
+ const extra = specialCharge(getCardBase(card));
+
+ card.querySelectorAll(".color option").forEach(option => {
+  option.textContent = isSpecial(option.value)
+   ? `${option.value} (+$${extra})`
+   : option.value;
+ });
+}
+
+/* COLOR SWATCH GUIDE (grouped) */
 function renderColorPalette() {
- const palette = document.getElementById("colorPalette");
-<section class="color-guide">
-    <h2>Available Colors</h2>
-    <p>Choose from our available 3D printing colors.</p>
-    <div class="palette" id="colorPalette"></div>
-</section>
- if (!palette) return;
- colors.forEach(color => {
-  const item = document.createElement("div");
-  item.className = "swatch";
+ const container = document.getElementById("colorPalette");
+ if (!container) return;
 
-  const swatch = document.createElement("div");
-  swatch.className = "swatch-color";
-  swatch.style.background = colorHex[color] || "#ccc";
+ colorGroups.forEach(group => {
+  const section = document.createElement("div");
+  section.className = "color-group";
 
-  if (color === "White") {
-   swatch.style.boxShadow = "inset 0 0 0 1px #ddd";
-  }
+  const heading = document.createElement("h3");
+  heading.textContent = group.name + " Colors";
 
-  const label = document.createElement("div");
-  label.className = "swatch-label";
-  label.textContent = color.replace(" (+$2)", "");
+  const note = document.createElement("p");
+  note.className = "color-group-note";
+  note.textContent = group.note;
 
-  const note = document.createElement("div");
-  note.className = "swatch-note";
-  note.textContent = color.includes("(+$2)") ? "+$2 per item" : "Standard";
+  const palette = document.createElement("div");
+  palette.className = "palette";
 
-  item.append(swatch,label,note);
-  palette.appendChild(item);
+  colors.filter(color => color.group === group.name).forEach(color => {
+   const item = document.createElement("div");
+   item.className = "swatch";
+
+   const swatch = document.createElement("div");
+   swatch.className = "swatch-color";
+   swatch.style.background = color.hex || "#ccc";
+
+   const label = document.createElement("div");
+   label.className = "swatch-label";
+   label.textContent = color.name.replace(/\//g,"/\u200b"); /* lets long names wrap after the slashes */
+
+   item.append(swatch,label);
+
+   if (color.special) {
+    const extra = document.createElement("div");
+    extra.className = "swatch-note";
+    extra.textContent = "+$1 / +$2";
+    item.appendChild(extra);
+   }
+
+   palette.appendChild(item);
+  });
+
+  section.append(heading,note,palette);
+  container.appendChild(section);
  });
 }
 
@@ -847,7 +959,6 @@ renderColorPalette();
 /* CART STORAGE */
 const STORAGE_KEY = "pervan3d_cart_v1";
 let cartItems = [];
-let total = 0;
 
 try {
  const saved = localStorage.getItem(STORAGE_KEY);
@@ -880,12 +991,7 @@ function saveCart() {
  }
 }
 
-/* HELPERS */
-function upcharge(color, basePrice) {
- if (!color || !color.includes("(+$2)")) return 0;
-
- return basePrice <= 10 ? 1 : 2;
-}
+/* GENERAL HELPERS */
 function getQuantity(card) {
  const input = card.querySelector('input[type="number"]');
  const qty = Number(input.value);
@@ -927,6 +1033,8 @@ function animateCart(button) {
 }
 
 function addItem(label,price,qty,button) {
+ price = Math.round(price * 100) / 100;
+
  if (!Number.isFinite(price) || price < 0 || !Number.isInteger(qty) || qty < 1) {
   alert("Please check the product price and quantity.");
   return;
@@ -950,54 +1058,51 @@ function addItem(label,price,qty,button) {
 
  saveCart();
  renderCart();
- showToast("✓ Added to cart!");
+ showToast("âœ“ Added to cart!");
 }
 
-/* TREE FIDGET */
+function getColors(card) {
+ return [...card.querySelectorAll(".color")].map(s => s.value);
+}
+
+/* TREE FIDGET (inner + outer colors) */
 function addTree(name,base,button) {
  const card = button.closest(".card");
- const cs = [...card.querySelectorAll(".treeColor")].map(s => s.value);
+ const cs = getColors(card);
  const qty = getQuantity(card);
  if (qty === null) return;
 
- const hasSpecial = cs.some(color => color.includes("(+$2)"));
- const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
-
- addItem(`${cs[0]} / ${cs[1]} ${name}`,price,qty,button);
+ const price = base + upcharge(cs,base);
+ addItem(`${name} (Inner: ${cs[0]}, Outer: ${cs[1]})`,price,qty,button);
 }
 
-/* SIZE-BASED FIDGETS */
+/* SIZE-BASED FIDGETS (Dragon, Star) */
 function addFidget(name,sizeId,button) {
  const card = button.closest(".card");
- const size = card.querySelector("#" + sizeId).value;
+ const size = document.getElementById(sizeId).value;
  const color = card.querySelector(".color").value;
  const qty = getQuantity(card);
  if (qty === null) return;
 
-const base = size === "Big" ? 8 : 5;
-const price = base + upcharge(color,base);
-
-addItem(`${color} ${name} (${size})`,price,qty,button);
+ const base = getCardBase(card);
+ const price = base + upcharge(color,base);
+ addItem(`${color} ${name} (${size})`,price,qty,button);
 }
-/* SPINNING STAR */
+
+/* SPINNING STAR (size + stick and star colors) */
 function addSpinningStar(button) {
  const card = button.closest(".card");
- const size = card.querySelector("#spinSize").value;
- const colorChoices = [...card.querySelectorAll(".color")].map(s => s.value);
+ const size = document.getElementById("spinSize").value;
+ const cs = getColors(card);
  const qty = getQuantity(card);
  if (qty === null) return;
 
- const base = size === "Big" ? 10 : 6;
-const hasSpecial = colorChoices.some(color => color.includes("(+$2)"));
-const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
-
- addItem(
-  `${colorChoices[0]} / ${colorChoices[1]} Flexi Spinning Star (${size})`,
-  price,qty,button
- );
+ const base = getCardBase(card);
+ const price = base + upcharge(cs,base);
+ addItem(`Flexi Spinning Star (${size}) (Stick: ${cs[0]}, Star: ${cs[1]})`,price,qty,button);
 }
 
-/* FIXED-PRICE PRODUCTS */
+/* FIXED-PRICE PRODUCTS (with or without a color) */
 function addFixed(name,base,button) {
  const card = button.closest(".card");
  const colorSelect = card.querySelector(".color");
@@ -1006,60 +1111,59 @@ function addFixed(name,base,button) {
  if (qty === null) return;
 
  const price = base + upcharge(color,base);
-
  addItem(color ? `${color} ${name}` : name,price,qty,button);
 }
 
-/* TWO-COLOR PRODUCTS */
+/* CACTUS (base + cactus colors) */
 function addTwoColor(name,base,button) {
  const card = button.closest(".card");
- const cs = [...card.querySelectorAll(".color")].map(s => s.value);
+ const cs = getColors(card);
  const qty = getQuantity(card);
  if (qty === null) return;
 
- const hasSpecial = cs.some(color => color.includes("(+$2)"));
- const price = base + (hasSpecial ? (base <= 10 ? 1 : 2) : 0);
-
-addItem(`${name} (${cs[0]} / ${cs[1]})`,price,qty,button);
+ const price = base + upcharge(cs,base);
+ addItem(`${name} (Base: ${cs[0]}, Cactus: ${cs[1]})`,price,qty,button);
 }
 
 /* KEYBOARD CLICKER */
 function addKeyboardClicker(button) {
  const card = button.closest(".card");
- const textValue = card.querySelector(".keyboardText").value.trim();
- const color = card.querySelector(".color").value;
- const qty = getQuantity(card);
+ const textInput = card.querySelector(".keyboardText");
+ const textValue = textInput.value.trim();
+ const cs = getColors(card);
 
- if (!textValue) {
+ if (!countLetters(textValue)) {
   alert("Type the text for your keyboard clicker.");
-  card.querySelector(".keyboardText").focus();
+  textInput.focus();
   return;
  }
+
+ const qty = getQuantity(card);
  if (qty === null) return;
 
- const letters = [...textValue].length;
- const pricePerLetter = letters <= 4 ? 2.50 : 2.00;
-const base = letters * pricePerLetter;
-const price = base + upcharge(color,base);
- addItem(`${color} Keyboard Clicker: ${textValue}`,price,qty,button);
+ const base = keyboardBase(countLetters(textValue));
+ const price = base + upcharge(cs,base);
+ addItem(`Keyboard Clicker: ${textValue} (Base: ${cs[0]}, Keys: ${cs[1]})`,price,qty,button);
 }
 
-/* CUSTOM NAMES */
+/* CUSTOM NAMES ($1 per letter, spaces are free) */
 function addName(button) {
  const card = button.closest(".card");
- const text = card.querySelector(".nameText").value.trim();
+ const textInput = card.querySelector(".nameText");
+ const text = textInput.value.trim();
  const color = card.querySelector(".color").value;
- const qty = getQuantity(card);
 
- if (!text) {
+ if (!countLetters(text)) {
   alert("Type the name you want printed.");
-  card.querySelector(".nameText").focus();
+  textInput.focus();
   return;
  }
+
+ const qty = getQuantity(card);
  if (qty === null) return;
 
- const base = [...text].length;
-const price = base + upcharge(color,base);
+ const base = countLetters(text);
+ const price = base + upcharge(color,base);
  addItem(`${color} Name: ${text}`,price,qty,button);
 }
 
@@ -1090,21 +1194,23 @@ function removeItem(index) {
  renderCart();
 }
 
-/* CART DISPLAY — use textContent for customer-entered text */
+function getSubtotal() {
+ return cartItems.reduce((sum,item) => sum + item.price * item.qty,0);
+}
+
+/* CART DISPLAY â€” uses textContent for customer-entered text */
 function renderCart() {
  const ul = document.getElementById("cart");
  ul.replaceChildren();
- total = 0;
 
  if (cartItems.length === 0) {
   const empty = document.createElement("li");
   empty.className = "empty-cart";
-  empty.textContent = "🛒 Your cart is empty. Add some awesome 3D prints!";
+  empty.textContent = "ðŸ›’ Your cart is empty. Add some awesome 3D prints!";
   ul.appendChild(empty);
  } else {
   cartItems.forEach((item,index) => {
    const itemTotal = item.price * item.qty;
-   total += itemTotal;
 
    const li = document.createElement("li");
    li.className = "cart-item";
@@ -1132,7 +1238,7 @@ function renderCart() {
    const minus = document.createElement("button");
    minus.className = "quantity-button";
    minus.type = "button";
-   minus.textContent = "−";
+   minus.textContent = "âˆ’";
    minus.setAttribute("aria-label",`Decrease quantity of ${item.label}`);
    minus.addEventListener("click",() => changeQuantity(index,-1));
 
@@ -1152,7 +1258,7 @@ function renderCart() {
    const remove = document.createElement("button");
    remove.className = "remove";
    remove.type = "button";
-   remove.textContent = "✖";
+   remove.textContent = "âœ–";
    remove.setAttribute("aria-label",`Remove ${item.label}`);
    remove.addEventListener("click",() => removeItem(index));
 
@@ -1161,12 +1267,12 @@ function renderCart() {
   });
  }
 
+ const subtotal = getSubtotal();
  const shipping = Number(document.getElementById("shipping").value);
- const finalTotal = total + shipping;
 
- document.getElementById("subtotal").textContent = total.toFixed(2);
+ document.getElementById("subtotal").textContent = subtotal.toFixed(2);
  document.getElementById("shippingCost").textContent = shipping.toFixed(2);
- document.getElementById("total").textContent = finalTotal.toFixed(2);
+ document.getElementById("total").textContent = (subtotal + shipping).toFixed(2);
 
  updateCartCount();
 }
@@ -1238,7 +1344,7 @@ function getCheckoutDetails() {
   return null;
  }
 
- const subtotal = cartItems.reduce((sum,item) => sum + item.price * item.qty,0);
+ const subtotal = getSubtotal();
 
  return {
   name,phone,address,shipping,subtotal,
@@ -1268,6 +1374,16 @@ function createOrderNote(order) {
  return note;
 }
 
+/* Opens a new tab safely. Returns false if a pop-up blocker stopped it.
+   (Don't pass "noopener" to window.open â€” that makes it always return null,
+   which looked like a blocked pop-up every time.) */
+function openPaymentTab(url) {
+ const opened = window.open(url,"_blank");
+ if (!opened) return false;
+ opened.opener = null;
+ return true;
+}
+
 /* VENMO */
 function checkout() {
  const order = getCheckoutDetails();
@@ -1275,13 +1391,11 @@ function checkout() {
 
  const note = createOrderNote(order);
  const url = "https://venmo.com/?txn=pay"
-  + "&recipients=" + encodeURIComponent("@Pervan3D")
+  + "&recipients=" + encodeURIComponent("Pervan3D")
   + "&amount=" + encodeURIComponent(order.finalTotal.toFixed(2))
   + "&note=" + encodeURIComponent(note);
 
-const opened = window.open(url, "_blank");
-if (opened) opened.opener = null;
- if (!opened) {
+ if (!openPaymentTab(url)) {
   alert("Your browser blocked the payment window. Please allow pop-ups and try again.");
   return;
  }
@@ -1308,30 +1422,19 @@ async function zelleCheckout() {
   copied = false;
  }
 
- const opened = window.open("https://www.zellepay.com/","_blank","noopener,noreferrer");
-
- if (!opened) {
-  alert("Your browser blocked the Zelle page. Please allow pop-ups and try again.");
+ if (!openPaymentTab("https://www.zellepay.com/")) {
+  alert("Your browser blocked the Zelle page. Please allow pop-ups, or open your bank app and send the payment with Zelle.");
  }
 
  if (copied) {
-  alert("Order details copied. Review them before using Zelle. Confirm the recipient and amount carefully; payment is not verified by this website.");
+  alert(`Order details copied. Send $${order.finalTotal.toFixed(2)} with Zelle to tammypervan@hotmail.com and paste the order details in the memo. Payment is not verified by this website.`);
  } else {
   prompt("Copy your order details and keep them for reference:",note);
  }
 }
 
-
 /* INITIALIZE */
-window.addTree = addTree;
-window.addFidget = addFidget;
-window.addSpinningStar = addSpinningStar;
-window.addFixed = addFixed;
-window.addTwoColor = addTwoColor;
-window.addName = addName;
-window.addKeyboardClicker = addKeyboardClicker;
-
 renderCart();
 </script>
 </body>
- </html>
+</html>
